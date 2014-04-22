@@ -257,23 +257,10 @@ module.exports = function(grunt) {
     TASKS
     **/
     grunt.registerTask('css', ['sass', 'requirejs:css']);
-
     grunt.registerTask('local', ['concurrent:concurrentLocal']);
     grunt.registerTask('localServer', ['css', 'nodemon:local']);
-
-    grunt.registerTask('offline', ['concurrent:concurrentOffline']);
-    grunt.registerTask('offlineServer', ['css', 'nodemon:offline']);
-
-    grunt.registerTask('prod', ['nodemon:prod']);
-
-    grunt.registerTask('brk', ['concurrent:concurrentBrk']);
-    grunt.registerTask('brkServer', ['css', 'nodemon:brk']);
-
     grunt.registerTask('build', ['clean', 'css', 'requirejs:main', 'copy:main']);
-    grunt.registerTask('dev', ['build', 'shell:gitdev']);
-
+    grunt.registerTask('deploy-dev', ['build', 'shell:gitdev']);
     grunt.registerTask('documentation', ['clean', 'markdown:all']);
     grunt.registerTask('analyze', ['plato:analyze']);
-    grunt.registerTask('devlog', ['shell:devlog']);
-
 };

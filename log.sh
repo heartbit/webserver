@@ -1,1 +1,1 @@
-heroku logs --app insightful --ps web --tail
+heroku logs --app  heartbit-dev  --ps web --tail
