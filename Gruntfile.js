@@ -30,7 +30,7 @@ module.exports = function(grunt) {
             buildClientDir: './build/client',
             cssDir: './client/styles',
             dev: 'heartbit-dev',
-            prod: 'heartbit-prod'
+            master: 'heartbit-prod'
         },
 
         /**
@@ -204,6 +204,10 @@ module.exports = function(grunt) {
             gitdev: {
                 options: shellDefaultOptions,
                 command: ['cd ./build', 'git init', 'echo "node_modules/*" > .gitignore', 'git add .', 'echo "before commit"', 'git commit -m "deployment..."', 'echo "before add remote"', 'git remote add <%= props.dev %> git@heroku.com:<%= props.dev %>.git', 'echo "before push master"', 'git push --force <%= props.dev %> master:master', 'echo "after push dev branch"'].join('&&')
+            },
+            gitmaster: {
+                options: shellDefaultOptions,
+                command: ['cd ./build', 'git init', 'echo "node_modules/*" > .gitignore', 'git add .', 'echo "before commit"', 'git commit -m "deployment..."', 'echo "before add remote"', 'git remote add <%= props.master %> git@heroku.com:<%= props.master %>.git', 'echo "before push master"', 'git push --force <%= props.master %> master:master', 'echo "after push dev branch"'].join('&&')
             }
         },
 
@@ -253,6 +257,7 @@ module.exports = function(grunt) {
     grunt.registerTask('localServer', ['css', 'nodemon:local']);
     grunt.registerTask('build', ['clean', 'css', 'requirejs:main', 'copy:main']);
     grunt.registerTask('deploy-dev', ['build', 'shell:gitdev']);
+    grunt.registerTask('deploy-master', ['build', 'shell:gitmaster']);
     grunt.registerTask('documentation', ['clean', 'markdown:all']);
     grunt.registerTask('analyze', ['plato:analyze']);
 };
