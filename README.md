@@ -6,7 +6,7 @@ https://www.codeship.io/projects/52bbf060-ac81-0131-039a-424b8261493a/status
 
 ## Installation
 
-aaaaaaIf you haven't already done so, install [nodejs][], [gruntjs][] and [bowerjs][].
+If you haven't already done so, install [nodejs][], [gruntjs][] and [bowerjs][].
 
 ```
 npm install -g grunt
