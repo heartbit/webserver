@@ -29,8 +29,8 @@ module.exports = function(grunt) {
             serverDir: './server',
             buildClientDir: './build/client',
             cssDir: './client/styles',
-            dev: 'insightful',
-            prod: 'prod'
+            dev: 'heartbit-dev',
+            prod: 'heartbit-prod'
         },
 
         /**
@@ -208,10 +208,6 @@ module.exports = function(grunt) {
             gitdev: {
                 options: shellDefaultOptions,
                 command: ['cd ./build', 'git init', 'echo "node_modules/*" > .gitignore', 'git add .', 'echo "before commit"', 'git commit -m "deployment..."', 'echo "before add remote"', 'git remote add <%= props.dev %> git@heroku.com:<%= props.dev %>.git', 'echo "before push master"', 'git push --force <%= props.dev %> master:master', 'echo "after push dev branch"'].join('&&')
-            },
-            devlog: {
-                options: shellDefaultOptions,
-                command: ['bash log.sh'].join('&&')
             }
         },
 
