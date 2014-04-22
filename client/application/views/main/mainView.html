@@ -1,0 +1,27 @@
+<div class="">
+
+    <div id="maingraphmenu">
+        <ul class="inline-list timeperiods left">
+            <%_.each(timeperiods, function(timeperiod){%>
+                <li class="<%=(timeperiod.id == currentTimeperiodId) ? 'current' : 'available'%>">
+                    <a href="#" id="<%=timeperiod.id%>" class="js-timeperiod ">
+                        <%=timeperiod.label%>
+                    </a>
+                </li>
+                <%});%>
+        </ul>
+
+        <ul class="inline-list right">
+                <li class="">
+                    <a href="#" id="js-volumeLayer" class="">
+                    Volumes
+                    </a>
+                </li>
+        </ul>
+
+    </div>
+
+    <div class="mainchart loading" id="js-mainchart">
+    </div>
+
+</div>

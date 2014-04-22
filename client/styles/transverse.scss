@@ -1,0 +1,86 @@
+$primary_color: #ffffff;
+a {
+	font-color:003366;
+}
+
+/*a:hover{
+	text-decoration:underline;
+}*/
+
+.panel {
+	background:$primary_color;
+	border:none !important;
+	margin-bottom: 0;
+}
+
+.row {
+    max-width:none;
+}
+
+.ul.inline-list > .li {
+    display: inline;
+}
+
+.loading {
+    background: url("/images/loaders/spiffygif_30x30.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.selecteur {
+	margin:0px;
+	padding:0px;
+	padding-bottom:0px;
+	font-size:12px;
+}
+
+.sideMenu {
+	min-height:300px;
+}
+
+.mainchartcontroller {
+/*	min-height: 328px;
+	padding-bottom: 10px;*/
+}
+
+.indicatorscontroller {
+	min-height: 298px;
+	padding-bottom:10px;
+}
+
+.bottomTopBorder {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.withoutBorder {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+
+
+
+
+/*@media only screen and (max-width:1000px) {
+    .paddingSection {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}*/
+
+/*.custom-row-class {
+    @include gride-row();
+r
+    @media only screen and(max-width:1000px;){
+	    .custom-column-small {
+	        @include gride-column(6);
+	    }
+	}
+}*/

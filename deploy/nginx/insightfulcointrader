@@ -1,0 +1,19 @@
+
+# Change access and error log files.
+  access_log /home/ber/nginx/access.log;
+  error_log /home/ber/nginx/error.log;
+
+
+server {
+    listen 80;
+    #root /home/chl/chat;
+    #index index.html index.htm;
+    server_name _;
+    location / {
+        proxy_pass http://localhost:9090;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+    }
+}

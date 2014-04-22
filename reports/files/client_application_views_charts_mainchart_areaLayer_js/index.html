@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome-ie7.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>client/application/views/charts/mainchart/areaLayer.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
+      <p class="stat">72.83</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
+      <p class="stat">230</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
+      <p class="stat">40.33</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
+      <p class="stat">2.44</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">define(&#039;areaLayer&#039;, [&#039;d3&#039;, &#039;tooltip&#039;, &#039;FormatUtils&#039;, &#039;moment&#039;], function(d3, Tooltip, FormatUtils) {
+
+    var defaultDuration = 200;
+
+    function AreaLayer(chart) {
+        var self = this;
+
+        this.chart = chart;
+        this.candleLayer = this.chart.mainLayer
+            .append(&quot;g&quot;)
+            .attr(&quot;class&quot;, &quot;candle_layer&quot;);
+
+        this.tooltip = new Tooltip(this.chart.el, &#039;areaLayerTooltip&#039;);
+
+        // Min, Max and Last value
+        var candleTickValues = function(d, i, j) {
+            var values = [];
+            // Last value
+            values.push(_.last(self.candles).close);
+            // Mean
+            // var mean = 
+            // // Close min - max
+            // values = _.union(values, d3.extent(self.candles.map(function(candle) {
+            //     return candle.close;
+            // })));
+            // High max
+            values = _.union(values, d3.max(self.candles.map(function(candle) {
+                return candle.high;
+            })));
+            // low min
+            values = _.union(values, d3.min(self.candles.map(function(candle) {
+                return candle.low;
+            })));
+            return values;
+        };
+
+        this.candleYScale = d3.scale
+            .linear()
+            .range([3 * this.chart.height / 4, 0]);
+
+        this.candleYAxis = d3.svg.axis()
+            .scale(this.candleYScale)
+            .orient(&quot;right&quot;)
+            .tickValues(candleTickValues)
+            .tickFormat(function(d) {
+                return FormatUtils.formatValueShort(d, 3);
+            })
+            .tickSize(-this.chart.width, 0)
+
+        this.candleYAxisInstance = this.candleLayer
+            .append(&quot;g&quot;)
+            .attr(&quot;class&quot;, &quot;y_candle_axis&quot;)
+            .attr(&quot;transform&quot;, &quot;translate(&quot; + self.chart.width + &quot;,0)&quot;);
+
+        this.candlesArea = d3.svg.area()
+            .x(function(candle) {
+                return self.chart.timeScale(candle.middleDate);
+            })
+            .y0(function(candle) {
+                return self.candleYScale(candle.high);
+            })
+            .y1(function(candle) {
+                return self.candleYScale(candle.low);
+            })
+            .interpolate(&quot;monotone&quot;);
+
+        this.candleAreaChart = this.candleLayer
+            .append(&quot;path&quot;)
+            .attr(&#039;opacity&#039;, 0.4)
+            .attr(&#039;class&#039;, &#039;candle_area&#039;);
+
+        this.candlesLine = d3.svg.line()
+            .x(function(candle) {
+                return self.chart.timeScale(candle.middleDate);
+            })
+            .y(function(candle) {
+                var meanValue = (candle.high + candle.low) / 2;
+                return self.candleYScale(meanValue);
+            })
+            .interpolate(&quot;monotone&quot;);
+
+        this.candleLineChart = this.candleLayer
+            .append(&quot;path&quot;)
+            .attr(&#039;class&#039;, &#039;candle_line&#039;);
+
+        this.candlesCirclesLayer = this.candleLayer
+            .append(&quot;g&quot;)
+            .attr(&#039;class&#039;, &quot;candle_circles_layer&quot;);
+    };
+
+    AreaLayer.prototype.draw = function(params) {
+        var self = this;
+        this.params = params;
+        this.update();
+    };
+
+    AreaLayer.prototype.update = function() {
+        var self = this;
+        this.candles = this.chart.models.candles;
+
+        var candleYOffset = 0;
+        var ratio = 0.005;
+
+        this.candleYScale.domain([d3.min(self.candles.map(function(candle) {
+            return (candle.low - (candle.low * ratio));
+        })) - candleYOffset, d3.max(this.candles.map(function(candle) {
+            return (candle.high + (candle.high * ratio));
+        })) + candleYOffset]);
+
+        this.candleYAxisInstance
+            .transition()
+            .duration(defaultDuration)
+            .call(self.candleYAxis);
+
+        this.candleCircles = this.candlesCirclesLayer
+            .selectAll(&quot;.circle&quot;)
+            .data(self.candles, function(candle) {
+                return candle.middleDate;
+            });
+
+        var circleRadius = 4;
+        // Enter
+        this.candleCircles
+            .enter()
+            .insert(&quot;circle&quot;)
+            .attr(&quot;class&quot;, &quot;circle&quot;);
+
+        // Exit
+        this.candleCircles
+            .exit()
+            .remove();
+
+        // Update
+        this.candleCircles
+            .attr(&#039;cx&#039;, function(candle) {
+                return self.chart.timeScale(candle.middleDate);
+            })
+            .attr(&#039;cy&#039;, function(candle) {
+                var meanValue = (candle.high + candle.low) / 2;
+                return self.candleYScale(meanValue);
+            })
+            .attr(&#039;r&#039;, 0)
+            .attr(&#039;class&#039;, &#039;circle&#039;)
+
+        this.candleAreaChart
+            .transition()
+            .duration(defaultDuration)
+            .attr(&#039;d&#039;, self.candlesArea(self.candles))
+
+        this.candleLineChart
+            .transition()
+            .duration(defaultDuration)
+            .attr(&#039;d&#039;, self.candlesLine(self.candles))
+    };
+
+    AreaLayer.prototype.hide = function() {};
+
+    AreaLayer.prototype.updateTooltip = function(date) {
+        var self = this;
+
+        var finclosestCandle = function(date) {
+            var pointIndex = (self.closestPoint &amp;&amp; self.closestPoint.index) || 0;
+            var closestPoint = self.candleCircles[pointIndex];
+            var circlesCount = self.candleCircles.size()
+            self.candleCircles.each(function(candleCircle, index) {
+                if (index == 0 &amp;&amp; date &lt;= candleCircle.startDate) {
+                    pointIndex = index;
+                    closestPoint = candleCircle;
+                }
+                if (index == circlesCount - 1 &amp;&amp; date &gt;= candleCircle.endDate) {
+                    pointIndex = index;
+                    closestPoint = candleCircle;
+                }
+                if (candleCircle.startDate &lt;= date &amp;&amp; candleCircle.endDate &gt;= date) {
+                    pointIndex = index;
+                    closestPoint = candleCircle;
+                }
+            });
+            return {
+                index: pointIndex,
+                candle: closestPoint
+            };
+        };
+
+        this.closestPoint = finclosestCandle(date);
+
+        var left = 0;
+        var top = 0;
+
+        this.candleCircles
+            .transition()
+            .duration(100)
+            .attr(&#039;r&#039;, function(d, i) {
+                if (i == self.closestPoint.index) {
+                    left = d3.select(this).attr(&#039;cx&#039;);
+                    top = d3.select(this).attr(&#039;cy&#039;);
+                    return 3;
+                } else {
+                    return 0;
+                }
+            });
+
+        var position = {
+            left: String(Math.round(left + this.chart.margin.left + 40)) + &quot;px&quot;,
+            top: String(Math.round(top)) + &quot;px&quot;
+        };
+
+        this.tooltip.render(this.closestPoint.candle.startDate, position);
+    };
+
+    AreaLayer.prototype.mouseout = function() {
+        this.tooltip.mouseout();
+        this.candleCircles
+            .transition()
+            .duration(100)
+            .attr(&#039;r&#039;, 0);
+    };
+
+    AreaLayer.prototype.mouseover = function() {
+        this.tooltip.mouseover();
+    };
+
+    AreaLayer.prototype.updateRange = function(range) {
+        this.candleYScale.range(range);
+        this.update();
+    };
+
+    return AreaLayer;
+
+});</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

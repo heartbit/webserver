@@ -1,0 +1,10 @@
+<div class="row" id="keyfact">
+    <% _.each(tickerAttributes, function(tickerAttribute) { %>
+        <div class="large-2 medium-2 small-2 columns panel bottomTopBorder text-center">
+            <span class="">
+                <%=tickerAttribute.label%>
+            </span>
+            <div id="<%=tickerAttribute.htmlSelector%>" class="bigNumber-medium"></div>
+        </div>
+        <% }); %>
+</div>

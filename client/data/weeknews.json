@@ -1,0 +1,32 @@
+{
+
+	"week1":
+			"startup":{
+			"description":"aaaaaaaaaaaaaaaaaaaaaaa",
+			"source":"",
+			"priceimpact":"",
+			"pourcentage":""
+		},
+
+		"merchant":{
+			"description":"",
+			"source":"",
+			"priceimpact":"",
+			"pourcentage":""
+		},
+
+		"other":[{
+			"description":"",
+			"source":"",
+			"priceimpact":"",
+			"pourcentage":""
+		},
+		{
+			"description":"",
+			"source":"",
+			"priceimpact":"",
+			"pourcentage":""
+		}]
+
+
+}

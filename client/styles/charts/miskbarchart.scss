@@ -1,0 +1,36 @@
+
+
+
+.yaxis text{
+	
+	font-size:8px;
+	font-family:arial;
+}
+
+.xaxis line {
+	fill:none;
+	stroke:black;
+
+	shape-rendering:crispEdges;
+}
+.xaxis text{
+	font-size:10px;
+	font-family:arial;
+}
+.volTitle {
+	font-size:12px;
+}
+
+.title{	
+	font-size:14px;
+	text-anchor:middle;
+}
+
+.grid .tick {
+	stroke: lightgrey;
+	opacity:0.4;
+}
+
+.grid text {
+	display:none;
+}

@@ -1,0 +1,48 @@
+[{
+  "id": "BTCE",
+  "label": "BTC-e",
+  "url": "https://btc-e.com/",
+  "logo": "",
+  "interval": 30000,
+  "pairs": [{
+    "item": {
+      "id": "BTC",
+      "label": "Bitcoin",
+      "symbol": "Ƀ"
+    },
+    "currency": {
+      "id": "USD",
+      "label": "American dollars",
+      "symbol": "$"
+    }
+  }, {
+    "item": {
+      "id": "LTC",
+      "label": "Litcoin",
+      "symbol": "LTC"
+    },
+    "currency": {
+      "id": "USD",
+      "label": "American dollars",
+      "symbol": "$"
+    }
+  }]
+}, {
+  "id": "BITSTAMP",
+  "label": "Bitstamp",
+  "url": "https://www.bitstamp.net/",
+  "logo": "https://www.bitstamp.net/s/icons/favicon.ico",
+  "interval": 30000,
+  "pairs": [{
+    "item": {
+      "id": "BTC",
+      "label": "Bitcoin",
+      "symbol": "Ƀ"
+    },
+    "currency": {
+      "id": "USD",
+      "label": "American dollars",
+      "symbol": "$"
+    }
+  }]
+}]

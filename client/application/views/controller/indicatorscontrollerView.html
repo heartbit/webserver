@@ -1,0 +1,11 @@
+
+<div class="indicatorscontroller">
+    <h4>Indicators</h4>
+        <div class="checkbox">
+            <% _.each(checkboxes, function(checkbox){ %>
+                <input type="checkbox" id="<%=checkbox.id%>" name="<%=checkbox.label%>" value="<%=checkbox.value%>" class="js-sma">
+                <%=checkbox.label%>
+                    </br>
+                    <% }); %>
+        </div>
+</div>

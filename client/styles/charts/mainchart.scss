@@ -1,0 +1,62 @@
+.mainchart {
+  min-height: 300px;  
+}
+
+li.current a{
+	text-decoration:underline;
+	text-decoration:overline;
+}
+
+#mainChartTimeController {
+	margin-left: 50px;
+}
+
+$label_color: #666666;
+$tick_color: #cccccc;
+
+.domain { 
+  fill: none; 
+  stroke-width: 1;  
+} 
+
+.x_time_axis .domain {
+  stroke: $tick_color;
+}
+
+// Area layer
+.candle_area{
+  fill: $tick_color;
+}
+
+.candle_line {
+  stroke: #b7b7b7;
+  stroke-width: 1.5px;
+  fill : none;
+}
+
+.y_candle_axis .tick line, {
+  stroke: $tick_color;
+  stroke-dasharray: 4,6;
+}
+
+.y_candle_axis .tick text {
+  fill: $label_color;
+}
+
+.circle {
+  stroke-width: 2px;
+  stroke:$label_color;
+  fill: white;
+}
+
+// Volume layer
+.y_volume_axis .tick text {
+  fill: $label_color;
+}
+
+.y_volume_axis .tick line {
+  stroke: $tick_color;
+  stroke-dasharray: 4,4;
+}
+
+

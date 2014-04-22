@@ -1,0 +1,155 @@
+<!DOCTYPE  html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>doc</title>
+    <style>
+      /*github.com style (c) Vasily Polovnyov <vast@whiteants.net>*/
+      pre code {
+        display: block; padding: 0.5em;
+        color: #333;
+        background: #f8f8ff
+      }
+      pre .comment,
+      pre .template_comment,
+      pre .diff .header,
+      pre .javadoc {
+        color: #998;
+        font-style: italic
+      }
+      pre .keyword,
+      pre .css .rule .keyword,
+      pre .winutils,
+      pre .javascript .title,
+      pre .nginx .title,
+      pre .subst,
+      pre .request,
+      pre .status {
+        color: #333;
+        font-weight: bold
+      }
+      pre .number,
+      pre .hexcolor,
+      pre .ruby .constant {
+        color: #099;
+      }
+      pre .string,
+      pre .tag .value,
+      pre .phpdoc,
+      pre .tex .formula {
+        color: #d14
+      }
+      pre .title,
+      pre .id {
+        color: #900;
+        font-weight: bold
+      }
+      pre .javascript .title,
+      pre .lisp .title,
+      pre .clojure .title,
+      pre .subst {
+        font-weight: normal
+      }
+      pre .class .title,
+      pre .haskell .type,
+      pre .vhdl .literal,
+      pre .tex .command {
+        color: #458;
+        font-weight: bold
+      }
+      pre .tag,
+      pre .tag .title,
+      pre .rules .property,
+      pre .django .tag .keyword {
+        color: #000080;
+        font-weight: normal
+      }
+      pre .attribute,
+      pre .variable,
+      pre .lisp .body {
+        color: #008080
+      }
+      pre .regexp {
+        color: #009926
+      }
+      pre .class {
+        color: #458;
+        font-weight: bold
+      }
+      pre .symbol,
+      pre .ruby .symbol .string,
+      pre .lisp .keyword,
+      pre .tex .special,
+      pre .prompt {
+        color: #990073
+      }
+      pre .built_in,
+      pre .lisp .title,
+      pre .clojure .built_in {
+        color: #0086b3
+      }
+      pre .preprocessor,
+      pre .pi,
+      pre .doctype,
+      pre .shebang,
+      pre .cdata {
+        color: #999;
+        font-weight: bold
+      }
+      pre .deletion {
+        background: #fdd
+      }
+      pre .addition {
+        background: #dfd
+      }
+      pre .diff .change {
+        background: #0086b3
+      }
+      pre .chunk {
+        color: #aaa
+      }
+    </style>
+  </head>
+  <body>  
+    <h1 id="insightful-trader">Insightful trader</h1>
+<blockquote>
+<p>Visualize <a href="http://bitcoin.org">Bitcoins</a> &amp; co</p>
+</blockquote>
+<h2 id="back">Back</h2>
+<p>If you haven&#39;t already done so, install <a href="http://www.java.com">java</a> and <a href="http://maven.apache.org">maven</a>.</p>
+<pre><code>launch cassandra
+launch mariadb
+
+mvn clean install -DskipTests=true
+mvn jetty:run</code></pre>
+<h2 id="webserver">Webserver</h2>
+<h3 id="installation">Installation</h3>
+<p>If you haven&#39;t already done so, install <a href="http://nodejs.org">nodejs</a>, <a href="http://gruntjs.com">gruntjs</a> and <a href="https://github.com/bower/bower">bowerjs</a>.</p>
+<pre><code>npm install -g grunt
+npm install -g grunt-cli
+npm install -g bower</code></pre>
+<h4 id="server-dependencies">Server dependencies</h4>
+<pre><code>npm install</code></pre>
+<h4 id="client-dependencies">Client dependencies</h4>
+<pre><code>bower install</code></pre>
+<h3 id="usage">Usage</h3>
+<h4 id="developement-environment-distant-api-">Developement environment (Distant API)</h4>
+<pre><code>grunt local</code></pre>
+<h4 id="offline-mode-mocks-">Offline mode (mocks)</h4>
+<pre><code>grunt offline</code></pre>
+<h4 id="build">Build</h4>
+<pre><code>grunt build</code></pre>
+<p>See ./frontend/build</p>
+<h4 id="deploy-on-dev">Deploy on dev</h4>
+<pre><code>grunt dev</code></pre>
+<h4 id="compil-documentation">Compil documentation</h4>
+<pre><code>grunt documentation</code></pre>
+<p>See ./frontend/doc</p>
+<h4 id="analyze-source-code-using-plato">Analyze source code using plato</h4>
+<pre><code>grunt analyze</code></pre>
+<p>See ./frontend/reports</p>
+<p><em>(This documentation is a WIP)</em></p>
+
+  </body>
+</html>

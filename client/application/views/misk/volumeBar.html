@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.misk_indicator {
+	height:200px;
+	width:200px;
+}
+
+.yaxis text{
+	
+	font-size:8px;
+	font-family:arial;
+}
+
+.xaxis line {
+	fill:none;
+	stroke:black;
+
+	shape-rendering:crispEdges;
+}
+.xaxis text{
+	font-size:10px;
+	font-family:arial;
+}
+.volTitle {
+	font-size:12px;
+}
+
+.title{	
+	font-size:14px;
+	text-anchor:middle;
+}
+
+/*.widgetlayer {
+	font:10px;
+}*/
+
+.grid .tick {
+	stroke: lightgrey;
+	opacity:0.4;
+}
+
+.grid text {
+	display:none;
+}
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script> 
+<script src="/home/roger/dev/InsightfulTrader/frontend/client/components/underscore/underscore-min.js"></script> 
+<script src="/home/roger/dev/InsightfulTrader/frontend/client/components/jquery/jquery.js"></script> 
+<script>
+
+
+	function VolumeComp(){
+		// this.el=el;
+		this.initChart();
+		this.initLayer();
+		this.initAxis();
+		
+	};
+
+
+	VolumeComp.prototype.initChart=function(){
+
+		this.volumes=[
+			["bitstamp",26863,"EU","#508F40",true],
+			["btcChina",8245,"PRC","#D95050",true],
+			["btc-e",21837,"BG","#64658C",true],
+			["OKCoin",124098,"PRC","#99609C",false],
+			["huobi",166968,"PRC","#DED143",false],
+			["bitcoin-central",400,"EU","#042157",true],
+			["kraken",1211,"EU","#D0D61A",true]
+		];
+
+		this.volumes.sort(function(a,b) {
+			return a[1]>b[1];		
+		});
+		this.generalHeight=300;
+		this.generalWidth=1500;
+
+		this.w=400;
+		this.h=230;
+		this.radius=Math.min(this.w,this.h)/2;
+		//WIDTH rec
+		this.widthRec=30;
+
+		this.margin= {
+			top:50,
+			bottom:50,
+			left:100,
+			right:100,
+			caption:6,
+			captionVol:4,
+			barPadding:15,
+		};
+		this.visHeight=this.h+this.margin.top+this.margin.bottom;
+		this.visWidth=this.w+this.margin.left+this.margin.right;
+		this.height=this.h-this.margin.top-this.margin.bottom;
+		this.width=this.w-this.margin.left-this.margin.right;
+
+
+	};
+
+
+		
+
+	VolumeComp.prototype.initLayer=function() {
+		this.misk=d3.select("body").append("svg").attr("height",this.generalHeight).attr("width",this.generalWidth);
+
+		this.widget1=this.misk.append("g").attr("height",this.visHeight).attr("width",this.visWidth).attr("class","widget1");
+		// this.widget2=this.misk.append("svg").attr("height",this.visHeight).attr("width",this.visWidth)
+		// .attr("x",$("#widget1").width());
+		
+
+		this.barChartLayer=this.widget1.append("g").attr("transform","translate("+this.margin.left+","+this.margin.top+")").attr("class","widgetlayer");
+		// console.log($("#barChartLayer").width());
+
+		// this.pieChartLayer
+
+
+	};
+
+	VolumeComp.prototype.initAxis=function() {
+		var self=this;
+		//barchart
+		this.yScale=d3.scale.linear().range([this.height,0]);
+		this.xScale=d3.scale.ordinal().rangeBands([0,this.width],0.25,0.25);
+
+
+		this.yAxis=d3.svg.axis().scale(this.yScale).orient("left").tickSize(3,1).ticks(4);
+		this.xAxis=d3.svg.axis().scale(this.xScale).orient("bottom").tickSize(3,1).ticks(4);
+		this.grid=d3.svg.axis().scale(this.yScale).orient("left").ticks(4).tickSize(-this.width,0,0);
+
+		this.timeYAxisInstance=this.barChartLayer.append("g").attr("class","yaxis");
+		this.timeXAxisInstance=this.barChartLayer.append("g").attr("class","xaxis")
+		.attr("transform","translate(0,"+self.height+")");
+		this.gridInstance=this.barChartLayer.append("g").attr("class","grid");
+
+		
+
+		
+
+	};
+
+	VolumeComp.prototype.updateAxis=function() {
+		var self=this;
+		//PieChart
+
+
+		this.caption=this.barChartLayer.append("text").attr("x",(this.width)/2).attr("y",0-this.margin.caption)
+			.text("24h Volume (BTC)").attr("class","title");
+
+		this.xScale.domain(_.last(this.volumes,4).map(function(name) {		
+			return name[0];
+		}));
+		this.yScale.domain(d3.extent(this.volumes,function(volume){
+			return volume[1]+volume[1]*0.3;
+		}));
+
+		this.gridInstance.call(self.grid);
+		this.timeYAxisInstance.call(self.yAxis);
+		this.timeXAxisInstance.call(self.xAxis);
+		
+
+		
+		this.VolumeBarChart=this.barChartLayer.selectAll("rect").data(_.last(this.volumes,4));
+
+		this.VolumeBarChart.enter().append("rect")
+			.attr("class","volume")
+			.attr("x",function(volume,i){
+				// console.log(self.xScale(volume[0]));
+				
+				return self.xScale(volume[0]);
+			
+			})
+			.attr("y",function(volume){
+				// console.log(self.yScale(volume[1]));
+				return self.yScale(volume[1]);
+			})
+			// .attr("height",volume[1])
+			.attr("height",function(volume) {
+				return self.height-self.yScale(volume[1]);
+			})
+			.attr("width",function(){
+				var width = self.xScale.rangeBand();	
+				return width;
+			})	
+			.style("fill", function(volume){
+				// console.log(volume[3]);
+				return volume[3];
+			});
+
+		this.VolumeBarChart.enter().append("text")
+			.attr("class","volTitle")
+			.text(function(volume){
+				
+				return volume[1];
+			})
+			.attr("x",function(volume,i){
+				// console.log(this.widthRec/2);
+				console.log(self.width/2);
+				return self.xScale(volume[0])+($("rect.volume").attr("width"))/2;
+			})
+			.attr("y",function(volume){
+				return self.yScale(volume[1])-self.margin.captionVol;
+			})
+			.attr("text-anchor","middle");
+
+	};
+
+	VolumeComp.prototype.updateVolumeComp=function() {
+	
+
+	};
+
+	VolumeComp.prototype.draw=function() {
+		
+		this.updateAxis();
+		this.updateVolumeComp();
+	};
+
+	VolumeComp.prototype.update=function() {		
+		this.draw();
+	};
+
+
+
+this.volumecomp= new VolumeComp();
+// this.volumecomp.draw();
+this.volumecomp.update();
+
+</script>
+
+</body>
+

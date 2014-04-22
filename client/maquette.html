@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="icon" href="/images/favicon.ico" />
+    <link href="/styles/external/foundation.min.css" rel="stylesheet" />
+    <link href="/styles/external/jquery.gridster.min.css" rel="stylesheet" />
+    <link href="/styles/maquette/custom.css" rel="stylesheet" />
+    <title>Coin-ichiwa</title>
+</head>
+
+<body id="js-app">
+
+    <div class="fixed" id="js-menu">
+        <nav class="top-bar" data-topbar>
+            <ul class="title-area">
+                <li class="name">
+                    <h1><a href="#" class="js-home">Coin-ichiwa</a></h1>
+                </li>
+                <li class="toggle-topbar menu-icon"><a href="#">Settings</a>
+                </li>
+            </ul>
+
+            <section class="top-bar-section">
+                <!-- Right Nav Section -->
+                 <!-- <ul class="right">
+                    <li class="divider"></li>
+                    <li class="has-dropdown" id="tutoPlatform">
+                        <a href="#">Bitstamp</a>
+                        <ul class="dropdown">
+                            <li><a href="#">BTC-e</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown" id="tutoItemCurrency">
+                        <a href="#">BTC/USD</a>
+                        <ul class="dropdown">
+                            <li><a href="#">LTC/USD</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                </ul> -->
+                <!-- Left Nav Section -->
+                <ul class="right">
+                    <li class="has-form">
+                        <a href="#" id="js-Save layout" class="button">Save layout</a>
+                    </li>
+                    <li class="has-form">
+                        <a href="#" id="js-Save layout" class="button">Block layout</a>
+                    </li>
+                </ul> 
+            </section>
+        </nav>
+    </div>
+
+    <section class="raw">
+        <div class="gridster medium-12 columns">
+          <ul>
+            <li data-row="1" data-col="1" data-sizex="8" data-sizey="1">
+            <div class="centertext">Keyfacts</div></li>
+            <li data-row="1" data-col="6" data-sizex="2" data-sizey="1">Controller</li>
+            <li data-row="2" data-col="1" data-sizex="10" data-sizey="4">Main chart</li>
+            
+            <li data-row="3" data-col="1" data-sizex="10" data-sizey="3">Depth</li>
+            <li data-row="4" data-col="1" data-sizex="5" data-sizey="5">Order Book</li>
+            <li data-row="4" data-col="6" data-sizex="5" data-sizey="5">News</li>
+            <li data-row="5" data-col="1" data-sizex="6" data-sizey="2">Indicators 1</li>
+            <li data-row="5" data-col="7" data-sizex="4" data-sizey="2">Indicators 2</li>
+
+            <!-- <li class="try" data-row="1" data-col="4" data-sizex="1" data-sizey="1" data-max-sizex="1" data-max-sizey="1"></li>
+            <li data-row="2" data-col="4" data-sizex="2" data-sizey="1"></li>
+            <li data-row="3" data-col="4" data-sizex="1" data-sizey="1"></li>
+
+            <li data-row="1" data-col="5" data-sizex="1" data-sizey="1"></li>
+            <li data-row="3" data-col="5" data-sizex="1" data-sizey="1"></li>
+
+            <li data-row="1" data-col="6" data-sizex="1" data-sizey="1"></li>
+            <li data-row="2" data-col="6" data-sizex="1" data-sizey="2"></li> -->
+          </ul>
+        </div>
+
+    </section>
+
+<script src="components/jquery/jquery.js"></script>
+<script src="/libs/modernizr.js"></script>
+<script src="/components/bower-foundation/js/foundation.min.js"></script>
+<script src="libs/jquery.gridster.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+  var gridster;
+
+  $(function(){
+
+    gridster = $(".gridster > ul").gridster({
+        widget_margins: [10, 10],
+        widget_base_dimensions: [100, 50],
+        min_cols: 6,
+        resize: {
+            enabled: false
+        }
+    }).data('gridster');
+  });
+</script>
+
+
+</body>
+
+</html>

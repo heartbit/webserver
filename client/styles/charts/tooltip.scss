@@ -1,0 +1,17 @@
+.tooltip {
+  position: absolute;
+  padding: 5px 5px 5px 0px;
+  /*margin:0px;*/
+  height: auto;
+  width: auto;
+  opacity: 0.7;
+  color: white;
+  background-color: black;
+  border-radius: 3px;
+}
+
+.tooltip ul {
+  list-style-type: none;
+  font-size:10px;
+  line-height:12px;
+}

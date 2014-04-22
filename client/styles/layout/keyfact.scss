@@ -1,0 +1,23 @@
+.keyfacts {
+	border-width:1px;
+ 	border-style:solid;
+ 	border-color:black;
+}
+
+#keyfact {
+	min-height:40px;
+}
+
+#keyfact .panel{
+	min-height:inherit;
+}
+
+#keyfact .high{
+	min-width:30px;
+	display:inline;
+}
+
+#keyfact .low{
+	min-width:30px;
+	float:left;
+}

@@ -1,0 +1,14 @@
+<div class="row">
+	<div class="column large-6 medium-6 small-6 js-newsContent newsContent">
+	</div>
+
+	<div class="column large-6 medium-6 small-6" >
+		<dl class="accordion newsList">
+		<%_.each(newsArray, function(news, index){%>
+			<dd>
+				<a href="#" class="news" id="<%=news.guid%>"><img width="25px" height="25px" src="<%=news.params.logo%>"/> <%=moment(news.pubDate).fromNow()%> - <%=news.title%></a>
+			</dd>
+		<% }); %>
+		</dl>
+	</div>
+</div>

@@ -1,0 +1,53 @@
+{
+  "name": "insightfultrader-webapp",
+  "preferGlobal": "false",
+  "version": "0.1.0",
+  "author": "dschonfe",
+  "description": "",
+  "contributors": [],
+  "engines": {
+    "node": "~0.10.24",
+    "npm": "~1.3.2"
+  },
+  "keywords": [
+    "webapp",
+    "server",
+    "proxy"
+  ],
+  "dependencies": {
+    "grunt-cli": "*",
+    "express": "3.5.1",
+    "q": "*",
+    "bash-color": "*",
+    "optimist": "*",
+    "underscore": "*",
+    "redis": "*",
+    "request": "*",
+    "node-eventer": "*",
+    "cron": "*",
+    "moment": "*",
+    "socket.io": "*",
+    "ws":"*",
+    "githubhook": "*",
+    "prettyjson":"*"
+  },
+  "devDependencies": {
+    "matchdep": "*",
+    "grunt": "~0.4.1",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-requirejs": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-shell": "*",
+    "grunt-contrib-rename": "*",
+    "grunt-express": "*",
+    "grunt-plato": "~0.2.1",
+    "grunt-concurrent": "*",
+    "grunt-markdown": "~0.4.0",
+    "grunt-node-inspector": "~0.1.2",
+    "grunt-nodemon": "~0.1.2",
+    "grunt-contrib-sass": "~0.6.0"
+  },
+  "license": "insightfultrader.com",
+  "subdomain": "insightfultrader.com"
+}

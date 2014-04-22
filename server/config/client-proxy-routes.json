@@ -1,0 +1,6 @@
+{
+    "routes": {
+        "/": "file:index.html",
+        "/market": "file:index.html"
+    }
+}

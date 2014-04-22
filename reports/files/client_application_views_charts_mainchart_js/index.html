@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome-ie7.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>client/application/views/charts/mainchart.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
+      <p class="stat">73.36</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
+      <p class="stat">602</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
+      <p class="stat">56.32</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
+      <p class="stat">6.67</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">define(&#039;mainchart&#039;, [&#039;config&#039;, &#039;dataHelper&#039;, &#039;d3&#039;, &#039;maingraphes&#039;, &#039;maingraphe&#039;, &#039;GrapheExceptionsUtils&#039;, &#039;tooltip&#039;, &#039;chandelier&#039;, &#039;moment&#039;], function(config, DataHelper, d3, Maingraphes, Maingraphe, Grapheexceptionsutils, Tooltip, Chandelier) {
+
+    function MainChart(el) {
+        this.el = el;
+
+        _.bindAll(
+            this,
+            &#039;initOnMouseOverEvents&#039;,
+            &#039;doZoom&#039;
+        );
+
+        this.initChart();
+        this.initLayers();
+    };
+
+    MainChart.prototype.parseMainGraphes = function(maingraphes) {
+        this.candles = maingraphes.candles;
+        this.volumes = maingraphes.volumes;
+        this.candles = Grapheexceptionsutils.Candle(this.candles);
+    };
+
+    /* Init methods  =&gt; should insert all svg element in the dom*/
+    MainChart.prototype.initChart = function() {
+        var self = this;
+
+        this.margin = {
+            top: 20,
+            right: 50,
+            bottom: 25,
+            left: 50
+        };
+
+        this.width = $(this.el).width() - this.margin.left - this.margin.right;
+        this.height = $(this.el).height() - this.margin.top - this.margin.bottom;
+
+        var visWidth = this.width + this.margin.left + this.margin.right;
+        var visHeigth = this.height + this.margin.top + this.margin.bottom;
+
+        this.chart = d3.select(this.el)
+            .append(&#039;svg&#039;)
+            .attr(&quot;class&quot;, &#039;playground&#039;)
+            .attr(&quot;width&quot;, visWidth)
+            .attr(&quot;height&quot;, visHeigth)
+            .attr(&#039;viewBox&#039;, &quot;0 0 &quot; + visWidth + &quot; &quot; + visHeigth)
+            .attr(&#039;perserveAspectRatio&#039;, &quot;xMidYMid&quot;);
+
+        // auto resize
+        var ratio = visWidth / visHeigth;
+        $(window).on(&quot;resize&quot;, function() {
+            console.log(&#039;resize!!&#039;);
+            var parent = $(&#039;#js-mainchart&#039;);
+            var targetWidth = parent.width();
+            self.chart.attr(&quot;width&quot;, targetWidth);
+            self.chart.attr(&quot;height&quot;, targetWidth / ratio);
+        });
+
+        // Create responsive svg object
+        // var containerChartRatio = 1;
+        // console.log(&#039;element : &#039;, $(el))
+        // $(el).on(&quot;resized&quot;, function() {
+        //     console.log(&#039;resized!!&#039;);
+        //     var targetWidth = $(el).width();
+        //     var targetHeight = $(el).height();
+        //     if (targetHeight &gt; 0 &amp;&amp; targetWidth &gt; 0) {
+        //         self.chart.style(&#039;width&#039;, ta2rgetWidth)
+        //             .style(&#039;height&#039;, targetHeight)
+        //             .attr(&#039;viewBox&#039;, &quot;0 0 &quot; + targetWidth + &quot; &quot; + targetHeight);
+        //     }
+        // }).trigger(&quot;resized&quot;);
+    };
+
+    MainChart.prototype.initLayers = function() {
+        var self = this;
+
+        this.mainLayer = this.chart
+            .append(&quot;g&quot;)
+            .attr(&quot;class&quot;, &#039;mainLayer&#039;)
+            .attr(&quot;transform&quot;, &quot;translate(&quot; + this.margin.left + &quot;,&quot; + this.margin.top + &quot;)&quot;);
+
+        this.color = d3.scale.category10();
+        this.initXAxis();
+        this.initCandleLayer();
+        this.initVolumeLayer();
+        this.initTooltipLayer();
+        this.initChandelierLayer();
+    };
+
+    MainChart.prototype.initXAxis = function() {
+        var self = this;
+        this.timeScale = d3.time.scale()
+            .range([0, this.width]);
+
+        this.zoom = d3.behavior.zoom().on(&quot;zoom&quot;, this.doZoom);
+        this.chart.call(this.zoom);
+
+        this.timeAxis = d3.svg.axis()
+            .scale(this.timeScale)
+            .orient(&#039;bottom&#039;)
+            .ticks(8);
+
+        this.timeAxisInstance = this.mainLayer.append(&quot;g&quot;)
+            .attr(&quot;class&quot;, &quot;x_time_axis&quot;)
+            .attr(&quot;transform&quot;, &quot;translate(0,&quot; + self.height + &quot;)&quot;);
+
+        this.currentPositionXLine = this.mainLayer.append(&quot;svg:line&quot;)
+            .attr(&#039;class&#039;, &#039;currentPositionXLine&#039;)
+            .attr(&#039;y1&#039;, this.height)
+            .attr(&#039;y2&#039;, this.height)
+            .attr(&#039;x1&#039;, 0)
+            .attr(&#039;x2&#039;, 0)
+            .attr(&#039;stroke&#039;, &#039;gray&#039;)
+            .attr(&#039;stroke-width&#039;, 1)
+            .attr(&#039;opacity&#039;, 0);
+
+        this.currentPositionYLine = this.mainLayer.append(&quot;svg:line&quot;)
+            .attr(&#039;class&#039;, &#039;currentPositionXLine&#039;)
+            .attr(&#039;y1&#039;, 0)
+            .attr(&#039;y2&#039;, 0)
+            .attr(&#039;x1&#039;, 0)
+            .attr(&#039;x2&#039;, this.width)
+            .attr(&#039;stroke&#039;, &#039;gray&#039;)
+            .attr(&#039;stroke-width&#039;, 1)
+            .attr(&#039;opacity&#039;, 0);
+    };
+
+    MainChart.prototype.initCandleLayer = function() {
+        var self = this;
+        this.candleLayer = this.mainLayer
+            .append(&quot;g&quot;)
+            .attr(&quot;class&quot;, &quot;candle_layer&quot;);
+
+        // Min, Max and Last value
+        var candleTickValues = function(d, i, j) {
+            var values = d3.extent(self.candles.map(function(candle) {
+                return candle.close;
+            }));
+            var lastValue = _.last(self.candles).close;
+            values.push(lastValue);
+            return values;
+        };
+
+        this.candleYScale = d3.scale.linear()
+            .range([this.height, 0]);
+
+        this.candleYAxis = d3.svg.axis()
+            .scale(this.candleYScale)
+            .orient(&quot;right&quot;)
+            .ticks(6);
+        // .tickValues(candleTickValues)
+        // .tickSize(0, 0);
+
+        this.candleYAxisInstance = this.candleLayer.append(&quot;g&quot;)
+            .attr(&quot;class&quot;, &quot;y_candle_axis&quot;)
+            .attr(&quot;transform&quot;, &quot;translate(&quot; + self.width + &quot;,0)&quot;)
+
+        this.candlesLine = d3.svg.line()
+            .x(function(candle) {
+                return self.timeScale(candle.middleDate);
+            })
+            .y(function(candle) {
+                return self.candleYScale(candle.close);
+            })
+            .interpolate(&quot;basic&quot;);
+
+        this.candleLineChart = this.candleLayer
+            .append(&quot;path&quot;)
+            .attr(&#039;class&#039;, &#039;candle_line&#039;);
+
+        this.candlesCirclesLayer = this.candleLayer
+            .append(&quot;g&quot;)
+            .attr(&#039;class&#039;, &quot;candle_circles_layer&quot;);
+
+    };
+
+    MainChart.prototype.initVolumeLayer = function() {
+        var self = this;
+        this.volumeLayer = this.mainLayer
+            .append(&quot;g&quot;)
+            .attr(&quot;class&quot;, &quot;volume_layer&quot;);
+
+        var volumeTickValues = function(d, i, j) {
+            return d3.extent(self.volumes.map(function(volume) {
+                return volume.amount;
+            }));
+        };
+
+        var volumeTickSize = function(d, i, j) {
+            return 2;
+        };
+
+        var self = this;
+        this.volumeYScale = d3.scale.linear()
+            .range([this.height, 0]);
+
+        this.volumeYAxis = d3.svg.axis()
+            .scale(this.volumeYScale)
+            .orient(&quot;left&quot;)
+            .ticks(6)
+        // .tickValues(volumeTickValues)
+        // .tickSize(2, 0);
+
+        this.volumeYAxisInstance = this.volumeLayer.append(&quot;g&quot;)
+            .attr(&quot;class&quot;, &quot;y_volume_axis&quot;);
+
+        this.volumeBarChartLayer = this.volumeLayer.append(&#039;g&#039;)
+            .attr(&#039;class&#039;, &#039;volume_barchart_layer&#039;);
+    };
+
+    MainChart.prototype.initChandelierLayer = function() {
+        this.chandelierLayer = this.mainLayer.append(&quot;g&quot;).attr(&quot;class&quot;, &quot;chandelier_layer&quot;);
+    };
+
+    MainChart.prototype.initTooltipLayer = function() {
+        this.tooltip = new Tooltip(this.el);
+        this.chart
+            .call(this.initOnMouseOverEvents);
+    };
+
+    MainChart.prototype.doZoom = function() {
+        console.log(&#039;do zoom&#039;);
+        this.timeAxisInstance.call(this.timeAxis);
+        this.updateCandleLayer();
+        this.updateVolumeLayer();
+        this.updateChandelier();
+    };
+
+    MainChart.prototype.initOnMouseOverEvents = function(element) {
+        var self = this;
+        element
+            .on(&quot;mouseover&quot;, function() {
+                self.tooltip.mouseover();
+                self.currentPositionXLine
+                    .transition()
+                    .duration(400)
+                    .attr(&#039;opacity&#039;, 1);
+                self.currentPositionYLine
+                    .transition()
+                    .duration(400)
+                    .attr(&#039;opacity&#039;, 1);
+            })
+            .on(&quot;mouseout&quot;, function() {
+                self.candleCircles.attr(&#039;opacity&#039;, function(circle, index) {
+                    return 0.5;
+                });
+                self.volumeBarChart.attr(&#039;opacity&#039;, function(volumeBar, index) {
+                    return 0.5;
+                });
+                self.tooltip.mouseout();
+                self.currentPositionXLine
+                    .transition()
+                    .duration(400)
+                    .attr(&#039;opacity&#039;, 0);
+                self.currentPositionYLine
+                    .transition()
+                    .duration(400)
+                    .attr(&#039;opacity&#039;, 0);
+            })
+            .on(&quot;mousemove&quot;, function() {
+                if (!self.candleCircles) {
+                    return;
+                }
+                var mouse = d3.mouse(this);
+                var mousex = +mouse[0];
+                var mousey = +mouse[1];
+                var minDiff = 5000;
+
+                var findClosestPoint = function(x) {
+                    var closestPoint = self.candleCircles[0];
+                    var pointIndex = 0;
+                    self.candleCircles.each(function(candleCircle, index) {
+                        var circleX = +d3.select(this).attr(&#039;cx&#039;);
+                        var diff = Math.abs((circleX) - (x));
+                        if (diff &lt; minDiff) {
+                            minDiff = diff;
+                            pointIndex = index;
+                            closestPoint = this;
+                        }
+                    });
+                    return {
+                        index: pointIndex || 0,
+                        candle: d3.select(closestPoint)
+                    };
+                };
+
+                var closestPoint = findClosestPoint(mousex - self.margin.left);
+
+                var tooltipVariables = {};
+                self.candleCircles
+                    .transition()
+                    .duration(0)
+                    .attr(&#039;opacity&#039;, function(circle, index) {
+                        if (index == closestPoint.index) {
+                            tooltipVariables.candle = circle;
+                            return 1;
+                        } else {
+                            return 0.5;
+                        }
+                    });
+                self.volumeBarChart.transition()
+                    .duration(0)
+                    .attr(&#039;opacity&#039;, function(volumeBar, index) {
+                        if (index == closestPoint.index) {
+                            tooltipVariables.volume = volumeBar;
+                            return 1;
+                        } else {
+                            return 0.5;
+                        }
+                    });
+
+                self.currentPositionXLine
+                    .attr(&#039;x1&#039;, closestPoint.candle.attr(&#039;cx&#039;))
+                    .attr(&#039;x2&#039;, closestPoint.candle.attr(&#039;cx&#039;))
+                    .attr(&#039;y1&#039;, closestPoint.candle.attr(&#039;cy&#039;));
+
+                self.currentPositionYLine
+                    .attr(&#039;x1&#039;, closestPoint.candle.attr(&#039;cx&#039;))
+                    .attr(&#039;y1&#039;, closestPoint.candle.attr(&#039;cy&#039;))
+                    .attr(&#039;y2&#039;, closestPoint.candle.attr(&#039;cy&#039;));
+
+                var position = {
+                    left: String(50 + mousex) + &#039;px&#039;,
+                    top: String(50 + mousey) + &#039;px&#039;
+                };
+
+                self.tooltip.render(tooltipVariables, position);
+
+            });
+
+    };
+
+    /* Update methods */
+    MainChart.prototype.updateXAxis = function() {
+        var self = this;
+
+        // var last30 = _.last(self.candles, 30);
+        var last30 = self.candles;
+
+        this.timeScale.domain([d3.min(last30.map(function(candle) {
+            return candle.startDate;
+        })), d3.max(last30.map(function(candle) {
+            return candle.endDate;
+        }))]);
+
+        this.zoom.x(this.timeScale);
+
+        this.timeAxisInstance.call(self.timeAxis);
+    };
+
+    MainChart.prototype.updateCandleLayer = function() {
+        var self = this;
+
+        var candleYOffset = 0;
+        this.candleYScale.domain([d3.min(self.candles.map(function(candle) {
+            return (candle.close - (candle.close * 0.025));
+        })) - candleYOffset, d3.max(this.candles.map(function(candle) {
+            return (candle.close + (candle.close * 0.025));
+        })) + candleYOffset]);
+        this.candleYAxisInstance.call(self.candleYAxis);
+
+        // Init bar chart data
+        this.candleCircles = this.candlesCirclesLayer
+            .selectAll(&quot;.circle&quot;)
+            .data(self.candles, function(candle) {
+                return candle.middleDate;
+            });
+
+        var circleRadius = 2;
+        // Enter
+        this.candleCircles
+            .enter()
+            .insert(&quot;circle&quot;)
+            .attr(&quot;class&quot;, &quot;circle&quot;);
+        // Exit
+        this.candleCircles
+            .exit()
+            .transition()
+            .duration(500)
+            .attr(&#039;opacity&#039;, 0)
+            .remove();
+        // Update
+        this.candleCircles
+            .attr(&#039;opacity&#039;, 0.5)
+            .attr(&#039;cx&#039;, function(candle) {
+                return self.timeScale(candle.middleDate);
+            })
+            .attr(&#039;cy&#039;, function(candle) {
+                return self.candleYScale(candle.close);
+            })
+            .attr(&#039;r&#039;, circleRadius)
+            .attr(&#039;class&#039;, &#039;circle&#039;)
+            .style(&#039;fill&#039;, function(candle, i) {
+                if (candle.close &lt; candle.open) {
+                    return &quot;red&quot;;
+                }
+                if (candle.close &gt; candle.open) {
+                    return &quot;green&quot;;
+                }
+                // return &quot;grey&quot;;
+            });
+
+        this.candleLineChart
+            .attr(&#039;d&#039;, self.candlesLine(self.candles))
+            .attr(&#039;stroke&#039;, &#039;black&#039;)
+            .attr(&#039;fill&#039;, &#039;none&#039;)
+            .attr(&#039;opacity&#039;, .5)
+            .attr(&#039;stroke-width&#039;, &#039;1.5px&#039;)
+            // .attr(&quot;stroke-dasharray&quot;, function(d, i, j) {
+            //     var path = d3.select(this);
+            //     var totalLength = path.node().getTotalLength();
+            //     return totalLength + &quot; &quot; + totalLength;
+            // })
+            // .attr(&quot;stroke-dashoffset&quot;, function(d, i, j) {
+            //     var path = d3.select(this);
+            //     var totalLength = path.node().getTotalLength();
+            //     return totalLength;
+            // })
+            // .transition()
+            // .duration(500)
+            // .ease(&quot;ease&quot;)
+            // .attr(&quot;stroke-dashoffset&quot;, 0);
+    };
+
+    MainChart.prototype.updateVolumeLayer = function() {
+        var self = this;
+
+        this.volumeYScale.domain([d3.min(self.volumes.map(function(volume) {
+                return (0);
+            })) //volume.amount*0.25
+            , d3.max(self.volumes.map(function(volume) {
+                return (volume.amount + volume.amount * 0.5);
+            }))
+        ]);
+        this.volumeYAxisInstance.call(self.volumeYAxis);
+
+        // Init bar chart data
+        this.volumeBarChart = this.volumeBarChartLayer
+            .selectAll(&quot;rect.volume&quot;)
+            .data(self.volumes, function(volume) {
+                return volume.startDate;
+            });
+
+        // Enter
+        this.volumeBarChart
+            .enter()
+            .insert(&quot;rect&quot;)
+            .attr(&quot;class&quot;, &quot;volume&quot;);
+
+        // Exit
+        this.volumeBarChart
+            .exit()
+            .transition()
+            .duration(500)
+            .attr(&#039;opacity&#039;, 0)
+            .remove();
+
+        // Update
+        this.volumeBarChart
+            .attr(&quot;x&quot;, function(d) {
+                return self.timeScale(d.startDate);
+            })
+            .attr(&#039;y&#039;, function(d) {
+                return self.volumeYScale(d.amount);
+            })
+            .attr(&quot;height&quot;, function(d) {
+                return self.height - self.volumeYScale(d.amount);
+            })
+            .attr(&quot;width&quot;, function(d) {
+                return (self.timeScale(d.endDate) - self.timeScale(d.startDate)) - 1;
+            })
+            .attr(&#039;fill&#039;, function(volume, i) {
+                var correspondingCandle = self.candles[i];
+                if (correspondingCandle) {
+                    if (correspondingCandle.close &lt; correspondingCandle.open) {
+                        return &quot;red&quot;;
+                    }
+                    if (correspondingCandle.close &gt; correspondingCandle.open) {
+                        return &quot;green&quot;;
+                    }
+                }
+                return &quot;grey&quot;;
+            })
+            .transition()
+            .duration(500)
+            .attr(&#039;opacity&#039;, .5)
+    };
+
+    MainChart.prototype.updateChandelier = function() {
+        var self = this;
+        //Chandelier High-Low (petit trait du milieu)
+        this.chandelierChart = this.chandelierLayer
+            .selectAll(&quot;rect.chandelier_HL&quot;)
+            .data(self.candles, function(candle, i) {
+                return candle.startDate;
+            });
+        // Enter
+        this.chandelierChart
+            .enter()
+            .insert(&quot;rect&quot;)
+            .attr(&quot;class&quot;, &quot;chandelier_HL&quot;);
+        // Exit
+        this.chandelierChart
+            .exit()
+            .transition()
+            .duration(500)
+            .attr(&#039;opacity&#039;, 0)
+            .remove();
+
+        this.chandelierChart
+            .attr(&quot;x&quot;, function(d) {
+                return self.timeScale(d.middleDate);
+            })
+            .attr(&#039;y&#039;, function(d) {
+                return self.candleYScale(d.high);
+            })
+            .attr(&quot;height&quot;, function(d) {
+
+                return Math.abs(self.candleYScale(d.high) - self.candleYScale(d.low));
+            })
+            .attr(&quot;width&quot;, function(d) {
+                return 1;
+            });
+
+        // Chandelier: Open-Close (barre de couleur)
+        this.chandelierChart = this.chandelierLayer
+            .selectAll(&quot;rect.chandelier_OC&quot;)
+            .data(self.candles, function(candle, i) {
+                return candle.startDate;
+            });
+
+        // Enter
+        this.chandelierChart
+            .enter()
+            .insert(&quot;rect&quot;)
+            .attr(&quot;class&quot;, &quot;chandelier_OC&quot;);
+
+        // Exit
+        this.chandelierChart
+            .exit()
+            .transition()
+            .duration(500)
+            .attr(&#039;opacity&#039;, 0)
+            .remove();
+
+        // Update
+        this.chandelierChart
+            .attr(&quot;x&quot;, function(d) {
+                return self.timeScale(d.startDate);
+            })
+            .attr(&#039;y&#039;, function(d) {
+                if (d.close &gt; d.open) {
+                    return self.candleYScale(d.close);
+                } else {
+                    return self.candleYScale(d.open);
+                }
+            })
+            .attr(&quot;height&quot;, function(d) {
+
+                return Math.abs(self.candleYScale(d.close) - self.candleYScale(d.open));
+            })
+            .attr(&quot;width&quot;, function(d) {
+                return (self.timeScale(d.endDate) - self.timeScale(d.startDate)) - 1;
+            })
+            .attr(&#039;fill&#039;, function(d, i) {
+                var correspondingCandle = self.candles[i];
+                if (correspondingCandle.close &lt; correspondingCandle.open) {
+                    return &quot;red&quot;;
+                }
+                if (correspondingCandle.close &gt; correspondingCandle.open) {
+                    return &quot;green&quot;;
+                }
+                // return &quot;grey&quot;;
+            })
+            .transition()
+            .duration(500)
+            .attr(&#039;opacity&#039;, 1)
+    };
+
+    /* API methods */
+    MainChart.prototype.draw = function(maingraphes) {
+        var self = this;
+        this.parseMainGraphes(maingraphes);
+        this.updateXAxis();
+        this.updateCandleLayer();
+        this.updateVolumeLayer();
+        this.updateChandelier();
+    };
+
+    MainChart.prototype.update = function(maingraphes) {
+        //Do something else?
+        this.draw(maingraphes);
+    };
+
+    MainChart.prototype.clear = function() {
+        // this.mainLayer.selectAll(&#039;.tradeLayer&#039;).remove();
+        // this.mainLayer.selectAll(&#039;.x_axis&#039;).remove();
+        // this.mainLayer.selectAll(&#039;.y_axis&#039;).remove();
+        // this.mainLayer.selectAll(&#039;.z_axis&#039;).remove();
+    };
+
+    return MainChart;
+
+});</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

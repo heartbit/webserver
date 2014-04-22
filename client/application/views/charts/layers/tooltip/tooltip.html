@@ -1,0 +1,7 @@
+<ul>
+
+<% _.each(_.keys(tooltipVariables), function(key){ %>
+	<li><span class="tooltipKey"><%= key %></span>:<span class="tooltipValue"> <%=tooltipVariables[key]%></span></li>
+<% }); %>
+
+</ul>
