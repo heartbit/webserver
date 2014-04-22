@@ -1,3 +1,5 @@
+https://www.codeship.io/projects/52bbf060-ac81-0131-039a-424b8261493a/status
+
 # Insightful trader - webserver
 
 > Webserver, webSockets, proxy
