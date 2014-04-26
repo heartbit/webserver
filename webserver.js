@@ -36,7 +36,7 @@ var isDebug = (argv.debug === 'yes');
 var mode = argv.mode;
 
 console.log('');
-console.log('Webserver - Insightful coin trader');
+console.log('Webserver - Heartbit');
 console.log('');
 console.log('Port #', port);
 console.log('Debug ?', isDebug);

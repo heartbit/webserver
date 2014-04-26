@@ -11,69 +11,46 @@ define('graphmenuView', ['config', 'html2canvas', 'canvg', 'screenshot', 'text!g
         initialize: function() {},
 
         render: function(params) {
-            // this.$el.html(this.template());
+            this.$el.html(this.template());
             return this;
         },
 
         takeAScreenshot: function() {
             var div2screen = this.$el.parent();
-
-            // var nodesToRecover = [];
-            // var nodesToRemove = [];
-
             var svgElem = div2screen.find('svg');
+            var wkdoc = $('<html>')
+            var body = $('<body>')
+            var head = $('<head>')
+            wkdoc.append(body)
+            wkdoc.prepend(head)
+            body.append(svgElem.clone())
+            head.prepend($('<link href="http://localhost:9090/styles/all.css" rel="stylesheet" />'))
+            var data = '<!DOCTYPE html>' + wkdoc[0].outerHTML
 
-            // svgElem.each(function(index, node) {
-            //     var parentNode = node.parentNode;
-            //     var svg = parentNode.innerHTML;
+            var payload = {
+                html: data,
+                type: 'maingraph'
+            };
 
-            //     var canvas = document.createElement('canvas');
-
-            //     canvg(canvas, svg);
-
-            //     nodesToRecover.push({
-            //         parent: parentNode,
-            //         child: node
-            //     });
-            //     parentNode.removeChild(node);
-
-            //     nodesToRemove.push({
-            //         parent: parentNode,
-            //         child: canvas
-            //     });
-
-            //     parentNode.appendChild(canvas);
-            // });
-
-            // html2canvas(div2screen, {
-            //     onrendered: function(canvas) {
-            //         var ctx = canvas.getContext('2d');
-            //         ctx.webkitImageSmoothingEnabled = false;
-            //         ctx.mozImageSmoothingEnabled = false;
-            //         ctx.imageSmoothingEnabled = false;
-
-            //         canvas.toBlob(function(blob) {
-            //             nodesToRemove.forEach(function(pair) {
-            //                 pair.parent.removeChild(pair.child);
-            //             });
-
-            //             nodesToRecover.forEach(function(pair) {
-            //                 pair.parent.appendChild(pair.child);
-            //             });
-            //             saveAs(blob, 'screenshot_' + moment().format('YYYYMMDD_HHmmss') + '.png');
-            //         });
-            //     }
-            // });
-
-            html2canvas(svgElem, {
-                onrendered: function(canvas) {
-                    var screenshot = new Screenshot(canvas);
-                    document.body.appendChild(canvas);
-                    window.open(canvas.toDataURL());
-                },
-                width: svgElem.width(),
-                height: svgElem.height()
+            $.ajax({
+                url: "/services/pdf",
+                type: "POST",
+                data: payload,
+                success: function(filename) {
+                    console.log('pdf : ', filename);
+                    window.open('/services/pdf/' + filename)
+                }
             });
+
+            // html2canvas(svgElem.clone(), {
+            //     onrendered: function(canvas) {
+            //         var screenshot = new Screenshot(canvas);
+            //         document.body.appendChild(canvas);
+            //         window.open(canvas.toDataURL());
+            //     },
+            //     width: svgElem.width(),
+            //     height: svgElem.height()
+            // });
         }
 
     });

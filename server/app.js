@@ -19,6 +19,7 @@ App.prototype.start = function(options) {
             self.initApiProxy();
             self.initSockets();
             self.initClientRoutes();
+            self.initServicesRoutes();
             self.initStaticContentManager();
             self.initFourtyFourPage();
         })
@@ -171,6 +172,10 @@ App.prototype.initApiProxy = function() {
     };
 
     this.apiproxy.init(initProxyCallback);
+};
+
+App.prototype.initServicesRoutes = function() {
+    this.app.use('/services', require('./routers/servicesRouter'));
 };
 
 App.prototype.initClientRoutes = function() {

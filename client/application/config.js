@@ -98,8 +98,8 @@ define('config', function() {
 	}, {
 		id: 'all',
 		label: 'all',
-		duration: 'all',
-		typeDuration: 'all'
+		duration: '1',
+		typeDuration: 'ALL'
 	}];
 	config.maingraph.defaultTimeperiodId = "last24hours";
 

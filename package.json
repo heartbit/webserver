@@ -29,7 +29,8 @@
     "socket.io": "*",
     "ws":"*",
     "githubhook": "*",
-    "prettyjson":"*"
+    "prettyjson":"*",
+    "slang": "*"
   },
   "devDependencies": {
     "matchdep": "*",
