@@ -1,21 +1,17 @@
 <div class="row">
     <div class="large-6 medium-6 small-6 columns">
-        <input class="" id="js-itemSearchbar" placeholder=" Search cryptos, platforms...">
+        <input class="" id="js-searchbar" placeholder=" Search cryptos, platforms...">
     </div>
+    
     <div class="large-6 medium-6 small-6 columns">
-    <a href="#" class="small button">BTC</a>
-    <a href="#" class="small button">BTCE</a>
-    <a href="#" class="small button">USD</a>
-        <!-- <div class="button-bar">
-            <ul class="button-group">
-                <li>
-                </li>
-                <li><a href="#" class="small button">BTCE</a>
-                </li>
-                <li><a href="#" class="small button">USD</a>
-                </li>
-            </ul>
-        </div> -->
+        <a href="#" id="js-showItemsView" class="small button">BTC</a>
+        <div id="js-itemsViewModal" class="reveal-modal" data-reveal></div>
+
+        <a href="#" id="js-showPlatformsView" class="small button">BTCE</a>
+        <div id="js-platformsViewModal" class="reveal-modal" data-reveal></div>
+
+        <a href="#" id="js-showCurrenciesView">USD</a>
+        <div id="js-currenciesViewModal" class="reveal-modal" data-reveal></div>
     </div>
 </div>
 
@@ -39,9 +35,6 @@
      <li class="has-form">
         <a href="#" id="js-currentCurrency" class="button">USD</a>
     </li> -->
-
-
-
 
 <!-- <div class="row">
     <div class="large-5 medium-5 small-5 columns">

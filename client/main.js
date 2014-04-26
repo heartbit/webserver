@@ -3,45 +3,47 @@ requirejs.config({
         config: 'application/config',
 
         // General imports
-        backbone: 'libs/backbone-min',
         'backbone-params': 'libs/backbone.queryparams',
         foundation: 'libs/foundation.min',
-        d3: 'libs/d3.min',
-        jquery: 'libs/jquery.min',
+        underscore: 'libs/underscore-min',
         modernizr: 'libs/modernizr',
+        backbone: 'libs/backbone-min',
+        socketio: 'libs/socket.io.min',
+        jquery: 'libs/jquery.min',
         moment: 'libs/moment.min',
         text: 'libs/text',
-        socketio: 'libs/socket.io.min',
-        underscore: 'libs/underscore-min',
         cldr: 'libs/twitter_cldr',
         fuse: 'libs/fuse.min',
+        d3: 'libs/d3.min',
 
         // Screenshot
         html2canvas: 'libs/html2canvas',
-        canvg: 'libs/canvg/canvg',
-        rgbcolor: 'libs/canvg/rgbcolor',
         stackBlur: 'libs/canvg/StackBlur',
+        rgbcolor: 'libs/canvg/rgbcolor',
+        canvg: 'libs/canvg/canvg',
 
         // Routers
         indexRouter: 'application/app.router',
 
         // Views
-        homeView: 'application/views/home/homeView',
+        currenciesView: 'application/views/currencies/currenciesView',
         controllerView: 'application/views/controller/controllerView',
+        platformsView: 'application/views/platforms/platformsView',
         headerView: 'application/views/header/headerView',
-        itemControllerView: 'application/views/header/itemControllerView',
+        itemsView: 'application/views/items/itemsView',
+        homeView: 'application/views/home/homeView',
 
         // Embeddable views
-        calculatorView:'application/views/calculator/calculatorView',
-        weeknewsView: 'application/views/weeknews/weeknewsView',
-        marketcapView: 'application/views/marketcap/marketcapView',
-        mainView: 'application/views/main/mainView',
-        keyFactsView: 'application/views/keyfacts/keyFactsView',
         mainchartcheckcontrollerView: 'application/views/controller/mainchartcheckcontrollerView',
-        sidecontrollerView: 'application/views/controller/sidecontrollerView',
         indicatorscontrollerView: 'application/views/controller/indicatorscontrollerView',
+        sidecontrollerView: 'application/views/controller/sidecontrollerView',
+        calculatorView: 'application/views/calculator/calculatorView',
         lastupdateView: 'application/views/lastupdate/lastupdateView',
         indicatorsView: 'application/views/indicators/indicatorsView',
+        marketcapView: 'application/views/marketcap/marketcapView',
+        weeknewsView: 'application/views/weeknews/weeknewsView',
+        keyFactsView: 'application/views/keyfacts/keyFactsView',
+        mainView: 'application/views/main/mainView',
         miskView: 'application/views/misk/miskView',
         newsView: 'application/views/news/newsView',
 
@@ -50,26 +52,28 @@ requirejs.config({
 
         // Charts
         ////Mainchart
-        mainchart: 'application/views/charts/mainchart/mainchart',
         candleLayer: 'application/views/charts/mainchart/candleLayer',
-        areaLayer: 'application/views/charts/mainchart/areaLayer',
         volumeLayer: 'application/views/charts/mainchart/volumeLayer',
+        areaLayer: 'application/views/charts/mainchart/areaLayer',
+        mainchart: 'application/views/charts/mainchart/mainchart',
 
-        miskbarchart: 'application/views/charts/misk/miskbarchart',
         miskhorizbarchart: 'application/views/charts/misk/miskhorizbarchart',
-        miskpiechart: 'application/views/charts/misk/miskpiechart',
-        depthchart: 'application/views/charts/depth/depthchart',
         'misc-bignumber': 'application/views/charts/utils/misc-bignumber',
+        miskpiechart: 'application/views/charts/misk/miskpiechart',
+        miskbarchart: 'application/views/charts/misk/miskbarchart',
+        depthchart: 'application/views/charts/depth/depthchart',
         tooltip: 'application/views/charts/layers/tooltip/tooltip',
 
         // DataHelpers
         dataHelper: 'application/helpers/dataHelper',
 
         // Models
-        depth: 'application/models/depth',
         maingraphe: 'application/models/maingraphe',
+        platform: 'application/models/platform',
+        currency: 'application/models/currency',
         ticker: 'application/models/ticker',
         trade: 'application/models/trade',
+        depth: 'application/models/depth',
         item: 'application/models/item',
         // informationEvent: 'application/models/informationEvent',
         marketcap: 'application/models/marketcap',
@@ -79,22 +83,23 @@ requirejs.config({
 
         // Collections
         maingraphes: 'application/collections/maingraphes',
+        currencies: 'application/collections/currencies',
+        marketcaps: 'application/collections/marketcaps',
         platforms: 'application/collections/platforms',
         tickers: 'application/collections/tickers',
         items: 'application/collections/items',
         news: 'application/collections/news',
-        marketcaps: 'application/collections/marketcaps',
 
         // Manager
-        EventManager: 'application/managers/EventManager',
-        CacheManager: 'application/managers/CacheManager',
         DataSocketManager: 'application/managers/sockets/dataSocketManager',
         ChatSocketManager: 'application/managers/sockets/chatSocketManager',
         NewsSocketManager: 'application/managers/sockets/newsSocketManager',
+        CacheManager: 'application/managers/CacheManager',
+        EventManager: 'application/managers/EventManager',
 
         // Utils
-        FormatUtils: 'application/utils/FormatUtils',
-        GrapheExceptionsUtils: 'application/utils/GrapheExceptionsUtils'   
+        GrapheExceptionsUtils: 'application/utils/GrapheExceptionsUtils',
+        FormatUtils: 'application/utils/FormatUtils'
 
     },
 

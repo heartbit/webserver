@@ -1,4 +1,4 @@
-define('headerView', ['config', 'text!headerView.html', 'items', 'itemControllerView'], function(config, HeaderTemplate, Items, itemControllerView) {
+define('headerView', ['config', 'text!headerView.html'], function(config, HeaderTemplate) {
 
     return Backbone.View.extend({
 
@@ -16,7 +16,6 @@ define('headerView', ['config', 'text!headerView.html', 'items', 'itemController
 
         initialize: function() {
             var self = this;
-            // this.itemControllerView = new itemControllerView();
             _.bindAll(this,
                 'render',
                 'update'
@@ -25,15 +24,12 @@ define('headerView', ['config', 'text!headerView.html', 'items', 'itemController
 
         render: function(params) {
             this.$el.prepend(this.template());
-            // this.itemControllerView
-            //     .setElement('#js-itemView')
-            //     .render(params);
+            
             $(document).foundation();
             return this;
         },
 
         update: function(params) {
-            // this.itemControllerView.render(params);
             $(document).foundation();
         }
 

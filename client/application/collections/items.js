@@ -2,6 +2,8 @@ define('items', ['config', 'item', 'fuse'], function(config, Item, Fuse) {
 
     var Items = Backbone.Collection.extend({
 
+        model: Item,
+
         url: config.item.urlCollection,
 
         initialize: function() {

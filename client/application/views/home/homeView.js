@@ -82,6 +82,7 @@ define('homeView', ['config', 'items', 'headerView', 'marketcapView', 'keyFactsV
             }
             return this;
         },
+
         showCalculator: function() {
             this.calculatorView.render(this.params);
             $('#js-calculatorModal').foundation('reveal','open');
@@ -93,6 +94,7 @@ define('homeView', ['config', 'items', 'headerView', 'marketcapView', 'keyFactsV
             $('#js-marketcapModal').foundation('reveal', 'open');
             return false;
         },
+        
         showWeeknews: function() {
             this.weeknewsView.render(this.params);
             $('#js-weeknewsModal').foundation('reveal', 'open');
@@ -124,7 +126,7 @@ define('homeView', ['config', 'items', 'headerView', 'marketcapView', 'keyFactsV
             this.controllerView.render(this.params);
             this.keyFactsView.render(this.params);
             this.mainView.render(this.params);
-            // this.newsView.render();
+            this.newsView.render();
             this.indicatorsView.render(this.params);
             this.miskView.render(this.params);
             this.lastUpdateView.render(this.params);

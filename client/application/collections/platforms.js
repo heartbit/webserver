@@ -1,4 +1,4 @@
-define('platforms', ['config'], function(config) {
+define('platforms', ['config', 'platform'], function(config, Platform) {
 
 	var Platforms = Backbone.Collection.extend({
 
