@@ -51,7 +51,7 @@ requirejs.config({
         graphmenuView: 'application/views/menu/graphmenuView',
 
         // Charts
-        ////Mainchart
+        /// Mainchart
         candleLayer: 'application/views/charts/mainchart/candleLayer',
         volumeLayer: 'application/views/charts/mainchart/volumeLayer',
         areaLayer: 'application/views/charts/mainchart/areaLayer',
@@ -69,14 +69,14 @@ requirejs.config({
 
         // Models
         maingraphe: 'application/models/maingraphe',
-        platform: 'application/models/platform',
+        marketcap: 'application/models/marketcap',
         currency: 'application/models/currency',
+        platform: 'application/models/platform',
         ticker: 'application/models/ticker',
         trade: 'application/models/trade',
         depth: 'application/models/depth',
+        pair: 'application/models/pair',
         item: 'application/models/item',
-        // informationEvent: 'application/models/informationEvent',
-        marketcap: 'application/models/marketcap',
 
         //Models util
         screenshot: 'application/models/utils/screenshot',
@@ -87,6 +87,7 @@ requirejs.config({
         marketcaps: 'application/collections/marketcaps',
         platforms: 'application/collections/platforms',
         tickers: 'application/collections/tickers',
+        pairs: 'application/collections/pairs',
         items: 'application/collections/items',
         news: 'application/collections/news',
 

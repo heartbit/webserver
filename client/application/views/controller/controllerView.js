@@ -26,13 +26,17 @@ define('controllerView', ['text!controllerView.html', 'config', 'items', 'itemsV
             );
             this.items = new Items();
             this.itemsView = new ItemsView();
+            this.currencies = new Currencies();
             this.currenciesView = new CurrenciesView();
+            this.platforms = new Platforms();
             this.platformsView = new PlatformsView();
         },
 
         render: function(params) {
             this.items = params.items;
-
+            this.platforms = this.items.getPlatforms();
+            this.currencies = this.items.getCurrencies();
+            this.pairs = this.items.getPairs();
             this.updateInternalParams(params);
 
             var tplVars = {

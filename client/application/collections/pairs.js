@@ -1,12 +1,9 @@
-define('pairs', ['config', 'pair', 'fuse'], function(config, Item, Fuse) {
+define('pairs', ['config', 'pair', 'fuse'], function(config, Pair, Fuse) {
 
-    var Items = Backbone.Collection.extend({
+    var Pairs = Backbone.Collection.extend({
 
-        url: config.item.urlCollection,
+        initialize: function(ids) {
 
-        initialize: function() {
-            this.on('change reset add remove', this.indexItems, this);
-            this.searchIndex = new Fuse();
         },
 
         indexItems: function() {
@@ -30,6 +27,6 @@ define('pairs', ['config', 'pair', 'fuse'], function(config, Item, Fuse) {
 
     });
 
-    return Items;
+    return Pairs;
 
 });
