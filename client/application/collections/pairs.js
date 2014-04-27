@@ -2,13 +2,14 @@ define('pairs', ['config', 'pair', 'fuse'], function(config, Pair, Fuse) {
 
     var Pairs = Backbone.Collection.extend({
 
-        initialize: function(ids) {
+        initFromIds: function(ids) {
+            var self = this;
+            _.each(ids, function(id) {
+                self.add(new Pair(id));
+            });
 
-        },
-
-        indexItems: function() {
             var options = {
-                keys: ['name', 'id'],
+                keys: ['id'],
             };
             this.searchIndex = new Fuse(this.models, options);
         },

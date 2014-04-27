@@ -1,8 +1,18 @@
-define('currencies', ['config', 'currency'], function(config, Currency) {
+define('currencies', ['config', 'currency', 'fuse'], function(config, Currency, Fuse) {
 
 	var Currencies = Backbone.Collection.extend({
 
-		url: config.platform.urlCollection,
+		initFromIds: function(ids) {
+			var self = this;
+			_.each(ids, function(id) {
+				self.add(new Currency(id));
+			});
+
+			var options = {
+				keys: ['id'],
+			};
+			this.searchIndex = new Fuse(this.models, options);
+		},
 
 		findByName: function(name) {
 			return _.find(this.models, function(platform) {

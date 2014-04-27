@@ -1,0 +1,26 @@
+<div class="row panel">
+    <div class="large-4 medium-4 small-4 columns">
+        Items:
+        <ul>
+        <%_.each(items,function(item){%>
+            <li><%=item.name%></li>
+        <%})%>
+        </ul>
+    </div>
+    <div class="large-4 medium-4 small-4 columns">
+        Platforms:
+        <ul>
+            <%_.each(platforms,function(platform){%>
+            <li><%=platform.get('id')%></li>
+        <%})%>
+        </ul>
+    </div>
+    <div class="large-4 medium-4 small-4 columns">
+        Pairs:
+        <ul>
+            <%_.each(pairs,function(pair){%>
+            <li><%=pair.get('id')%></li>
+        <%})%>
+        </ul>
+    </div>
+</div>

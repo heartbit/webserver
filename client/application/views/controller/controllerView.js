@@ -1,4 +1,4 @@
-define('controllerView', ['text!controllerView.html', 'config', 'items', 'itemsView', 'platforms', 'platformsView', 'currencies', 'currenciesView', 'FormatUtils'], function(ControllerViewTemplate, config, Items, ItemsView, Platforms, PlatformsView, Currencies, CurrenciesView, FormatUtils) {
+define('controllerView', ['text!controllerView.html', 'text!./application/views/controller/searchView.html', 'config', 'items', 'itemsView', 'platforms', 'platformsView', 'currencies', 'currenciesView', 'FormatUtils'], function(ControllerViewTemplate, SearchViewTemplate, config, Items, ItemsView, Platforms, PlatformsView, Currencies, CurrenciesView, FormatUtils) {
 
     return Backbone.View.extend({
 
@@ -8,15 +8,16 @@ define('controllerView', ['text!controllerView.html', 'config', 'items', 'itemsV
             'keyup #js-searchbar': 'search',
 
             'click #js-showItemsView': 'showItemsView',
-            'click #js-showCurrenciesView': 'showCurrenciesView',
+            'click #js-showPairsView': 'showPairsView',
             'click #js-showPlatformsView': 'showPlatformsView',
 
             'click .js-item': 'changeGlobalItem',
-            'click .js-currency': 'changeGlobalCurrency',
+            'click .js-pair': 'changeGlobalPair',
             'click .js-platform': 'changeGlobalPlatform'
         },
 
         template: _.template(ControllerViewTemplate),
+        templateSearch: _.template(SearchViewTemplate),
 
         initialize: function() {
             _.bindAll(
@@ -24,11 +25,9 @@ define('controllerView', ['text!controllerView.html', 'config', 'items', 'itemsV
                 'render',
                 'update'
             );
-            this.items = new Items();
+
             this.itemsView = new ItemsView();
-            this.currencies = new Currencies();
             this.currenciesView = new CurrenciesView();
-            this.platforms = new Platforms();
             this.platformsView = new PlatformsView();
         },
 
@@ -86,19 +85,38 @@ define('controllerView', ['text!controllerView.html', 'config', 'items', 'itemsV
 
         search: function() {
             var query = $('#js-searchbar').val();
-            var matchItems = _.uniq(this.items.search(query), function(item) {
-                return item.id;
-            });
-            var itemList = "";
-            _.each(matchItems, function(matchItem) {
-                var link = "<a href='#' class='js-item' id=" + matchItem.id + ">" + matchItem.name + " - " + matchItem.id + "</a>";
-                itemList += "<li class='js-item item'>" + link + "</li>";
-            });
-            $('#js-searchItemList').html(itemList);
+            if (query && query != "") {
+                var matchItems = _.uniq(this.items.search(query), function(item) {
+                    return item.id;
+                });
+                var matchPlatforms = _.uniq(this.platforms.search(query), function(platform) {
+                    return platform.id;
+                });
+                var matchPairs = _.uniq(this.pairs.search(query), function(pair) {
+                    return pair.id;
+                });
+
+                var tplVariables = {
+                    platforms: matchPlatforms,
+                    items: matchItems,
+                    pairs: matchPairs
+                };
+
+                var htmlResults = this.templateSearch(tplVariables);
+
+                // var itemList = "";
+                // _.each(matchItems, function(matchItem) {
+                //     var link = "<a href='#' class='js-item' id=" + matchItem.id + ">" + matchItem.name + " - " + matchItem.id + "</a>";
+                //     itemList += "<li class='js-item item'>" + link + "</li>";
+                // });
+                $('#js-searchResults').html(htmlResults);
+            } else {
+                $('#js-searchResults').html("");
+            }
             return true;
         },
 
-        changeGlobalCurrency: function(event) {
+        changeGlobalPair: function(event) {
             var $a = $(event.target);
             var currencyId = $a.attr('id');
             var params = {
@@ -126,10 +144,9 @@ define('controllerView', ['text!controllerView.html', 'config', 'items', 'itemsV
             $('#js-platformsViewModal').foundation('reveal', 'open');
         },
 
-        showCurrenciesView: function() {
+        showPairsView: function() {
             $('#js-currenciesViewModal').foundation('reveal', 'open');
         },
-
 
         showItemsView: function() {
             $('#js-itemsViewModal').foundation('reveal', 'open');

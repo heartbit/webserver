@@ -1,4 +1,4 @@
-define('items', ['config', 'item', 'platforms', 'currencies', 'fuse'], function(config, Item, Platforms, Currencies, Fuse) {
+define('items', ['config', 'item', 'platforms', 'currencies', 'pairs', 'fuse'], function(config, Item, Platforms, Currencies, Pairs, Fuse) {
 
     var Items = Backbone.Collection.extend({
 
@@ -31,34 +31,31 @@ define('items', ['config', 'item', 'platforms', 'currencies', 'fuse'], function(
         },
 
         getPlatforms: function() {
-            var platforms = new Platforms();
             var platformdIds = [];
-
             _.each(this.models, function(item) {
                 var currencies = _.keys(item.currencies);
                 _.each(currencies, function(currency) {
                     platformdIds = _.union(platformdIds, item.currencies[currency]);
                 });
             });
-
+            var platforms = new Platforms();
+            platforms.initFromIds(platformdIds);
             return platforms;
         },
 
         getCurrencies: function() {
-            var currencies = new Currencies();
             var currencyIds = [];
-
             _.each(this.models, function(item) {
                 var currencies = _.keys(item.currencies);
                 currencyIds = _.union(currencyIds, currencies);
             });
+            var currencies = new Currencies();
+            currencies.initFromIds(currencyIds);
             return currencies;
         },
 
         getPairs: function() {
-            var currencies = new Currencies();
             var pairIds = [];
-
             _.each(this.models, function(item) {
                 pairIds = _.union(pairIds, _.chain(item.currencies)
                     .keys()
@@ -66,7 +63,9 @@ define('items', ['config', 'item', 'platforms', 'currencies', 'fuse'], function(
                         return item.id + '/' + currency;
                     }).value());
             });
-            return currencies;
+            var pairs = new Pairs();
+            pairs.initFromIds(pairIds);
+            return pairs;
         }
 
     });

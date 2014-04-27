@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">70.25</p>
+      <p class="stat">69.60</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">148</p>
+      <p class="stat">165</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">19.02</p>
+      <p class="stat">26.20</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">1.47</p>
+      <p class="stat">1.53</p>
     </div>
   </div>
 </div>
@@ -90,7 +90,7 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;controllerView&#039;, [&#039;text!controllerView.html&#039;, &#039;config&#039;, &#039;items&#039;, &#039;itemsView&#039;, &#039;platforms&#039;, &#039;platformsView&#039;, &#039;currencies&#039;, &#039;currenciesView&#039;, &#039;FormatUtils&#039;], function(ControllerViewTemplate, config, Items, ItemsView, Platforms, PlatformsView, Currencies, CurrenciesView, FormatUtils) {
+    <textarea id="file-source" class="col-md-12">define(&#039;controllerView&#039;, [&#039;text!controllerView.html&#039;, &#039;text!./application/views/controller/searchView.html&#039;, &#039;config&#039;, &#039;items&#039;, &#039;itemsView&#039;, &#039;platforms&#039;, &#039;platformsView&#039;, &#039;currencies&#039;, &#039;currenciesView&#039;, &#039;FormatUtils&#039;], function(ControllerViewTemplate, SearchViewTemplate, config, Items, ItemsView, Platforms, PlatformsView, Currencies, CurrenciesView, FormatUtils) {
 
     return Backbone.View.extend({
 
@@ -100,15 +100,16 @@
             &#039;keyup #js-searchbar&#039;: &#039;search&#039;,
 
             &#039;click #js-showItemsView&#039;: &#039;showItemsView&#039;,
-            &#039;click #js-showCurrenciesView&#039;: &#039;showCurrenciesView&#039;,
+            &#039;click #js-showPairsView&#039;: &#039;showPairsView&#039;,
             &#039;click #js-showPlatformsView&#039;: &#039;showPlatformsView&#039;,
 
             &#039;click .js-item&#039;: &#039;changeGlobalItem&#039;,
-            &#039;click .js-currency&#039;: &#039;changeGlobalCurrency&#039;,
+            &#039;click .js-pair&#039;: &#039;changeGlobalPair&#039;,
             &#039;click .js-platform&#039;: &#039;changeGlobalPlatform&#039;
         },
 
         template: _.template(ControllerViewTemplate),
+        templateSearch: _.template(SearchViewTemplate),
 
         initialize: function() {
             _.bindAll(
@@ -116,11 +117,9 @@
                 &#039;render&#039;,
                 &#039;update&#039;
             );
-            this.items = new Items();
+
             this.itemsView = new ItemsView();
-            this.currencies = new Currencies();
             this.currenciesView = new CurrenciesView();
-            this.platforms = new Platforms();
             this.platformsView = new PlatformsView();
         },
 
@@ -178,19 +177,38 @@
 
         search: function() {
             var query = $(&#039;#js-searchbar&#039;).val();
-            var matchItems = _.uniq(this.items.search(query), function(item) {
-                return item.id;
-            });
-            var itemList = &quot;&quot;;
-            _.each(matchItems, function(matchItem) {
-                var link = &quot;&lt;a href=&#039;#&#039; class=&#039;js-item&#039; id=&quot; + matchItem.id + &quot;&gt;&quot; + matchItem.name + &quot; - &quot; + matchItem.id + &quot;&lt;/a&gt;&quot;;
-                itemList += &quot;&lt;li class=&#039;js-item item&#039;&gt;&quot; + link + &quot;&lt;/li&gt;&quot;;
-            });
-            $(&#039;#js-searchItemList&#039;).html(itemList);
+            if (query &amp;&amp; query != &quot;&quot;) {
+                var matchItems = _.uniq(this.items.search(query), function(item) {
+                    return item.id;
+                });
+                var matchPlatforms = _.uniq(this.platforms.search(query), function(platform) {
+                    return platform.id;
+                });
+                var matchPairs = _.uniq(this.pairs.search(query), function(pair) {
+                    return pair.id;
+                });
+
+                var tplVariables = {
+                    platforms: matchPlatforms,
+                    items: matchItems,
+                    pairs: matchPairs
+                };
+
+                var htmlResults = this.templateSearch(tplVariables);
+
+                // var itemList = &quot;&quot;;
+                // _.each(matchItems, function(matchItem) {
+                //     var link = &quot;&lt;a href=&#039;#&#039; class=&#039;js-item&#039; id=&quot; + matchItem.id + &quot;&gt;&quot; + matchItem.name + &quot; - &quot; + matchItem.id + &quot;&lt;/a&gt;&quot;;
+                //     itemList += &quot;&lt;li class=&#039;js-item item&#039;&gt;&quot; + link + &quot;&lt;/li&gt;&quot;;
+                // });
+                $(&#039;#js-searchResults&#039;).html(htmlResults);
+            } else {
+                $(&#039;#js-searchResults&#039;).html(&quot;&quot;);
+            }
             return true;
         },
 
-        changeGlobalCurrency: function(event) {
+        changeGlobalPair: function(event) {
             var $a = $(event.target);
             var currencyId = $a.attr(&#039;id&#039;);
             var params = {
@@ -218,10 +236,9 @@
             $(&#039;#js-platformsViewModal&#039;).foundation(&#039;reveal&#039;, &#039;open&#039;);
         },
 
-        showCurrenciesView: function() {
+        showPairsView: function() {
             $(&#039;#js-currenciesViewModal&#039;).foundation(&#039;reveal&#039;, &#039;open&#039;);
         },
-
 
         showItemsView: function() {
             $(&#039;#js-itemsViewModal&#039;).foundation(&#039;reveal&#039;, &#039;open&#039;);
