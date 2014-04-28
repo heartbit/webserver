@@ -23,10 +23,12 @@ define('newsView', ['news', 'moment', 'text!./newsView.html', 'text!./applicatio
 
         render: function() {
             var self = this;
-            this.$el.html(this.template({
-                newsArray: this.news.models.reverse()
-            }));
-            this.renderContent(null, this.news.models[0].guid);
+            if (this.news && this.news.length > 0) {
+                this.$el.html(this.template({
+                    newsArray: this.news.models.reverse()
+                }));
+                this.renderContent(null, this.news.models[0].guid);
+            }
             return this;
         },
 

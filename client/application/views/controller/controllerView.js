@@ -5,15 +5,17 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
         el: '#js-controller',
 
         events: {
-            'keyup #js-searchbar': 'search',
-
             'click #js-showItemsView': 'showItemsView',
             'click #js-showPairsView': 'showPairsView',
             'click #js-showPlatformsView': 'showPlatformsView',
 
             'click .js-item': 'changeGlobalItem',
             'click .js-pair': 'changeGlobalPair',
-            'click .js-platform': 'changeGlobalPlatform'
+            'click .js-platform': 'changeGlobalPlatform',
+
+            'keyup #js-searchbar': 'search',
+            // 'blur #js-searchbar': 'hideSearchView',
+            // 'focus #js-searchbar': 'showSearchView'
         },
 
         template: _.template(ControllerViewTemplate),
@@ -116,6 +118,26 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             return true;
         },
 
+        showSearchView: function() {
+            $('#js-searchResults').show();
+            return false;
+        },
+
+        hideSearchView: function() {
+            $('#js-searchResults').hide();
+            return false;
+        },
+
+        changeGlobalItem: function(event) {
+            var itemId = $(event.target).attr('id');
+            var url = this.constructUrl(itemId);
+            // $('#js-itemSearchbar').val('');
+            // $('#js-searchItemList').html('');
+            // $('#itemModal').foundation('reveal', 'close');
+            Backbone.history.navigate(url, true);
+            return false;
+        },
+
         changeGlobalPair: function(event) {
             var $a = $(event.target);
             var currencyId = $a.attr('id');
@@ -126,6 +148,7 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             };
             var url = this.constructUrl(params);
             Backbone.history.navigate(url, false);
+            return false;
         },
 
         changeGlobalPlatform: function(event) {
@@ -138,25 +161,29 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             }
             var url = this.constructUrl(params);
             Backbone.history.navigate(url, false);
+            return false;
         },
 
         showPlatformsView: function() {
             $('#js-platformsViewModal').foundation('reveal', 'open');
+            return false;
         },
 
         showPairsView: function() {
             $('#js-currenciesViewModal').foundation('reveal', 'open');
+            return false;
         },
 
         showItemsView: function() {
             $('#js-itemsViewModal').foundation('reveal', 'open');
+            return false;
         },
 
-        constructUrl: function(params) {
+        constructUrl: function(item) {
             var url = "/market?";
-            url += "platform=" + params.platform;
-            url += "&item=" + params.item;
-            url += "&currency=" + params.currency;
+            // url += "platform=" + params.platform;
+            url += "item=" + item;
+            // url += "&currency=" + params.currency;
             return url;
         }
 

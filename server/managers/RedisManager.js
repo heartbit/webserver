@@ -59,7 +59,7 @@ RedisManager.prototype.subscribeToChannels = function(callback) {
 
         self.redisClient.on("pmessage", function(pattern, channel, message) {
             message = self.parseMessage(channel, message);
-            // console.log(channel);
+            console.log(channel);
             // if (channel.indexOf('DEPTH') != -1) {
             //     console.log(channel);// + "    " + message.order_book.length);
             // }
