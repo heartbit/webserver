@@ -77,7 +77,7 @@ requirejs.config({
         },
         'backbone_params': {
             deps: ['backbone'],
-            exports: 'Backone'
+            exports: 'Backbone'
         },
         'd3': {
             deps: ['jquery'],

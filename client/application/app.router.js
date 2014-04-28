@@ -11,11 +11,6 @@ define('indexRouter', ['homeView', 'EventManager', 'config', 'DataSocketManager'
 			this.appEl = '#appArticle';
 			this.$appEl = $(this.appEl);
 			this.$homeloader = $('.homeloader');
-
-			// ChatSocketManager.on('welcome', function(data) {
-			// 	console.log('welcome', data);
-			// });
-			// window.DataSocketManager = DataSocketManager;
 			Backbone.history.start({
 				pushState: true
 			});
