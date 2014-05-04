@@ -28,7 +28,8 @@ requirejs.config({
         // Routers
         appRouter: 'application/routers/app.router',
         embedKeyfactsRouter: 'application/routers/keyfacts.embed.router',
-        
+        embedMaingraphRouter: 'application/routers/maingraph.embed.router',
+
         // Views
         currenciesView: 'application/views/currencies/currenciesView',
         controllerView: 'application/views/controller/controllerView',

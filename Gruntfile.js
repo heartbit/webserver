@@ -62,6 +62,8 @@ module.exports = function(grunt) {
                         name: 'modules/app',
                     }, {
                         name: 'modules/embed-keyfacts',
+                    }, {
+                        name: 'modules/embed-maingraph',
                     }],
                     inlineText: true,
                     preserveLicenseComments: false
