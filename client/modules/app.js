@@ -1,5 +1,5 @@
 requirejs(['common'], function() {
-    require(['appRouter', 'underscore', 'backbone-params'], function(AppRouter, _ , Backbone) {
+    require(['appRouter', 'underscore', 'backbone-params', 'foundation'], function(AppRouter, _ , Backbone, foundation) {
         new AppRouter();
     });
 });

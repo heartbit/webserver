@@ -1,5 +1,5 @@
-reqrequirejs(['common'], function() {
-    require(['embedKeyfactsRouter', 'underscore', 'backbone-params'], function(EmbedKeyfactsRouter, _ , Backbone) {
+requirejs(['common'], function() {
+    require(['embedKeyfactsRouter', 'underscore', 'backbone-params', 'foundation'], function(EmbedKeyfactsRouter, _ , Backbone, foundation) {
         new EmbedKeyfactsRouter();
     });
 });
