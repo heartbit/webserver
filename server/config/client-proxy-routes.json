@@ -2,6 +2,7 @@
     "routes": {
         "/": "file:templates/index.html",
         "/webapp": "file:templates/webapp.html",
-        "/embed/keyfacts": "file:templates/embedkeyfacts.html"
+        "/embed/keyfacts": "file:templates/embed/keyfacts.html",
+        "/embed/maingraph": "file:templates/embed/maingraph.html"
     }
 }

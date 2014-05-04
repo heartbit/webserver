@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">77.19</p>
+      <p class="stat">68.28</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">51</p>
+      <p class="stat">44</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">6.00</p>
+      <p class="stat">7.50</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.11</p>
+      <p class="stat">0.14</p>
     </div>
   </div>
 </div>
@@ -90,7 +90,7 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;embedKeyfactsRouter&#039;, [&#039;config&#039;, &#039;EventManager&#039;,&#039;keyFactsView&#039;], function(config, EventManager, keyFactsView) {
+    <textarea id="file-source" class="col-md-12">define(&#039;embedKeyfactsRouter&#039;, [&#039;config&#039;, &#039;EventManager&#039;, &#039;keyFactsView&#039;], function(config, EventManager, keyFactsView) {
 
 	var Router = Backbone.Router.extend({
 
@@ -99,42 +99,35 @@
 		},
 
 		initialize: function() {
+			var self = this;
+			this.keyFactsView = new keyFactsView();
+
+			var params = {
+				platform: &#039;Bitstamp&#039;,
+				currency: &#039;USD&#039;,
+				item: &#039;BTC&#039;
+			}
+
+			this.keyFactsView.render(params);
+
 			Backbone.history.start({
 				pushState: true
 			});
 		},
 
-		/*	README
-			Mini doc 
-			var params = {
-				item: itemId,
-				currency: currencyId,
-				platforms: [platformId],
-				status:{
-					socket: boolean
-					(... NE PAS ABUSER...)
-				},
-				mainview:{
-					candle: true
-					(... NE PAS ABUSER...)
-				}
-			}
-		*/
-		displayKeyfacts: function(params) {
-			var self = this;
-			console.log(&#039;blatte&#039;);
-			// params = params ? this.sanitizeParams(params) : config.defaultparams;
-			// var homeViewRenderCallback = function() {
-			// 	self.$homeloader.hide();
-			// 	self.joinDataRoom(params);
-			// };
-			// if (this.homeView) {
-			// 	this.homeView.update(params, homeViewRenderCallback);
-			// } else {
-			// 	this.homeView = new HomeView();
-			// 	this.homeView.setElement(this.appEl).render(params, homeViewRenderCallback);
-			// }
-		}
+		// displayKeyfacts: function(params) {
+		// 	// params = params ? this.sanitizeParams(params) : config.defaultparams;
+		// 	// var homeViewRenderCallback = function() {
+		// 	// 	self.$homeloader.hide();
+		// 	// 	self.joinDataRoom(params);
+		// 	// };
+		// 	// if (this.homeView) {
+		// 	// 	this.homeView.update(params, homeViewRenderCallback);
+		// 	// } else {
+		// 	// 	this.homeView = new HomeView();
+		// 	// 	this.homeView.setElement(this.appEl).render(params, homeViewRenderCallback);
+		// 	// }
+		// }
 
 	});
 

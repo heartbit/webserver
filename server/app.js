@@ -198,7 +198,7 @@ App.prototype.initClientRoutes = function() {
 App.prototype.initFourtyFourPage = function() {
     var self = this;
     this.app.use(function(req, res, next) {
-        res.sendfile(self.options.clientPath + "404.html");
+        res.sendfile(self.options.clientPath + "templates/404.html");
     });
 };
 
