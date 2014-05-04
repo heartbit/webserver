@@ -48,25 +48,29 @@ module.exports = function(grunt) {
         requirejs: {
             main: {
                 options: {
-                    dir: '<%= props.buildClientDir %>',
-                    baseUrl: '.',
                     appDir: '<%= props.clientDir %>',
-                    mainConfigFile: '<%= props.clientDir %>/modules/main.js',
+                    baseUrl: '.',
+                    mainConfigFile: '<%= props.clientDir %>/modules/app.js',
+                    dir: '<%= props.buildClientDir %>',
                     fileExclusionRegExp: /^(bower_components|build|node_modules)$/,
                     optimize: 'uglify2',
                     // name: "modules/app",
                     // out: 'compress.js',
                     modules: [{
-                        name: 'main',
-                        include: ['application/app.router']
+                        name: 'modules/common',
+                    }, {
+                        name: 'modules/app',
+                    }, {
+                        name: 'modules/embed-keyfacts',
                     }],
+                    inlineText: true,
                     preserveLicenseComments: false
                 }
             },
             css: {
                 options: {
                     logLevel: 3,
-                    optimizeCss: 'none', // standard
+                    optimizeCss: 'standard', // standard
                     cssIn: '<%= props.cssDir %>/all-sass.css',
                     out: '<%= props.cssDir %>/all.css'
                 }
@@ -76,8 +80,8 @@ module.exports = function(grunt) {
         sass: {
             dist: {
                 options: {
-                    style: 'extended', // compressed
-                    banner: 'insightfullcointrader grunt build: compiled css v.25'
+                    style: 'compressed', // compressed
+                    banner: 'heartbit.io build: compiled css v.25'
                 },
                 files: {
                     '<%= props.cssDir %>/all-sass.css': '<%= props.cssDir %>/all-source.scss' // 'destination': 'source'

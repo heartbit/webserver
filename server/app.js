@@ -35,7 +35,7 @@ App.prototype.initManagers = function() {
     this.apiManager.init(this.config.apiproxy);
     return Q.all([
         this.initEventManager(),
-        this.initRedisAndCacheManager()
+        // this.initRedisAndCacheManager()
     ]);
 };
 

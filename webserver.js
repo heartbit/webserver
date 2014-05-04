@@ -45,6 +45,7 @@ console.log('Mode ?', mode);
 
 var webapp = process.cwd() + '/';
 var webapp_server_path = webapp + 'server/';
+//var webapp_client_path = webapp + 'build/client/';
 var webapp_client_path = webapp + 'client/';
 
 console.log('');
