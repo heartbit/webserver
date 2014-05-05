@@ -49,7 +49,7 @@ module.exports = function(grunt) {
             main: {
                 options: {
                     appDir: '<%= props.clientDir %>',
-                    baseUrl: '.',
+                    baseUrl: './modules',
                     mainConfigFile: '<%= props.clientDir %>/modules/app.js',
                     dir: '<%= props.buildClientDir %>',
                     fileExclusionRegExp: /^(bower_components|build|node_modules)$/,
@@ -57,13 +57,13 @@ module.exports = function(grunt) {
                     // name: "modules/app",
                     // out: 'compress.js',
                     modules: [{
-                        name: 'modules/common',
+                        name: 'common',
                     }, {
-                        name: 'modules/app',
+                        name: 'app',
                     }, {
-                        name: 'modules/embed-keyfacts',
+                        name: 'embed-keyfacts',
                     }, {
-                        name: 'modules/embed-maingraph',
+                        name: 'embed-maingraph',
                     }],
                     inlineText: true,
                     preserveLicenseComments: false
