@@ -4,7 +4,7 @@ define('appRouter', ['homeView', 'EventManager', 'config', 'DataSocketManager', 
 
 		routes: {
 			"": "home",
-			"market*": "home",
+			"webapp*": "home",
 		},
 
 		initialize: function() {
