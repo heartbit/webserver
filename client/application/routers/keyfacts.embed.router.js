@@ -1,4 +1,4 @@
-define('embedKeyfactsRouter', ['config', 'EventManager', 'keyFactsView'], function(config, EventManager, keyFactsView) {
+define('embedKeyfactsRouter', ['config', 'EventManager', 'DataSocketManager', 'keyFactsView'], function(config, EventManager, DataSocketManager, keyFactsView) {
 
 	var Router = Backbone.Router.extend({
 
@@ -11,31 +11,22 @@ define('embedKeyfactsRouter', ['config', 'EventManager', 'keyFactsView'], functi
 			this.keyFactsView = new keyFactsView();
 
 			var params = {
-				platform: 'Bitstamp',
+				platform: 'BITSTAMP',
 				currency: 'USD',
 				item: 'BTC'
 			}
 
 			this.keyFactsView.render(params);
 
+			var sep = ':';
+			var dataroom = params.item + sep + params.currency;
+			console.log('dataroom', dataroom);
+			DataSocketManager.emit('dataroom', dataroom);
+
 			Backbone.history.start({
 				pushState: true
 			});
-		},
-
-		// displayKeyfacts: function(params) {
-		// 	// params = params ? this.sanitizeParams(params) : config.defaultparams;
-		// 	// var homeViewRenderCallback = function() {
-		// 	// 	self.$homeloader.hide();
-		// 	// 	self.joinDataRoom(params);
-		// 	// };
-		// 	// if (this.homeView) {
-		// 	// 	this.homeView.update(params, homeViewRenderCallback);
-		// 	// } else {
-		// 	// 	this.homeView = new HomeView();
-		// 	// 	this.homeView.setElement(this.appEl).render(params, homeViewRenderCallback);
-		// 	// }
-		// }
+		}
 
 	});
 

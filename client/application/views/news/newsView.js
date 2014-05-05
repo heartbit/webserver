@@ -23,7 +23,7 @@ define('newsView', ['news', 'moment', 'text!./newsView.html', 'text!./applicatio
 
         render: function() {
             var self = this;
-            if (this.news && this.news.length > 0) {
+            if (this.news && this.news.models.length > 0) {
                 this.$el.html(this.template({
                     newsArray: this.news.models.reverse()
                 }));
