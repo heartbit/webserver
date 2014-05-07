@@ -94,6 +94,7 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
                 var matchPlatforms = _.uniq(this.platforms.search(query), function(platform) {
                     return platform.id;
                 });
+                
                 var matchPairs = _.uniq(this.pairs.search(query), function(pair) {
                     return pair.id;
                 });

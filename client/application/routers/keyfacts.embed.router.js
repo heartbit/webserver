@@ -2,9 +2,9 @@ define('embedKeyfactsRouter', ['config', 'EventManager', 'DataSocketManager', 'k
 
 	var Router = Backbone.Router.extend({
 
-		routes: {
-			"": "displayKeyfacts"
-		},
+		// routes: {
+		// 	"": "displayKeyfacts"
+		// },
 
 		initialize: function() {
 			var self = this;
