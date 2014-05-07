@@ -14,15 +14,29 @@ define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'Forma
             var self = this;
             this.viewName = params ? params.viewName: 'marketcap' ;
             this.marketcap = new Marketcap({url:config.marketcap.urlModel+"item="+this.item+"&currency="+this.currency});
-            // this.marketcaps.on('update',);
-            this.marketcap.on('sync', this.fetch, this); 
-            this.fetch();
-            this.currencylabel = FormatUtils.formatCurrencyLabel;
+            //_.bindAll(this, 'render', 'update');
+            //this.render({viewName:'none'});
+            //this.listenTo(this.marketcap,'change', this.render({viewName:'marketcap'})); 
+            this.marketcap.fetch().done(function(){
+                self.render({viewName:'marketcap'});
+                self.initListener();
+            });
+
         },
-        fetch: function(){
-            this.marketcap.fetch({
-                success:this.render
-            });   
+        initListener: function(){
+            var self = this;
+            $("#js-marketcap").click(function(){
+                self.render({viewName:'marketcap'});
+                self.initListener();
+            });
+            $("#js-price").click(function(){
+                self.render({viewName:'price'});
+                self.initListener();
+            });
+            $("#js-volume").click(function(){
+                self.render({viewName:'volume'});
+                self.initListener();
+            });
         },
         render: function(params) {
             this.viewName= params ? params.viewName : this.viewName ;
