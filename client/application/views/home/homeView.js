@@ -5,6 +5,8 @@ define('homeView', ['config', 'items', 'headerView', 'marketcapView', 'keyFactsV
         events: {
             'click .js-home': 'navigateToHome',
             'click #js-marketcap': 'showMarketcap',
+            'click #js-price': 'showPrice',
+            'click #js-volume': 'showVolume',
             'click #js-weeknews': 'showWeeknews',
             'click #js-calculator':'showCalculator'
         },
@@ -90,10 +92,21 @@ define('homeView', ['config', 'items', 'headerView', 'marketcapView', 'keyFactsV
         },
 
         showMarketcap: function() {
-            this.marketcapView.render(this.params);
-            $('#js-marketcapModal').foundation('reveal', 'open');
+            this.marketcapView.render({viewName:'marketcap'});
             return false;
         },
+
+        showPrice: function() {
+            this.marketcapView.render({viewName:'price'});
+            return false;
+        },
+        
+
+        showVolume: function() {
+            this.marketcapView.render({viewName:'volume'});
+            return false;
+        },
+        
         
         showWeeknews: function() {
             this.weeknewsView.render(this.params);

@@ -20,7 +20,7 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
         };
 
         this.volumeYScale = d3.scale
-            .log()
+            .linear()
             .range([this.chart.height, 3 * this.chart.height / 4]);
 
         this.volumeYAxis = d3.svg.axis()

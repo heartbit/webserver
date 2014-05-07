@@ -1,10 +1,11 @@
-define('indexRouter', ['homeView', 'EventManager', 'config', 'DataSocketManager', 'ChatSocketManager'], function(HomeView, EventManager, config, DataSocketManager, ChatSocketManager) {
+define('indexRouter', ['homeView', 'marketCapView','EventManager', 'config', 'DataSocketManager', 'ChatSocketManager'], function(HomeView, MarketCapView,EventManager, config, DataSocketManager, ChatSocketManager) {
 
 	var Router = Backbone.Router.extend({
 
 		routes: {
 			"": "home",
-			"market*": "home",
+			'marketcap/:item/:currency' : 'marketcap',
+			"market*": "home"
 		},
 
 		initialize: function() {
@@ -53,7 +54,15 @@ define('indexRouter', ['homeView', 'EventManager', 'config', 'DataSocketManager'
 				this.homeView.setElement(this.appEl).render(params, homeViewRenderCallback);
 			}
 		},
-
+		marketcap: function( item,currency ) {
+			var self = this;
+			if (this.marketCapView) {
+				this.marketCapView.update();
+			} else {
+				this.marketCapView = new MarketCapView(item,currency);
+				this.marketCapView.setElement(this.appEl).render();
+			}
+		},
 		joinDataRoom: function(params) {
 			var sep = ':';
 			var dataroom = params.item + sep + params.currency;

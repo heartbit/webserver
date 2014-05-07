@@ -1,26 +1,19 @@
-define('marketcap', ['moment'], function(moment) {
+define('marketcap', ['config','moment'], function(config,moment) {
 
 	var Marketcap = Backbone.Model.extend({
-
+        url: config.marketcap.urlCollection,
 		defaults: {
 			currencyName: "",
 			marketcap: {
-				date: new Date(),
-				difficulty: 0,
-				totalCoin: 0
+				price: 0,
+				volume: 0,
+				totalCoin: 0,
+				marketcap: 0
 			}
 		},
-
-		parse: function(json) {
-			// Parse timestamp to Date
-			if (json.marketcap) {
-				json.marketcap.date = new Date(+json.marketcap.date * 1000);
-				json.marketcap.difficulty = +json.marketcap.difficulty;
-				json.marketcap.totalCoin = +json.marketcap.totalCoin;
-			}
-			return json;
-		},
-
+		initialize: function(props){
+		    this.url = props.url;
+		} 
 	});
 
 	return Marketcap;
