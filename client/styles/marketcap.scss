@@ -1,0 +1,26 @@
+.marketcap {
+	margin: 10px;
+	height: 135px;
+}
+
+.marketcap .globalDiv {
+	border-radius: 6px;
+	padding: 12px;
+	margin-left: 12px;
+	margin-top: -7px;
+	position:relative;
+	min-height: 100px;
+}
+
+.marketcap .globalDiv em {
+	margin-top: 9px;
+	padding: 3px;
+	padding-top: 0px;
+	font-style: bold;
+	font-size: 44px;
+}
+.marketcap .globalDiv .maketcap-italic {
+	font-size: 12px;
+	margin: 0;
+	display: inline-block;	
+}
