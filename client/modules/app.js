@@ -1,5 +1,5 @@
-requirejs(['backbone-params', 'd3', 'foundation'], function() {
-    require(['indexRouter'], function(IndexRouter) {
-        var router = new IndexRouter();
+requirejs(['common'], function() {
+    require(['appRouter', 'underscore', 'backbone-params', 'foundation'], function(AppRouter, _ , Backbone, foundation) {
+        new AppRouter();
     });
 });

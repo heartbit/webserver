@@ -1,4 +1,7 @@
 requirejs.config({
+
+    baseUrl: "../",
+
     paths: {
         config: 'application/config',
 
@@ -23,7 +26,9 @@ requirejs.config({
         canvg: 'libs/canvg/canvg',
 
         // Routers
-        indexRouter: 'application/app.router',
+        appRouter: 'application/routers/app.router',
+        embedKeyfactsRouter: 'application/routers/keyfacts.embed.router',
+        embedMaingraphRouter: 'application/routers/maingraph.embed.router',
 
         // Views
         currenciesView: 'application/views/currencies/currenciesView',
@@ -101,7 +106,6 @@ requirejs.config({
         // Utils
         GrapheExceptionsUtils: 'application/utils/GrapheExceptionsUtils',
         FormatUtils: 'application/utils/FormatUtils'
-
     },
 
     shim: {
@@ -114,7 +118,7 @@ requirejs.config({
         },
         'backbone_params': {
             deps: ['backbone'],
-            exports: 'Backone'
+            exports: 'Backbone'
         },
         'd3': {
             deps: ['jquery'],
@@ -135,10 +139,4 @@ requirejs.config({
             exports: 'canvg'
         }
     }
-});
-
-requirejs(['backbone-params', 'd3', 'foundation'], function() {
-    require(['indexRouter'], function(IndexRouter) {
-        var router = new IndexRouter();
-    });
 });

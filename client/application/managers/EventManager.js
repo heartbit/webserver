@@ -1,4 +1,4 @@
-define('EventManager', function() {
+define('EventManager', ['backbone'], function(Backbone) {
 
     var instance = null;
 

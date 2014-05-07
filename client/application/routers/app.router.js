@@ -1,22 +1,25 @@
+<<<<<<< HEAD:client/application/app.router.js
 define('indexRouter', ['homeView', 'marketCapView','EventManager', 'config', 'DataSocketManager', 'ChatSocketManager'], function(HomeView, MarketCapView,EventManager, config, DataSocketManager, ChatSocketManager) {
+=======
+define('appRouter', ['homeView', 'EventManager', 'config', 'DataSocketManager', 'ChatSocketManager'], function(HomeView, EventManager, config, DataSocketManager, ChatSocketManager) {
+>>>>>>> 43e4c42b825e58b05e334a38f4732c3bcfef5f31:client/application/routers/app.router.js
 
 	var Router = Backbone.Router.extend({
 
 		routes: {
 			"": "home",
+<<<<<<< HEAD:client/application/app.router.js
 			'marketcap/:item/:currency' : 'marketcap',
 			"market*": "home"
+=======
+			"webapp*": "home",
+>>>>>>> 43e4c42b825e58b05e334a38f4732c3bcfef5f31:client/application/routers/app.router.js
 		},
 
 		initialize: function() {
 			this.appEl = '#appArticle';
 			this.$appEl = $(this.appEl);
 			this.$homeloader = $('.homeloader');
-
-			// ChatSocketManager.on('welcome', function(data) {
-			// 	console.log('welcome', data);
-			// });
-			// window.DataSocketManager = DataSocketManager;
 			Backbone.history.start({
 				pushState: true
 			});

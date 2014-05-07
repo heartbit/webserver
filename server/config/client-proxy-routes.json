@@ -1,6 +1,8 @@
 {
     "routes": {
-        "/": "file:index.html",
-        "/market": "file:index.html"
+        "/": "file:templates/home.html",
+        "/webapp": "file:templates/webapp.html",
+        "/embed/keyfacts": "file:templates/embed/keyfacts.html",
+        "/embed/maingraph": "file:templates/embed/maingraph.html"
     }
 }
