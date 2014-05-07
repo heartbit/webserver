@@ -5,7 +5,7 @@ define('appRouter', ['homeView', 'marketCapView','EventManager', 'config', 'Data
 		routes: {
 			"": "home",
 			'marketcap/:item/:currency' : 'marketcap',
-			"webapp*": "home",
+			"webapp*": "home"
 		},
 
 		initialize: function() {
