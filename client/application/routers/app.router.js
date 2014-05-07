@@ -1,4 +1,4 @@
-define('indexRouter', ['homeView', 'marketCapView','EventManager', 'config', 'DataSocketManager', 'ChatSocketManager'], function(HomeView, MarketCapView,EventManager, config, DataSocketManager, ChatSocketManager) {
+define('appRouter', ['homeView', 'marketCapView','EventManager', 'config', 'DataSocketManager', 'ChatSocketManager'], function(HomeView, MarketCapView,EventManager, config, DataSocketManager, ChatSocketManager) {
 
 	var Router = Backbone.Router.extend({
 
