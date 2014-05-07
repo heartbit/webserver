@@ -5,7 +5,7 @@ define('indexRouter', ['homeView', 'marketCapView','EventManager', 'config', 'Da
 		routes: {
 			"": "home",
 			'marketcap/:item/:currency' : 'marketcap',
-			"webapp*": "home",
+			"webapp*": "home"
 		},
 
 		initialize: function() {
