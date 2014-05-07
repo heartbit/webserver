@@ -12,7 +12,10 @@
 		    			<%break;
 		    			  } case 'volume': { %>
 		        			<%=marketcapTemplate.volume%>
-		    			<%}
+		        		<%	break;
+		    			} case 'none':{%>
+		    				Click a buton<%
+		    			}
 	    			}%>
 	    		</em>
     		</div>
@@ -22,4 +25,18 @@
 				</i>
 			</div>
         </div>
+        <div style="float:right" >
+        	<ul>
+	        	<li id="js-marketcap">
+	                <a href="#">Marketcap</a>
+	            </li>
+	            <li id="js-price">
+	                <a href="#">Price</a>
+	            </li>
+	            <li id="js-volume">
+	                <a href="#">Volume</a>
+	            </li>
+        	</ul>
+        </div>
+        
 </div>

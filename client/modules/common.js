@@ -27,6 +27,7 @@ requirejs.config({
 
         // Routers
         appRouter: 'application/routers/app.router',
+        embedMarketCapRouter: 'application/routers/marketcap.embed.router',
         embedKeyfactsRouter: 'application/routers/keyfacts.embed.router',
         embedMaingraphRouter: 'application/routers/maingraph.embed.router',
 
