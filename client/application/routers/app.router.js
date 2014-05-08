@@ -9,7 +9,7 @@ define('appRouter', ['homeView', 'marketCapView','EventManager', 'config', 'Data
 		},
 
 		initialize: function() {
-			this.appEl = '#appArticle';
+			this.appEl = '#js-app';
 			this.$appEl = $(this.appEl);
 			this.$homeloader = $('.homeloader');
 			Backbone.history.start({
