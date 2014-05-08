@@ -18,6 +18,17 @@ a {
 .ul.inline-list > .li {
     display: inline;
 }
+.right-small.tab-bar-section {
+    width: 15em;
+}
+
+.buttonList {
+  display: block;
+}
+.tab-bar-section.left-small{
+    width: 3.8125rem;
+    z-index: 99;
+}
 
 .loading {
     background: url("/images/loaders/spiffygif_30x30.gif");
