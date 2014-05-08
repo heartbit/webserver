@@ -80,14 +80,14 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
         search: function() {
             var query = $('#js-searchbar').val();
             if (query && query != "") {
-                var matchItems = _.uniq(this.items.search(query), function(item) {
+                var matchItems = _.uniq(ParametersManager.getItems().search(query), function(item) {
                     return item.id;
                 });
-                var matchPlatforms = _.uniq(this.platforms.search(query), function(platform) {
+                var matchPlatforms = _.uniq(ParametersManager.getPlatforms().search(query), function(platform) {
                     return platform.id;
                 });
 
-                var matchPairs = _.uniq(this.pairs.search(query), function(pair) {
+                var matchPairs = _.uniq(ParametersManager.getPairs().search(query), function(pair) {
                     return pair.id;
                 });
 
@@ -98,12 +98,6 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
                 };
 
                 var htmlResults = this.templateSearch(tplVariables);
-
-                // var itemList = "";
-                // _.each(matchItems, function(matchItem) {
-                //     var link = "<a href='#' class='js-item' id=" + matchItem.id + ">" + matchItem.name + " - " + matchItem.id + "</a>";
-                //     itemList += "<li class='js-item item'>" + link + "</li>";
-                // });
                 $('#js-searchResults').html(htmlResults);
             } else {
                 $('#js-searchResults').html("");
