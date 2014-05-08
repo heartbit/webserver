@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">68.68</p>
+      <p class="stat">68.19</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">73</p>
+      <p class="stat">82</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">21.09</p>
+      <p class="stat">22.43</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.53</p>
+      <p class="stat">0.64</p>
     </div>
   </div>
 </div>
@@ -90,13 +90,14 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;appRouter&#039;, [&#039;homeView&#039;, &#039;EventManager&#039;, &#039;config&#039;, &#039;DataSocketManager&#039;, &#039;ChatSocketManager&#039;], function(HomeView, EventManager, config, DataSocketManager, ChatSocketManager) {
+    <textarea id="file-source" class="col-md-12">define(&#039;appRouter&#039;, [&#039;homeView&#039;, &#039;marketCapView&#039;,&#039;EventManager&#039;, &#039;config&#039;, &#039;DataSocketManager&#039;, &#039;ChatSocketManager&#039;], function(HomeView, MarketCapView,EventManager, config, DataSocketManager, ChatSocketManager) {
 
 	var Router = Backbone.Router.extend({
 
 		routes: {
 			&quot;&quot;: &quot;home&quot;,
-			&quot;webapp*&quot;: &quot;home&quot;,
+			&#039;marketcap/:item/:currency&#039; : &#039;marketcap&#039;,
+			&quot;webapp*&quot;: &quot;home&quot;
 		},
 
 		initialize: function() {
@@ -140,7 +141,15 @@
 				this.homeView.setElement(this.appEl).render(params, homeViewRenderCallback);
 			}
 		},
-
+		marketcap: function( item,currency ) {
+			var self = this;
+			if (this.marketCapView) {
+				this.marketCapView.update();
+			} else {
+				this.marketCapView = new MarketCapView(item,currency);
+				this.marketCapView.setElement(this.appEl).render();
+			}
+		},
 		joinDataRoom: function(params) {
 			var sep = &#039;:&#039;;
 			var dataroom = params.item + sep + params.currency;

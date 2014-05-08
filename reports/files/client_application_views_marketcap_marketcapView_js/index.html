@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">73.81</p>
+      <p class="stat">70.47</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">34</p>
+      <p class="stat">55</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">8.83</p>
+      <p class="stat">18.44</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.16</p>
+      <p class="stat">0.60</p>
     </div>
   </div>
 </div>
@@ -90,34 +90,55 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;marketcapView&#039;, [&#039;marketcaps&#039;, &#039;text!marketcapView.html&#039;, &#039;FormatUtils&#039;], function(Marketcaps, MarketcapViewTemplate, FormatUtils) {
+    <textarea id="file-source" class="col-md-12">define(&#039;marketcapView&#039;, [&#039;config&#039;,&#039;marketcap&#039;, &#039;text!marketcapView.html&#039;, &#039;FormatUtils&#039;], 
+    function(config,Marketcap, MarketcapViewTemplate, FormatUtils) {
 
     return Backbone.View.extend({
 
-        el: &#039;#js-marketcapModal&#039;,
+        el:&#039;#js-marketcapDiv&#039;,
 
-        template: _.template(MarketcapViewTemplate),
+        templateMarketCap: _.template(MarketcapViewTemplate),
+        
 
-        initialize: function() {
+        item:&quot;BTC&quot;,
+        currency:&quot;USD&quot;,
+        initialize: function(params) {
             var self = this;
-            _.bindAll(
-                this,
-                &#039;render&#039;
-            );
-            this.marketcaps = new Marketcaps();
-            // this.marketcaps.on(&#039;update&#039;,);
-            this.marketcaps.fetch({
-                success: this.render
+            this.viewName = params ? params.viewName: &#039;marketcap&#039; ;
+            this.marketcap = new Marketcap({url:config.marketcap.urlModel+&quot;item=&quot;+this.item+&quot;&amp;currency=&quot;+this.currency});
+            //_.bindAll(this, &#039;render&#039;, &#039;update&#039;);
+            //this.render({viewName:&#039;none&#039;});
+            //this.listenTo(this.marketcap,&#039;change&#039;, this.render({viewName:&#039;marketcap&#039;})); 
+            this.marketcap.fetch().done(function(){
+                self.render({viewName:&#039;marketcap&#039;});
+                self.initListener();
             });
-            this.currencylabel = FormatUtils.formatCurrencyLabel;
-        },
 
-        render: function(update) {
-            // var self = this;
-            // var tplVariables = {
-            //     currencylabel: this.currencylabel,
-            // };
-            this.$el.html(this.template(this.marketcaps));
+        },
+        initListener: function(){
+            var self = this;
+            $(&quot;#js-marketcap&quot;).click(function(){
+                self.render({viewName:&#039;marketcap&#039;});
+                self.initListener();
+            });
+            $(&quot;#js-price&quot;).click(function(){
+                self.render({viewName:&#039;price&#039;});
+                self.initListener();
+            });
+            $(&quot;#js-volume&quot;).click(function(){
+                self.render({viewName:&#039;volume&#039;});
+                self.initListener();
+            });
+        },
+        render: function(params) {
+            this.viewName= params ? params.viewName : this.viewName ;
+            FormatUtils.formatCurrencyLabel
+            this.marketCapJson = this.marketcap.toJSON();
+            this.marketCapJson.price = FormatUtils.formatPrice( this.marketCapJson.price,&#039;USD&#039;);
+            this.marketCapJson.volume = FormatUtils.formatPrice( this.marketCapJson.volume,&#039;BTC&#039;);
+            this.marketCapJson.totalcoin = FormatUtils.formatPrice( this.marketCapJson.totalcoin,&#039;BTC&#039;);
+            this.marketCapJson.marketcap = FormatUtils.formatPrice( this.marketCapJson.marketcap,&#039;USD&#039;);
+            this.$el.html(this.templateMarketCap({viewName:params.viewName,marketcapTemplate:this.marketCapJson}));
             return this;
         }
 

@@ -49,7 +49,7 @@
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">192</p>
+      <p class="stat">193</p>
     </div>
   </div>
   <div class="row historical">
@@ -186,6 +186,7 @@
                 var matchPlatforms = _.uniq(this.platforms.search(query), function(platform) {
                     return platform.id;
                 });
+                
                 var matchPairs = _.uniq(this.pairs.search(query), function(pair) {
                     return pair.id;
                 });
