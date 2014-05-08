@@ -1,11 +1,12 @@
-define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', 'misc-bignumber', 'FormatUtils'], function(Ticker, Trade, config, KeyfactsTemplate, BigNumber, FormatUtils) {
+define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', 'misc-bignumber', 'FormatUtils','graphmenuView'], 
+    function(Ticker, Trade, config, KeyfactsTemplate, BigNumber, FormatUtils,GraphmenuView) {
 
     return Backbone.View.extend({
 
         events: {},
 
         el: '#js-keyfacts',
-
+        exportToolEl: '#js-keyFactExportTools',
         template: _.template(KeyfactsTemplate),
 
         /**
@@ -22,9 +23,11 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
             this.options = options;
             this.ticker = new Ticker();
             this.trade = new Trade();
+            this.exportTools = new GraphmenuView();
+            this.exportTools.initParent(this.$el);
             _.bindAll(this, 'render', 'update');
         },
-
+       
         renderBigNumbers: function(tickerAttributes) {
             var self = this;
             this.bigNumberViews = [];
@@ -57,6 +60,7 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
             this.ticker.on('update', this.update, this);
             this.trade.on('update', this.update, this);
             this.update(true);
+            this.exportTools.setElement($(this.exportToolEl)).render();
             return this;
         },
 
@@ -94,7 +98,7 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
 
                 bigNumberView.bigNumberChart.render(updateParams);
             });
-
+                        this.exportTools.render();
             // this.changePageTitle();
         },
 

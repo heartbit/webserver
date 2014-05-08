@@ -1,44 +1,43 @@
 <div class="js-marketcapDiv marketcap">
-        <div class="globalDiv">
-    		<img width="80" height="55" style="float:left" src="http://1.bp.blogspot.com/-cMd4p4D3yLo/Uu7-FL-5MHI/AAAAAAAAAiw/msWsPjJccjM/s1600/bitcoinLogo1000.png"/>
-        	<div style="margin-top: 10px;">
-	    		<em>
-	    			<% switch(viewName) { 
-		    			case 'marketcap' : {%>
-		    				<%=marketcapTemplate.marketcap%>
-		    			<%break;
-		    			  } case 'price': { %>
-		    				<%=marketcapTemplate.price%>
-		    			<%break;
-		    			  } case 'volume': { %>
-		        			<%=marketcapTemplate.volume%>
-		        		<%	break;
-		    			} case 'none':{%>
-		    				Click a buton<%
-		    			}
-	    			}%>
-	    		</em>
-    		</div>
-			<div class="maketcap-italic">
-				<i>
-					Live data from Kraken,Bitstamp,Btce,BitFinex<br/>
-				</i>
-			</div>
-			<div id="pieChart" >
-			</div>
-        </div>
-        <div style="float:right" >
-        	<ul>
-	        	<li id="js-marketcap">
-	                <a href="#">Marketcap</a>
-	            </li>
-	            <li id="js-price">
-	                <a href="#">Price</a>
-	            </li>
-	            <li id="js-volume">
-	                <a href="#">Volume</a>
-	            </li>
-        	</ul>
-        </div>
-        
+    <div class="globalDiv">
+		<img width="80" height="55" style="float:left" src="http://1.bp.blogspot.com/-cMd4p4D3yLo/Uu7-FL-5MHI/AAAAAAAAAiw/msWsPjJccjM/s1600/bitcoinLogo1000.png"/>
+    	<div style="margin-top: 10px;">
+    		<em>
+    			<% switch(viewName) { 
+	    			case 'marketcap' : {%>
+	    				<%=marketcapTemplate.marketcap%>
+	    			<%break;
+	    			  } case 'price': { %>
+	    				<%=marketcapTemplate.price%>
+	    			<%break;
+	    			  } case 'volume': { %>
+	        			<%=marketcapTemplate.volume%>
+	        		<%	break;
+	    			} case 'none':{%>
+	    				Click a buton<%
+	    			}
+    			}%>
+    		</em>
+		</div>
+		<div class="maketcap-italic">
+			<i>
+				Live data from Kraken,Bitstamp,Btce,BitFinex<br/>
+			</i>
+		</div>
+		<div id="pieChart" >
+		</div>
+    </div>
+    <div style="float:right" >
+    	<ul>
+        	<li id="js-marketcap">
+                <a href="#">Marketcap</a>
+            </li>
+            <li id="js-price">
+                <a href="#">Price</a>
+            </li>
+            <li id="js-volume">
+                <a href="#">Volume</a>
+            </li>
+    	</ul>
+    </div>
 </div>

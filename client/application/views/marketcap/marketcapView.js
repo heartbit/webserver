@@ -3,6 +3,7 @@ define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'Forma
 
     return Backbone.View.extend({
 
+        
         el:'#js-marketcapDiv',
 
         templateMarketCap: _.template(MarketcapViewTemplate),

@@ -1,5 +1,5 @@
 {
-  "name": "insightfulcointrader",
+  "name": "",
   "css_prefix_text": "icon-",
   "css_use_suffix": false,
   "hinting": true,
@@ -7,58 +7,28 @@
   "ascent": 850,
   "glyphs": [
     {
-      "uid": "dc3f1d5b1d006f7f7b3b6295eccab9da",
-      "css": "camera",
-      "code": 59400,
-      "src": "fontawesome"
-    },
-    {
-      "uid": "531bc468eecbb8867d822f1c11f1e039",
-      "css": "calendar",
-      "code": 59399,
-      "src": "fontawesome"
-    },
-    {
-      "uid": "b013f6403e5ab0326614e68d1850fd6b",
-      "css": "resize-full-alt",
-      "code": 59398,
-      "src": "fontawesome"
-    },
-    {
-      "uid": "a73c5deb486c8d66249811642e5d719a",
-      "css": "arrows-cw",
-      "code": 59392,
-      "src": "fontawesome"
-    },
-    {
-      "uid": "489090690d8bd1745e365485946e20a8",
-      "css": "megaphone",
-      "code": 59393,
-      "src": "entypo"
-    },
-    {
-      "uid": "8ax1xqcbzz1hobyd4i7f0unwib1bztip",
-      "css": "down-dir",
-      "code": 59396,
-      "src": "modernpics"
-    },
-    {
-      "uid": "6ipws8y9gej6vbloufvhi5qux7rluf64",
-      "css": "up-dir",
-      "code": 59395,
-      "src": "modernpics"
-    },
-    {
-      "uid": "616b755d0f4c7d2dc7a1dcc2e5427039",
-      "css": "down-open",
-      "code": 59397,
-      "src": "elusive"
-    },
-    {
-      "uid": "b91c0e6aaab5e3146732b69dd418e120",
-      "css": "up-open",
+      "uid": "381da2c2f7fd51f8de877c044d7f439d",
+      "css": "picture",
       "code": 59394,
-      "src": "elusive"
+      "src": "fontawesome"
+    },
+    {
+      "uid": "44a6b866f720a1d2b11bf05023a4e089",
+      "css": "export-outline",
+      "code": 59392,
+      "src": "typicons"
+    },
+    {
+      "uid": "wh8nbtrxjl2f67dpybsww6mri0xcaklm",
+      "css": "export",
+      "code": 59393,
+      "src": "typicons"
+    },
+    {
+      "uid": "fd1c420f4755e275d578d856d7b20c50",
+      "css": "acrobat",
+      "code": 59395,
+      "src": "zocial"
     }
   ]
 }

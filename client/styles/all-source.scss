@@ -1,6 +1,6 @@
 @import "./external/foundation.min.scss";
 @import "./external/codrops-menu.scss";
-@import "./external/fontello/css/insightfulcointrader.scss";
+@import "./external/fontello/css/fontello-embedded.css";
 @import "./external/normalize.scss";
 
 @import "./common.scss";
@@ -15,6 +15,7 @@
 @import "./views/news.scss";
 @import "./views/controller.scss";
 @import "./views/marketcap.scss";
+@import "./views/graphemenu.scss";
 
 @import "./charts/depthchart.scss";
 @import "./charts/mainchart.scss";
