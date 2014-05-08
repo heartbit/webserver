@@ -72,7 +72,6 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 		this.radius=(Math.min(this.w,this.h)/2)-this.margin.radiusMargin;
 		this.radius2=this.radius*2+20;
 
-		console.log(this.radius2);
 		this.visHeight=this.h+this.margin.top+this.margin.bottom;
 		this.visWidth=this.w+this.margin.left+this.margin.right;
 		this.height=this.h-this.margin.top-this.margin.bottom;
@@ -122,8 +121,7 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 		});
 		this.dataSelect=self.pie(_.last(this.volumes,4));
 		this.dataSelect2=self.pie2(_.last(this.volumes,4));
-		console.log(_.last(self.volumes,4));
-		console.log(this.dataSelect);
+	
 
 
 
@@ -136,10 +134,8 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 		this.pieChart.append("path")
 			.attr("d",self.arc)
 			.style("fill", function(volume){
-				// console.log(volume.data[3]);
-				// self.volumes
 				return volume.data[3];
-		})
+		});
 
 
 		this.pieChart.append("text")
@@ -173,22 +169,6 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 
 
 
-
-		// this.pieChart.append("text")
-		// 	.attr("transform",function(volume){
-		// 		var centre =self.arc.centroid(volume);
-		// 		var x=centre[0];
-		// 		// console.log(self.arc.centroid(volume));
-		// 		console.log(volume.data[0]);
-		// 		console.log(centre[0]);
-
-		// 		// console.log(centre[1]);
-		// 		return "translate("+x+","+centre[1]+")";
-		// 	})
-		// 	.attr("class","pourcent")
-		// 	.text(function(volume){
-		// 		return (((volume.endAngle-volume.startAngle)/Math.PI)*100).toFixed(2)+"%";
-		// 	})
 
 		this.pieChartLayer.append("text")
 			.attr("y",this.radius+this.margin.captiony)

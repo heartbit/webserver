@@ -1,5 +1,5 @@
-define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'FormatUtils','tickers','miskpiechart'], 
-    function(config,Marketcap, MarketcapViewTemplate, FormatUtils,Tickers,Miskpiechart) {
+define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'FormatUtils','tickers','miskpiechart','items'], 
+    function(config,Marketcap, MarketcapViewTemplate, FormatUtils,Tickers,Miskpiechart,Items) {
 
     return Backbone.View.extend({
 
@@ -14,14 +14,29 @@ define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'Forma
             var self = this;
             this.viewName = params ? params.viewName: 'marketcap' ;
             this.marketcap = new Marketcap({url:config.marketcap.urlModel+"item="+this.item+"&currency="+this.currency});
-            //_.bindAll(this, 'render', 'update');
+            
+            _.bindAll(this, 'render', 'update');
+            
             //this.render({viewName:'none'});
-            //this.listenTo(this.marketcap,'change', this.render({viewName:'marketcap'})); 
-            this.tickers = new Tickers();
-            this.marketcap.fetch().done(function(){
-                self.render({viewName:'marketcap'},self.drawPie());
+            //this.listenTo(this.marketcap,'change', this.render({viewName:'marketcap'}));
+            this.items = new Items(); 
+            this.items.fetch({
+                data: {},
+                type: 'POST',
+                success: function() {
+                    self.platforms = self.items.getPlatforms();
+                    _.each(self.platforms.models,function(platform){
+                        platform.pairs=[{item:'BTC',currency:'USD'}];
+                    });
+                    self.tickers = new Tickers();
+                    self.tickers.init({platforms:self.platforms.models})
+                    self.tickers.fetch({type:''});
+                    self.tickers.on('all', self.render)
+                }
             });
-
+        },
+        computeMarketcap: function(){
+            console.log(this.tickers);
         },
         drawPie: function(){
             this.pieChart = new Miskpiechart("#pieChart");
@@ -43,7 +58,9 @@ define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'Forma
                 self.initListener();
             });
         },
-        render: function(params, callback) {
+        render: function(params) {
+
+
             this.viewName= params ? params.viewName : this.viewName ;
             this.marketCapJson = this.marketcap.toJSON();
             this.marketCapJson.price = FormatUtils.formatPrice( this.marketCapJson.price,'USD');
@@ -51,10 +68,11 @@ define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'Forma
             this.marketCapJson.totalcoin = FormatUtils.formatPrice( this.marketCapJson.totalcoin,'BTC');
             this.marketCapJson.marketcap = FormatUtils.formatPrice( this.marketCapJson.marketcap,'USD');
             this.$el.html(this.templateMarketCap({viewName:params.viewName,marketcapTemplate:this.marketCapJson}));
-            if(callback){
-                callback();
-            }
+            
             return this;
+        },
+        update: function(){
+
         }
 
     });

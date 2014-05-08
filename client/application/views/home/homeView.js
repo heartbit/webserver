@@ -91,23 +91,6 @@ define('homeView', ['config', 'items', 'headerView', 'marketcapView', 'keyFactsV
             return false;
         },
 
-        showMarketcap: function() {
-            this.marketcapView.render({viewName:'marketcap'});
-            return false;
-        },
-
-        showPrice: function() {
-            this.marketcapView.render({viewName:'price'});
-            return false;
-        },
-        
-
-        showVolume: function() {
-            this.marketcapView.render({viewName:'volume'});
-            return false;
-        },
-        
-        
         showWeeknews: function() {
             this.weeknewsView.render(this.params);
             $('#js-weeknewsModal').foundation('reveal', 'open');

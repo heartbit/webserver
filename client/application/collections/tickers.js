@@ -4,7 +4,7 @@ define('tickers', ['config', 'ticker'], function(config, Ticker) {
 
         model: Ticker,
 
-        initialize: function(options) {
+        init: function(options) {
             var self = this;
             if (!options) {
                 options = {};
@@ -13,7 +13,7 @@ define('tickers', ['config', 'ticker'], function(config, Ticker) {
             _.each(this.platforms, function(platform) {
                 _.each(platform.pairs, function(pair) {
                     var initParams = {
-                        platform: platform,
+                        platform: platform.id,
                         item: pair.item,
                         currency: pair.currency
                     };
@@ -21,7 +21,7 @@ define('tickers', ['config', 'ticker'], function(config, Ticker) {
                     self.add(ticker);
                 });
             });
-            console.log('this models : ', this.models);
+            //return this;
         },
 
         fetch: function(params, callback) {
@@ -32,6 +32,9 @@ define('tickers', ['config', 'ticker'], function(config, Ticker) {
                         ticker.socketSync();
                     });
                     break;
+            }
+            if ( callback ) {
+                callback();
             }
         },
 

@@ -24,7 +24,9 @@ define('ticker', ['config', 'moment', 'DataSocketManager', 'EventManager', 'Form
             var updateCallback = function(payload) {
                 console.log('Ticker update: ', payload);
                 var objTicker = payload.data;
-                self.update(objTicker);
+                if( objTicker ) {
+                    self.update(objTicker);
+                }
             };
             var eventId
             if (this.isListening) {
@@ -32,9 +34,9 @@ define('ticker', ['config', 'moment', 'DataSocketManager', 'EventManager', 'Form
                 DataSocketManager.off(eventId, updateCallback);
             }
 
-            this.set('platform', params.platform);
-            this.set('currency', params.currency);
-            this.set('item', params.item);
+            this.set('platform',  this.params.platform);
+            this.set('currency',  this.params.currency);
+            this.set('item',  this.params.item);
             eventId = this.eventIdUpdate();
             DataSocketManager.on(eventId, updateCallback);
             this.isListening = true;
