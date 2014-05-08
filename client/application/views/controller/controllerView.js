@@ -1,4 +1,4 @@
-define('controllerView', ['text!controllerView.html', 'text!./application/views/controller/searchView.html', 'config', 'items', 'itemsView', 'platforms', 'platformsView', 'currencies', 'currenciesView', 'FormatUtils'], function(ControllerViewTemplate, SearchViewTemplate, config, Items, ItemsView, Platforms, PlatformsView, Currencies, CurrenciesView, FormatUtils) {
+define('controllerView', ['text!controllerView.html', 'text!./application/views/controller/searchView.html', 'ParametersManager', 'config', 'items', 'itemsView', 'platforms', 'platformsView', 'currencies', 'currenciesView', 'FormatUtils'], function(ControllerViewTemplate, SearchViewTemplate, ParametersManager, config, Items, ItemsView, Platforms, PlatformsView, Currencies, CurrenciesView, FormatUtils) {
 
     return Backbone.View.extend({
 
@@ -13,9 +13,7 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             'click .js-pair': 'changeGlobalPair',
             'click .js-platform': 'changeGlobalPlatform',
 
-            'keyup #js-searchbar': 'search',
-            // 'blur #js-searchbar': 'hideSearchView',
-            // 'focus #js-searchbar': 'showSearchView'
+            'keyup #js-searchbar': 'search'
         },
 
         template: _.template(ControllerViewTemplate),
@@ -34,15 +32,14 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
         },
 
         render: function(params) {
-            this.items = params.items;
-            this.platforms = this.items.getPlatforms();
-            this.currencies = this.items.getCurrencies();
-            this.pairs = this.items.getPairs();
-            this.updateInternalParams(params);
+            this.items = ParametersManager.getItems();
+            this.platforms = ParametersManager.getPlatforms();
+            this.currencies = ParametersManager.getCurrencies();
+            this.pairs = ParametersManager.getPairs();
 
             var tplVars = {
-                compatiblePlatforms: this.compatiblePlatforms,
-                compatibleCurrencies: this.compatibleCurrencies,
+                compatiblePlatforms: this.platforms,
+                compatibleCurrencies: this.currencies,
                 selectedPlatform: this.platform,
                 selectedCurrency: this.currency,
             };
@@ -64,21 +61,21 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             return this;
         },
 
-        updateInternalParams: function(params) {
-            this.items = params.items || this.items || [];
+        // updateInternalParams: function(params) {
+        //     this.items = params.items || this.items || [];
 
-            this.item = _.find(this.items.models, function(item) {
-                return item.id == params.item;
-            });
+        //     this.item = _.find(this.items.models, function(item) {
+        //         return item.id == params.item;
+        //     });
 
-            this.currency = params.currency;
-            this.compatibleCurrencies = _.keys(this.item.currencies);
+        //     this.currency = params.currency;
+        //     this.compatibleCurrencies = _.keys(this.item.currencies);
 
-            this.compatiblePlatforms = this.item.currencies[params.currency];
-            this.platform = _.find(this.compatiblePlatforms, function(platform) {
-                return platform == params.platform;
-            });
-        },
+        //     this.compatiblePlatforms = this.item.currencies[params.currency];
+        //     this.platform = _.find(this.compatiblePlatforms, function(platform) {
+        //         return platform == params.platform;
+        //     });
+        // },
 
         update: function(params) {
             var self = this;
@@ -94,7 +91,7 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
                 var matchPlatforms = _.uniq(this.platforms.search(query), function(platform) {
                     return platform.id;
                 });
-                
+
                 var matchPairs = _.uniq(this.pairs.search(query), function(pair) {
                     return pair.id;
                 });

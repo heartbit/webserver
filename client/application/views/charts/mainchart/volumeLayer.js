@@ -44,7 +44,7 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
         this.params = params;
         this.update();
     };
-
+    
     VolumeLayer.prototype.update = function(params) {
         var self = this;
         var offsetFactor = 0.1;
