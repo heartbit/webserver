@@ -17,7 +17,8 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
                 'toggleVolumeLayer'
             );
             this.maingraphes = new Maingraphes();
-            this.maingraphmenu = new GraphmenuView(this.el);
+            this.maingraphmenu = new GraphmenuView();
+            this.maingraphmenu.initParent(this.$el);
             this.timeperiods = config.maingraph.timeperiods;
             this.currentTimeperiodId = config.maingraph.defaultTimeperiodId;
         },
