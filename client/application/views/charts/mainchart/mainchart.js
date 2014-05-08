@@ -15,9 +15,10 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         this.dataHelper = new DataHelper();
         this.initChart(params);
         this.initXAxis();
-        this.layers = {};
-        this.layers.areaLayer = new AreaLayer(this);
-        this.layers.volumeLayer = new VolumeLayer(this);
+        this.layers = {
+            areaLayer: new AreaLayer(this),
+            volumeLayer: new VolumeLayer(this)
+        };
     };
 
     MainChart.prototype.parseMainGraphes = function(maingraphes) {
@@ -200,8 +201,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         if (this.layers.volumeLayer.isVisible) {
             this.layers.areaLayer.updateRange([this.height, 0]);
             this.layers.volumeLayer.hide();
-        }
-        else{
+        } else {
             this.layers.areaLayer.updateRange([3 * this.height / 4, 0]);
             this.layers.volumeLayer.show();
         }

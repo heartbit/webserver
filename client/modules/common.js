@@ -103,7 +103,8 @@ requirejs.config({
         NewsSocketManager: 'application/managers/sockets/newsSocketManager',
         CacheManager: 'application/managers/CacheManager',
         EventManager: 'application/managers/EventManager',
-
+        ParametersManager: 'application/managers/ParametersManager',
+        
         // Utils
         GrapheExceptionsUtils: 'application/utils/GrapheExceptionsUtils',
         FormatUtils: 'application/utils/FormatUtils'

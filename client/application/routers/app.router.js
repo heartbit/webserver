@@ -1,17 +1,25 @@
-define('appRouter', ['homeView', 'marketCapView','EventManager', 'config', 'DataSocketManager', 'ChatSocketManager'], function(HomeView, MarketCapView,EventManager, config, DataSocketManager, ChatSocketManager) {
+define('appRouter', ['config', 'ParametersManager', 'EventManager', 'NewsSocketManager', 'DataSocketManager', 'ChatSocketManager', 'items', 'headerView', 'marketcapView', 'keyFactsView', 'mainView', 'controllerView', 'lastupdateView', 'indicatorsView', 'miskView', 'newsView', 'weeknewsView', 'calculatorView'], function(config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, LastupdateView, IndicatorsView, MiskView, NewsView, WeeknewsView, CalculatorView) {
 
 	var Router = Backbone.Router.extend({
 
 		routes: {
 			"": "home",
-			'marketcap/:item/:currency' : 'marketcap',
-			"webapp*": "home"
+			"webapp*": "home",
+			'marketcap/:item/:currency': 'marketcap'
 		},
 
 		initialize: function() {
+			_.bindAll(this, 'refresh', 'render', 'update', 'initSockets');
+
 			this.appEl = '#js-app';
-			this.$appEl = $(this.appEl);
-			this.$homeloader = $('.homeloader');
+			this.isRender = false;
+
+			this.views = {
+				header: new HeaderView(),
+				keyfacts: new KeyFactsView(),
+				controller: new ControllerView()
+			};
+
 			Backbone.history.start({
 				pushState: true
 			});
@@ -34,30 +42,50 @@ define('appRouter', ['homeView', 'marketCapView','EventManager', 'config', 'Data
 			}
 		*/
 		home: function(params) {
+			this.params = params || this.params || {};
+			ParametersManager.isInit ? this.refresh() : ParametersManager.init(this.refresh);
+		},
+
+		refresh: function() {
+			ParametersManager.updateUserInputParams(this.params);
+			this.isRender ? this.update(this.initSockets) : this.render(this.initSockets);
+		},
+
+		render: function(callback) {
 			var self = this;
-			params = params ? this.sanitizeParams(params) : config.defaultparams;
-
-			var homeViewRenderCallback = function() {
-				self.$homeloader.hide();
-				self.joinDataRoom(params);
-			};
-
-			if (this.homeView) {
-				this.homeView.update(params, homeViewRenderCallback);
-			} else {
-				this.homeView = new HomeView();
-				this.homeView.setElement(this.appEl).render(params, homeViewRenderCallback);
+			_.each(_.keys(this.views), function(viewKey) {
+				self.views[viewKey].render(ParametersManager.getCurrentParams());
+			});
+			this.isRender = true;
+			if (callback) {
+				callback();
 			}
 		},
-		marketcap: function( item,currency ) {
+
+		initSockets: function() {
+			this.joinDataRoom(ParametersManager.getCurrentParams());
+		},
+
+		update: function(callback) {
 			var self = this;
-			if (this.marketCapView) {
-				this.marketCapView.update();
-			} else {
-				this.marketCapView = new MarketCapView(item,currency);
-				this.marketCapView.setElement(this.appEl).render();
+			_.each(_.keys(this.views), function(viewKey) {
+				self.views[viewKey].update(ParametersManager.getCurrentParams());
+			});
+			if (callback) {
+				callback();
 			}
 		},
+
+		// marketcap: function( item,currency ) {
+		// 	var self = this;
+		// 	if (this.marketCapView) {
+		// 		this.marketCapView.update();
+		// 	} else {
+		// 		this.marketCapView = new MarketCapView(item,currency);
+		// 		this.marketCapView.setElement(this.appEl).render();
+		// 	}
+		// },
+
 		joinDataRoom: function(params) {
 			var sep = ':';
 			var dataroom = params.item + sep + params.currency;
@@ -65,15 +93,15 @@ define('appRouter', ['homeView', 'marketCapView','EventManager', 'config', 'Data
 			DataSocketManager.emit('dataroom', dataroom);
 		},
 
-		sanitizeParams: function(params) {
-			var cleanParams = {
-				item: params.item || (this.params && this.params.item) || config.defaultparams.item,
-				platform: params.platform || (this.params && this.params.platform) || config.defaultparams.platform,
-				currency: params.currency || (this.params && this.params.currency) || config.defaultparams.currency
-			};
-			this.params = cleanParams;
-			return cleanParams;
-		}
+		// sanitizeParams: function(params) {
+		// 	var cleanParams = {
+		// 		item: params.item || (this.params && this.params.item) || config.defaultparams.item,
+		// 		platform: params.platform || (this.params && this.params.platform) || config.defaultparams.platform,
+		// 		currency: params.currency || (this.params && this.params.currency) || config.defaultparams.currency
+		// 	};
+		// 	this.params = cleanParams;
+		// 	return cleanParams;
+		// }
 
 	});
 

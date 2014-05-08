@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">38.43</p>
+      <p class="stat">38.13</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">2.40</p>
+      <p class="stat">2.38</p>
     </div>
   </div>
 </div>
@@ -107,9 +107,10 @@
         this.dataHelper = new DataHelper();
         this.initChart(params);
         this.initXAxis();
-        this.layers = {};
-        this.layers.areaLayer = new AreaLayer(this);
-        this.layers.volumeLayer = new VolumeLayer(this);
+        this.layers = {
+            areaLayer: new AreaLayer(this),
+            volumeLayer: new VolumeLayer(this)
+        };
     };
 
     MainChart.prototype.parseMainGraphes = function(maingraphes) {
@@ -292,8 +293,7 @@
         if (this.layers.volumeLayer.isVisible) {
             this.layers.areaLayer.updateRange([this.height, 0]);
             this.layers.volumeLayer.hide();
-        }
-        else{
+        } else {
             this.layers.areaLayer.updateRange([3 * this.height / 4, 0]);
             this.layers.volumeLayer.show();
         }
