@@ -1,4 +1,4 @@
-define('platformsView', ['config', 'text!platformsView.html'], function(config, PlatformsTemplate) {
+define('platformsView', ['config', 'text!platformsView.html', 'ParametersManager'], function(config, PlatformsTemplate, ParametersManager) {
 
 	return Backbone.View.extend({
 
@@ -13,17 +13,10 @@ define('platformsView', ['config', 'text!platformsView.html'], function(config, 
 			);
 		},
 
-		changePlatforms: function(event) {
-			var platformId = $(event.target).attr('id');
-			// $('#js-platformsViewModal').foundation('reveal', 'close');
-			// Backbone.history.navigate(url, true);
-		},
-
 		render: function(params) {
-			if (!params) params = {};
-			this.currentPlatform = params.platform || this.platform;
-			this.$el.html(this.template({}));
-			// $('.js-item').on('click', this.changeItem);
+			this.$el.html(this.template({
+                platforms: ParametersManager.getPlatforms().models,
+            }));
 			$(document).foundation();
 			return this;
 		}

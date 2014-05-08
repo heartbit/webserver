@@ -1,4 +1,4 @@
-define('controllerView', ['text!controllerView.html', 'text!./application/views/controller/searchView.html', 'ParametersManager', 'config', 'items', 'itemsView', 'platforms', 'platformsView', 'currencies', 'currenciesView', 'FormatUtils'], function(ControllerViewTemplate, SearchViewTemplate, ParametersManager, config, Items, ItemsView, Platforms, PlatformsView, Currencies, CurrenciesView, FormatUtils) {
+define('controllerView', ['text!controllerView.html', 'text!./application/views/controller/searchView.html', 'ParametersManager', 'config', 'items', 'itemsView', 'platforms', 'platformsView', 'currencies', 'currenciesView', 'pairs', 'pairsView', 'FormatUtils'], function(ControllerViewTemplate, SearchViewTemplate, ParametersManager, config, Items, ItemsView, Platforms, PlatformsView, Currencies, CurrenciesView, Pairs, PairsView, FormatUtils) {
 
     return Backbone.View.extend({
 
@@ -29,7 +29,7 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             );
 
             this.itemsView = new ItemsView();
-            this.currenciesView = new CurrenciesView();
+            this.pairsView = new PairsView();
             this.platformsView = new PlatformsView();
         },
 
@@ -44,15 +44,15 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
 
             this.itemsView
                 .setElement('#js-itemsViewModal')
-                .render(params);
+                .render();
 
             this.platformsView
                 .setElement('#js-platformsViewModal')
-                .render(params);
+                .render();
 
-            this.currenciesView
-                .setElement('#js-currenciesViewModal')
-                .render(params);
+            this.pairsView
+                .setElement('#js-pairsViewModal')
+                .render();
 
             $(document).foundation();
             return this;
@@ -125,7 +125,7 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
         },
 
         showPairsView: function() {
-            $('#js-currenciesViewModal').foundation('reveal', 'open');
+            $('#js-pairsViewModal').foundation('reveal', 'open');
             return false;
         },
 

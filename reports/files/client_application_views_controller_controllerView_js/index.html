@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">70.16</p>
+      <p class="stat">71.51</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">179</p>
+      <p class="stat">139</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">20.06</p>
+      <p class="stat">15.01</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">1.35</p>
+      <p class="stat">1.13</p>
     </div>
   </div>
 </div>
@@ -90,7 +90,7 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;controllerView&#039;, [&#039;text!controllerView.html&#039;, &#039;text!./application/views/controller/searchView.html&#039;, &#039;ParametersManager&#039;, &#039;config&#039;, &#039;items&#039;, &#039;itemsView&#039;, &#039;platforms&#039;, &#039;platformsView&#039;, &#039;currencies&#039;, &#039;currenciesView&#039;, &#039;FormatUtils&#039;], function(ControllerViewTemplate, SearchViewTemplate, ParametersManager, config, Items, ItemsView, Platforms, PlatformsView, Currencies, CurrenciesView, FormatUtils) {
+    <textarea id="file-source" class="col-md-12">define(&#039;controllerView&#039;, [&#039;text!controllerView.html&#039;, &#039;text!./application/views/controller/searchView.html&#039;, &#039;ParametersManager&#039;, &#039;config&#039;, &#039;items&#039;, &#039;itemsView&#039;, &#039;platforms&#039;, &#039;platformsView&#039;, &#039;currencies&#039;, &#039;currenciesView&#039;, &#039;pairs&#039;, &#039;pairsView&#039;, &#039;FormatUtils&#039;], function(ControllerViewTemplate, SearchViewTemplate, ParametersManager, config, Items, ItemsView, Platforms, PlatformsView, Currencies, CurrenciesView, Pairs, PairsView, FormatUtils) {
 
     return Backbone.View.extend({
 
@@ -105,7 +105,9 @@
             &#039;click .js-pair&#039;: &#039;changeGlobalPair&#039;,
             &#039;click .js-platform&#039;: &#039;changeGlobalPlatform&#039;,
 
-            &#039;keyup #js-searchbar&#039;: &#039;search&#039;
+            &#039;keyup #js-searchbar&#039;: &#039;search&#039;,
+            &#039;click #js-searchbar&#039;:&#039;showSearchView&#039;,
+            &#039;blur #js-searchbar&#039;:&#039;hideSearchView&#039;
         },
 
         template: _.template(ControllerViewTemplate),
@@ -119,7 +121,7 @@
             );
 
             this.itemsView = new ItemsView();
-            this.currenciesView = new CurrenciesView();
+            this.pairsView = new PairsView();
             this.platformsView = new PlatformsView();
         },
 
@@ -134,35 +136,19 @@
 
             this.itemsView
                 .setElement(&#039;#js-itemsViewModal&#039;)
-                .render(params);
+                .render();
 
             this.platformsView
                 .setElement(&#039;#js-platformsViewModal&#039;)
-                .render(params);
+                .render();
 
-            this.currenciesView
-                .setElement(&#039;#js-currenciesViewModal&#039;)
-                .render(params);
+            this.pairsView
+                .setElement(&#039;#js-pairsViewModal&#039;)
+                .render();
 
             $(document).foundation();
             return this;
         },
-
-        // updateInternalParams: function(params) {
-        //     this.items = params.items || this.items || [];
-
-        //     this.item = _.find(this.items.models, function(item) {
-        //         return item.id == params.item;
-        //     });
-
-        //     this.currency = params.currency;
-        //     this.compatibleCurrencies = _.keys(this.item.currencies);
-
-        //     this.compatiblePlatforms = this.item.currencies[params.currency];
-        //     this.platform = _.find(this.compatiblePlatforms, function(platform) {
-        //         return platform == params.platform;
-        //     });
-        // },
 
         update: function(params) {
             var self = this;
@@ -199,47 +185,29 @@
 
         showSearchView: function() {
             $(&#039;#js-searchResults&#039;).show();
-            return false;
+            return true;
         },
 
         hideSearchView: function() {
             $(&#039;#js-searchResults&#039;).hide();
-            return false;
+            return true;
         },
 
         changeGlobalItem: function(event) {
             var itemId = $(event.target).attr(&#039;id&#039;);
-            var url = this.constructUrl(itemId);
-            // $(&#039;#js-itemSearchbar&#039;).val(&#039;&#039;);
-            // $(&#039;#js-searchItemList&#039;).html(&#039;&#039;);
-            // $(&#039;#itemModal&#039;).foundation(&#039;reveal&#039;, &#039;close&#039;);
-            Backbone.history.navigate(url, true);
+            ParametersManager.changeGlobalItem(itemId);
             return false;
         },
 
         changeGlobalPair: function(event) {
-            var $a = $(event.target);
-            var currencyId = $a.attr(&#039;id&#039;);
-            var params = {
-                platform: this.platform,
-                item: this.item.id,
-                currency: currencyId
-            };
-            var url = this.constructUrl(params);
-            Backbone.history.navigate(url, false);
+            var itemId = $(event.target).attr(&#039;id&#039;);
+            ParametersManager.changeGlobalItem(itemId);
             return false;
         },
 
         changeGlobalPlatform: function(event) {
-            var $a = $(event.target);
-            var platformId = $a.attr(&#039;id&#039;);
-            var params = {
-                platform: platformId,
-                item: this.item.id,
-                currency: this.currency
-            }
-            var url = this.constructUrl(params);
-            Backbone.history.navigate(url, false);
+            var platformId = $(event.target).attr(&#039;id&#039;);
+            ParametersManager.changeGlobalPlatform(platformId);
             return false;
         },
 
@@ -249,21 +217,13 @@
         },
 
         showPairsView: function() {
-            $(&#039;#js-currenciesViewModal&#039;).foundation(&#039;reveal&#039;, &#039;open&#039;);
+            $(&#039;#js-pairsViewModal&#039;).foundation(&#039;reveal&#039;, &#039;open&#039;);
             return false;
         },
 
         showItemsView: function() {
             $(&#039;#js-itemsViewModal&#039;).foundation(&#039;reveal&#039;, &#039;open&#039;);
             return false;
-        },
-
-        constructUrl: function(item) {
-            var url = &quot;/market?&quot;;
-            // url += &quot;platform=&quot; + params.platform;
-            url += &quot;item=&quot; + item;
-            // url += &quot;&amp;currency=&quot; + params.currency;
-            return url;
         }
 
     });

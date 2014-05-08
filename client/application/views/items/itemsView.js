@@ -1,31 +1,25 @@
-define('itemsView', ['config', 'text!itemsView.html'], function(config, ItemTemplate) {
+define('itemsView', ['config', 'text!itemsView.html', 'ParametersManager'], function(config, ItemTemplate, ParametersManager) {
 
     return Backbone.View.extend({
 
         template: _.template(ItemTemplate),
 
-        events: {
-            'click .js-item': 'changeItem',
-        },
+        // events: {
+        //     'click .js-item': 'changeItem',
+        // },
 
         initialize: function() {
             var self = this;
             _.bindAll(this,
-                'render',
-                'changeItem'
+                'render'
             );
         },
 
-        changeItem: function(event) {
-            var itemId = $(event.target).attr('id');
-        },
-
-        render: function(params) {
-            if (!params) params = {};
+        render: function() {
             this.$el.html(this.template({
-                // items: this.items.models,
-                // currentItem: this.currentItem
+                items: ParametersManager.getItems().models,
             }));
+            $(document).foundation();
             return this;
         }
 

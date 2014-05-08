@@ -37,6 +37,7 @@ requirejs.config({
         platformsView: 'application/views/platforms/platformsView',
         headerView: 'application/views/header/headerView',
         itemsView: 'application/views/items/itemsView',
+        pairsView: 'application/views/pairs/pairsView',
         homeView: 'application/views/home/homeView',
 
         // Embeddable views

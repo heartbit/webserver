@@ -1,1 +1,11 @@
-items
+<div>
+    <ul>
+        <%_.each(items, function(item){%>
+            <li>
+                <a>
+                    <%=item.name%>
+                </a>
+            </li>
+            <%})%>
+    </ul>
+</div>
