@@ -13,7 +13,9 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             'click .js-pair': 'changeGlobalPair',
             'click .js-platform': 'changeGlobalPlatform',
 
-            'keyup #js-searchbar': 'search'
+            'keyup #js-searchbar': 'search',
+            'click #js-searchbar':'showSearchView',
+            'blur #js-searchbar':'hideSearchView'
         },
 
         template: _.template(ControllerViewTemplate),
@@ -91,12 +93,12 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
 
         showSearchView: function() {
             $('#js-searchResults').show();
-            return false;
+            return true;
         },
 
         hideSearchView: function() {
             $('#js-searchResults').hide();
-            return false;
+            return true;
         },
 
         changeGlobalItem: function(event) {

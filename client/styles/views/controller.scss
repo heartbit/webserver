@@ -1,6 +1,14 @@
-#js-searchbar {
-	width: 90%;
-	height: 45px;
+.searchBox {
+	position:fixed;
+	float:right;
+	z-index:99;
+	opacity:0.8;
+	margin-top: 2.25em;
+	margin-right:0.5em;
+}
+
+.controllerBox{
+	float:right
 }
 
 .searchIcon{
