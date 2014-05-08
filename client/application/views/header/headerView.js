@@ -23,8 +23,7 @@ define('headerView', ['config', 'text!headerView.html'], function(config, Header
         },
 
         render: function(params) {
-            this.$el.prepend(this.template());
-            
+            this.$el.html(this.template());
             $(document).foundation();
             return this;
         },

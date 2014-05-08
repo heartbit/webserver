@@ -15,58 +15,32 @@
     <div class="off-canvas-wrap" data-offcanvas>
         <div class="inner-wrap">
 
-            <div id="js-header" class="fixed">
-                <nav class="tab-bar">
-                    <section class="left-small">
-                        <a class="left-off-canvas-toggle menu-icon" href="#">
-                            <span></span>
-                        </a>
-                    </section>
+            <aside class="left-off-canvas-menu">
+                <ul class="off-canvas-list">
+                    <li>
+                        <label>Tools</label>
+                    </li>
+                    <li id="js-calculator">
+                        <a href="#">Calculator</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li id="js-weeknews">
+                        <a href="#">Week Facts</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">Ressources</a>
+                    </li>
+                </ul>
+            </aside>
 
-                    <section class="middle tab-bar-section">
-                        <h1 class="title"><a href="/">Heartbit - maket's pulse</a>
-                        </h1>
-                    </section>
-
-                    <section class="top-bar-section">
-                        <!-- Right Nav Section -->
-                        <ul class="right">
-                            <li>
-                                <a href="http://blog.heartbit.io/">Blog</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li class="has-form">
-                                <a href="#" id="js-getStarted" class="button">Get started</a>
-                            </li>
-                        </ul>
-                    </section>
-                </nav>
-
-                <aside class="left-off-canvas-menu">
-                    <ul class="off-canvas-list">
-                        <li>
-                            <label>Tools</label>
-                        </li>
-                        <li id="js-calculator">
-                            <a href="#">Calculator</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li id="js-weeknews">
-                            <a href="#">Week Facts</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">Ressources</a>
-                        </li>
-                    </ul>
-                </aside>
-            </div>
+            <div id="js-header" class="fixed"></div>
 
             <article id="appArticle">
 
                 <section id="firstPart" class="row datawidget">
-                    <div class="small-12 medium-6 large-6 columns" id="js-keyfacts"></div>
-                    <div class="small-12 medium-6 large-6 columns" id="js-controller"></div>
+                    <div class="small-12 medium-12 large-6 columns" id="js-keyfacts"></div>
+                    <div class="small-12 medium-12 large-6 columns" id="js-controller"></div>
                 </section>
 
                 <section class="row datawidget">
@@ -84,11 +58,6 @@
                 </section>
 
                 <!-- <div class="large-6 medium-6 small-12 columns panel" id="js-misk"></div> -->
-                <!--   <section class="row" id="footer">
-            <div class="large-12 medium-12 small-12 columns panel">
-                Footer
-            </div>
-        </section> -->
 
                 <section id="js-calculatorModal" class="reveal-modal" data-reveal>
                 </section>
@@ -96,7 +65,6 @@
                 <section id="js-weeknewsModal" class="reveal-modal" data-reveal>
                 </section>
 
-                <!-- Get started -->
                 <section id="js-getStarted">
                     <ol class="joyride-list" data-joyride>
                         <li data-id="js-getStarted" data-text="Next" data-class="custom so-awesome" data-options="tip_location: left;tip_animation:fade">
