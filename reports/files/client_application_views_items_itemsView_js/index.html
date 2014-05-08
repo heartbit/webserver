@@ -49,7 +49,7 @@
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">52</p>
+      <p class="stat">34</p>
     </div>
   </div>
   <div class="row historical">
@@ -102,17 +102,6 @@
 
         initialize: function() {
             var self = this;
-            // this.items = new Items();
-            // this.items.fetch({
-            //     data: {},
-            //     type: &#039;POST&#039;,
-            //     success: function() {
-            //         self.render();
-            //     },
-            //     error: function(error) {
-            //         console.log(&#039;error&#039;, error);
-            //     }
-            // });
             _.bindAll(this,
                 &#039;render&#039;,
                 &#039;changeItem&#039;
@@ -121,21 +110,14 @@
 
         changeItem: function(event) {
             var itemId = $(event.target).attr(&#039;id&#039;);
-            // var url = this.constructUrl(itemId);
-            // $(&#039;#js-itemSearchbar&#039;).val(&#039;&#039;);
-            // $(&#039;#js-searchItemList&#039;).html(&#039;&#039;);
-            // $(&#039;#itemModal&#039;).foundation(&#039;reveal&#039;, &#039;close&#039;);
-            // Backbone.history.navigate(url, true);
         },
 
         render: function(params) {
             if (!params) params = {};
-            // this.currentItem = params.item || this.currentItem;
             this.$el.html(this.template({
                 // items: this.items.models,
                 // currentItem: this.currentItem
             }));
-            // $(&#039;.js-item&#039;).on(&#039;click&#039;, this.changeItem);
             return this;
         }
 
