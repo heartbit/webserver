@@ -17,7 +17,7 @@ define('appRouter', ['config', 'ParametersManager', 'EventManager', 'NewsSocketM
 			this.views = {
 				header: new HeaderView(),
 				keyfacts: new KeyFactsView(),
-				controller: new ControllerView()
+				controller: new ControllerView(),
 			};
 
 			Backbone.history.start({
@@ -26,7 +26,7 @@ define('appRouter', ['config', 'ParametersManager', 'EventManager', 'NewsSocketM
 		},
 
 		/*	README
-			Mini doc 
+			Mini doc tous les params sont optionnels
 			var params = {
 				item: itemId,
 				currency: currencyId,

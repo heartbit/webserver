@@ -56,22 +56,6 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             return this;
         },
 
-        // updateInternalParams: function(params) {
-        //     this.items = params.items || this.items || [];
-
-        //     this.item = _.find(this.items.models, function(item) {
-        //         return item.id == params.item;
-        //     });
-
-        //     this.currency = params.currency;
-        //     this.compatibleCurrencies = _.keys(this.item.currencies);
-
-        //     this.compatiblePlatforms = this.item.currencies[params.currency];
-        //     this.platform = _.find(this.compatiblePlatforms, function(platform) {
-        //         return platform == params.platform;
-        //     });
-        // },
-
         update: function(params) {
             var self = this;
             this.render(params);
@@ -117,37 +101,19 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
 
         changeGlobalItem: function(event) {
             var itemId = $(event.target).attr('id');
-            var url = this.constructUrl(itemId);
-            // $('#js-itemSearchbar').val('');
-            // $('#js-searchItemList').html('');
-            // $('#itemModal').foundation('reveal', 'close');
-            Backbone.history.navigate(url, true);
+            ParametersManager.changeGlobalItem(itemId);
             return false;
         },
 
         changeGlobalPair: function(event) {
-            var $a = $(event.target);
-            var currencyId = $a.attr('id');
-            var params = {
-                platform: this.platform,
-                item: this.item.id,
-                currency: currencyId
-            };
-            var url = this.constructUrl(params);
-            Backbone.history.navigate(url, false);
+            var itemId = $(event.target).attr('id');
+            ParametersManager.changeGlobalItem(itemId);
             return false;
         },
 
         changeGlobalPlatform: function(event) {
-            var $a = $(event.target);
-            var platformId = $a.attr('id');
-            var params = {
-                platform: platformId,
-                item: this.item.id,
-                currency: this.currency
-            }
-            var url = this.constructUrl(params);
-            Backbone.history.navigate(url, false);
+            var platformId = $(event.target).attr('id');
+            ParametersManager.changeGlobalPlatform(platformId);
             return false;
         },
 
@@ -164,14 +130,6 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
         showItemsView: function() {
             $('#js-itemsViewModal').foundation('reveal', 'open');
             return false;
-        },
-
-        constructUrl: function(item) {
-            var url = "/market?";
-            // url += "platform=" + params.platform;
-            url += "item=" + item;
-            // url += "&currency=" + params.currency;
-            return url;
         }
 
     });
