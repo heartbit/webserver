@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">66.99</p>
+      <p class="stat">66.14</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">114</p>
+      <p class="stat">118</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">25.65</p>
+      <p class="stat">25.99</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.84</p>
+      <p class="stat">0.95</p>
     </div>
   </div>
 </div>
@@ -90,14 +90,15 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;keyFactsView&#039;, [&#039;ticker&#039;, &#039;trade&#039;, &#039;config&#039;, &#039;text!keyFactsView.html&#039;, &#039;misc-bignumber&#039;, &#039;FormatUtils&#039;], function(Ticker, Trade, config, KeyfactsTemplate, BigNumber, FormatUtils) {
+    <textarea id="file-source" class="col-md-12">define(&#039;keyFactsView&#039;, [&#039;ticker&#039;, &#039;trade&#039;, &#039;config&#039;, &#039;text!keyFactsView.html&#039;, &#039;misc-bignumber&#039;, &#039;FormatUtils&#039;,&#039;graphmenuView&#039;], 
+    function(Ticker, Trade, config, KeyfactsTemplate, BigNumber, FormatUtils,GraphmenuView) {
 
     return Backbone.View.extend({
 
         events: {},
 
         el: &#039;#js-keyfacts&#039;,
-
+        exportToolEl: &#039;#js-keyFactExportTools&#039;,
         template: _.template(KeyfactsTemplate),
 
         /**
@@ -114,9 +115,11 @@
             this.options = options;
             this.ticker = new Ticker();
             this.trade = new Trade();
+            this.exportTools = new GraphmenuView();
+            this.exportTools.initParent(this.$el);
             _.bindAll(this, &#039;render&#039;, &#039;update&#039;);
         },
-
+       
         renderBigNumbers: function(tickerAttributes) {
             var self = this;
             this.bigNumberViews = [];
@@ -149,6 +152,7 @@
             this.ticker.on(&#039;update&#039;, this.update, this);
             this.trade.on(&#039;update&#039;, this.update, this);
             this.update(true);
+            this.exportTools.setElement($(this.exportToolEl)).render();
             return this;
         },
 
@@ -186,7 +190,7 @@
 
                 bigNumberView.bigNumberChart.render(updateParams);
             });
-
+                        this.exportTools.render();
             // this.changePageTitle();
         },
 
