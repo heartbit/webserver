@@ -1,21 +1,38 @@
 <div class="row">
-    <div class="large-4 medium-4 small-4 columns">
-        <!-- <span class="searchIcon">
-        </span> -->
-        <input class="" id="js-searchbar" placeholder=" Search cryptos, platforms, pairs...">
-    </div>
-    
-    <div class="large-8 medium-8 small-8 columns">
-        <a href="#" id="js-showItemsView" class="small button">BTC</a>
-        <div id="js-itemsViewModal" class="reveal-modal" data-reveal></div>
+    <div class="small-10 columns controllerBox">
 
-        <a href="#" id="js-showPlatformsView" class="small button">BTCE</a>
-        <div id="js-platformsViewModal" class="reveal-modal" data-reveal></div>
-
-        <a href="#" id="js-showCurrenciesView" class="small button">BTC/USD</a>
-        <div id="js-currenciesViewModal" class="reveal-modal" data-reveal></div>
+        <div class="row collapse ">
+            <div class="small-8 columns">
+                <input type="text" class="" id="js-searchbar" placeholder="Search cryptos, platforms, pairs...">
+            </div>
+            <div class="small-2 columns">
+                <a href="#" class="button postfix">Go</a>
+            </div>
+            <div class="searchBox left large-4 medium-3 small-4 columns" id="js-searchResults">
+            </div>
+        </div>
+        <div class="row collapse">
+            <div class="small-12 columns">
+                <div class="button-bar">
+                    <ul class="button-group">
+                        <li>
+                            <a href="#" id="js-showItemsView" class="tiny button">BTC</a>
+                            <div id="js-itemsViewModal" class="reveal-modal" data-reveal></div>
+                        </li>
+                        <li>
+                            <a href="#" id="js-showPlatformsView" class="tiny button">BTCE</a>
+                            <div id="js-platformsViewModal" class="reveal-modal" data-reveal></div>
+                        </li>
+                        <li>
+                            <a href="#" id="js-showCurrenciesView" class="tiny button">BTC/USD</a>
+                            <div id="js-currenciesViewModal" class="reveal-modal" data-reveal></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="left large-10 medium-10 small-10 columns" id="js-searchResults">
-    </div>
+
+
 </div>
