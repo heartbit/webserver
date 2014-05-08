@@ -18,6 +18,7 @@ define('appRouter', ['config', 'ParametersManager', 'EventManager', 'NewsSocketM
 				header: new HeaderView(),
 				keyfacts: new KeyFactsView(),
 				controller: new ControllerView(),
+				main: new MainView()
 			};
 
 			Backbone.history.start({
