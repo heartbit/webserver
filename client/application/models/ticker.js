@@ -20,7 +20,7 @@ define('ticker', ['config', 'moment', 'DataSocketManager', 'EventManager', 'Form
 
         socketSync: function(params) {
             var self = this;
-
+            this.params = params || this.params;
             var updateCallback = function(payload) {
                 console.log('Ticker update: ', payload);
                 var objTicker = payload.data;
@@ -40,7 +40,9 @@ define('ticker', ['config', 'moment', 'DataSocketManager', 'EventManager', 'Form
             this.isListening = true;
         },
 
-        initialize: function() {},
+        initialize: function(params) {
+            this.params = params;
+        },
 
         update: function(ticker) {
             if (ticker.candle) {
