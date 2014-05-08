@@ -42,15 +42,15 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
 
             this.itemsView
                 .setElement('#js-itemsViewModal')
-                .render(params);
+                .render();
 
             this.platformsView
                 .setElement('#js-platformsViewModal')
-                .render(params);
+                .render();
 
             this.currenciesView
                 .setElement('#js-currenciesViewModal')
-                .render(params);
+                .render();
 
             $(document).foundation();
             return this;
