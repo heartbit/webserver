@@ -79,7 +79,7 @@ define('ParametersManager', ['config', 'items', 'platforms', 'currencies', 'pair
     };
 
     ParametersManager.prototype.changeGlobalItem = function(itemid){
-
+        
     };
 
     /* Getters */

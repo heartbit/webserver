@@ -3,7 +3,8 @@ requirejs.config({
     baseUrl: "../",
 
     paths: {
-        config: 'application/config',
+        config: 'application/config/global',
+        parametersManagerConfig: 'application/config/parametersManagerConfig'
 
         // General imports
         'backbone-params': 'libs/backbone.queryparams',

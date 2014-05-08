@@ -14,8 +14,8 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             'click .js-platform': 'changeGlobalPlatform',
 
             'keyup #js-searchbar': 'search',
-            'click #js-searchbar':'showSearchView',
-            'blur #js-searchbar':'hideSearchView'
+            'click #js-searchbar': 'showSearchView',
+            // 'blur #js-searchbar': 'hideSearchView'
         },
 
         template: _.template(ControllerViewTemplate),
@@ -96,20 +96,22 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             return true;
         },
 
-        hideSearchView: function() {
-            $('#js-searchResults').hide();
+        hideSearchView: function(e) {
+            setTimeout(function() {
+                $('#js-searchResults').hide();
+            }, 2000);
             return true;
         },
 
         changeGlobalItem: function(event) {
             var itemId = $(event.target).attr('id');
             ParametersManager.changeGlobalItem(itemId);
-            return false;
+            return true;
         },
 
         changeGlobalPair: function(event) {
-            var itemId = $(event.target).attr('id');
-            ParametersManager.changeGlobalItem(itemId);
+            var pairId = $(event.target).attr('id');
+            ParametersManager.changeGlobalPair(pairId);
             return false;
         },
 
