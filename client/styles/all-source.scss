@@ -3,18 +3,18 @@
 @import "./external/fontello/css/insightfulcointrader.scss";
 @import "./external/normalize.scss";
 
-@import "./transverse.scss";
+@import "./common.scss";
 
-@import "./layout/global.scss";
-@import "./layout/indicatorsView.scss";
-@import "./layout/keyfact.scss";
-@import "./layout/mainView.scss";
-@import "./layout/misk.scss";
-@import "./layout/itemView.scss";
-@import "./layout/weeknews.scss";
-@import "./layout/calculator.scss";
-@import "./layout/news.scss";
-@import "./layout/controller.scss";
+@import "./views/indicatorsView.scss";
+@import "./views/keyfact.scss";
+@import "./views/mainView.scss";
+@import "./views/misk.scss";
+@import "./views/itemView.scss";
+@import "./views/weeknews.scss";
+@import "./views/calculator.scss";
+@import "./views/news.scss";
+@import "./views/controller.scss";
+@import "./views/marketcap.scss";
 
 @import "./charts/depthchart.scss";
 @import "./charts/mainchart.scss";
@@ -23,4 +23,3 @@
 @import "./charts/miskbarchart.scss";
 @import "./charts/miskhorizbarchart.scss";
 
-@import "./marketcap.scss";
