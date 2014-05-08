@@ -70,6 +70,17 @@ define('ParametersManager', ['config', 'items', 'platforms', 'currencies', 'pair
 
     };
 
+    ParametersManager.prototype.changeGlobalPair = function(pairId){
+
+    };
+
+    ParametersManager.prototype.changeGlobalPlatform = function(platformId){
+
+    };
+
+    ParametersManager.prototype.changeGlobalItem = function(itemid){
+
+    };
 
     /* Getters */
     ParametersManager.prototype.getCurrentParams = function() {
