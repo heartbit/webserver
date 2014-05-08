@@ -16,6 +16,7 @@ define('appRouter', ['config', 'ParametersManager', 'EventManager', 'NewsSocketM
 
 			this.views = {
 				header: new HeaderView(),
+				keyfacts: new KeyFactsView(),
 				controller: new ControllerView()
 			};
 
