@@ -32,16 +32,11 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
         },
 
         render: function(params) {
-            this.items = ParametersManager.getItems();
-            this.platforms = ParametersManager.getPlatforms();
-            this.currencies = ParametersManager.getCurrencies();
-            this.pairs = ParametersManager.getPairs();
-
+            var currentParams = ParametersManager.getCurrentParams();
             var tplVars = {
-                compatiblePlatforms: this.platforms,
-                compatibleCurrencies: this.currencies,
-                selectedPlatform: this.platform,
-                selectedCurrency: this.currency,
+                selectedPlatform: currentParams.platform,
+                selectedItem: currentParams.item,
+                selectedPair: currentParams.pair
             };
             this.$el.html(this.template(tplVars));
 
