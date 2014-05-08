@@ -30,6 +30,10 @@ a {
     z-index: 99;
 }
 
+.title-area.webappTitle {
+    text-align: center;
+    margin-left: 5em;
+}
 .loading {
     background: url("/images/loaders/spiffygif_30x30.gif");
     background-repeat: no-repeat;
