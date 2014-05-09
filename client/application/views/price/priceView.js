@@ -20,9 +20,13 @@ define('priceView', ['config', 'text!priceView.html', 'ParametersManager', 'Form
 				var self = this;
 				this.averages = new Array();
 				_.each(this.trades.averages, function(average) {
+					var formattedItems = new Array();
+					_.each(average.items,function(item){
+						formattedItems.push({platform:item.platform,price:FormatUtils.formatPrice(item.price, average.currency)})
+					});
 					self.averages.push({
 						average: FormatUtils.formatPrice(average.average, average.currency),
-						items: average.items
+						items: formattedItems
 					});
 				});
 				this.$el.html(this.template({
@@ -31,7 +35,7 @@ define('priceView', ['config', 'text!priceView.html', 'ParametersManager', 'Form
 				return this;
 			},
 			update: function() {
-				this.render();
+				//this.render();
 				return this;
 			}
 		});
