@@ -35,7 +35,7 @@ define('priceView', ['config', 'text!priceView.html', 'ParametersManager', 'Form
 				return this;
 			},
 			update: function() {
-				//this.render();
+				this.render();
 				return this;
 			}
 		});
