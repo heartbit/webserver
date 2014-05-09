@@ -1,32 +1,24 @@
 <div class="js-marketcapDiv marketcap">
     <div class="globalDiv">
-		<img width="80" height="55" style="float:left" src="http://1.bp.blogspot.com/-cMd4p4D3yLo/Uu7-FL-5MHI/AAAAAAAAAiw/msWsPjJccjM/s1600/bitcoinLogo1000.png"/>
-    	<div style="margin-top: 10px;">
-    		<em>
-	    				<%=marketcapTemplate.marketcap%> =
-	    		&nbsp;&nbsp;
-	    				<%=marketcapTemplate.price%> X <%=marketcapTemplate.totalcoin%>
-	        	
-    		</em>
-		</div>
-		<div class="maketcap-italic">
-			<i>
-				Live data from Kraken,Bitstamp,Btce,BitFinex<br/>
+    	<h1>Marketcap <img width="40" height="27" style="float:none" src="http://1.bp.blogspot.com/-cMd4p4D3yLo/Uu7-FL-5MHI/AAAAAAAAAiw/msWsPjJccjM/s1600/bitcoinLogo1000.png" />
+    	</h1>
+        <div style="margin-top: 10px;">
+            <% _.each(marketcapTemplate.marketcaps,function(marketcap,index){%>
+            <div class="<%if (index != 0){%>hide<%}%>">
+                <em>
+                    <%=marketcap.marketcap%>
+                </em>
+                <br/>
+                <i class="infos-marketcap"><%=marketcap.price%> X <%=marketcap.totalcoin%></i>
+            </div>
+
+            <%})%>
+        </div>
+        <div class="makertcap-italic">
+            <i>
+				Live data from Bitstamp,Btce,BitFinex<br/>
 			</i>
-		</div>
-		<!--<%_.each(marketcapTemplate.averages,function(average){%>
-		<div>
-				<em><%= average.average%></em>
-
-			<ul>
-				<%_.each(average.items,function(item){%>
-					<li> <%= item.platform %> : <%= item.price %></li>
-							
-				<%});%>
-			</ul>
-		</div>
-		<%});%>-->
-
+        </div>
     </div>
-  
+
 </div>
