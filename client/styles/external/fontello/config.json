@@ -13,6 +13,18 @@
       "src": "fontawesome"
     },
     {
+      "uid": "5408be43f7c42bccee419c6be53fdef5",
+      "css": "doc-text",
+      "code": 59409,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "531bc468eecbb8867d822f1c11f1e039",
+      "css": "calendar",
+      "code": 59408,
+      "src": "fontawesome"
+    },
+    {
       "uid": "2c0b53280f82068f6bab4e2200025d9f",
       "css": "chat",
       "code": 59404,

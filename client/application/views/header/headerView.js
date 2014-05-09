@@ -1,4 +1,4 @@
-define('headerView', ['config', 'text!headerView.html'], function(config, HeaderTemplate) {
+define('headerView', ['config', 'text!headerView.html', 'backbone'], function(config, HeaderTemplate, Backbone) {
 
     return Backbone.View.extend({
 

@@ -1,4 +1,4 @@
-define('platform', ['config', 'moment'], function(config, moment) {
+define('platform', ['config', 'moment', 'backbone'], function(config, moment, Backbone) {
 
 	var Platform = Backbone.Model.extend({
 

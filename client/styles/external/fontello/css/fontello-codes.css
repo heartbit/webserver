@@ -1,17 +1,19 @@
 
 .icon-picture:before { content: '\e802'; } /* '' */
 .icon-acrobat:before { content: '\e803'; } /* '' */
+.icon-calendar:before { content: '\e810'; } /* '' */
+.icon-chat:before { content: '\e80c'; } /* '' */
 .icon-chart-pie:before { content: '\e80a'; } /* '' */
 .icon-chart-area:before { content: '\e809'; } /* '' */
 .icon-export-outline:before { content: '\e800'; } /* '' */
 .icon-export:before { content: '\e801'; } /* '' */
 .icon-down-dir:before { content: '\e80d'; } /* '' */
-.icon-right-dir:before { content: '\e80e'; } /* '' */
-.icon-chat:before { content: '\e80c'; } /* '' */
+.icon-doc-text:before { content: '\e811'; } /* '' */
+.icon-up-dir:before { content: '\e80f'; } /* '' */
 .icon-chart:before { content: '\e80b'; } /* '' */
 .icon-chart-bar:before { content: '\e808'; } /* '' */
 .icon-twitter:before { content: '\e804'; } /* '' */
 .icon-facebook:before { content: '\e805'; } /* '' */
 .icon-github-circled:before { content: '\e806'; } /* '' */
 .icon-wordpress:before { content: '\e807'; } /* '' */
-.icon-up-dir:before { content: '\e80f'; } /* '' */
+.icon-right-dir:before { content: '\e80e'; } /* '' */

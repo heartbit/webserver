@@ -1,5 +1,5 @@
 {
-  "name": "insightfultrader-webapp",
+  "name": "heartbit-webserver",
   "preferGlobal": "false",
   "version": "0.1.0",
   "author": "dschonfe",
@@ -27,9 +27,9 @@
     "cron": "*",
     "moment": "*",
     "socket.io": "*",
-    "ws":"*",
+    "ws": "*",
     "githubhook": "*",
-    "prettyjson":"*",
+    "prettyjson": "*",
     "slang": "*"
   },
   "devDependencies": {
@@ -49,6 +49,6 @@
     "grunt-nodemon": "~0.1.2",
     "grunt-contrib-sass": "~0.6.0"
   },
-  "license": "insightfultrader.com",
-  "subdomain": "insightfultrader.com"
+  "license": "heartbit.io",
+  "subdomain": "heartbit.io"
 }

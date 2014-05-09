@@ -61,7 +61,7 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
             this.trade.on('update', this.update, this);
             this.update(true);
             this.exportTools.setElement($(this.exportToolEl)).render();
-            this.exportTools.render();
+            // this.exportTools.render();
             return this;
         },
 

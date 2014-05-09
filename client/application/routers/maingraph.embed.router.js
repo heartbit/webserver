@@ -7,7 +7,7 @@ define('embedMaingraphRouter', ['config', 'EventManager', 'mainView'], function(
 			this.mainView = new MainView();
 
 			var params = {
-				platform: 'Bitstamp',
+				platform: 'BITSTAMP',
 				currency: 'USD',
 				item: 'BTC'
 			}
