@@ -38,7 +38,7 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             var tplVars = {
                 selectedPlatform: currentParams.platform,
                 selectedItem: currentParams.item,
-                selectedPair: currentParams.pair
+                selectedPair: currentParams.item + '/' + currentParams.currency
             };
             this.$el.html(this.template(tplVars));
 

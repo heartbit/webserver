@@ -122,7 +122,7 @@ requirejs.config({
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
-        'backbone_params': {
+        'backbone-params': {
             deps: ['backbone'],
             exports: 'Backbone'
         },

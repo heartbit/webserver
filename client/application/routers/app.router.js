@@ -3,13 +3,7 @@ define('appRouter', ['config', 'ParametersManager', 'EventManager', 'NewsSocketM
 	var Router = Backbone.Router.extend({
 
 		routes: {
-			"show": "show",
-			"":"home"
-			// 'marketcap/:item/:currency': 'marketcap'
-		},
-
-		show: function(){
-			console.log('show');
+			"app*": "app",
 		},
 
 		initialize: function() {
@@ -48,14 +42,16 @@ define('appRouter', ['config', 'ParametersManager', 'EventManager', 'NewsSocketM
 				}
 			}
 		*/
-		home: function(params) {
+		app: function(params) {
+			console.log('params : ', params);
 			this.params = params || this.params || {};
 			ParametersManager.isInit ? this.refresh() : ParametersManager.init(this.refresh);
 		},
 
 		refresh: function() {
 			ParametersManager.updateUserInputParams(this.params);
-			this.isRender ? this.update(this.initSockets) : this.render(this.initSockets);
+			this.render(this.initSockets);
+			// this.isRender ? this.update(this.initSockets) : this.render(this.initSockets);
 		},
 
 		render: function(callback) {
@@ -83,32 +79,12 @@ define('appRouter', ['config', 'ParametersManager', 'EventManager', 'NewsSocketM
 			}
 		},
 
-		// marketcap: function( item,currency ) {
-		// 	var self = this;
-		// 	if (this.marketCapView) {
-		// 		this.marketCapView.update();
-		// 	} else {
-		// 		this.marketCapView = new MarketCapView(item,currency);
-		// 		this.marketCapView.setElement(this.appEl).render();
-		// 	}
-		// },
-
 		joinDataRoom: function(params) {
 			var sep = ':';
 			var dataroom = params.item + sep + params.currency;
 			console.log('dataroom', dataroom);
 			DataSocketManager.emit('dataroom', dataroom);
-		},
-
-		// sanitizeParams: function(params) {
-		// 	var cleanParams = {
-		// 		item: params.item || (this.params && this.params.item) || config.defaultparams.item,
-		// 		platform: params.platform || (this.params && this.params.platform) || config.defaultparams.platform,
-		// 		currency: params.currency || (this.params && this.params.currency) || config.defaultparams.currency
-		// 	};
-		// 	this.params = cleanParams;
-		// 	return cleanParams;
-		// }
+		}
 
 	});
 

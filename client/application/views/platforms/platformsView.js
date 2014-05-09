@@ -4,7 +4,9 @@ define('platformsView', ['config', 'text!platformsView.html', 'ParametersManager
 
 		template: _.template(PlatformsTemplate),
 
-		events: {},
+		events: {
+			'click .js-platform': 'changeGlobalPlatform'
+		},
 
 		initialize: function() {
 			var self = this;
@@ -15,11 +17,17 @@ define('platformsView', ['config', 'text!platformsView.html', 'ParametersManager
 
 		render: function(params) {
 			this.$el.html(this.template({
-                platforms: ParametersManager.getPlatforms().models,
-            }));
+				platforms: ParametersManager.getPlatforms().models,
+			}));
 			$(document).foundation();
 			return this;
-		}
+		},
+
+		changeGlobalPlatform: function(event) {
+			var platformId = $(event.target).attr('id');
+			ParametersManager.changeGlobalPlatform(platformId);
+			return false;
+		},
 
 	});
 

@@ -66,12 +66,13 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
     };
 
     ParametersManager.prototype.updateUserInputParams = function(params) {
-
-
+        if (params && params.currency && params.platform && params.item) {
+            this.currentParams = params;
+        }
     };
 
     ParametersManager.prototype.computeUrl = function(params) {
-        return 'webapp/?item=' + params.item + "&platform=" + params.platform + "&currency=" + params.currency;
+        return 'app?item=' + params.item + "&platform=" + params.platform + "&currency=" + params.currency;
     };
 
     ParametersManager.prototype.changeGlobalPair = function(pairId) {
@@ -93,7 +94,7 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
     };
 
     ParametersManager.prototype.changeGlobalItem = function(itemid) {
-        console.log(platformId);
+        console.log(itemid);
         var params = config.defaultitems[itemid];
         params.item = itemid;
         var url = this.computeUrl(params);
