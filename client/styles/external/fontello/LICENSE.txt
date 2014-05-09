@@ -10,6 +10,24 @@ Font license info
    Homepage:  http://fortawesome.github.com/Font-Awesome/
 
 
+## Zocial
+
+   Copyright (C) 2012 by Sam Collins
+
+   Author:    Sam Collins
+   License:   MIT (http://opensource.org/licenses/mit-license.php)
+   Homepage:  http://zocial.smcllns.com/
+
+
+## Entypo
+
+   Copyright (C) 2012 by Daniel Bruce
+
+   Author:    Daniel Bruce
+   License:   CC BY-SA (http://creativecommons.org/licenses/by-sa/2.0/)
+   Homepage:  http://www.entypo.com
+
+
 ## Typicons
 
    (c) Stephen Hutchings 2012
@@ -19,12 +37,21 @@ Font license info
    Homepage:  http://typicons.com/
 
 
-## Zocial
+## Modern Pictograms
 
-   Copyright (C) 2012 by Sam Collins
+   Copyright (c) 2012 by John Caserta. All rights reserved.
 
-   Author:    Sam Collins
-   License:   MIT (http://opensource.org/licenses/mit-license.php)
-   Homepage:  http://zocial.smcllns.com/
+   Author:    John Caserta
+   License:   SIL (http://scripts.sil.org/OFL)
+   Homepage:  http://thedesignoffice.org/project/modern-pictograms/
+
+
+## MFG Labs
+
+   Copyright (C) 2012 by Daniel Bruce
+
+   Author:    MFG Labs
+   License:   SIL (http://scripts.sil.org/OFL)
+   Homepage:  http://www.mfglabs.com/
 
 

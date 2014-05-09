@@ -15,7 +15,7 @@ define('indicatorsView', ['config', 'depth', 'text!indicatorsView.html', 'depthc
             this.$el.html(this.template());
             this.depth.socketSync(params);
             this.depth.on('update', this.update, this);
-            this.depthChart = new DepthChart('#js-indicator');
+            this.depthChart = new DepthChart('#js-depth');
             return this;
         },
 

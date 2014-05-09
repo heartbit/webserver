@@ -41,6 +41,10 @@ define('parametersManagerConfig', function() {
 			item: 'BTC',
 			currency: 'EUR'
 		},
+		BITFINEX: {
+			item: 'BTC',
+			currency: 'USD'
+		}
 	};
 
 	parametersManagerConfig.defaultitems = {
