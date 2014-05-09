@@ -44,16 +44,9 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
             });
             return selectedTrade;
         },
-        initParameterManager: function() {
-            ParameterManager.init(this.fetchAllTradesByItems);
-        },
+      
         fetchAllLastTrades: function() {
-            var self = this;
-            if(! ParameterManager.isInit ) {
-               this.initParameterManager();
-            }
-        },
-        fetchAllTradesByItems:function(){
+          
             var self = this;
             this.platforms = ParameterManager.getPlatforms();
             _.each(this.platforms.models, function(platform) {
