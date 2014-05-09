@@ -5,7 +5,11 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 
 			template: _.template(VolumewidgetTemplate),
 
-			events: {},
+			events: {
+				'click #js-showDetails':'showDetails',
+				'click #js-volumewidget':'hideDetails',
+				'click #js-volumes':'hideDetails'
+			},
 			el: '#js-volumewidget',
 			initialize: function() {
 				var self = this;
@@ -16,7 +20,12 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 				this.tickers.on('update',this.update,this);
 				this.render();
 			},
-
+			showDetails:function(){
+				$("#js-volumes").toggle('slow');
+			},
+			hideDetails: function() {
+				$("#js-volumes").toggle('slow');
+			},
 			render: function(params) {
 				var self = this;
 				var data = this.dataHelper.buildVolumesForPieChart(this.tickers);
@@ -25,7 +34,7 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 						{data: {tickers:data.volumes,total:data.volumeTotal}}
 					));
 					this.pieChart = new Miskpiechart({el:"#js-pieChart",tickers:data.volumesPieChart});
-					this.drawPie();
+					this.pieChart.rogueDraw({tickers:data.volumesPieChart});
 				}
 				return this;
 			},
