@@ -43,6 +43,7 @@ define('trades', ['config', 'trade', 'items'], function(config, Trade, Items) {
             });
             return selectedTrade;
         },
+        
         fetchAllLastTrades: function() {
             var self = this;
             this.items = new Items();
