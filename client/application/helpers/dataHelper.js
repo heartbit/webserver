@@ -69,6 +69,13 @@ define('dataHelper', function() {
       return models;
    };
 
+   DataHelper.prototype.buildVolumesForPieChart =function(tickers)  {
+      var volumes = [];
+      _.each(tickers,function(ticker){
+         volumes.push([ticker.platform,ticker.vol]);
+      })
+   }
+
    return DataHelper;
 
 });
