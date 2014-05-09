@@ -1,0 +1,19 @@
+<div id="js-price">
+    <%_.each(averages,function(average){%>
+        <div>
+            <em>
+                <%=average.average%>
+            </em>
+
+            <ul>
+                <%_.each(average.items,function(item){%>
+                    <li>
+                        <%=item.platform %>:
+                        <%=item.price %>
+                    </li>
+
+                    <%});%>
+            </ul>
+        </div>
+    <%});%>
+</div>

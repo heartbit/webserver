@@ -76,9 +76,7 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
             this.fetch();
             return this.models
 
-        }
-         
-        ,
+        },
         update: function() {
             var self = this;
             this.averages = new Array();
