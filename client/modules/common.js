@@ -33,6 +33,7 @@ requirejs.config({
         embedMaingraphRouter: 'application/routers/maingraph.embed.router',
         embedVolumeRouter: 'application/routers/volume.embed.router',
         embedPriceRouter: 'application/routers/price.embed.router',
+        embedNewsRouter: 'application/routers/news.embed.router',
 
         // Views
         currenciesView: 'application/views/currencies/currenciesView',
