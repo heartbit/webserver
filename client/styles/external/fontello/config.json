@@ -13,6 +13,24 @@
       "src": "fontawesome"
     },
     {
+      "uid": "2c0b53280f82068f6bab4e2200025d9f",
+      "css": "chat",
+      "code": 59404,
+      "src": "entypo"
+    },
+    {
+      "uid": "fb5082fac1794b69a1381196219a836e",
+      "css": "chart-pie",
+      "code": 59402,
+      "src": "entypo"
+    },
+    {
+      "uid": "32b4054f35918992f723e39f4095f005",
+      "css": "chart-area",
+      "code": 59401,
+      "src": "entypo"
+    },
+    {
       "uid": "44a6b866f720a1d2b11bf05023a4e089",
       "css": "export-outline",
       "code": 59392,
@@ -23,6 +41,60 @@
       "css": "export",
       "code": 59393,
       "src": "typicons"
+    },
+    {
+      "uid": "8ax1xqcbzz1hobyd4i7f0unwib1bztip",
+      "css": "down-dir",
+      "code": 59405,
+      "src": "modernpics"
+    },
+    {
+      "uid": "gypcofts1tkouwkxbv8d33eanqpreyy9",
+      "css": "right-dir",
+      "code": 59406,
+      "src": "modernpics"
+    },
+    {
+      "uid": "6ipws8y9gej6vbloufvhi5qux7rluf64",
+      "css": "up-dir",
+      "code": 59407,
+      "src": "modernpics"
+    },
+    {
+      "uid": "97ylvmgyj79w96iwzdanwmf5o4cvo17w",
+      "css": "chart",
+      "code": 59403,
+      "src": "modernpics"
+    },
+    {
+      "uid": "c46c42ae95f46394bd2f9c9a9cc5f768",
+      "css": "chart-bar",
+      "code": 59400,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "b1ec8e90c2c85cf0035849980a3789b3",
+      "css": "twitter",
+      "code": 59396,
+      "src": "zocial"
+    },
+    {
+      "uid": "6f7586c6f99798c3c1de6123d1f6cfa9",
+      "css": "facebook",
+      "code": 59397,
+      "src": "zocial"
+    },
+    {
+      "uid": "ff16079eb4be12c49bf3014d2322acdd",
+      "css": "github-circled",
+      "code": 59398,
+      "src": "zocial"
+    },
+    {
+      "uid": "0636c283a9822288a767609062bbf4a4",
+      "css": "wordpress",
+      "code": 59399,
+      "src": "zocial"
     },
     {
       "uid": "fd1c420f4755e275d578d856d7b20c50",
