@@ -2,6 +2,9 @@
     margin: 10px;
     height: 135px;
 }
+#js-marketcapDiv {
+    background:white;
+}
 .infos-marketcap {
     font-size:0.8em;
 }
@@ -10,12 +13,20 @@
 }
 .marketcap .globalDiv {
     border-radius: 6px;
+    border:solid 1px;
     padding: 12px;
     margin-left: 12px;
     margin-top: -7px;
     position:relative;
     min-height: 100px;
+    box-shadow: 10px 10px 5px #888888;
+
 }
+.marketcapRow {
+	background:white;
+	height: 100%;
+}
+
 .globalDiv h1 {
 	margin-bottom:0.3em;
 	margin-top:0.15em;
