@@ -1,31 +1,36 @@
 <div class="">
-   
-    <div id="graphtools">
-        <ul class="inline-list timeperiods left">
-            <%_.each(timeperiods, function(timeperiod){%>
+
+
+    <div id="graphtools" class="row">
+        
+        <div class="small-8 large-8 medium-8 columns">
+            <ul class="inline-list timeperiods left">
+                <%_.each(timeperiods, function(timeperiod){%>
                 <li class="<%=(timeperiod.id == currentTimeperiodId) ? 'current' : 'available'%>">
                     <a href="#" id="<%=timeperiod.id%>" class="js-timeperiod ">
                         <%=timeperiod.label%>
                     </a>
                 </li>
                 <%});%>
-        </ul>
-        <ul class="inline-list right">
-            <li class="">
-                <a href="#" id="js-volumeLayer" class="icon-chart-bar">
-                </a>
-            </li>
-            <li class="">
-                <a href="#" id="js-candleLayer" class="icon-chart">
-                </a>
-            </li>
-        </ul>
+            </ul>
+        </div>
+
+        <div class="small-2 large-2 mediul-2 columns">
+            <ul class="inline-list right">
+                <li class="">
+                    <a href="#" id="js-volumeLayer" class="icon-chart-bar">
+                    </a>
+                </li>
+                <li class="">
+                    <a href="#" id="js-candleLayer" class="icon-chart">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div id="maingraphmenu" class="exporttools small-2 large-2 mediul-2 columns"></div>
     </div>
 
-    <div id="maingraphmenu">
-    </div>
-
-    <div class="mainchart loading" id="js-mainchart">
-    </div>
+    <div class="mainchart loading" id="js-mainchart"></div>
 
 </div>

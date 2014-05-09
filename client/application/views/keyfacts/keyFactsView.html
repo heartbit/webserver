@@ -1,4 +1,5 @@
 <div class="row" id="keyfact">
+	<div id="js-keyFactExportTools" class="exporttools"></div>
     <% _.each(tickerAttributes, function(tickerAttribute) { %>
         <div class="large-2 medium-2 small-2 columns panel bottomTopBorder text-center">
             <span class="">
@@ -7,6 +8,4 @@
             <div id="<%=tickerAttribute.htmlSelector%>" class="bigNumber-medium"></div>
         </div>
         <% }); %>
-</div>
-<div id="js-keyFactExportTools" class="row exportTools">
 </div>

@@ -3,8 +3,17 @@
 	display:inline;
 	width:100%;
 }
+
 .exportMenuList li {
 	list-style-type: none;
 	display: inline;
 	float: left;
-	}
+}
+
+.exporttools{
+	position: absolute;
+	z-index:99;
+	right:0px;
+	display:none;
+	width:15em;
+}
