@@ -4,7 +4,7 @@ requirejs.config({
 
     paths: {
         config: 'application/config/global',
-        parametersManagerConfig: 'application/config/parametersManagerConfig'
+        parametersManagerConfig: 'application/config/parametersManagerConfig',
 
         // General imports
         'backbone-params': 'libs/backbone.queryparams',

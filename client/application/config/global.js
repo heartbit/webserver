@@ -4,11 +4,6 @@ define('config', function() {
 
 	var config = {};
 
-	config.defaultparams = {};
-	config.defaultparams.platform = "BITSTAMP";
-	config.defaultparams.item = "BTC";
-	config.defaultparams.currency = "USD";
-
 	config.platform = {};
 	config.platform.url = apiprefix + "documentation/platform";
 	config.platform.urlCollection = apiprefix + "documentation/platform";
@@ -17,26 +12,6 @@ define('config', function() {
 	config.item.url = apiprefix + "documentation/item";
 	config.item.urlCollection = apiprefix + "documentation/item";
 
-	config.defaultplatforms = [{
-		"id": "BTCE",
-		"label": "btce",
-		"url": "https://www.bitstamp.net/",
-		"logo": "https://www.bitstamp.net/s/icons/favicon.ico",
-		"pairs": [{
-			"item": {
-				"id": "BTC",
-				"label": "Bitcoin",
-				"symbol": "Ƀ"
-			},
-			"currency": {
-				"id": "USD",
-				"label": "American dollars",
-				"symbol": "$"
-			}
-		}]
-	}];
-
-	config.depth = "/data/depth.json";
 	config.ticker = {};
 	config.ticker.url = apiprefix + "ticker/";
 
@@ -45,6 +20,7 @@ define('config', function() {
 
 	config.maingraph = {};
 	config.maingraph.urlCollection = apiprefix + "maingraph";
+	config.maingraph.defaultTimeperiodId = "last24hours";
 	config.maingraph.timeperiods = [{
 		id: 'last3hours',
 		label: '3H',
@@ -101,7 +77,6 @@ define('config', function() {
 		duration: '1',
 		typeDuration: 'ALL'
 	}];
-	config.maingraph.defaultTimeperiodId = "last24hours";
 
 	config.keyfactsview = {};
 	config.keyfactsview.defaultAttributes = [{

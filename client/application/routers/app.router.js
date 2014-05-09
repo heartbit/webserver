@@ -3,9 +3,13 @@ define('appRouter', ['config', 'ParametersManager', 'EventManager', 'NewsSocketM
 	var Router = Backbone.Router.extend({
 
 		routes: {
-			"": "home",
-			"webapp*": "home",
-			'marketcap/:item/:currency': 'marketcap'
+			"show": "show",
+			"":"home"
+			// 'marketcap/:item/:currency': 'marketcap'
+		},
+
+		show: function(){
+			console.log('show');
 		},
 
 		initialize: function() {
@@ -18,9 +22,9 @@ define('appRouter', ['config', 'ParametersManager', 'EventManager', 'NewsSocketM
 				header: new HeaderView(),
 				keyfacts: new KeyFactsView(),
 				controller: new ControllerView(),
-				main: new MainView(),
-				news: new NewsView(),
-				indicators: new IndicatorsView(),
+				// main: new MainView(),
+				// news: new NewsView(),
+				// indicators: new IndicatorsView(),
 			};
 
 			Backbone.history.start({

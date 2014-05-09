@@ -1,4 +1,4 @@
-define('ParametersManager', ['config', 'items', 'platforms', 'currencies', 'pairs'], function(config, Items, Platforms, Currencies, Pairs) {
+define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'currencies', 'pairs'], function(config, Items, Platforms, Currencies, Pairs) {
 
     var ParametersManager = function ParametersManager() {
         if (ParametersManager.caller != ParametersManager.getInstance) {
@@ -18,7 +18,6 @@ define('ParametersManager', ['config', 'items', 'platforms', 'currencies', 'pair
     ParametersManager.prototype.init = function(callback) {
         var self = this;
         this.items.fetch({
-            data: {},
             type: 'POST',
             success: function() {
                 self.initInternalParams();
@@ -68,18 +67,38 @@ define('ParametersManager', ['config', 'items', 'platforms', 'currencies', 'pair
 
     ParametersManager.prototype.updateUserInputParams = function(params) {
 
-    };
-
-    ParametersManager.prototype.changeGlobalPair = function(pairId){
 
     };
 
-    ParametersManager.prototype.changeGlobalPlatform = function(platformId){
-
+    ParametersManager.prototype.computeUrl = function(params) {
+        return 'webapp/?item=' + params.item + "&platform=" + params.platform + "&currency=" + params.currency;
     };
 
-    ParametersManager.prototype.changeGlobalItem = function(itemid){
-        
+    ParametersManager.prototype.changeGlobalPair = function(pairId) {
+        console.log(platformId);
+        var params = config.defaultitems[platformId];
+        params.platform = platformId;
+        var url = this.computeUrl(params);
+        Backbone.history.navigate(url, true);
+        return false;
+    };
+
+    ParametersManager.prototype.changeGlobalPlatform = function(platformId) {
+        console.log(platformId);
+        var params = config.defaultplatforms[platformId];
+        params.platform = platformId;
+        var url = this.computeUrl(params);
+        Backbone.history.navigate(url, true);
+        return false;
+    };
+
+    ParametersManager.prototype.changeGlobalItem = function(itemid) {
+        console.log(platformId);
+        var params = config.defaultitems[itemid];
+        params.item = itemid;
+        var url = this.computeUrl(params);
+        Backbone.history.navigate(url, true);
+        return false;
     };
 
     /* Getters */
