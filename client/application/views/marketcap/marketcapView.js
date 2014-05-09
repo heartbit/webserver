@@ -1,5 +1,5 @@
-define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'FormatUtils','tickers','miskpiechart','items'], 
-    function(config,Marketcap, MarketcapViewTemplate, FormatUtils,Tickers,Miskpiechart,Items) {
+define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'FormatUtils','tickers','items'], 
+    function(config,Marketcap, MarketcapViewTemplate, FormatUtils,Tickers,Items) {
 
     return Backbone.View.extend({
 
@@ -20,29 +20,10 @@ define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'Forma
             
             //this.render({viewName:'none'});
             //this.listenTo(this.marketcap,'change', this.render({viewName:'marketcap'}));
-            this.items = new Items(); 
-            this.items.fetch({
-                data: {},
-                type: 'POST',
-                success: function() {
-                    self.platforms = self.items.getPlatforms();
-                    _.each(self.platforms.models,function(platform){
-                        platform.pairs=[{item:'BTC',currency:'USD'}];
-                    });
-                    self.tickers = new Tickers();
-                    self.tickers.init({platforms:self.platforms.models})
-                    self.tickers.fetch({type:''});
-                    self.tickers.on('all', self.render)
-                }
-            });
+          
         },
         computeMarketcap: function(){
             console.log(this.tickers);
-        },
-        drawPie: function(){
-            this.pieChart = new Miskpiechart("#pieChart");
-            this.pieChart.draw();
-            this.initListener();
         },
         initListener: function(){
             var self = this;

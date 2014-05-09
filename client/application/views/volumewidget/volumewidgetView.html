@@ -1,0 +1,16 @@
+<div id="js-pieChart" >
+</div>
+<div id="js-volumes">
+	 <ul style="list-style-type:none;">
+        <%_.each(data.tickers, function(ticker){%>
+        <li  style="list-style-type:none;padding:2px;margin-top:3px;">
+            <%=ticker.platform%> : <%=ticker.vol%>  
+            Major Currency : <%=ticker.currency%>
+        </li>
+        <%})%>
+        <li>
+        	TOTAL : <%= data.total%>
+        </li>
+    </ul>
+</div>
+

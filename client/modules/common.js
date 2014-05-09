@@ -30,6 +30,7 @@ requirejs.config({
         embedMarketCapRouter: 'application/routers/marketcap.embed.router',
         embedKeyfactsRouter: 'application/routers/keyfacts.embed.router',
         embedMaingraphRouter: 'application/routers/maingraph.embed.router',
+        embedVolumeRouter: 'application/routers/volume.embed.router',
 
         // Views
         currenciesView: 'application/views/currencies/currenciesView',
@@ -53,6 +54,7 @@ requirejs.config({
         mainView: 'application/views/main/mainView',
         miskView: 'application/views/misk/miskView',
         newsView: 'application/views/news/newsView',
+        volumewidgetView: 'application/views/volumewidget/volumewidgetView',
 
         // Menu
         graphmenuView: 'application/views/menu/graphmenuView',

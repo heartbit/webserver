@@ -1,53 +1,39 @@
 define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], function(config, Datahelper, d3, formatutils) {
 
-	function MiskPieChart(el) {
-		this.el = el;
-		this.initChart();
+	function MiskPieChart(params) {
+		this.el = params.el;
+		this.initlayer=false;
+		this.initChart(params);
 		this.initLayer();
 		this.initPie();
 	};
 
-	MiskPieChart.prototype.parseCollections = function(collections) {
-		var self = this;
+	MiskPieChart.prototype.initChart = function(params) {
+		var self =this;
+		this.volumes=[];
+		this.colors = {
+			"BITSTAMP":"#508F40",
+			"BTCE":"#99609C",
+			"BTCECHINA":"#D95050",
+			"BITFINEX":"#CACACA",
+			"KRAKEN":"#D0D61A",
+		}
+		if( params && params.tickers ) {
 
-		this.volumes = [];
-		this.data = [
-			["bitstamp", 26863, "EU", "#508F40", true],
-			["btcChina", 8245, "PRC", "#D95050", true],
-			["btc-e", 21837, "BG", "#64658C", true],
-			["OKCoin", 124098, "PRC", "#99609C", false],
-			["huobi", 166968, "PRC", "#DED143", false],
-			["bitcoin-central", 400, "EU", "#042157", true],
-			["kraken", 1211, "EU", "#D0D61A", true]
-		];
-		//Tri tableau par grandeur volume
-		this.data.sort(function(a, b)  {
-			return a[1] > b[1];
-		});
-
-		//RADIUS
-		_.each(this.data, function(data) {
-			var volume = {};
-			volume.platform = data[0];
-			volume.volume = data[1];
-			volume.region = data[2];
-			volume.color = data[3];
-			volume.reliable = data[4];
-			self.volumes.push(volume);
-		});
-	};
-
-	MiskPieChart.prototype.initChart = function() {
-		
-		this.volumes=[
-			["bitstamp",2680,"EU","#508F40",true],
-			["btcChina",8245,"PRC","#D95050",true],
-			["btc-e",21870,"BG","#64658C",true],
-			["OKCoin",12098,"PRC","#99609C",false],
-			["huobi",56696,"PRC","#DED143",false],
-			["bitcoin-central",400,"EU","#042157",true],
-			["kraken",1211,"EU","#D0D61A",true]
-		];
+			_.each(params.tickers,function(volume){
+				var vol = volume.vol || 0;
+				self.volumes.push([volume.platform,vol,'',self.colors[volume.platform],true]);
+			});
+		}
+		// [
+		// 	["bitstamp",2680,"EU","#508F40",true],
+		// 	["btcChina",8245,"PRC","#D95050",true],
+		// 	["btc-e",21870,"BG","#64658C",true],
+		// 	["OKCoin",12098,"PRC","#99609C",false],
+		// 	["huobi",56696,"PRC","#DED143",false],
+		// 	["bitcoin-central",400,"EU","#042157",true],
+		// 	["kraken",1211,"EU","#D0D61A",true]
+		// ];
 
 		this.volumes.sort(function(a,b) {
 			return a[1]>b[1];		
@@ -79,12 +65,12 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 	};
 
 	MiskPieChart.prototype.initLayer=function() {
-		this.misk=d3.select("body").append("svg").attr("height",this.generalHeight).attr("width",this.generalWidth);
+		this.misk=d3.select("#js-pieChart").append("svg").attr("height",this.generalHeight).attr("width",this.generalWidth);
 
 		this.widget2=this.misk.append("g").attr("height",this.visHeight).attr("width",this.visWidth).attr("class","widget2");
 	
 		this.pieChartLayer=this.widget2.append("g").attr("transform","translate("+this.margin.left+","+this.margin.top+")").attr("class","widgetlayer");
-
+		this.initlayer=true;
 	};
 
 	MiskPieChart.prototype.initPie=function() {
@@ -102,10 +88,10 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 
 	};
 
-	MiskPieChart.prototype.updateAxis=function() {
+	MiskPieChart.prototype.updateAxis=function(params) {
 		var self=this;
 		
-
+		this.initChart(params); 
 		//PieChart1
 		this.pie= d3.layout.pie()
 			.sort(null)
@@ -185,9 +171,8 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 
 	};
 
-	MiskPieChart.prototype.draw=function() {
-		
-		this.updateAxis();
+	MiskPieChart.prototype.draw=function(params) {
+		this.updateAxis(params);
 		this.updateMiskPieChart();
 	};
 
