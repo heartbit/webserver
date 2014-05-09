@@ -15,6 +15,7 @@ define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'Forma
             var self = this;
             this.marketcap = new Marketcap({url:config.marketcap.urlModel+"item="+this.item+"&currency="+this.currency});
             this.trades = new Trades();
+            this.trades.init();
             this.trades.fetchAllLastTrades();
             this.marketcap.fetch();
             _.bindAll(this, 'render', 'update');

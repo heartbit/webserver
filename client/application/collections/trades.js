@@ -1,4 +1,4 @@
-define('trades', ['config', 'trade', 'items'], function(config, Trade, Items) {
+define('trades', ['config', 'trade', 'items','ParametersManager'], function(config, Trade, Items,ParameterManager) {
 
     var Tickers = Backbone.Collection.extend({
 
@@ -22,6 +22,7 @@ define('trades', ['config', 'trade', 'items'], function(config, Trade, Items) {
                     self.add(trade);
                 });
             });
+            
             return this;
         },
 
@@ -43,44 +44,48 @@ define('trades', ['config', 'trade', 'items'], function(config, Trade, Items) {
             });
             return selectedTrade;
         },
+        initParameterManager: function() {
+            ParameterManager.init(this.fetchAllTradesByItems);
+        },
         fetchAllLastTrades: function() {
             var self = this;
-            this.items = new Items();
-            this.items.fetch({
-                data: {},
-                type: 'POST',
-                success: function() {
-                    self.platforms = self.items.getPlatforms();
-                    _.each(self.platforms.models, function(platform) {
-                        switch (platform.id) {
-                            case 'BTCCHINA':
-                                platform.pairs = [{
-                                    item: 'BTC',
-                                    currency: 'CNY'
-                                }];
-                                break;
-                            case 'KRAKEN':
-                                platform.pairs = [{
-                                    item: 'BTC',
-                                    currency: 'EUR'
-                                }];
-                                break;
-                            default:
-                                platform.pairs = [{
-                                    item: 'BTC',
-                                    currency: 'USD'
-                                }];
-                        }
-                    });
-                    self.init({
-                        platforms: self.platforms.models
-                    });
-                    self.fetch();
-                    return self.models
+            if(! ParameterManager.isInit ) {
+               this.initParameterManager();
+            }
+        },
+        fetchAllTradesByItems:function(){
+            var self = this;
+            this.platforms = ParameterManager.getPlatforms();
+            _.each(this.platforms.models, function(platform) {
+                switch (platform.id) {
+                    case 'BTCCHINA':
+                        platform.pairs = [{
+                            item: 'BTC',
+                            currency: 'CNY'
+                        }];
+                        break;
+                    case 'KRAKEN':
+                        platform.pairs = [{
+                            item: 'BTC',
+                            currency: 'EUR'
+                        }];
+                        break;
+                    default:
+                        platform.pairs = [{
+                            item: 'BTC',
+                            currency: 'USD'
+                        }];
                 }
             });
-            return self.models;
-        },
+            this.init({
+                platforms: this.platforms.models
+            });
+            this.fetch();
+            return this.models
+
+        }
+         
+        ,
         update: function() {
             var self = this;
             this.averages = new Array();
