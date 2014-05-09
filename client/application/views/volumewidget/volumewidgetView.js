@@ -1,5 +1,5 @@
-define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersManager', 'miskpiechart','tickers','FormatUtils'],
-	function(config, VolumewidgetTemplate, ParametersManager, Miskpiechart,Tickers,FormatUtils) {
+define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersManager', 'miskpiechart','tickers','FormatUtils','dataHelper'],
+	function(config, VolumewidgetTemplate, ParametersManager, Miskpiechart,Tickers,FormatUtils,DataHelper) {
 
 		return Backbone.View.extend({
 
@@ -9,6 +9,7 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 			el: '#js-volumewidget',
 			initialize: function() {
 				var self = this;
+				this.dataHelper = new DataHelper();
 				_.bindAll(this, 'render', 'update');
 				this.tickers = new Tickers();
 				this.tickers.fetchAllTickersForVolumeWidget();
@@ -18,25 +19,13 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 
 			render: function(params) {
 				var self = this;
-				this.modelsJSONPieChart =  new Array();
-				this.modelsJSON =  new Array();
-				var item= "";
-				_.each(this.tickers.models,function(model) {
-					item = model.item;
-					var modelPieChart = model.toJSON();
-					model = model.toJSON();
-					self.modelsJSONPieChart.push(modelPieChart);
-					model.vol = FormatUtils.formatPrice( model.vol,model.item );
-					model.currency = FormatUtils.formatCurrencyLabel( model.currency);
-					self.modelsJSON.push(model);
-				});
-				if( this.modelsJSON && this.modelsJSON.length > 0 ) {
-					var volumeTotal = FormatUtils.formatPrice(this.tickers.volumeTotal,this.modelsJSON[0].item);
+				var data = this.dataHelper.buildVolumesForPieChart(this.tickers);
+				if( data.volumes && data.volumes.length > 0 ) {
 					this.$el.html(this.template(
-						{data: {tickers:this.modelsJSON,total:volumeTotal}}
+						{data: {tickers:data.volumes,total:data.volumeTotal}}
 					));
-					this.pieChart = new Miskpiechart({el:"#js-pieChart",tickers:this.modelsJSONPieChart});
-					this.drawPie({el:"#js-pieChart",tickers:this.modelsJSONPieChart});
+					this.pieChart = new Miskpiechart({el:"#js-pieChart",tickers:data.volumesPieChart});
+					this.drawPie({el:"#js-pieChart",tickers:data.volumesPieChart});
 				}
 				return this;
 			},
