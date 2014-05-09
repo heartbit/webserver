@@ -54,17 +54,20 @@ ClientSocket.prototype.initNewsfeedNamespace = function() {
 ClientSocket.prototype.initDataNamespace = function() {
 	var self = this;
 	var sep = ":";
-
+	this.datarooms = [];
 	this.io
 		.of("/data")
 		.on('connection', function(socket) {
 			socket.on('dataroom', function(dataroom) {
 				console.log('client want to join dataroom : ' + dataroom);
-				socket.get('dataroom', function(err, nameroom) {
-					if (nameroom) {
-						socket.leave(nameroom);
-					}
-				});
+				 socket.get('dataroom', function(err, nameroom) {
+				 	if (nameroom === dataroom) {
+				 		socket.leave(nameroom);
+				 	}
+				 	else {
+				 	 	self.datarooms.push(dataroom);
+				 	}
+				 });
 
 				// Send cached data :
 				_.each(self.platforms, function(platform) {

@@ -4,6 +4,8 @@
         "/app": "file:templates/app.html",
         "/embed/keyfacts": "file:templates/embed/keyfacts.html",
         "/embed/maingraph": "file:templates/embed/maingraph.html",
-        "/embed/marketcap": "file:templates/embed/marketcap.html"
+        "/embed/marketcap": "file:templates/embed/marketcap.html",
+        "/embed/volume": "file:templates/embed/volume.html"
+
     }
 }

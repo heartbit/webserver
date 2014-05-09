@@ -1,6 +1,7 @@
-define('dataHelper', function() {
+define('dataHelper', ['FormatUtils'],function(FormatUtils) {
 
-   var DataHelper = function() {};
+   var DataHelper = function() {
+   };
 
    DataHelper.prototype.computeDepth = function(depth) {
       var data = depth.attributes;
@@ -69,12 +70,25 @@ define('dataHelper', function() {
       return models;
    };
 
-   DataHelper.prototype.buildVolumesForPieChart =function(tickers)  {
-      var volumes = [];
-      _.each(tickers,function(ticker){
-         volumes.push([ticker.platform,ticker.vol]);
-      })
-   }
+   DataHelper.prototype.buildVolumesForPieChart = function(tickers)  {
+      var self = this;
+      this.volumesPieChart = new Array();
+      this.volumes = new Array();
+      _.each(tickers.models, function(model) {
+         //Pure Json for PieChart
+         var modelPieChart = model.toJSON();
+         self.volumesPieChart.push(modelPieChart);
+         //Format price for Display
+         var model = model.toJSON();
+         model.vol = FormatUtils.formatPrice(model.vol, model.item);
+         model.currency = FormatUtils.formatCurrencyLabel(model.currency);
+         self.volumes.push(model);
+      });
+      if ( this.volumes.length > 0 ) {
+            this.volumeTotal = FormatUtils.formatPrice(tickers.volumeTotal, this.volumes[0].item);
+      }
+      return this;
+   };
 
    return DataHelper;
 

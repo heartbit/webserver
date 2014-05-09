@@ -16,7 +16,7 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 			"BTCE":"#99609C",
 			"BTCECHINA":"#D95050",
 			"BITFINEX":"#CACACA",
-			"KRAKEN":"#D0D61A",
+			"KRAKEN":"#D0D61A"
 		}
 		if( params && params.tickers ) {
 
@@ -56,7 +56,7 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 
 		//RADIUS
 		this.radius=(Math.min(this.w,this.h)/2)-this.margin.radiusMargin;
-		this.radius2=this.radius*2+20;
+		this.radius2=this.radius*2+80;
 
 		this.visHeight=this.h+this.margin.top+this.margin.bottom;
 		this.visWidth=this.w+this.margin.left+this.margin.right;
@@ -105,8 +105,8 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 		.value(function(volume){
 			return volume[1];
 		});
-		this.dataSelect=self.pie(_.last(this.volumes,4));
-		this.dataSelect2=self.pie2(_.last(this.volumes,4));
+		this.dataSelect=self.pie(_.last(this.volumes,5));
+		this.dataSelect2=self.pie2(_.last(this.volumes,5));
 	
 
 
@@ -126,21 +126,19 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 
 		this.pieChart.append("text")
 			.attr("transform",function(volume){
-				if((volume.endAngle-volume.startAngle)<(Math.PI/2)){
 					var centre2=self.arc2.centroid(volume);
 					var centre1=self.arc.centroid(volume);
+				
 					self.pieChart.append("line")
 						.attr("x1",centre1[0])
 						.attr("y1",centre1[1])
 						.attr("x2",centre2[0])
-						.attr("y2",centre2[1]+self.margin.outLine)
+						.attr("y2",centre2[1])
 						// .interpolate("basis")
 						.attr("class","outLine");
 				
 					return "translate("+self.arc2.centroid(volume)+")";
-				}else{
-					return "translate("+self.arc.centroid(volume)+")";
-				}
+				
 			})
 			.attr("class","volTitle")
 			.text(function(volume){
@@ -149,17 +147,17 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 				return volume.data[0];
 			})
 		
-		this.pieChart.append("text").text("BTC")
-			.attr("class","title")
-			.attr("y",4);
+		// this.pieChart.append("text").text("BTC")
+		// 	.attr("class","title")
+		// 	.attr("y",4);
 
 
 
 
-		this.pieChartLayer.append("text")
-			.attr("y",this.radius+this.margin.captiony)
-			.attr("class","title")
-			.text("24h Volume (BTC)");
+		// this.pieChartLayer.append("text")
+		// 	.attr("y",this.radius+this.margin.captiony)
+		// 	.attr("class","title")
+		// 	.text("24h Volume (BTC)");
 
 /////////PIECHART2
 		
