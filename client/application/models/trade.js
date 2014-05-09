@@ -1,4 +1,4 @@
-define('trade', ['config', 'moment', 'DataSocketManager'], function(config, moment, DataSocketManager) {
+define('trade', ['config', 'moment', 'DataSocketManager', 'backbone'], function(config, moment, DataSocketManager, Backbone) {
 
     var Trade = Backbone.Model.extend({
 

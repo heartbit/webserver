@@ -1,21 +1,25 @@
 <div class="">
+   
     <div id="graphtools">
-    <ul class="inline-list timeperiods left">
-        <%_.each(timeperiods, function(timeperiod){%>
-            <li class="<%=(timeperiod.id == currentTimeperiodId) ? 'current' : 'available'%>">
-                <a href="#" id="<%=timeperiod.id%>" class="js-timeperiod ">
-                    <%=timeperiod.label%>
+        <ul class="inline-list timeperiods left">
+            <%_.each(timeperiods, function(timeperiod){%>
+                <li class="<%=(timeperiod.id == currentTimeperiodId) ? 'current' : 'available'%>">
+                    <a href="#" id="<%=timeperiod.id%>" class="js-timeperiod ">
+                        <%=timeperiod.label%>
+                    </a>
+                </li>
+                <%});%>
+        </ul>
+        <ul class="inline-list right">
+            <li class="">
+                <a href="#" id="js-volumeLayer" class="icon-chart-bar">
                 </a>
             </li>
-            <%});%>
-    </ul>
-
-    <ul class="inline-list right">
-        <li class="">
-            <a href="#" id="js-volumeLayer" class="icon-chart-bar">
-                    </a>
-        </li>
-    </ul>
+            <li class="">
+                <a href="#" id="js-candleLayer" class="icon-chart">
+                </a>
+            </li>
+        </ul>
     </div>
 
     <div id="maingraphmenu">
