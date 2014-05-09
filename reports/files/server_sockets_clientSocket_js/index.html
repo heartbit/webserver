@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">78.21</p>
+      <p class="stat">77.64</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">202</p>
+      <p class="stat">205</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">21.25</p>
+      <p class="stat">26.65</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">1.15</p>
+      <p class="stat">1.19</p>
     </div>
   </div>
 </div>
@@ -146,17 +146,20 @@ ClientSocket.prototype.initNewsfeedNamespace = function() {
 ClientSocket.prototype.initDataNamespace = function() {
 	var self = this;
 	var sep = &quot;:&quot;;
-
+	this.datarooms = [];
 	this.io
 		.of(&quot;/data&quot;)
 		.on(&#039;connection&#039;, function(socket) {
 			socket.on(&#039;dataroom&#039;, function(dataroom) {
 				console.log(&#039;client want to join dataroom : &#039; + dataroom);
-				socket.get(&#039;dataroom&#039;, function(err, nameroom) {
-					if (nameroom) {
-						socket.leave(nameroom);
-					}
-				});
+				 socket.get(&#039;dataroom&#039;, function(err, nameroom) {
+				 	if (nameroom === dataroom) {
+				 		socket.leave(nameroom);
+				 	}
+				 	else {
+				 	 	self.datarooms.push(dataroom);
+				 	}
+				 });
 
 				// Send cached data :
 				_.each(self.platforms, function(platform) {

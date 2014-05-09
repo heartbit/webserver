@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">70.65</p>
+      <p class="stat">70.31</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">200</p>
+      <p class="stat">183</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">28.23</p>
+      <p class="stat">25.02</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">2.38</p>
+      <p class="stat">1.86</p>
     </div>
   </div>
 </div>
@@ -92,54 +92,40 @@
   <div class="row">
     <textarea id="file-source" class="col-md-12">define(&#039;miskpiechart&#039;, [&#039;config&#039;, &#039;dataHelper&#039;, &#039;d3&#039;, &#039;FormatUtils&#039;, &#039;moment&#039;], function(config, Datahelper, d3, formatutils) {
 
-	function MiskPieChart(el) {
-		this.el = el;
-		this.initChart();
+	function MiskPieChart(params) {
+		this.el = params.el;
+		this.initlayer=false;
+		this.initChart(params);
 		this.initLayer();
 		this.initPie();
 	};
 
-	MiskPieChart.prototype.parseCollections = function(collections) {
-		var self = this;
+	MiskPieChart.prototype.initChart = function(params) {
+		var self =this;
+		this.volumes=[];
+		this.colors = {
+			&quot;BITSTAMP&quot;:&quot;#508F40&quot;,
+			&quot;BTCE&quot;:&quot;#99609C&quot;,
+			&quot;BTCECHINA&quot;:&quot;#D95050&quot;,
+			&quot;BITFINEX&quot;:&quot;#CACACA&quot;,
+			&quot;KRAKEN&quot;:&quot;#D0D61A&quot;
+		}
+		if( params &amp;&amp; params.tickers ) {
 
-		this.volumes = [];
-		this.data = [
-			[&quot;bitstamp&quot;, 26863, &quot;EU&quot;, &quot;#508F40&quot;, true],
-			[&quot;btcChina&quot;, 8245, &quot;PRC&quot;, &quot;#D95050&quot;, true],
-			[&quot;btc-e&quot;, 21837, &quot;BG&quot;, &quot;#64658C&quot;, true],
-			[&quot;OKCoin&quot;, 124098, &quot;PRC&quot;, &quot;#99609C&quot;, false],
-			[&quot;huobi&quot;, 166968, &quot;PRC&quot;, &quot;#DED143&quot;, false],
-			[&quot;bitcoin-central&quot;, 400, &quot;EU&quot;, &quot;#042157&quot;, true],
-			[&quot;kraken&quot;, 1211, &quot;EU&quot;, &quot;#D0D61A&quot;, true]
-		];
-		//Tri tableau par grandeur volume
-		this.data.sort(function(a, b)  {
-			return a[1] &gt; b[1];
-		});
-
-		//RADIUS
-		_.each(this.data, function(data) {
-			var volume = {};
-			volume.platform = data[0];
-			volume.volume = data[1];
-			volume.region = data[2];
-			volume.color = data[3];
-			volume.reliable = data[4];
-			self.volumes.push(volume);
-		});
-	};
-
-	MiskPieChart.prototype.initChart = function() {
-		
-		this.volumes=[
-			[&quot;bitstamp&quot;,2680,&quot;EU&quot;,&quot;#508F40&quot;,true],
-			[&quot;btcChina&quot;,8245,&quot;PRC&quot;,&quot;#D95050&quot;,true],
-			[&quot;btc-e&quot;,21870,&quot;BG&quot;,&quot;#64658C&quot;,true],
-			[&quot;OKCoin&quot;,12098,&quot;PRC&quot;,&quot;#99609C&quot;,false],
-			[&quot;huobi&quot;,56696,&quot;PRC&quot;,&quot;#DED143&quot;,false],
-			[&quot;bitcoin-central&quot;,400,&quot;EU&quot;,&quot;#042157&quot;,true],
-			[&quot;kraken&quot;,1211,&quot;EU&quot;,&quot;#D0D61A&quot;,true]
-		];
+			_.each(params.tickers,function(volume){
+				var vol = volume.vol || 0;
+				self.volumes.push([volume.platform,vol,&#039;&#039;,self.colors[volume.platform],true]);
+			});
+		}
+		// [
+		// 	[&quot;bitstamp&quot;,2680,&quot;EU&quot;,&quot;#508F40&quot;,true],
+		// 	[&quot;btcChina&quot;,8245,&quot;PRC&quot;,&quot;#D95050&quot;,true],
+		// 	[&quot;btc-e&quot;,21870,&quot;BG&quot;,&quot;#64658C&quot;,true],
+		// 	[&quot;OKCoin&quot;,12098,&quot;PRC&quot;,&quot;#99609C&quot;,false],
+		// 	[&quot;huobi&quot;,56696,&quot;PRC&quot;,&quot;#DED143&quot;,false],
+		// 	[&quot;bitcoin-central&quot;,400,&quot;EU&quot;,&quot;#042157&quot;,true],
+		// 	[&quot;kraken&quot;,1211,&quot;EU&quot;,&quot;#D0D61A&quot;,true]
+		// ];
 
 		this.volumes.sort(function(a,b) {
 			return a[1]&gt;b[1];		
@@ -162,7 +148,7 @@
 
 		//RADIUS
 		this.radius=(Math.min(this.w,this.h)/2)-this.margin.radiusMargin;
-		this.radius2=this.radius*2+20;
+		this.radius2=this.radius*2+80;
 
 		this.visHeight=this.h+this.margin.top+this.margin.bottom;
 		this.visWidth=this.w+this.margin.left+this.margin.right;
@@ -171,12 +157,12 @@
 	};
 
 	MiskPieChart.prototype.initLayer=function() {
-		this.misk=d3.select(&quot;body&quot;).append(&quot;svg&quot;).attr(&quot;height&quot;,this.generalHeight).attr(&quot;width&quot;,this.generalWidth);
+		this.misk=d3.select(&quot;#js-pieChart&quot;).append(&quot;svg&quot;).attr(&quot;height&quot;,this.generalHeight).attr(&quot;width&quot;,this.generalWidth);
 
 		this.widget2=this.misk.append(&quot;g&quot;).attr(&quot;height&quot;,this.visHeight).attr(&quot;width&quot;,this.visWidth).attr(&quot;class&quot;,&quot;widget2&quot;);
 	
 		this.pieChartLayer=this.widget2.append(&quot;g&quot;).attr(&quot;transform&quot;,&quot;translate(&quot;+this.margin.left+&quot;,&quot;+this.margin.top+&quot;)&quot;).attr(&quot;class&quot;,&quot;widgetlayer&quot;);
-
+		this.initlayer=true;
 	};
 
 	MiskPieChart.prototype.initPie=function() {
@@ -194,10 +180,10 @@
 
 	};
 
-	MiskPieChart.prototype.updateAxis=function() {
+	MiskPieChart.prototype.updateAxis=function(params) {
 		var self=this;
 		
-
+		this.initChart(params); 
 		//PieChart1
 		this.pie= d3.layout.pie()
 			.sort(null)
@@ -211,8 +197,8 @@
 		.value(function(volume){
 			return volume[1];
 		});
-		this.dataSelect=self.pie(_.last(this.volumes,4));
-		this.dataSelect2=self.pie2(_.last(this.volumes,4));
+		this.dataSelect=self.pie(_.last(this.volumes,5));
+		this.dataSelect2=self.pie2(_.last(this.volumes,5));
 	
 
 
@@ -232,21 +218,19 @@
 
 		this.pieChart.append(&quot;text&quot;)
 			.attr(&quot;transform&quot;,function(volume){
-				if((volume.endAngle-volume.startAngle)&lt;(Math.PI/2)){
 					var centre2=self.arc2.centroid(volume);
 					var centre1=self.arc.centroid(volume);
+				
 					self.pieChart.append(&quot;line&quot;)
 						.attr(&quot;x1&quot;,centre1[0])
 						.attr(&quot;y1&quot;,centre1[1])
 						.attr(&quot;x2&quot;,centre2[0])
-						.attr(&quot;y2&quot;,centre2[1]+self.margin.outLine)
+						.attr(&quot;y2&quot;,centre2[1])
 						// .interpolate(&quot;basis&quot;)
 						.attr(&quot;class&quot;,&quot;outLine&quot;);
 				
 					return &quot;translate(&quot;+self.arc2.centroid(volume)+&quot;)&quot;;
-				}else{
-					return &quot;translate(&quot;+self.arc.centroid(volume)+&quot;)&quot;;
-				}
+				
 			})
 			.attr(&quot;class&quot;,&quot;volTitle&quot;)
 			.text(function(volume){
@@ -255,17 +239,17 @@
 				return volume.data[0];
 			})
 		
-		this.pieChart.append(&quot;text&quot;).text(&quot;BTC&quot;)
-			.attr(&quot;class&quot;,&quot;title&quot;)
-			.attr(&quot;y&quot;,4);
+		// this.pieChart.append(&quot;text&quot;).text(&quot;BTC&quot;)
+		// 	.attr(&quot;class&quot;,&quot;title&quot;)
+		// 	.attr(&quot;y&quot;,4);
 
 
 
 
-		this.pieChartLayer.append(&quot;text&quot;)
-			.attr(&quot;y&quot;,this.radius+this.margin.captiony)
-			.attr(&quot;class&quot;,&quot;title&quot;)
-			.text(&quot;24h Volume (BTC)&quot;);
+		// this.pieChartLayer.append(&quot;text&quot;)
+		// 	.attr(&quot;y&quot;,this.radius+this.margin.captiony)
+		// 	.attr(&quot;class&quot;,&quot;title&quot;)
+		// 	.text(&quot;24h Volume (BTC)&quot;);
 
 /////////PIECHART2
 		
@@ -277,9 +261,8 @@
 
 	};
 
-	MiskPieChart.prototype.draw=function() {
-		
-		this.updateAxis();
+	MiskPieChart.prototype.draw=function(params) {
+		this.updateAxis(params);
 		this.updateMiskPieChart();
 	};
 

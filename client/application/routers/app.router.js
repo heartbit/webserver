@@ -1,4 +1,4 @@
-define('appRouter', ['config', 'ParametersManager', 'EventManager', 'NewsSocketManager', 'DataSocketManager', 'ChatSocketManager', 'items', 'headerView', 'marketcapView', 'keyFactsView', 'mainView', 'controllerView', 'lastupdateView', 'indicatorsView', 'miskView', 'newsView', 'weeknewsView', 'calculatorView'], function(config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, LastupdateView, IndicatorsView, MiskView, NewsView, WeeknewsView, CalculatorView) {
+define('appRouter', ['backbone', 'config', 'ParametersManager', 'EventManager', 'NewsSocketManager', 'DataSocketManager', 'ChatSocketManager', 'items', 'headerView', 'marketcapView', 'keyFactsView', 'mainView', 'controllerView', 'lastupdateView', 'indicatorsView', 'miskView', 'newsView', 'weeknewsView', 'calculatorView'], function(Backbone, config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, LastupdateView, IndicatorsView, MiskView, NewsView, WeeknewsView, CalculatorView) {
 
 	var Router = Backbone.Router.extend({
 
@@ -16,9 +16,9 @@ define('appRouter', ['config', 'ParametersManager', 'EventManager', 'NewsSocketM
 				header: new HeaderView(),
 				keyfacts: new KeyFactsView(),
 				controller: new ControllerView(),
-				// main: new MainView(),
-				// news: new NewsView(),
-				// indicators: new IndicatorsView(),
+				main: new MainView(),
+				news: new NewsView(),
+				indicators: new IndicatorsView(),
 			};
 
 			Backbone.history.start({

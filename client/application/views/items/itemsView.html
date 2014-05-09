@@ -2,8 +2,8 @@
     <ul>
         <%_.each(items, function(item){%>
             <li>
-                <a>
-                    <%=item.name%>
+                <a class="js-item" id="<%=item.id%>">
+                    <%=item.id%>
                 </a>
             </li>
             <%})%>

@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">71.51</p>
+      <p class="stat">72.12</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">139</p>
+      <p class="stat">141</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">15.01</p>
+      <p class="stat">15.87</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">1.13</p>
+      <p class="stat">1.16</p>
     </div>
   </div>
 </div>
@@ -106,8 +106,8 @@
             &#039;click .js-platform&#039;: &#039;changeGlobalPlatform&#039;,
 
             &#039;keyup #js-searchbar&#039;: &#039;search&#039;,
-            &#039;click #js-searchbar&#039;:&#039;showSearchView&#039;,
-            &#039;blur #js-searchbar&#039;:&#039;hideSearchView&#039;
+            &#039;click #js-searchbar&#039;: &#039;showSearchView&#039;,
+            // &#039;blur #js-searchbar&#039;: &#039;hideSearchView&#039;
         },
 
         template: _.template(ControllerViewTemplate),
@@ -130,7 +130,7 @@
             var tplVars = {
                 selectedPlatform: currentParams.platform,
                 selectedItem: currentParams.item,
-                selectedPair: currentParams.pair
+                selectedPair: currentParams.item + &#039;/&#039; + currentParams.currency
             };
             this.$el.html(this.template(tplVars));
 
@@ -188,20 +188,22 @@
             return true;
         },
 
-        hideSearchView: function() {
-            $(&#039;#js-searchResults&#039;).hide();
+        hideSearchView: function(e) {
+            setTimeout(function() {
+                $(&#039;#js-searchResults&#039;).hide();
+            }, 2000);
             return true;
         },
 
         changeGlobalItem: function(event) {
             var itemId = $(event.target).attr(&#039;id&#039;);
             ParametersManager.changeGlobalItem(itemId);
-            return false;
+            return true;
         },
 
         changeGlobalPair: function(event) {
-            var itemId = $(event.target).attr(&#039;id&#039;);
-            ParametersManager.changeGlobalItem(itemId);
+            var pairId = $(event.target).attr(&#039;id&#039;);
+            ParametersManager.changeGlobalPair(pairId);
             return false;
         },
 

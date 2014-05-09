@@ -4,9 +4,9 @@ define('itemsView', ['config', 'text!itemsView.html', 'ParametersManager'], func
 
         template: _.template(ItemTemplate),
 
-        // events: {
-        //     'click .js-item': 'changeItem',
-        // },
+        events: {
+            'click .js-item': 'changeGlobalItems',
+        },
 
         initialize: function() {
             var self = this;
@@ -21,7 +21,13 @@ define('itemsView', ['config', 'text!itemsView.html', 'ParametersManager'], func
             }));
             $(document).foundation();
             return this;
-        }
+        },
+
+        changeGlobalItems: function(event) {
+            var itemId = $(event.target).attr('id');
+            ParametersManager.changeGlobalItem(itemId);
+            return false;
+        },
 
     });
 

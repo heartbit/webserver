@@ -45,7 +45,7 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">66.14</p>
+      <p class="stat">66.13</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
@@ -153,6 +153,7 @@
             this.trade.on(&#039;update&#039;, this.update, this);
             this.update(true);
             this.exportTools.setElement($(this.exportToolEl)).render();
+            this.exportTools.render();
             return this;
         },
 
@@ -190,7 +191,6 @@
 
                 bigNumberView.bigNumberChart.render(updateParams);
             });
-                        this.exportTools.render();
             // this.changePageTitle();
         },
 
