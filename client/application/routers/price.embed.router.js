@@ -1,4 +1,4 @@
-define('embedMarketCapRouter', ['config',  'marketcapView','DataSocketManager','ParametersManager'], function(config, MarketCapView,DataSocketManager,ParametersManager) {
+define('embedPriceRouter', ['config',  'priceView','DataSocketManager','ParametersManager'], function(config, PriceView,DataSocketManager,ParametersManager) {
 
 	var Router = Backbone.Router.extend({
 
@@ -21,7 +21,7 @@ define('embedMarketCapRouter', ['config',  'marketcapView','DataSocketManager','
 				currency: 'CNY',
 				item: 'BTC'
 			}]
-			this.marketCapView = new MarketCapView(params);
+			this.priceView = new PriceView(params);
 			var datarooms = new Array();
 			_.each(params, function(param) {
 				console.log('dataroom', param.item + ":" + param.currency);

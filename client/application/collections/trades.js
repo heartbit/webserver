@@ -1,13 +1,10 @@
-define('trades', ['config', 'trade', 'items', 'ParametersManager'], function(config, Trade, Items, ParameterManager) {
+define('trades', ['config', 'trade', 'items','ParametersManager'], function(config, Trade, Items,ParameterManager) {
 
     var Tickers = Backbone.Collection.extend({
 
         model: Trade,
 
         init: function(options) {
-
-            _.bindAll(this, 'fetchAllTradesByItems');
-
             this.bind('all', this.update, this);
             var self = this;
             if (!options) {
@@ -25,7 +22,7 @@ define('trades', ['config', 'trade', 'items', 'ParametersManager'], function(con
                     self.add(trade);
                 });
             });
-
+            
             return this;
         },
 
@@ -47,16 +44,9 @@ define('trades', ['config', 'trade', 'items', 'ParametersManager'], function(con
             });
             return selectedTrade;
         },
-        initParameterManager: function() {
-            ParameterManager.init(this.fetchAllTradesByItems);
-        },
+      
         fetchAllLastTrades: function() {
-            var self = this;
-            if (!ParameterManager.isInit) {
-                this.initParameterManager();
-            }
-        },
-        fetchAllTradesByItems: function() {
+          
             var self = this;
             this.platforms = ParameterManager.getPlatforms();
             _.each(this.platforms.models, function(platform) {
@@ -86,9 +76,7 @@ define('trades', ['config', 'trade', 'items', 'ParametersManager'], function(con
             this.fetch();
             return this.models
 
-        }
-
-        ,
+        },
         update: function() {
             var self = this;
             this.averages = new Array();
