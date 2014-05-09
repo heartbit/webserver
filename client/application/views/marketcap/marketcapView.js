@@ -34,7 +34,7 @@ define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'Forma
                     {
                       price:FormatUtils.formatPrice(average.average,average.currency),
                       marketcap:FormatUtils.formatPrice(average.average*self.marketCapJson.totalcoin,average.currency),
-                      totalcoin:self.marketCapJson.totalcoin
+                      totalcoin:FormatUtils.formatPrice(self.marketCapJson.totalcoin,'BTC')
                   });
             });
             // _.each(this.trades.averages,function(average){
