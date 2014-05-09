@@ -26,14 +26,17 @@ define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'Forma
        
         render: function(params) {
             this.marketCapJson = this.marketcap.toJSON();
-            this.marketCapJson.price = FormatUtils.formatPrice( this.trades.average,'USD');
-
+            this.marketCapJson.prices = new Array();
+                    
             this.marketCapJson.trades = new Array() ;
+            this.marketCapJson.averages = new Array() ;
+
             var self = this;
-            _.each(this.trades.models,function(trade){
-                 self.marketCapJson.trades.push(trade.toJSON());
+            _.each(this.trades.averages,function(average){
+                 self.marketCapJson.averages.push({average: FormatUtils.formatPrice( average.average,average.currency),items:average.items});
             });
-            this.marketCapJson.marketcap = FormatUtils.formatPrice( this.marketCapJson.totalcoin*this.trades.average,'USD');
+            
+            //this.marketCapJson.marketcap = FormatUtils.formatPrice( this.marketCapJson.totalcoin*this.trades.average,'USD');
             this.marketCapJson.totalcoin = FormatUtils.formatPrice( this.marketCapJson.totalcoin,'BTC');
 
             this.$el.html(this.templateMarketCap({marketcapTemplate:this.marketCapJson}));

@@ -14,14 +14,19 @@
 				Live data from Kraken,Bitstamp,Btce,BitFinex<br/>
 			</i>
 		</div>
+		<%_.each(marketcapTemplate.averages,function(average){%>
 		<div>
+				<em><%= average.average%></em>
+
 			<ul>
-			<%_.each(marketcapTemplate.trades,function(trade){
-				%><li><%= trade.platform %> : <%= trade.price %></li>
-			<%});%>
+				<%_.each(average.items,function(item){%>
+					<li> <%= item.platform %> : <%= item.price %></li>
+							
+				<%});%>
 			</ul>
 		</div>
-		
+		<%});%>
+
     </div>
   
 </div>
