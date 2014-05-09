@@ -1,5 +1,5 @@
-define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'FormatUtils','tickers','items'], 
-    function(config,Marketcap, MarketcapViewTemplate, FormatUtils,Tickers,Items) {
+define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'FormatUtils','trades'], 
+    function(config,Marketcap, MarketcapViewTemplate, FormatUtils,Trades) {
 
     return Backbone.View.extend({
 
@@ -13,48 +13,38 @@ define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'Forma
 
         initialize: function(params) {
             var self = this;
-            this.viewName = params ? params.viewName: 'marketcap' ;
             this.marketcap = new Marketcap({url:config.marketcap.urlModel+"item="+this.item+"&currency="+this.currency});
-            
+            this.trades = new Trades();
+            this.trades.fetchAllLastTrades();
+            this.marketcap.fetch();
             _.bindAll(this, 'render', 'update');
-            
-            //this.render({viewName:'none'});
+            this.trades.on('update',this.update,this);
+            this.render();
             //this.listenTo(this.marketcap,'change', this.render({viewName:'marketcap'}));
           
         },
-        computeMarketcap: function(){
-            console.log(this.tickers);
-        },
-        initListener: function(){
-            var self = this;
-            $("#js-marketcap").click(function(){
-                self.render({viewName:'marketcap'});
-                self.initListener();
-            });
-            $("#js-price").click(function(){
-                self.render({viewName:'price'});
-                self.initListener();
-            });
-            $("#js-volume").click(function(){
-                self.render({viewName:'volume'});
-                self.initListener();
-            });
-        },
+       
         render: function(params) {
-
-
-            this.viewName= params ? params.viewName : this.viewName ;
             this.marketCapJson = this.marketcap.toJSON();
-            this.marketCapJson.price = FormatUtils.formatPrice( this.marketCapJson.price,'USD');
-            this.marketCapJson.volume = FormatUtils.formatPrice( this.marketCapJson.volume,'BTC');
-            this.marketCapJson.totalcoin = FormatUtils.formatPrice( this.marketCapJson.totalcoin,'BTC');
-            this.marketCapJson.marketcap = FormatUtils.formatPrice( this.marketCapJson.marketcap,'USD');
-            this.$el.html(this.templateMarketCap({viewName:params.viewName,marketcapTemplate:this.marketCapJson}));
+            this.marketCapJson.prices = new Array();
+                    
+            this.marketCapJson.trades = new Array() ;
+            this.marketCapJson.averages = new Array() ;
+
+            var self = this;
+            _.each(this.trades.averages,function(average){
+                 self.marketCapJson.averages.push({average: FormatUtils.formatPrice( average.average,average.currency),items:average.items});
+            });
             
+            //this.marketCapJson.marketcap = FormatUtils.formatPrice( this.marketCapJson.totalcoin*this.trades.average,'USD');
+            this.marketCapJson.totalcoin = FormatUtils.formatPrice( this.marketCapJson.totalcoin,'BTC');
+
+            this.$el.html(this.templateMarketCap({marketcapTemplate:this.marketCapJson}));
             return this;
         },
         update: function(){
-
+            this.render();
+            return this;
         }
 
     });

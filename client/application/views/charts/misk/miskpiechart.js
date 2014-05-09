@@ -88,10 +88,9 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 
 	};
 
-	MiskPieChart.prototype.updateAxis=function(params) {
+	MiskPieChart.prototype.updateAxis=function() {
 		var self=this;
 		
-		this.initChart(params); 
 		//PieChart1
 		this.pie= d3.layout.pie()
 			.sort(null)
@@ -169,8 +168,8 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 
 	};
 
-	MiskPieChart.prototype.draw=function(params) {
-		this.updateAxis(params);
+	MiskPieChart.prototype.draw=function() {
+		this.updateAxis();
 		this.updateMiskPieChart();
 	};
 

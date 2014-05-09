@@ -100,6 +100,7 @@ requirejs.config({
         pairs: 'application/collections/pairs',
         items: 'application/collections/items',
         news: 'application/collections/news',
+        trades: 'application/collections/trades',
 
         // Manager
         DataSocketManager: 'application/managers/sockets/dataSocketManager',

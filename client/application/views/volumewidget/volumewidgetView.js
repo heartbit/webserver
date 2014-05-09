@@ -25,7 +25,7 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 						{data: {tickers:data.volumes,total:data.volumeTotal}}
 					));
 					this.pieChart = new Miskpiechart({el:"#js-pieChart",tickers:data.volumesPieChart});
-					this.drawPie({el:"#js-pieChart",tickers:data.volumesPieChart});
+					this.drawPie();
 				}
 				return this;
 			},
@@ -34,11 +34,11 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 				this.render();
 				return this;
 			},
-			drawPie: function(params) {
+			drawPie: function() {
 				if ( !this.pieChart.initLayer ){
 					this.pieChart.initLayer();
 				}
-				this.pieChart.draw(params);
+				this.pieChart.draw();
 			}
 
 		});

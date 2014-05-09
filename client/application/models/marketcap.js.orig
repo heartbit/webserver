@@ -1,0 +1,32 @@
+<<<<<<< HEAD
+define('marketcap', ['config','moment','trades'], function(config,moment,Trades) {
+
+	var Marketcap = Backbone.Model.extend({
+        url: config.marketcap.urlModel,
+=======
+define('marketcap', ['config', 'moment', 'backbone'], function(config, moment, Backbone) {
+
+	var Marketcap = Backbone.Model.extend({
+		url: config.marketcap.urlCollection,
+>>>>>>> 96f1601736ada7e6a18d02921dc50beaf3c83617
+		defaults: {
+			currencyName: "",
+			marketcap: {
+				price: 0,
+				volume: 0,
+				totalCoin: 0,
+				marketcap: 0
+			}
+		},
+<<<<<<< HEAD
+		initialize: function(props){
+		    this.url = props.url;
+=======
+		initialize: function(props) {
+			this.url = props.url;
+>>>>>>> 96f1601736ada7e6a18d02921dc50beaf3c83617
+		}
+	});
+
+	return Marketcap;
+});

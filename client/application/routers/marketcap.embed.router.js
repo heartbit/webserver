@@ -5,14 +5,22 @@ define('embedMarketCapRouter', ['config',  'marketcapView','DataSocketManager'],
 
 		initialize: function() {
 			var self = this;
-			var params = {
+			var params = [{
 				currency: 'USD',
 				item: 'BTC'
-			}
+			}, {
+				currency: 'EUR',
+				item: 'BTC'
+			}, {
+				currency: 'CNY',
+				item: 'BTC'
+			}]
 			this.marketCapView = new MarketCapView(params);
-			var dataroom = params.item + ":" + params.currency;
-			console.log('dataroom', dataroom);
-			DataSocketManager.emit('dataroom', dataroom);
+			var datarooms = new Array();
+			_.each(params, function(param) {
+				console.log('dataroom', param.item + ":" + param.currency);
+				DataSocketManager.emit('dataroom',  param.item + ":" + param.currency);
+			})
 		}
 
 	});
