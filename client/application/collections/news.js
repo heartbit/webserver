@@ -1,4 +1,4 @@
-define('news', ['config', 'NewsSocketManager'], function(config, NewsSocketManager) {
+define('news', ['config', 'NewsSocketManager', 'backbone'], function(config, NewsSocketManager, Backbone) {
 
     var News = Backbone.Collection.extend({
 

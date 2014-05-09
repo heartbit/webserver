@@ -1,7 +1,7 @@
-define('marketcap', ['config','moment'], function(config,moment) {
+define('marketcap', ['config', 'moment', 'backbone'], function(config, moment, Backbone) {
 
 	var Marketcap = Backbone.Model.extend({
-        url: config.marketcap.urlCollection,
+		url: config.marketcap.urlCollection,
 		defaults: {
 			currencyName: "",
 			marketcap: {
@@ -11,9 +11,9 @@ define('marketcap', ['config','moment'], function(config,moment) {
 				marketcap: 0
 			}
 		},
-		initialize: function(props){
-		    this.url = props.url;
-		} 
+		initialize: function(props) {
+			this.url = props.url;
+		}
 	});
 
 	return Marketcap;

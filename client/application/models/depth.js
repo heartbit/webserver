@@ -1,4 +1,4 @@
-define('depth', ['config', 'moment', 'DataSocketManager'], function(config, moment, DataSocketManager) {
+define('depth', ['config', 'moment', 'DataSocketManager', 'backbone'], function(config, moment, DataSocketManager, Backbone) {
 
     var Depth = Backbone.Model.extend({
 

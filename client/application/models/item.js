@@ -1,4 +1,4 @@
-define('item', ['config', 'moment'], function(config, moment) {
+define('item', ['config', 'moment', 'backbone'], function(config, moment, Backbone) {
 
 	var Item = Backbone.Model.extend({
 
