@@ -1,20 +1,6 @@
-<%_.each(averages,function(average,index){%>
-  <div class="small-12 middle columns <%if (index != 0){%>hide<%}%>">
-    <div class="averagePrice">
-        <div class="price">
-            <em>
-                <%=average.average%>
-            </em>
-        </div>
-        <img width="80" height="55" style="float:left" src="http://1.bp.blogspot.com/-cMd4p4D3yLo/Uu7-FL-5MHI/AAAAAAAAAiw/msWsPjJccjM/s1600/bitcoinLogo1000.png"/>
-        <ul class="platformList">
-            <%_.each(average.items,function(item){%>
-                <li>
-                    <%=item.platform %>:
-                    <%=item.price %>
-                </li>
-            <%});%>
-        </ul>
-    </div>
-  </div>
-<%});%>
+
+<div id="js-priceBox">
+    
+</div>
+<div id="js-selectCurrency">
+</div>

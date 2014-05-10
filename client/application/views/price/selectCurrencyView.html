@@ -1,0 +1,5 @@
+    <select>
+        <%_.each(averages,function(average,index){%>
+            <option value="<%=average.currency%>" <%if(average.currency == currency){%>selected<%}%>><%=average.currency%></option>
+        <%});%>
+    </select>

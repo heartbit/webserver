@@ -59,6 +59,8 @@ requirejs.config({
         newsView: 'application/views/news/newsView',
         volumewidgetView: 'application/views/volumewidget/volumewidgetView',
         priceView: 'application/views/price/priceView',
+        selectCurrencyView: 'application/views/price/selectCurrencyView',
+        boxView: 'application/views/price/boxView',
 
         // Menu
         graphmenuView: 'application/views/menu/graphmenuView',

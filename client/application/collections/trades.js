@@ -45,7 +45,7 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
             return selectedTrade;
         },
       
-        fetchAllLastTrades: function() {
+        fetchAllLastTrades: function(params) {
           
             var self = this;
             this.platforms = ParameterManager.getPlatforms();
