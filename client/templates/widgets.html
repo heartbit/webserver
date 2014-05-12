@@ -10,7 +10,7 @@
     <script src="/libs/modernizr.js"></script>
 </head>
 
-<body>
+<body style="background:white;">
 
     <div class="off-canvas-wrap" data-offcanvas>
         <div class="inner-wrap">
@@ -67,20 +67,31 @@
 
                 <div class="row">
                     <div class="medium-6 columns">
-                        <h3>Bla bla</h3>
-                        <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
-                        <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
+                        <h3>Easy-to-embed widgets</h3>
+                        <p>With a simple iframe you can display real time and configurable information on your site ! </p>
+                        <p>We're working on improvements in order to display real time informations about any crypto currency. </p>
+
                     </div>
-                    <div class="medium-6 columns">
-                        <h3>Bla bla</h3>
-                        <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
-                        <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
+                    <div class="medium-6 columns" >
+                        <h3>Real time informations from</h3>
+                        <div class="medium-6 columns text-center">
+                            <p>
+                                <ul class="platformLogoList">
+                                    <li><img width="200" height="200" src="/images/LogosPlateforme/bitstamp.jpg"/></li>
+                                    <li><img width="200" height="200" src="/images/LogosPlateforme/btc-e.jpg"/> </li>
+                                    <li><img width="200" height="200" src="/images/LogosPlateforme/bitfinex.png"/></li>
+                                    <li><img width="200" height="200" src="/images/LogosPlateforme/btcchina.png"/></li>
+                                    <li><img width="200" height="200" src="/images/LogosPlateforme/kraken.png"/></li>
+
+                                </ul>
+                            </p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- TEMPLATE WIDGET -->
                 <div class="row">
-                    <div class="medium-5 columns">
+                    <div class="medium-5 columns text-center">
                         <h1>
                             Available widgets
                         </h1>
@@ -88,41 +99,45 @@
                 </div>
 
                 <div class="row">
-                    <div class="medium-6 columns">
+                    <div class="medium-6 columns  text-center">
                         <iframe frameBorder="0" width="300px" height="270px" src="http://localhost:9090/embed/price"></iframe>
                     </div>
 
                     <div class="medium-6 columns">
-                        <h3>Last prics</h3>
+                        <h3>Last prices</h3>
                         <p>The last prices from BTC/USD platforms</p>
                         <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
-                        <a href="#" class="button expand">Get link!</a>
+                        <a href="#" class="button linkpopup expand">Get link!</a>
                     </div>
                 </div>
 
                 <div class="row">
+
+                    <div class="medium-6 columns text-center">
+                        <iframe frameBorder="0" width="400px" height="200px" src="http://localhost:9090/embed/volume"></iframe>
+                    </div>
                     <div class="medium-6 columns">
                         <h3>Volumes</h3>
                         <p>All the bitcoins volumes for the last 24 hours / by platform</p>
-                        <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
-                        <a href="#" class="button expand">Download</a>
+                        <a href="#" class="button linkpopup expand">Get link!</a>
                     </div>
 
-                    <div class="medium-6 columns">
-                        <iframe frameBorder="0" width="400px" height="200px" src="http://localhost:9090/embed/volume"></iframe>
-                    </div>
                 </div>
 
                 <div class="row">
+                    <div class="medium-6 columns  text-center">
+                        <iframe frameBorder="0" width="400px" height="200px" src="http://localhost:9090/embed/marketcap"></iframe>
+                    </div>
                     <div class="medium-6 columns">
-                        <h3>Coming soon...</h3>
-                        <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
+                        <h3>MarketCap</h3>
+                        <p>Average value of the bitcoin X totalcoin</p>
+                        <a href="#" class="button linkpopup expand">Get link!</a>
                     </div>
 
                 </div>
-            
+                <div class="hide" id="divpopup"></div>
             </section>
-
+           
             <a class="exit-off-canvas"></a>
 
         </div>
@@ -133,6 +148,7 @@
 
     <script>
         $(document).foundation();
+              
     </script>
 
 </body>
