@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">70.31</p>
+      <p class="stat">74.35</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">183</p>
+      <p class="stat">111</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">25.02</p>
+      <p class="stat">19.50</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">1.86</p>
+      <p class="stat">1.17</p>
     </div>
   </div>
 </div>
@@ -96,8 +96,8 @@
 		this.el = params.el;
 		this.initlayer=false;
 		this.initChart(params);
-		this.initLayer();
-		this.initPie();
+	//	this.initLayer();
+	//	this.initPie();
 	};
 
 	MiskPieChart.prototype.initChart = function(params) {
@@ -130,139 +130,67 @@
 		this.volumes.sort(function(a,b) {
 			return a[1]&gt;b[1];		
 		});
-		this.generalHeight=500;
-		this.generalWidth=1500;
-
-		this.w=400;
-		this.h=230;
-		this.margin= {
-			top:200,
-			bottom:500,
-			left:250,
-			right:100,
-			captiony:25,
-			captionx:50,
-			radiusMargin:30,
-			outLine:8,
-		};
-
-		//RADIUS
-		this.radius=(Math.min(this.w,this.h)/2)-this.margin.radiusMargin;
-		this.radius2=this.radius*2+80;
-
-		this.visHeight=this.h+this.margin.top+this.margin.bottom;
-		this.visWidth=this.w+this.margin.left+this.margin.right;
-		this.height=this.h-this.margin.top-this.margin.bottom;
-		this.width=this.w-this.margin.left-this.margin.right;
+	
 	};
 
-	MiskPieChart.prototype.initLayer=function() {
-		this.misk=d3.select(&quot;#js-pieChart&quot;).append(&quot;svg&quot;).attr(&quot;height&quot;,this.generalHeight).attr(&quot;width&quot;,this.generalWidth);
 
-		this.widget2=this.misk.append(&quot;g&quot;).attr(&quot;height&quot;,this.visHeight).attr(&quot;width&quot;,this.visWidth).attr(&quot;class&quot;,&quot;widget2&quot;);
-	
-		this.pieChartLayer=this.widget2.append(&quot;g&quot;).attr(&quot;transform&quot;,&quot;translate(&quot;+this.margin.left+&quot;,&quot;+this.margin.top+&quot;)&quot;).attr(&quot;class&quot;,&quot;widgetlayer&quot;);
-		this.initlayer=true;
-	};
+	MiskPieChart.prototype.rogueDraw=function(params) {
+		this.initChart(params);
+		var w = 130,
+		h = 200,
+		r = Math.min(w, h) / 2,
+		labelr = r + 15, // radius for label anchor
+		color = d3.scale.category20(),
+		donut = d3.layout.pie(),
+		arc = d3.svg.arc().innerRadius(r * .3).outerRadius(r);
 
-	MiskPieChart.prototype.initPie=function() {
-		var self=this;
-		//piechart
-		// this.color=d3.scale.ordinal()
-		// 	.range([this.volumes[3]]);
+		var vis = d3.select(&quot;#js-pieChart&quot;)
+		  .append(&quot;svg:svg&quot;)
+			.data([this.volumes])
+			.attr(&quot;width&quot;, w + 200)
+			.attr(&quot;height&quot;, h);
 
-		this.arc=d3.svg.arc().outerRadius(this.radius).innerRadius(20);
-		this.arc2=d3.svg.arc().outerRadius(this.radius2).innerRadius(20);
-		// this.arc2=d3.svg.arc().outerRadius(this.radius2).innerRadius();
+		var arcs = vis.selectAll(&quot;g.arc&quot;)
+			.data(donut.value(function(volume) { return volume[1]; }))
+		  .enter().append(&quot;svg:g&quot;)
+			.attr(&quot;class&quot;, &quot;arc&quot;)
+			.attr(&quot;transform&quot;, &quot;translate(&quot; + (r + 70) + &quot;,&quot; + (r+50) + &quot;)&quot;);
 
-			
-		
+		arcs.append(&quot;svg:path&quot;)
+			.attr(&quot;fill&quot;, function(volume) {return volume.data[3]; })
+			.attr(&quot;d&quot;, arc);
 
-	};
-
-	MiskPieChart.prototype.updateAxis=function(params) {
-		var self=this;
-		
-		this.initChart(params); 
-		//PieChart1
-		this.pie= d3.layout.pie()
-			.sort(null)
-			.value(function(volume){
-				return volume[1];
-			});
-
-		//PieChart2	
-		this.pie2= d3.layout.pie()
-		.sort(null)
-		.value(function(volume){
-			return volume[1];
-		});
-		this.dataSelect=self.pie(_.last(this.volumes,5));
-		this.dataSelect2=self.pie2(_.last(this.volumes,5));
-	
-
-
-
-////////PIECHART1
-		this.pieChart=this.pieChartLayer.selectAll(&quot;.arc&quot;)
-			.data(this.dataSelect)
-			.enter().append(&quot;g&quot;)
-			.attr(&quot;class&quot;,&quot;arc&quot;);
-	
-		this.pieChart.append(&quot;path&quot;)
-			.attr(&quot;d&quot;,self.arc)
-			.style(&quot;fill&quot;, function(volume){
-				return volume.data[3];
-		});
-
-
-		this.pieChart.append(&quot;text&quot;)
-			.attr(&quot;transform&quot;,function(volume){
-					var centre2=self.arc2.centroid(volume);
-					var centre1=self.arc.centroid(volume);
-				
-					self.pieChart.append(&quot;line&quot;)
-						.attr(&quot;x1&quot;,centre1[0])
-						.attr(&quot;y1&quot;,centre1[1])
-						.attr(&quot;x2&quot;,centre2[0])
-						.attr(&quot;y2&quot;,centre2[1])
-						// .interpolate(&quot;basis&quot;)
-						.attr(&quot;class&quot;,&quot;outLine&quot;);
-				
-					return &quot;translate(&quot;+self.arc2.centroid(volume)+&quot;)&quot;;
-				
+		arcs.append(&quot;svg:text&quot;)
+			.attr(&quot;transform&quot;, function(d) {
+				var c = arc.centroid(d),
+					x = c[0],
+					y = c[1],
+					// pythagorean theorem for hypotenuse
+					h = Math.sqrt(x*x + y*y);
+				return &quot;translate(&quot; + (x/h * labelr) +  &#039;,&#039; +
+				   (y/h * labelr) +  &quot;)&quot;; 
 			})
-			.attr(&quot;class&quot;,&quot;volTitle&quot;)
-			.text(function(volume){
-
-				// return volume.data[0]+&quot; &quot;+(((volume.endAngle-volume.startAngle)/Math.PI)*100).toFixed(2)+&quot;%&quot;;
-				return volume.data[0];
-			})
-		
-		// this.pieChart.append(&quot;text&quot;).text(&quot;BTC&quot;)
-		// 	.attr(&quot;class&quot;,&quot;title&quot;)
-		// 	.attr(&quot;y&quot;,4);
-
-
-
-
-		// this.pieChartLayer.append(&quot;text&quot;)
-		// 	.attr(&quot;y&quot;,this.radius+this.margin.captiony)
-		// 	.attr(&quot;class&quot;,&quot;title&quot;)
-		// 	.text(&quot;24h Volume (BTC)&quot;);
-
-/////////PIECHART2
-		
-
+		.attr(&quot;dy&quot;, &quot;.125em&quot;)
+		.attr(&quot;text-anchor&quot;, function(d) {
+			// are we past the center?
+			return (d.endAngle + d.startAngle)/2 &gt; Math.PI ?
+				&quot;end&quot; : &quot;start&quot;;
+		})
+		.data(donut.value(function(volume) {return volume[3]; }))
+		.text(
+		function(d) { 
+			if( d.data[1] ) {
+				return d.data[0];
+			}
+		}).attr(&quot;font-size&quot;,&quot;10px&quot;);
+	}
+	MiskPieChart.prototype.updateMiskPieChart=function(params) {
+		 d3.select(&quot;#js-pieChart&quot;).remove();
+		 this.rogueDraw(params);
 	};
 
-	MiskPieChart.prototype.updateMiskPieChart=function() {
-	
-
-	};
-
-	MiskPieChart.prototype.draw=function(params) {
-		this.updateAxis(params);
+	MiskPieChart.prototype.draw=function() {
+		this.updateAxis();
 		this.updateMiskPieChart();
 	};
 

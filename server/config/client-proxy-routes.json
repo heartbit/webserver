@@ -2,12 +2,12 @@
     "routes": {
         "/": "file:templates/home.html",
         "/app": "file:templates/app.html",
+        "/widgets": "file:templates/widgets.html",
         "/embed/keyfacts": "file:templates/embed/keyfacts.html",
         "/embed/maingraph": "file:templates/embed/maingraph.html",
         "/embed/marketcap": "file:templates/embed/marketcap.html",
         "/embed/volume": "file:templates/embed/volume.html",
         "/embed/price": "file:templates/embed/price.html",
         "/embed/news": "file:templates/embed/news.html"
-
     }
 }

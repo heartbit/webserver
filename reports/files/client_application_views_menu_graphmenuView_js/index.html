@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">72.81</p>
+      <p class="stat">72.58</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">68</p>
+      <p class="stat">102</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">9.72</p>
+      <p class="stat">11.89</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.46</p>
+      <p class="stat">0.67</p>
     </div>
   </div>
 </div>
@@ -98,9 +98,14 @@
             template: _.template(GraphmenuTemplate),
 
             events: {
-                &#039;click .js-screenshot&#039;: &#039;takeAScreenshot&#039;,
+                &#039;click .js-export-pdf&#039;: &#039;exportAsPdf&#039;,
+                &#039;click .js-export-embed&#039;: &#039;exportAsEmbed&#039;,
+                &#039;click .js-export-png&#039;: &#039;exportAsPng&#039;,
+                &#039;click .js-export-csv&#039;: &#039;exportAsCsv&#039;
             },
+
             intialize: function() {},
+
             initParent: function(parentEl) {
                 var self = this;
                 this.parentEl = parentEl;
@@ -112,14 +117,15 @@
                     });
                 }
             },
+
             render: function(params) {
                 this.$el.html(this.template());
                 return this;
             },
 
-            takeAScreenshot: function() {
+            exportAsPdf: function() {
                 var div2screen = this.$el.parent();
-                var svgElem = div2screen.find(&#039;svg&#039;);
+                var svgElem = div2screen //.find(&#039;svg&#039;);
                 var wkdoc = $(&#039;&lt;html&gt;&#039;)
                 var body = $(&#039;&lt;body&gt;&#039;)
                 var head = $(&#039;&lt;head&gt;&#039;)
@@ -127,7 +133,7 @@
                 wkdoc.prepend(head)
                 body.append(svgElem.clone())
                 head.prepend($(&#039;&lt;link href=&quot;http://localhost:9090/styles/all.css&quot; rel=&quot;stylesheet&quot; /&gt;&#039;))
-                var data = &#039;&lt;!DOCTYPE html&gt;&#039; + wkdoc[0].outerHTML
+                var data = &#039;&lt;!DOCTYPE html&gt;&#039; + wkdoc[0].outerHTML;
 
                 var payload = {
                     html: data,
@@ -153,6 +159,34 @@
                 //     width: svgElem.width(),
                 //     height: svgElem.height()
                 // });
+            },
+
+            exportAsEmbed: function() {
+                console.log(&#039;Export as embed&#039;);
+            },
+
+            exportAsPng: function() {
+                console.log(&#039;Export as png&#039;);
+                var div2screen = this.$el.parent();
+                var payload = {
+                    html: data,
+                    type: &#039;maingraph&#039;
+                };
+
+                $.ajax({
+                    url: &quot;/services/png&quot;,
+                    type: &quot;POST&quot;,
+                    data: payload,
+                    success: function(filename) {
+                        console.log(&#039;pdf : &#039;, filename);
+                        window.open(&#039;/services/pdf/&#039; + filename)
+                    }
+                });
+                var svgElem = div2screen //.find(&#039;svg&#039;);
+            },
+
+            exportAsCsv: function() {
+                console.log(&#039;Export as csv&#039;);
             }
 
         });

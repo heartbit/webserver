@@ -107,7 +107,7 @@
             this.$el.html(this.template());
             this.depth.socketSync(params);
             this.depth.on(&#039;update&#039;, this.update, this);
-            this.depthChart = new DepthChart(&#039;#js-indicator&#039;);
+            this.depthChart = new DepthChart(&#039;#js-depth&#039;);
             return this;
         },
 

@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">70.30</p>
+      <p class="stat">71.31</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">22</p>
+      <p class="stat">37</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">8.96</p>
+      <p class="stat">12.83</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.13</p>
+      <p class="stat">0.25</p>
     </div>
   </div>
 </div>
@@ -90,21 +90,36 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;embedMarketCapRouter&#039;, [&#039;config&#039;,  &#039;marketcapView&#039;,&#039;DataSocketManager&#039;], function(config, MarketCapView,DataSocketManager) {
+    <textarea id="file-source" class="col-md-12">define(&#039;embedMarketCapRouter&#039;, [&#039;config&#039;,  &#039;marketcapView&#039;,&#039;DataSocketManager&#039;,&#039;ParametersManager&#039;], function(config, MarketCapView,DataSocketManager,ParametersManager) {
 
 	var Router = Backbone.Router.extend({
 
 
 		initialize: function() {
 			var self = this;
-			var params = {
+			
+			if(! ParametersManager.isInit ) {
+               ParametersManager.init(this.finishInitialize);
+            }
+        },
+        finishInitialize : function(){
+			var params = [{
 				currency: &#039;USD&#039;,
 				item: &#039;BTC&#039;
-			}
+			}, {
+				currency: &#039;EUR&#039;,
+				item: &#039;BTC&#039;
+			}, {
+				currency: &#039;CNY&#039;,
+				item: &#039;BTC&#039;
+			}]
 			this.marketCapView = new MarketCapView(params);
-			var dataroom = params.item + &quot;:&quot; + params.currency;
-			console.log(&#039;dataroom&#039;, dataroom);
-			DataSocketManager.emit(&#039;dataroom&#039;, dataroom);
+			var datarooms = new Array();
+			_.each(params, function(param) {
+				console.log(&#039;dataroom&#039;, param.item + &quot;:&quot; + param.currency);
+				DataSocketManager.emit(&#039;dataroom&#039;,  param.item + &quot;:&quot; + param.currency);
+			});
+			return this;
 		}
 
 	});
