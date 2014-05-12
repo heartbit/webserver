@@ -19,6 +19,8 @@ define('appRouter', ['backbone', 'config', 'ParametersManager', 'EventManager', 
 				main: new MainView(),
 				news: new NewsView(),
 				indicators: new IndicatorsView(),
+				calculator: new CalculatorView,
+				weeknews: new WeeknewsView()
 			};
 
 			Backbone.history.start({

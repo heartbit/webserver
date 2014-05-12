@@ -44,18 +44,28 @@ module.exports = function(grunt) {
             build: ['<%= props.buildDir %>', '<%= props.documentationDir %>']
         },
 
+        simplemocha: {
+            options: {
+                timeout: 60000,
+                ignoreLeaks: false,
+                ui: 'bdd',
+                reporter: 'spec'
+            },
+            all: {
+                src: ['tests/client.tests.js', 'tests/server.tests.js']
+            }
+        },
+
         // Minify, compress, uglify javascript files
         requirejs: {
             main: {
                 options: {
                     appDir: '<%= props.clientDir %>',
                     baseUrl: './modules',
-                    mainConfigFile: '<%= props.clientDir %>/modules/app.js',
+                    mainConfigFile: '<%= props.clientDir %>/modules/common.js',
                     dir: '<%= props.buildClientDir %>',
                     fileExclusionRegExp: /^(bower_components|build|node_modules)$/,
                     optimize: 'uglify2',
-                    // name: "modules/app",
-                    // out: 'compress.js',
                     modules: [{
                         name: 'common',
                     }, {
@@ -72,7 +82,7 @@ module.exports = function(grunt) {
             css: {
                 options: {
                     logLevel: 3,
-                    optimizeCss: 'standard', // standard
+                    optimizeCss: 'standard',
                     cssIn: '<%= props.cssDir %>/all-sass.css',
                     out: '<%= props.cssDir %>/all.css'
                 }
@@ -258,12 +268,13 @@ module.exports = function(grunt) {
     /**
     TASKS
     **/
+    grunt.registerTask('test', ['simplemocha']);
     grunt.registerTask('css', ['sass', 'requirejs:css']);
+    grunt.registerTask('analyze', ['plato:analyze']);
     grunt.registerTask('local', ['concurrent:concurrentLocal']);
     grunt.registerTask('localServer', ['css', 'nodemon:local']);
-    grunt.registerTask('build', ['clean', 'css', 'requirejs:main', 'copy:main']);
     grunt.registerTask('deploy-dev', ['build', 'shell:gitdev']);
-    grunt.registerTask('deploy-master', ['build', 'shell:gitmaster']);
     grunt.registerTask('documentation', ['clean', 'markdown:all']);
-    grunt.registerTask('analyze', ['plato:analyze']);
+    grunt.registerTask('deploy-master', ['build', 'shell:gitmaster']);
+    grunt.registerTask('build', ['clean', 'css', 'requirejs:main', 'copy:main']);
 };

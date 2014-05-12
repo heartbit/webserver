@@ -3,6 +3,9 @@ requirejs.config({
     baseUrl: "../",
 
     paths: {
+        // Tests
+        parametersManagerTests: 'tests/parametersManager.test',
+
         config: 'application/config/global',
         parametersManagerConfig: 'application/config/parametersManagerConfig',
 

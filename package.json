@@ -30,7 +30,9 @@
     "ws": "*",
     "githubhook": "*",
     "prettyjson": "*",
-    "slang": "*"
+    "slang": "*",
+    "mocha": "*",
+    "amdefine": "*"
   },
   "devDependencies": {
     "matchdep": "*",
@@ -47,7 +49,8 @@
     "grunt-markdown": "~0.4.0",
     "grunt-node-inspector": "~0.1.2",
     "grunt-nodemon": "~0.1.2",
-    "grunt-contrib-sass": "~0.6.0"
+    "grunt-contrib-sass": "~0.6.0",
+    "grunt-simple-mocha": "*"
   },
   "license": "heartbit.io",
   "subdomain": "heartbit.io"
