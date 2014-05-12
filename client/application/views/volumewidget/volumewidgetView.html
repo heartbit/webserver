@@ -1,16 +1,37 @@
-<div id="js-pieChart" >
-</div>
-<div id="js-volumes">
-	 <ul style="list-style-type:none;">
-        <%_.each(data.tickers, function(ticker){%>
-        <li  style="list-style-type:none;padding:2px;margin-top:3px;">
-            <%=ticker.platform%> : <%=ticker.vol%>  
-            Major Currency : <%=ticker.currency%>
-        </li>
-        <%})%>
-        <li>
-        	TOTAL : <%= data.total%>
-        </li>
-    </ul>
+<div class="small-12 medium-12 large-12 columns"  style="padding:0;">
+    <span  id="js-showDetails" style="float:right;position:absolute;right:1em;bottom:1em;" class="button tiny" >Show Details</span>
+    <div id="js-pieChart" >
+    </div>
+    <div id="js-volumes">
+    	 <table class="platformListVolume" >
+            <tr>
+                <th>
+                    Platform
+                </th>
+                <th>
+                    Volume
+                </th>
+                <th>
+                    Main Currency
+                </th>
+            </tr>
+            <%_.each(data.tickers, function(ticker){%>
+            <tr>
+                <td>
+                    <%=ticker.platform%> 
+                </td>
+                <td> 
+                    <%=ticker.vol%>  
+                </td>
+                <td>
+                    <%=ticker.currency%>
+                </td>
+            </tr>
+            <%})%>
+            <tr>
+                <td colspan="3">TOTAL : <%= data.total%></td>
+            </tr>
+        </ul>
+    </div>
 </div>
 

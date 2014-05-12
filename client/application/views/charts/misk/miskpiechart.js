@@ -4,8 +4,8 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 		this.el = params.el;
 		this.initlayer=false;
 		this.initChart(params);
-		this.initLayer();
-		this.initPie();
+	//	this.initLayer();
+	//	this.initPie();
 	};
 
 	MiskPieChart.prototype.initChart = function(params) {
@@ -38,134 +38,63 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 		this.volumes.sort(function(a,b) {
 			return a[1]>b[1];		
 		});
-		this.generalHeight=500;
-		this.generalWidth=1500;
-
-		this.w=400;
-		this.h=230;
-		this.margin= {
-			top:200,
-			bottom:500,
-			left:250,
-			right:100,
-			captiony:25,
-			captionx:50,
-			radiusMargin:30,
-			outLine:8,
-		};
-
-		//RADIUS
-		this.radius=(Math.min(this.w,this.h)/2)-this.margin.radiusMargin;
-		this.radius2=this.radius*2+80;
-
-		this.visHeight=this.h+this.margin.top+this.margin.bottom;
-		this.visWidth=this.w+this.margin.left+this.margin.right;
-		this.height=this.h-this.margin.top-this.margin.bottom;
-		this.width=this.w-this.margin.left-this.margin.right;
+	
 	};
 
-	MiskPieChart.prototype.initLayer=function() {
-		this.misk=d3.select("#js-pieChart").append("svg").attr("height",this.generalHeight).attr("width",this.generalWidth);
 
-		this.widget2=this.misk.append("g").attr("height",this.visHeight).attr("width",this.visWidth).attr("class","widget2");
-	
-		this.pieChartLayer=this.widget2.append("g").attr("transform","translate("+this.margin.left+","+this.margin.top+")").attr("class","widgetlayer");
-		this.initlayer=true;
-	};
+	MiskPieChart.prototype.rogueDraw=function(params) {
+		this.initChart(params);
+		var w = 130,
+		h = 200,
+		r = Math.min(w, h) / 2,
+		labelr = r + 15, // radius for label anchor
+		color = d3.scale.category20(),
+		donut = d3.layout.pie(),
+		arc = d3.svg.arc().innerRadius(r * .3).outerRadius(r);
 
-	MiskPieChart.prototype.initPie=function() {
-		var self=this;
-		//piechart
-		// this.color=d3.scale.ordinal()
-		// 	.range([this.volumes[3]]);
+		var vis = d3.select("#js-pieChart")
+		  .append("svg:svg")
+			.data([this.volumes])
+			.attr("width", w + 200)
+			.attr("height", h);
 
-		this.arc=d3.svg.arc().outerRadius(this.radius).innerRadius(20);
-		this.arc2=d3.svg.arc().outerRadius(this.radius2).innerRadius(20);
-		// this.arc2=d3.svg.arc().outerRadius(this.radius2).innerRadius();
+		var arcs = vis.selectAll("g.arc")
+			.data(donut.value(function(volume) { return volume[1]; }))
+		  .enter().append("svg:g")
+			.attr("class", "arc")
+			.attr("transform", "translate(" + (r + 70) + "," + (r+50) + ")");
 
-			
-		
+		arcs.append("svg:path")
+			.attr("fill", function(volume) {return volume.data[3]; })
+			.attr("d", arc);
 
-	};
-
-	MiskPieChart.prototype.updateAxis=function() {
-		var self=this;
-		
-		//PieChart1
-		this.pie= d3.layout.pie()
-			.sort(null)
-			.value(function(volume){
-				return volume[1];
-			});
-
-		//PieChart2	
-		this.pie2= d3.layout.pie()
-		.sort(null)
-		.value(function(volume){
-			return volume[1];
-		});
-		this.dataSelect=self.pie(_.last(this.volumes,5));
-		this.dataSelect2=self.pie2(_.last(this.volumes,5));
-	
-
-
-
-////////PIECHART1
-		this.pieChart=this.pieChartLayer.selectAll(".arc")
-			.data(this.dataSelect)
-			.enter().append("g")
-			.attr("class","arc");
-	
-		this.pieChart.append("path")
-			.attr("d",self.arc)
-			.style("fill", function(volume){
-				return volume.data[3];
-		});
-
-
-		this.pieChart.append("text")
-			.attr("transform",function(volume){
-					var centre2=self.arc2.centroid(volume);
-					var centre1=self.arc.centroid(volume);
-				
-					self.pieChart.append("line")
-						.attr("x1",centre1[0])
-						.attr("y1",centre1[1])
-						.attr("x2",centre2[0])
-						.attr("y2",centre2[1])
-						// .interpolate("basis")
-						.attr("class","outLine");
-				
-					return "translate("+self.arc2.centroid(volume)+")";
-				
+		arcs.append("svg:text")
+			.attr("transform", function(d) {
+				var c = arc.centroid(d),
+					x = c[0],
+					y = c[1],
+					// pythagorean theorem for hypotenuse
+					h = Math.sqrt(x*x + y*y);
+				return "translate(" + (x/h * labelr) +  ',' +
+				   (y/h * labelr) +  ")"; 
 			})
-			.attr("class","volTitle")
-			.text(function(volume){
-
-				// return volume.data[0]+" "+(((volume.endAngle-volume.startAngle)/Math.PI)*100).toFixed(2)+"%";
-				return volume.data[0];
-			})
-		
-		// this.pieChart.append("text").text("BTC")
-		// 	.attr("class","title")
-		// 	.attr("y",4);
-
-
-
-
-		// this.pieChartLayer.append("text")
-		// 	.attr("y",this.radius+this.margin.captiony)
-		// 	.attr("class","title")
-		// 	.text("24h Volume (BTC)");
-
-/////////PIECHART2
-		
-
-	};
-
-	MiskPieChart.prototype.updateMiskPieChart=function() {
-	
-
+		.attr("dy", ".125em")
+		.attr("text-anchor", function(d) {
+			// are we past the center?
+			return (d.endAngle + d.startAngle)/2 > Math.PI ?
+				"end" : "start";
+		})
+		.data(donut.value(function(volume) {return volume[3]; }))
+		.text(
+		function(d) { 
+			if( d.data[1] ) {
+				return d.data[0];
+			}
+		}).attr("font-size","10px");
+	}
+	MiskPieChart.prototype.updateMiskPieChart=function(params) {
+		 d3.select("#js-pieChart").remove();
+		 this.rogueDraw(params);
 	};
 
 	MiskPieChart.prototype.draw=function() {
