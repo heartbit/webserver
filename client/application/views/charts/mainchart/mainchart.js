@@ -38,8 +38,8 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         this.width = $(this.el).width() - this.margin.left - this.margin.right;
         this.height = $(this.el).height() - this.margin.top - this.margin.bottom;
 
-        var visWidth = this.width + this.margin.left + this.margin.right;
-        var visHeigth = this.height + this.margin.top + this.margin.bottom;
+        var visWidth = $(this.el).width();
+        var visHeigth = $(this.el).height();
 
         this.chart = d3.select(this.el)
             .append('svg')
@@ -116,6 +116,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
     */
     MainChart.prototype.draw = function(maingraphes, params) {
         this.params = params;
+        this.maingraphes = maingraphes || this.maingraphes;
         this.parseMainGraphes(maingraphes);
         this.updateXAxis();
         _.each(_.values(this.layers), function(layer) {
@@ -125,7 +126,32 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
 
     MainChart.prototype.update = function(maingraphes, params) {
         //Do something else?
+        this.maingraphes = maingraphes || this.maingraphes;
         this.draw(maingraphes, params);
+    };
+
+    MainChart.prototype.resize = function(){
+        var self = this;
+
+        this.width = $(this.el).width() - this.margin.left - this.margin.right;
+        this.height = $(this.el).height() - this.margin.top - this.margin.bottom;
+
+        var visWidth = $(this.el).width();
+        var visHeigth = $(this.el).height();
+
+        this.chart
+            .attr("width", visWidth)
+            .attr("height", visHeigth)
+            .attr('viewBox', "0 0 " + visWidth + " " + visHeigth)
+            .call(this.initOnMouseOverEvents)
+
+        this.mainLayer
+            .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+
+        this.timeScale.range([0, this.width]);
+        this.zoom.x(this.timeScale);
+        this.timeAxisInstance.call(this.timeAxis);
+        this.draw(this.maingraphes);
     };
 
     MainChart.prototype.clear = function() {};

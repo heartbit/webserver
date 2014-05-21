@@ -12,15 +12,20 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
         template: _.template(MainTemplate),
 
         initialize: function() {
+            var self = this;
             _.bindAll(
                 this,
-                'toggleVolumeLayer'
+                'toggleVolumeLayer',
+                'update'
             );
             this.maingraphes = new Maingraphes();
             this.maingraphmenu = new GraphmenuView();
             this.maingraphmenu.initParent(this.$el);
             this.timeperiods = config.maingraph.timeperiods;
             this.currentTimeperiodId = config.maingraph.defaultTimeperiodId;
+            $(window).resize(function(){
+                self.mainChart.resize();
+            });
         },
 
         update: function(params) {

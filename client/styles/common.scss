@@ -10,6 +10,9 @@ $primary_color: #ffffff;
 }
 .row {
     max-width:none;
+    margin-left:2%;
+    margin-right:2%;
+    width:95%;
 }
 .ul.inline-list > .li {
     display: inline;
@@ -73,8 +76,8 @@ body {
     padding-top: 15px;
 }
 .datawidget {
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-bottom: 40px;
-    border:1px;
+    padding-left: 2%;
+    padding-right: 2%;
+    margin-top: 15px;
+    background-color: $primary_color;
 }

@@ -3,13 +3,13 @@
     margin-bottom: 5px !important;
 }
 
-.newsList {
-	max-height: 250px;
-	overflow-y: auto;
+.newsView {
+	padding-top:10px;
+	padding-bottom:10px;
 }
 
-.newsContent {
-	max-height: 250px;
+.newsList {
+	max-height: 300px;
 	overflow-y: auto;
 }
 
@@ -18,7 +18,4 @@
 }
 .accordion dd>a.news.seen {
 	background-color: #cacaca
-}
-.news.seen {
-	
 }
