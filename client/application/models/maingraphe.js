@@ -1,4 +1,4 @@
-define('maingraphe', ['config', 'moment'], function(config, moment) {
+define('maingraphe', ['backbone', 'config', 'moment'], function(Backbone, config, moment) {
 
 	var Maingraphe = Backbone.Model.extend({
 

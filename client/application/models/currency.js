@@ -1,4 +1,4 @@
-define('currency', ['config', 'moment'], function(config, moment) {
+define('currency', ['backbone','config', 'moment'], function(Backbone, config, moment) {
 
 	var Currency = Backbone.Model.extend({
 

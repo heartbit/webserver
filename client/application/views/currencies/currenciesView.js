@@ -1,4 +1,4 @@
-define('currenciesView', ['config', 'text!currenciesView.html'], function(config, CurrenciesTemplate) {
+define('currenciesView', ['backbone', 'config', 'text!currenciesView.html'], function(Backbone, config, CurrenciesTemplate) {
 
     return Backbone.View.extend({
 

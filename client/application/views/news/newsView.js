@@ -5,7 +5,9 @@ define('newsView', ['news', 'moment', 'text!./newsView.html', 'text!./applicatio
         el: '#js-news',
 
         events: {
-            'mouseenter .news': 'renderContent',
+            'click .news': 'checkSeen',
+            'click .content': 'articleRerouting',
+
         },
 
         template: _.template(NewsViewTemplate),
@@ -21,6 +23,25 @@ define('newsView', ['news', 'moment', 'text!./newsView.html', 'text!./applicatio
             this.news.on('update', this.render);
         },
 
+        checkSeen: function(event) {
+            this.$currentNewsItem = $(event.target);
+            if (!this.$currentNewsItem.hasClass('seen')) {
+                this.$currentNewsItem.addClass('seen');
+            }
+            var newsGuid = this.$currentNewsItem.attr('id');
+            this.currentNews = this.news.getNewsByGuid(newsGuid);
+        },
+
+        articleRerouting: function(event) {
+            window.open(this.currentNews.link, '_blank');
+            if(!this.$currentNewsItem.hasClass('read')){
+                this.$currentNewsItem.addClass('read');   
+            }
+            this.$currentNewsItem.click();
+            this.$currentNewsItem.children('.icon-ok').removeClass('hide');
+            event.preventDefault();
+        },
+
         render: function() {
             var self = this;
             if (this.news && this.news.models.length > 0) {
@@ -29,6 +50,7 @@ define('newsView', ['news', 'moment', 'text!./newsView.html', 'text!./applicatio
                 }));
                 this.renderContent(null, this.news.models[0].guid);
             }
+            $(document).foundation();
             return this;
         },
 

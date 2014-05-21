@@ -1,4 +1,4 @@
-define('calculatorView', ['text!calculatorView.html','FormatUtils'], function(calculatorViewTemplate,FormatUtils) {
+define('calculatorView', ['backbone','text!calculatorView.html','FormatUtils'], function(Backbone, calculatorViewTemplate,FormatUtils) {
 
     return Backbone.View.extend({
 
@@ -28,7 +28,7 @@ define('calculatorView', ['text!calculatorView.html','FormatUtils'], function(ca
                 }
             };
             // console.log(this.currencylabel);
-            console.log("uuuuh");
+            // console.log("uuuuh");
             this.$el.html(this.template(tplVariables));
             return this;
         }

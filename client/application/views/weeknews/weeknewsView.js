@@ -1,4 +1,4 @@
-define('weeknewsView', ['text!weeknewsView.html', 'FormatUtils'], function(weeknewsViewTemplate, FormatUtils) {
+define('weeknewsView', ['backbone','text!weeknewsView.html', 'FormatUtils'], function(Backbone, weeknewsViewTemplate, FormatUtils) {
 
     return Backbone.View.extend({
 
@@ -16,7 +16,7 @@ define('weeknewsView', ['text!weeknewsView.html', 'FormatUtils'], function(weekn
             var tplVariables = {
                 currencylabel: this.currencylabel,
             };
-            console.log(this.currencylabel);
+            // console.log(this.currencylabel);
             this.$el.html(this.template(tplVariables));
             return this;
         }

@@ -1,4 +1,4 @@
-define('screenshot', ['config'], function(config) {
+define('screenshot', ['backbone', 'config'], function(Backbone, config) {
 
     var Screenshot = Backbone.Model.extend({
 

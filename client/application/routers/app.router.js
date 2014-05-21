@@ -1,4 +1,4 @@
-define('appRouter', ['backbone', 'config', 'ParametersManager', 'EventManager', 'NewsSocketManager', 'DataSocketManager', 'ChatSocketManager', 'items', 'headerView', 'marketcapView', 'keyFactsView', 'mainView', 'controllerView', 'lastupdateView', 'indicatorsView', 'miskView', 'newsView', 'weeknewsView', 'calculatorView'], function(Backbone, config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, LastupdateView, IndicatorsView, MiskView, NewsView, WeeknewsView, CalculatorView) {
+define('appRouter', ['backbone', 'config', 'ParametersManager', 'EventManager', 'NewsSocketManager', 'DataSocketManager', 'ChatSocketManager', 'ShortcutsManager', 'items', 'headerView', 'marketcapView', 'keyFactsView', 'mainView', 'controllerView', 'lastupdateView', 'indicatorsView', 'miskView', 'newsView', 'weeknewsView', 'calculatorView'], function(Backbone, config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, ShortcutManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, LastupdateView, IndicatorsView, MiskView, NewsView, WeeknewsView, CalculatorView) {
 
 	var Router = Backbone.Router.extend({
 
@@ -22,6 +22,8 @@ define('appRouter', ['backbone', 'config', 'ParametersManager', 'EventManager', 
 				calculator: new CalculatorView,
 				weeknews: new WeeknewsView()
 			};
+
+			// ShortcutsManager.init();
 
 			Backbone.history.start({
 				pushState: true
