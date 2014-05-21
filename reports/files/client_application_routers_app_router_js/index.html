@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">72.93</p>
+      <p class="stat">72.92</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">95</p>
+      <p class="stat">97</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,7 +63,7 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">13.93</p>
+      <p class="stat">13.79</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
@@ -90,7 +90,7 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;appRouter&#039;, [&#039;backbone&#039;, &#039;config&#039;, &#039;ParametersManager&#039;, &#039;EventManager&#039;, &#039;NewsSocketManager&#039;, &#039;DataSocketManager&#039;, &#039;ChatSocketManager&#039;, &#039;items&#039;, &#039;headerView&#039;, &#039;marketcapView&#039;, &#039;keyFactsView&#039;, &#039;mainView&#039;, &#039;controllerView&#039;, &#039;lastupdateView&#039;, &#039;indicatorsView&#039;, &#039;miskView&#039;, &#039;newsView&#039;, &#039;weeknewsView&#039;, &#039;calculatorView&#039;], function(Backbone, config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, LastupdateView, IndicatorsView, MiskView, NewsView, WeeknewsView, CalculatorView) {
+    <textarea id="file-source" class="col-md-12">define(&#039;appRouter&#039;, [&#039;backbone&#039;, &#039;config&#039;, &#039;ParametersManager&#039;, &#039;EventManager&#039;, &#039;NewsSocketManager&#039;, &#039;DataSocketManager&#039;, &#039;ChatSocketManager&#039;, &#039;ShortcutsManager&#039;, &#039;items&#039;, &#039;headerView&#039;, &#039;marketcapView&#039;, &#039;keyFactsView&#039;, &#039;mainView&#039;, &#039;controllerView&#039;, &#039;lastupdateView&#039;, &#039;indicatorsView&#039;, &#039;miskView&#039;, &#039;newsView&#039;, &#039;weeknewsView&#039;, &#039;calculatorView&#039;], function(Backbone, config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, ShortcutManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, LastupdateView, IndicatorsView, MiskView, NewsView, WeeknewsView, CalculatorView) {
 
 	var Router = Backbone.Router.extend({
 
@@ -114,6 +114,8 @@
 				calculator: new CalculatorView,
 				weeknews: new WeeknewsView()
 			};
+
+			// ShortcutsManager.init();
 
 			Backbone.history.start({
 				pushState: true
