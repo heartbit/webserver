@@ -23,8 +23,8 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
 
         clickOnArticle: function(event) {
             this.$currentNewsItem = $(event.target).closest('.slider-item');
-            if (!this.$currentNewsItem.hasClass('seen')) {
-                this.$currentNewsItem.addClass('seen');
+            if (!this.$currentNewsItem.hasClass('read')) {
+                this.$currentNewsItem.addClass('read');
             }
             var newsGuid = this.$currentNewsItem.attr('id');
             this.currentNews = this.news.getNewsByGuid(newsGuid);

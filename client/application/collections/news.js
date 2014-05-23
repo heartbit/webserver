@@ -43,7 +43,7 @@ define('news', ['config', 'information', 'NewsSocketManager', 'backbone', 'momen
                     headline: model.title,
                     text: "", //model.summary,
                     tag: model.params.name,
-                    classname: "seen",
+                    classname: "",
                     idname: model.guid,
                     asset: {
                         thumbnail: model.params.logo,
