@@ -7735,7 +7735,7 @@ if (typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 							}
 						}
 
-						_date.title = data.date[i].headline;
+						_date.title = data.date[i].title;
 						_date.headline = data.date[i].headline;
 						_date.type = data.date[i].type;
 						_date.date = VMM.Date.prettyDate(_date.startdate, false, _date.precisiondate);

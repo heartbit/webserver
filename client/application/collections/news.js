@@ -41,14 +41,15 @@ define('news', ['config', 'information', 'NewsSocketManager', 'backbone', 'momen
                 var news = {
                     startDate: new moment(model.pubDate).format('YYYY,M,D,H,m,s'),
                     headline: model.title + '<span class="icon-ok hide right"></span>',
-                    text: "", //model.summary,
+                    title: model.title.substring(0,20) +'...<span class="icon-ok hide right"></span>',
+                    text: model.summary,
                     tag: model.params.name,
                     classname: "",
                     idname: model.guid,
                     asset: {
                         thumbnail: model.params.logo,
                         media: "",
-                        credit: "",
+                        credit: model.params.name,
                         caption: ""
                     }
                 };
