@@ -2,7 +2,7 @@ define('item', ['config', 'moment', 'backbone'], function(config, moment, Backbo
 
 	var Item = Backbone.Model.extend({
 
-		initiliaze: function() {},
+		initialize: function() {},
 
 	});
 

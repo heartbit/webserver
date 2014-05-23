@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">65.14</p>
+      <p class="stat">67.08</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">80</p>
+      <p class="stat">93</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">20.03</p>
+      <p class="stat">11.98</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.72</p>
+      <p class="stat">0.50</p>
     </div>
   </div>
 </div>
@@ -90,7 +90,7 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;newsView&#039;, [&#039;news&#039;, &#039;moment&#039;, &#039;text!./newsView.html&#039;, &#039;text!./application/views/news/articleContentTpl.html&#039;], function(News, moment, NewsViewTemplate, ArticleContentTemplate) {
+    <textarea id="file-source" class="col-md-12">define(&#039;newsView&#039;, [&#039;news&#039;, &#039;storyjs&#039;, &#039;timelinejs&#039;, &#039;moment&#039;, &#039;text!./newsView.html&#039;, &#039;text!./application/views/news/articleContentTpl.html&#039;], function(News, storyjs, timelinejs, moment, NewsViewTemplate, ArticleContentTemplate) {
 
     return Backbone.View.extend({
 
@@ -98,8 +98,7 @@
 
         events: {
             &#039;click .news&#039;: &#039;checkSeen&#039;,
-            &#039;click .content&#039;: &#039;articleRerouting&#039;,
-
+            &#039;click .slider-item&#039;: &#039;clickOnArticle&#039;
         },
 
         template: _.template(NewsViewTemplate),
@@ -113,6 +112,11 @@
             this.news = new News();
             this.news.socketSync();
             this.news.on(&#039;update&#039;, this.render);
+            console.log(typeof Timelinejs);
+        },
+
+        clickOnArticle: function(){
+            console.log(&#039;CLICK&#039;)
         },
 
         checkSeen: function(event) {
@@ -124,48 +128,57 @@
             this.currentNews = this.news.getNewsByGuid(newsGuid);
         },
 
-        articleRerouting: function(event) {
-            window.open(this.currentNews.link, &#039;_blank&#039;);
-            if(!this.$currentNewsItem.hasClass(&#039;read&#039;)){
-                this.$currentNewsItem.addClass(&#039;read&#039;);   
-            }
-            this.$currentNewsItem.click();
-            this.$currentNewsItem.children(&#039;.icon-ok&#039;).removeClass(&#039;hide&#039;);
-            event.preventDefault();
-        },
+        // articleRerouting: function(event) {
+        //     window.open(this.currentNews.link, &#039;_blank&#039;);
+        //     if (!this.$currentNewsItem.hasClass(&#039;read&#039;)) {
+        //         this.$currentNewsItem.addClass(&#039;read&#039;);
+        //     }
+        //     this.$currentNewsItem.click();
+        //     this.$currentNewsItem.children(&#039;.icon-ok&#039;).removeClass(&#039;hide&#039;);
+        //     event.preventDefault();
+        // },
 
         render: function() {
             var self = this;
             if (this.news &amp;&amp; this.news.models.length &gt; 0) {
-                this.$el.html(this.template({
-                    newsArray: this.news.models.reverse()
-                }));
-                this.renderContent(null, this.news.models[0].guid);
+                this.$el.html(this.template());
+                createStoryJS({
+                    type: &#039;timeline&#039;,
+                    width: &#039;100%&#039;,
+                    height: &#039;400&#039;,
+                    start_at_end: true,
+                    hash_bookmark: false,
+                    lang: &#039;en&#039;,
+                    // font: &#039;Bevan-PotanoSans&#039;,
+                    maptype: &#039;osm&#039;,
+                    source: this.news.toTimelineJSON(),
+                    embed_id: &#039;timeline-news&#039;
+                });
             }
             $(document).foundation();
             return this;
         },
 
-        renderContent: function(event, id) {
-            var newsGuid = event ? $(event.target).attr(&#039;id&#039;) : id;
-            var news = this.news.getNewsByGuid(newsGuid);
-            if (!news) return;
+        // renderContent: function(event, id) {
+        //     var newsGuid = event ? $(event.target).attr(&#039;id&#039;) : id;
+        //     var news = this.news.getNewsByGuid(newsGuid);
+        //     if (!news) return;
 
-            var content;
-            switch (news.params.type) {
-                case &#039;rss&#039;:
-                    content = this.articleContentTemplate({
-                        news: news
-                    });
-                    break;
-                case &#039;twitter&#039;:
-                    content = this.$(&#039;#tweetTpl&#039;);
-                    break;
-            }
+        //     var content;
+        //     switch (news.params.type) {
+        //         case &#039;rss&#039;:
+        //             content = this.articleContentTemplate({
+        //                 news: news
+        //             });
+        //             break;
+        //         case &#039;twitter&#039;:
+        //             content = this.$(&#039;#tweetTpl&#039;);
+        //             break;
+        //     }
 
-            $(&#039;.newsContent&#039;).html(content);
-            return false;
-        }
+        //     $(&#039;.newsContent&#039;).html(content);
+        //     return false;
+        // }
 
     });
 

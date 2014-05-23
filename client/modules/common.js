@@ -2,6 +2,8 @@ requirejs.config({
 
     baseUrl: "../",
 
+    waitSeconds: 10,
+
     paths: {
         // Tests
         parametersManagerTests: 'tests/parametersManager.test',
@@ -11,25 +13,25 @@ requirejs.config({
         config: 'application/config/global',
 
         // General imports
-        'backbone-params': 'libs/backbone.queryparams',
+        'backbone-params': 'libs/backbone/backbone.queryparams',
+        backbone: 'libs/backbone/backbone.min',
         foundation: 'libs/foundation.min',
         underscore: 'libs/underscore-min',
+        jquery: 'libs/jquery/jquery.min',
         socketio: 'libs/socket.io.min',
-        backbone: 'libs/backbone.min',
         modernizr: 'libs/modernizr',
         keymaster: 'libs/keymaster',
-        jquery: 'libs/jquery.min',
+        text: 'libs/require/text',
         moment: 'libs/moment.min',
         cldr: 'libs/twitter_cldr',
         fuse: 'libs/fuse.min',
-        text: 'libs/text',
         d3: 'libs/d3.min',
 
         // Screenshot
-        stackBlur: 'libs/canvg/StackBlur',
-        html2canvas: 'libs/html2canvas',
-        rgbcolor: 'libs/canvg/rgbcolor',
-        canvg: 'libs/canvg/canvg',
+        stackBlur: 'libs/export/canvg/StackBlur',
+        html2canvas: 'libs/export/html2canvas',
+        rgbcolor: 'libs/export/canvg/rgbcolor',
+        canvg: 'libs/export/canvg/canvg',
 
         // Routers
         embedMarketCapRouter: 'application/routers/marketcap.embed.router',
@@ -83,11 +85,15 @@ requirejs.config({
         tooltip: 'application/views/charts/layers/tooltip/tooltip',
         miskbarchart: 'application/views/charts/misk/miskbarchart',
         depthchart: 'application/views/charts/depth/depthchart',
+        // Timelinejs
+        timelinejs: 'libs/timelinejs/timeline',
+        storyjs: 'libs/timelinejs/storyjs-embed',
 
         // DataHelpers
         dataHelper: 'application/helpers/dataHelper',
 
         // Models
+        information: 'application/models/information',
         maingraphe: 'application/models/maingraphe',
         marketcap: 'application/models/marketcap',
         currency: 'application/models/currency',
@@ -127,6 +133,9 @@ requirejs.config({
     },
 
     shim: {
+        'timelinejs': {
+            deps: ['jquery', 'storyjs']
+        },
         'underscore': {
             exports: '_'
         },

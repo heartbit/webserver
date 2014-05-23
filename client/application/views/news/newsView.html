@@ -1,19 +1,7 @@
 <div class="row newsView">
     <div class="column large-12 medium-12 small-12">
-        <dl class="accordion newsList" data-accordion>
-            <%_.each(newsArray, function(news, index){%>
-                <dd>
-                    <a href="#news-<%=index%>" class="news" id="<%=news.guid%>"> 
-	                    <img width="25px" height="25px" src="<%=news.params.logo%>"/>
-	                    <%=moment(news.pubDate).fromNow()%> -  
-	                    <%=news.title%> 
-	                    <span class="icon-ok hide right"></span>
-                    </a>
-                    <div id="news-<%=index%>" class="content">
-                        <%=news.description%>
-                    </div>
-                </dd>
-                <% }); %>
-        </dl>
+        <div id="timeline-news">
+
+        </div>
     </div>
 </div>
