@@ -40,7 +40,7 @@ define('news', ['config', 'information', 'NewsSocketManager', 'backbone', 'momen
             _.each(this.models, function(model) {
                 var news = {
                     startDate: new moment(model.pubDate).format('YYYY,M,D,H,m,s'),
-                    headline: model.title,
+                    headline: model.title + '<span class="icon-ok hide right"></span>',
                     text: "", //model.summary,
                     tag: model.params.name,
                     classname: "",

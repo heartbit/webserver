@@ -27,6 +27,7 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
                 this.$currentNewsItem.addClass('read');
             }
             var newsGuid = this.$currentNewsItem.attr('id');
+            this.$currentNewsItem.find('.icon-ok').removeClass('hide');
             this.currentNews = this.news.getNewsByGuid(newsGuid);
             window.open(this.currentNews.link, '_blank');
             event.preventDefault();
