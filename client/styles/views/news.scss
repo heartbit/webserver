@@ -1,29 +1,8 @@
-#js-news .accordion dd {
-    display: block;
-    margin-bottom: 5px !important;
-}
-
 .newsView {
-	padding-top:10px;
-	padding-bottom:10px;
+	padding-top: 10px;	
 }
-
-/*
-.newsList {
-	max-height: 300px;
-	overflow-y: auto;
-}
-
-.accordion dd>a.news.seen:hover {
-	background-color: #cacaca
-}
-.accordion dd>a.news.seen {
-	background-color: #cacaca
-}
-*/
 
 .newsView .slider-item:hover{
 	background-color: #E9E9E9;
 	cursor: pointer
 }
-

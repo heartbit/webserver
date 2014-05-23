@@ -15,7 +15,7 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
             _.bindAll(
                 this,
                 "render"
-            )
+            );
             this.news = new News();
             this.news.socketSync();
             this.news.on('update', this.render);
@@ -32,15 +32,6 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
             window.open(this.currentNews.link, '_blank'); 
             event.preventDefault();           
         },
-
-        // articleRerouting: function(event) {
-        //     window.open(this.currentNews.link, '_blank');
-        //     if (!this.$currentNewsItem.hasClass('read')) {
-        //         this.$currentNewsItem.addClass('read');
-        //     }
-        //     this.$currentNewsItem.click();
-        //     this.$currentNewsItem.children('.icon-ok').removeClass('hide');
-        // },
 
         render: function() {
             var self = this;
