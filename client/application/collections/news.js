@@ -37,13 +37,14 @@ define('news', ['config', 'information', 'NewsSocketManager', 'backbone', 'momen
                     date: []
                 }
             };
-
             _.each(this.models, function(model) {
                 var news = {
                     startDate: new moment(model.pubDate).format('YYYY,M,D,H,m,s'),
                     headline: model.title,
                     text: "", //model.summary,
                     tag: model.params.name,
+                    classname: "seen",
+                    idname: model.guid,
                     asset: {
                         thumbnail: model.params.logo,
                         media: "",
@@ -53,7 +54,6 @@ define('news', ['config', 'information', 'NewsSocketManager', 'backbone', 'momen
                 };
                 timelineJson.timeline.date.push(news);
             });
-
             return timelineJson;
         }
 

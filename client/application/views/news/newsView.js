@@ -5,7 +5,6 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
         el: '#js-news',
 
         events: {
-            'click .news': 'checkSeen',
             'click .slider-item': 'clickOnArticle'
         },
 
@@ -23,17 +22,15 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
             console.log(typeof Timelinejs);
         },
 
-        clickOnArticle: function(){
-            console.log('CLICK')
-        },
-
-        checkSeen: function(event) {
-            this.$currentNewsItem = $(event.target);
+        clickOnArticle: function(event) {
+            this.$currentNewsItem = $(event.target).closest('.slider-item');
             if (!this.$currentNewsItem.hasClass('seen')) {
                 this.$currentNewsItem.addClass('seen');
             }
             var newsGuid = this.$currentNewsItem.attr('id');
             this.currentNews = this.news.getNewsByGuid(newsGuid);
+            window.open(this.currentNews.link, '_blank'); 
+            event.preventDefault();           
         },
 
         // articleRerouting: function(event) {
@@ -43,7 +40,6 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
         //     }
         //     this.$currentNewsItem.click();
         //     this.$currentNewsItem.children('.icon-ok').removeClass('hide');
-        //     event.preventDefault();
         // },
 
         render: function() {
@@ -57,7 +53,6 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
                     start_at_end: true,
                     hash_bookmark: false,
                     lang: 'en',
-                    // font: 'Bevan-PotanoSans',
                     maptype: 'osm',
                     source: this.news.toTimelineJSON(),
                     embed_id: 'timeline-news'

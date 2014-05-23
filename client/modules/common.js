@@ -85,7 +85,7 @@ requirejs.config({
         tooltip: 'application/views/charts/layers/tooltip/tooltip',
         miskbarchart: 'application/views/charts/misk/miskbarchart',
         depthchart: 'application/views/charts/depth/depthchart',
-        // Timelinejs
+        // News timelinejs
         timelinejs: 'libs/timelinejs/timeline',
         storyjs: 'libs/timelinejs/storyjs-embed',
 
@@ -133,8 +133,10 @@ requirejs.config({
     },
 
     shim: {
+        'storyjs': {
+        },
         'timelinejs': {
-            deps: ['jquery', 'storyjs']
+            deps: ['jquery','storyjs']
         },
         'underscore': {
             exports: '_'
