@@ -29,8 +29,8 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
             }
             var newsGuid = this.$currentNewsItem.attr('id');
             this.currentNews = this.news.getNewsByGuid(newsGuid);
-            window.open(this.currentNews.link, '_blank'); 
-            event.preventDefault();           
+            window.open(this.currentNews.link, '_blank');
+            event.preventDefault();
         },
 
         render: function() {
@@ -49,7 +49,11 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
                     embed_id: 'timeline-news'
                 });
             }
-            $(document).foundation();
+            $(document).foundation({
+                equalizer: {
+                    equalize_on_stack: true
+                }
+            });
             return this;
         },
 
