@@ -1,4 +1,4 @@
-define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', 'misc-bignumber', 'FormatUtils','graphmenuView'], 
+define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', 'bignumber', 'FormatUtils','graphmenuView'], 
     function(Ticker, Trade, config, KeyfactsTemplate, BigNumber, FormatUtils,GraphmenuView) {
 
     return Backbone.View.extend({

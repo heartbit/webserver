@@ -1,4 +1,4 @@
-define('misc-bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, FormatUtils, d3) {
+define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, FormatUtils, d3) {
 
     function BigNumber(el) {
         var self = this;

@@ -14,8 +14,7 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             'click .js-platform': 'changeGlobalPlatform',
 
             'keyup #js-searchbar': 'search',
-            'click #js-searchbar': 'showSearchView',
-            // 'blur #js-searchbar': 'hideSearchView'
+            'click #js-searchbar': 'showSearchView'
         },
 
         template: _.template(ControllerViewTemplate),

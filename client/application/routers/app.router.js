@@ -1,4 +1,4 @@
-define('appRouter', ['backbone', 'config', 'ParametersManager', 'EventManager', 'NewsSocketManager', 'DataSocketManager', 'ChatSocketManager', 'ShortcutsManager', 'items', 'headerView', 'marketcapView', 'keyFactsView', 'mainView', 'controllerView', 'lastupdateView', 'indicatorsView', 'miskView', 'newsView', 'weeknewsView', 'calculatorView'], function(Backbone, config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, ShortcutManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, LastupdateView, IndicatorsView, MiskView, NewsView, WeeknewsView, CalculatorView) {
+define('appRouter', ['backbone', 'config', 'ParametersManager', 'EventManager', 'NewsSocketManager', 'DataSocketManager', 'ChatSocketManager', 'ShortcutsManager', 'items', 'headerView', 'marketcapView', 'keyFactsView', 'mainView', 'controllerView', 'lastupdateView', 'indicatorsView', 'miskView', 'newsView', 'weeknewsView', 'calculatorView'], function(Backbone, config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, ShortcutsManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, LastupdateView, IndicatorsView, MiskView, NewsView, WeeknewsView, CalculatorView) {
 
 	var Router = Backbone.Router.extend({
 
@@ -19,15 +19,19 @@ define('appRouter', ['backbone', 'config', 'ParametersManager', 'EventManager', 
 				main: new MainView(),
 				news: new NewsView(),
 				indicators: new IndicatorsView(),
-				calculator: new CalculatorView,
+				calculator: new CalculatorView(),
 				weeknews: new WeeknewsView()
 			};
-
-			// ShortcutsManager.init();
 
 			Backbone.history.start({
 				pushState: true
 			});
+
+			ShortcutsManager.addShortcut('t', function() {
+				console.log('t')
+			});
+
+			$(document).foundation();
 		},
 
 		/*	README
@@ -49,13 +53,13 @@ define('appRouter', ['backbone', 'config', 'ParametersManager', 'EventManager', 
 		app: function(params) {
 			console.log('params : ', params);
 			this.params = params || this.params || {};
+
 			ParametersManager.isInit ? this.refresh() : ParametersManager.init(this.refresh);
 		},
 
 		refresh: function() {
 			ParametersManager.updateUserInputParams(this.params);
 			this.render(this.initSockets);
-			// this.isRender ? this.update(this.initSockets) : this.render(this.initSockets);
 		},
 
 		render: function(callback) {

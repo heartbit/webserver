@@ -80,14 +80,14 @@ requirejs.config({
         mainchart: 'application/views/charts/mainchart/mainchart',
 
         miskhorizbarchart: 'application/views/charts/misk/miskhorizbarchart',
-        'misc-bignumber': 'application/views/charts/utils/misc-bignumber',
+        bignumber: 'application/views/charts/utils/bignumber',
         miskpiechart: 'application/views/charts/misk/miskpiechart',
         tooltip: 'application/views/charts/layers/tooltip/tooltip',
         miskbarchart: 'application/views/charts/misk/miskbarchart',
         depthchart: 'application/views/charts/depth/depthchart',
         // News timelinejs
-        timelinejs: 'libs/timelinejs/timeline',
         storyjs: 'libs/timelinejs/storyjs-embed',
+        timelinejs: 'libs/timelinejs/timeline',
 
         // DataHelpers
         dataHelper: 'application/helpers/dataHelper',
@@ -160,6 +160,9 @@ requirejs.config({
         'foundation': {
             deps: ['jquery'],
             exports: 'foundation'
+        },
+        'keymaster': {
+            exports: 'keymaster'
         },
         'html2canvas': {
             exports: 'html2canvas'

@@ -1,4 +1,4 @@
-define('lastupdateView', ['text!lastupdateView.html', 'misc-bignumber', 'EventManager', 'moment'], function(LastUpdateViewViewTemplate, BigNumber, EventManager) {
+define('lastupdateView', ['text!lastupdateView.html', 'bignumber', 'EventManager', 'moment'], function(LastUpdateViewViewTemplate, BigNumber, EventManager) {
 
     return Backbone.View.extend({
 

@@ -1,4 +1,4 @@
-define('ShortcutsManager', ['keymaster'], function(key) {
+define('ShortcutsManager', ['keymaster'], function() {
 
 	var ShortcutsManager = function ShortcutsManager() {
 		if (instance !== null) {
@@ -7,9 +7,13 @@ define('ShortcutsManager', ['keymaster'], function(key) {
 	};
 
 	ShortcutsManager.prototype.init = function() {
-		key('a', function() {
-			alert('you pressed a!')
+		key('h', function() {
+			console.log('Press h -> help');
 		});
+	};
+
+	ShortcutsManager.prototype.addShortcut = function(combo, callback){
+		key(combo, callback);
 	};
 
 	var instance = null;
