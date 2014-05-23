@@ -1,6 +1,6 @@
 requirejs.config({
 
-    baseUrl: "../",
+    baseUrl: __dirname + "/../",
 
     waitSeconds: 10,
 

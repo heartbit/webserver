@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(grunt) {
 
     var path = require('path');
@@ -11,16 +13,25 @@ module.exports = function(grunt) {
         failOnError: true
     };
 
-    grunt.initConfig({
+    var props = {
+        defaultport: 9090,
+        srcDir: './',
+        buildDir: './build',
+        reportDir: './reports',
+        documentationDir: 'doc/html/',
+        clientDir: './client',
+        serverDir: './server',
+        buildClientDir: './build/client',
+        cssDir: './client/styles',
+        dev: 'heartbit-dev',
+        master: 'heartbit-prod',
+        appModuleConcat: 'build/client/modules/app.js'
+    };
 
-        /**
-       General properties
-    */
-        pkg: grunt.file.readJSON('package.json'),
+    grunt.initConfig({
 
         props: {
             defaultport: 9090,
-            defaultportProd: 9090,
             srcDir: './',
             buildDir: './build',
             reportDir: './reports',
@@ -30,8 +41,13 @@ module.exports = function(grunt) {
             buildClientDir: './build/client',
             cssDir: './client/styles',
             dev: 'heartbit-dev',
-            master: 'heartbit-prod'
+            master: 'heartbit-prod',
+            appModuleConcat: 'build/client/modules/app.js'
         },
+        /**
+       General properties
+    */
+        pkg: grunt.file.readJSON('package.json'),
 
         /**
       Sub tasks
@@ -41,7 +57,48 @@ module.exports = function(grunt) {
             options: {
                 force: true
             },
-            build: ['<%= props.buildDir %>', '<%= props.documentationDir %>']
+            build: [props.buildDir, props.documentationDir]
+        },
+
+        concat: {
+            app: {
+                src: ['client/libs/resuire/require.js', props.appModuleConcat],
+                dest: props.appModuleConcat
+            }
+        },
+
+        uglify: {
+            app: {
+                src: props.appModuleConcat,
+                dest: 'build/client/modules/app.min.js'
+            },
+        },
+
+        jshint: {
+            gruntfile: {
+                options: {
+                    jshintrc: '.jshintrc'
+                },
+                src: 'Gruntfile.js'
+            },
+            client: {
+                options: {
+                    jshintrc: '.jshintrc'
+                },
+                src: ['client/**/*.js']
+            },
+            server: {
+                options: {
+                    jshintrc: '.jshintrc'
+                },
+                src: ['server/**/*.js']
+            },
+            test: {
+                options: {
+                    jshintrc: '.jshintrc'
+                },
+                src: ['test/**/*.js']
+            },
         },
 
         simplemocha: {
@@ -58,33 +115,51 @@ module.exports = function(grunt) {
 
         // Minify, compress, uglify javascript files
         requirejs: {
-            main: {
-                options: {
-                    appDir: '<%= props.clientDir %>',
-                    baseUrl: './modules',
-                    mainConfigFile: '<%= props.clientDir %>/modules/common.js',
-                    dir: '<%= props.buildClientDir %>',
-                    fileExclusionRegExp: /^(bower_components|build|node_modules)$/,
-                    optimize: 'uglify2',
-                    modules: [{
-                        name: 'common',
-                    }, {
-                        name: 'app',
-                    }, {
-                        name: 'embed-keyfacts',
-                    }, {
-                        name: 'embed-maingraph',
-                    }],
-                    inlineText: true,
-                    preserveLicenseComments: false
+            // app: {
+            //     options: {
+                    
+            //         baseUrl: 'js', 
+            // appDir: 'public', 
+            // dir: 'build',
+            // modules: [
+            //     { name: 'main'}
+            // ],
+            // paths: {
+            //     main: 'main',
+            //     jquery: 'lib/jquery-1.10.0.min.js'
+            // }
+
+
+
+                    name: 'app',
+                    mainConfigFile: props.clientDir + '/modules/common.js',
+                    out: props.appModuleConcat,
+                    optimize: 'none'
+
+                    // appDir: '<%= props.clientDir %>',
+                    // baseUrl: './modules',
+                    // mainConfigFile: '<%= props.clientDir %>/modules/common.js',
+                    // dir: '<%= props.buildClientDir %>',
+                    // fileExclusionRegExp: /^(bower_components|build|node_modules)$/,
+                    // modules: [{
+                    //     name: 'common',
+                    // }, {
+                    //     name: 'app',
+                    // }, {
+                    //     name: 'embed-keyfacts',
+                    // }, {
+                    //     name: 'embed-maingraph',
+                    // }],
+                    // inlineText: true,
+                    // preserveLicenseComments: false
                 }
             },
             css: {
                 options: {
                     logLevel: 3,
                     optimizeCss: 'standard',
-                    cssIn: '<%= props.cssDir %>/all-sass.css',
-                    out: '<%= props.cssDir %>/all.css'
+                    cssIn: props.cssDir + '/all-sass.css',
+                    out: props.cssDir + '/all.css'
                 }
             }
         },
@@ -96,7 +171,8 @@ module.exports = function(grunt) {
                     banner: 'heartbit.io build: compiled css v.25'
                 },
                 files: {
-                    '<%= props.cssDir %>/all-sass.css': '<%= props.cssDir %>/all-source.scss' // 'destination': 'source'
+                    '<%= props.cssDir %>/all-sass.css': '<%= props.cssDir %>/all-source.scss'
+                    // props.cssDir + '/all-sass.css': props.cssDir + '/all-source.scss' // 'destination': 'source'
                 }
             }
         },
@@ -134,21 +210,21 @@ module.exports = function(grunt) {
 
         watch: {
             css: {
-                files: ['<%= props.cssDir %>/**'],
+                files: [props.cssDir + '/**'],
                 tasks: ['css'],
                 options: {
                     nospawn: true
                 }
             },
             local: {
-                files: ['<%=props.serverDir%>/**', './webserver.js'],
+                files: [props.serverDir + '/**', './webserver.js'],
                 tasks: ['localServer'],
                 options: {
                     nospawn: true
                 }
             },
             offline: {
-                files: ['<%=props.serverDir%>/**', './webserver.js'],
+                files: [props.serverDir + '/**', './webserver.js'],
                 tasks: ['offlineServer'],
                 options: {
                     nospawn: true
@@ -175,7 +251,7 @@ module.exports = function(grunt) {
                     args: ['-d', 'yes'],
                     ignoredFiles: ['node_modules/**'],
                     env: {
-                        PORT: "<%= props.defaultportProd %>"
+                        PORT: props.defaultportProd
                     },
                 }
             },
@@ -186,7 +262,7 @@ module.exports = function(grunt) {
                     nodeArgs: ['--debug'],
                     ignoredFiles: ['node_modules/**', 'RipplePairs/*', './client/application', './client/*.html'],
                     env: {
-                        PORT: "<%= props.defaultport %>"
+                        PORT: props.defaultport
                     },
                 }
             },
@@ -197,7 +273,7 @@ module.exports = function(grunt) {
                     nodeArgs: ['--debug'],
                     ignoredFiles: ['node_modules/**'],
                     env: {
-                        PORT: "<%= props.defaultport %>"
+                        PORT: props.defaultport
                     },
                 }
             },
@@ -208,7 +284,7 @@ module.exports = function(grunt) {
                     nodeArgs: ['--debug-brk'],
                     ignoredFiles: ['node_modules/**'],
                     env: {
-                        PORT: "<%= props.defaultport %>"
+                        PORT: props.defaultport
                     },
                 }
             }
@@ -241,7 +317,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     src: '../**.md',
-                    dest: '<%= props.documentationDir%>',
+                    dest: props.documentationDir,
                     ext: '.html'
                 }]
             }
@@ -276,5 +352,5 @@ module.exports = function(grunt) {
     grunt.registerTask('deploy-dev', ['build', 'shell:gitdev']);
     grunt.registerTask('documentation', ['clean', 'markdown:all']);
     grunt.registerTask('deploy-master', ['build', 'shell:gitmaster']);
-    grunt.registerTask('build', ['clean', 'css', 'requirejs:main', 'copy:main']);
+    grunt.registerTask('build', ['clean', 'test', 'css', 'requirejs:app', 'concat:app', 'uglify:app']); //, 'copy:main']);
 };
