@@ -1,4 +1,4 @@
-<div class="columns small-6">
+<div class="columns small-12 medium-8 large-6">
 
     <h1>
         <%=platform.id%>
@@ -7,7 +7,7 @@
 
         <%_.each(pairs, function(pair){%>
             <%if(_.contains(pair.platforms,platform.id)){%>
-                <li class="columns small-6 ">
+                <li class="columns small-12 medium-8 large-6 ">
                 	<a class="<% if(pair.id.split("/")[0] === item){%>selected<%}%>" >
 	                    <div class="pair js-pair" data-pair-id="<%=pair.id%>">
 	                        <%=pair.id%>
@@ -20,14 +20,14 @@
     </ul>
 
 </div>
-<div class="columns small-6">
+<div class="columns small-12 medium-8 large-6">
 
     <h1>Other Pairs</h1>
     <ul class="list">
 
         <%_.each(pairs, function(pair){%>
             <%if(!_.contains(pair.platforms,platform.id)){%>
-                <li class="columns small-6  ">
+                <li class="columns small-12 medium-8 large-6">
                         <a class=" <% if(pair.id.split("/")[0] === item){%>selected<%}%>" >
                         	<div class="pair js-pair" data-pair-id="<%=pair.id%>">
                               <%=pair.id%>
