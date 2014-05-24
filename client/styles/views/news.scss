@@ -2,6 +2,10 @@
 	padding-top: 10px;	
 }
 
+.newsView .slider-item {
+	overflow-y: hidden;
+}
+
 .newsView .slider-item:hover{
 	background-color: #E9E9E9;
 	cursor: pointer
