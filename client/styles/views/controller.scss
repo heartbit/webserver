@@ -1,4 +1,4 @@
-.searchBox {
+.controllerView .searchBox {
 	position:fixed;
 	float:right;
 	z-index:99;
@@ -7,13 +7,39 @@
 	margin-right:0.5em;
 }
 
-.controllerBox{
-	float:right
-}
-#js-controller{
+.controllerView .controllerBox{
 	float:right;
+	padding-top: 15px;
 }
-.searchIcon{
+
+.controllerView .searchbar{
+	max-height: 35px;	
+	padding-bottom: 0px;
+	margin:0px;
+}
+
+.controllerView .searchbutton{
+	max-height: 35px;	
+	padding-bottom: 0px;
+	margin:0px;
+}
+
+.controllerView .searchIcon{
 	width:10%;
 	height:45px;
 }
+
+.controllerView .row .row.collapse {
+	margin: 0 0 0 0;
+}
+
+.controllerView .button-bar a {
+	max-height: 45px;	
+	margin:0px;
+} 
+
+/*
+.controllerView #js-controller{
+	float:right;
+}
+*/

@@ -15,8 +15,9 @@ define('ShortcutsManager', ['keymaster'], function() {
 		}
 	};
 
+	ShortcutsManager.prototype.shortcuts = [];
+	
 	ShortcutsManager.prototype.init = function() {
-		this.shortcuts = [];
 		var helpShortcutsParams = {
 			combo: 'h',
 			action: 'Show this page!'
@@ -30,9 +31,8 @@ define('ShortcutsManager', ['keymaster'], function() {
 	};
 
 	ShortcutsManager.prototype.getList = function() {
-		return [{
-
-		}];
+		var list = this.shortcuts;
+		return list;
 	};
 
 	var instance = null;

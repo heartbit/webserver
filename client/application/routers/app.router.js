@@ -26,9 +26,10 @@ define('appRouter', ['backbone', 'config', 'ParametersManager', 'EventManager', 
 				pushState: true
 			});
 
-			ShortcutsManager.addShortcut('t', function() {
-				console.log('t')
-			});
+			ShortcutsManager.init();
+			// ShortcutsManager.addShortcut('t', function() {
+			// 	console.log('t')
+			// });
 
 			$(document).foundation();
 		},

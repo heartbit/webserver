@@ -1,8 +1,8 @@
 <div class="row" id="keyfact">
 	<div id="js-keyFactExportTools" class="exporttools"></div>
     <% _.each(tickerAttributes, function(tickerAttribute) { %>
-        <div class="large-2 medium-2 small-2 columns panel bottomTopBorder text-center">
-            <span class="">
+        <div class="large-2 medium-2 small-2 columns text-center">
+            <span>
                 <%=tickerAttribute.label%>
             </span>
             <div id="<%=tickerAttribute.htmlSelector%>" class="bigNumber-medium"></div>

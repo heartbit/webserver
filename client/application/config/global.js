@@ -85,7 +85,7 @@ define('config', function() {
 		type: 'price'
 	}, {
 		id: 'wavg',
-		label: 'Weighted avg',
+		label: 'Avg',
 		type: 'price'
 	}, {
 		id: 'high',

@@ -61,7 +61,7 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
                 },
                 function(maingraphes) {
                     if (maingraphes) {
-                        self.$('#js-mainchart').removeClass('loading');
+                        // self.$('#js-mainchart').removeClass('loading');
 
                         var mainGraphParams = {
                             area: true,

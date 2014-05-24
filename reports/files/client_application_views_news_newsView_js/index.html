@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">67.08</p>
+      <p class="stat">63.56</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">93</p>
+      <p class="stat">63</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">11.98</p>
+      <p class="stat">11.34</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.50</p>
+      <p class="stat">0.59</p>
     </div>
   </div>
 </div>
@@ -97,7 +97,6 @@
         el: &#039;#js-news&#039;,
 
         events: {
-            &#039;click .news&#039;: &#039;checkSeen&#039;,
             &#039;click .slider-item&#039;: &#039;clickOnArticle&#039;
         },
 
@@ -108,35 +107,24 @@
             _.bindAll(
                 this,
                 &quot;render&quot;
-            )
+            );
             this.news = new News();
             this.news.socketSync();
             this.news.on(&#039;update&#039;, this.render);
-            console.log(typeof Timelinejs);
         },
 
-        clickOnArticle: function(){
-            console.log(&#039;CLICK&#039;)
-        },
-
-        checkSeen: function(event) {
-            this.$currentNewsItem = $(event.target);
-            if (!this.$currentNewsItem.hasClass(&#039;seen&#039;)) {
-                this.$currentNewsItem.addClass(&#039;seen&#039;);
+        clickOnArticle: function(event) {
+            this.$currentNewsItem = $(event.target).closest(&#039;.slider-item&#039;);
+            if (!this.$currentNewsItem.hasClass(&#039;read&#039;)) {
+                this.$currentNewsItem.addClass(&#039;read&#039;);
             }
             var newsGuid = this.$currentNewsItem.attr(&#039;id&#039;);
+            this.$currentNewsItem.find(&#039;.icon-ok&#039;).removeClass(&#039;hide&#039;);
+            this.$(&#039;.marker.active&#039;).find(&#039;h3&#039;).append(&#039;&lt;span class=&quot;icon-ok right&quot;&gt;&lt;/span&gt;&#039;);
             this.currentNews = this.news.getNewsByGuid(newsGuid);
+            window.open(this.currentNews.link, &#039;_blank&#039;);
+            event.preventDefault();
         },
-
-        // articleRerouting: function(event) {
-        //     window.open(this.currentNews.link, &#039;_blank&#039;);
-        //     if (!this.$currentNewsItem.hasClass(&#039;read&#039;)) {
-        //         this.$currentNewsItem.addClass(&#039;read&#039;);
-        //     }
-        //     this.$currentNewsItem.click();
-        //     this.$currentNewsItem.children(&#039;.icon-ok&#039;).removeClass(&#039;hide&#039;);
-        //     event.preventDefault();
-        // },
 
         render: function() {
             var self = this;
@@ -149,37 +137,19 @@
                     start_at_end: true,
                     hash_bookmark: false,
                     lang: &#039;en&#039;,
-                    // font: &#039;Bevan-PotanoSans&#039;,
                     maptype: &#039;osm&#039;,
                     source: this.news.toTimelineJSON(),
                     embed_id: &#039;timeline-news&#039;
                 });
             }
-            $(document).foundation();
+            $(document).foundation({
+                equalizer: {
+                    equalize_on_stack: true
+                }
+            });
             return this;
-        },
-
-        // renderContent: function(event, id) {
-        //     var newsGuid = event ? $(event.target).attr(&#039;id&#039;) : id;
-        //     var news = this.news.getNewsByGuid(newsGuid);
-        //     if (!news) return;
-
-        //     var content;
-        //     switch (news.params.type) {
-        //         case &#039;rss&#039;:
-        //             content = this.articleContentTemplate({
-        //                 news: news
-        //             });
-        //             break;
-        //         case &#039;twitter&#039;:
-        //             content = this.$(&#039;#tweetTpl&#039;);
-        //             break;
-        //     }
-
-        //     $(&#039;.newsContent&#039;).html(content);
-        //     return false;
-        // }
-
+        }
+        
     });
 
 });</textarea>

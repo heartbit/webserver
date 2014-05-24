@@ -146,13 +146,13 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, 
     };
 
     BigNumber.prototype.addLoader = function() {
-        $(this.el).addClass('loading');
-        this.chart.attr('opacity', 0);
+        // $(this.el).addClass('loading');
+        // this.chart.attr('opacity', 0);
     };
 
     BigNumber.prototype.removeLoader = function() {
-        $(this.el).removeClass('loading');
-        this.chart.attr('opacity', 1);
+        // $(this.el).removeClass('loading');
+        // this.chart.attr('opacity', 1);
     };
 
     return BigNumber;

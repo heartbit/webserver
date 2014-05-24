@@ -10,6 +10,26 @@ define('offcanvasmenuView', ['config', 'text!offcanvasmenuView.html', 'backbone'
             'click #js-calculator': 'showCalculatorModal',
             'click #js-weeknews': 'showWeeknewsModal',
             'click #js-shortcuts': 'showShortcutsModal',
+            'click #js-ressources': 'openBlogRessourcesInNewTab'
+        },
+
+        initialize: function() {
+            _.bindAll(this,
+                'render'
+            );
+            this.calculatorView = new CalculatorView();
+            this.weeknewsView = new WeeknewsView();
+            this.shortcutsView = new ShortcutsView();
+            this.lastupdateView = new LastupdateView();
+        },
+
+        render: function(params) {
+            this.$el.html(this.template());
+            this.lastupdateView
+                .setElement('#js-lastUpdate')
+                .render();
+            $(document).foundation();
+            return this;
         },
 
         showCalculatorModal: function() {
@@ -33,21 +53,10 @@ define('offcanvasmenuView', ['config', 'text!offcanvasmenuView.html', 'backbone'
             $('#js-weeknewsModal').foundation('reveal', 'open');
         },
 
-        initialize: function() {
-            _.bindAll(this,
-                'render'
-            );
-            this.calculatorView = new CalculatorView();
-            this.weeknewsView = new WeeknewsView();
-            this.shortcutsView = new ShortcutsView();
-        },
-
-        render: function(params) {
-            this.$el.html(this.template());
-            $(document).foundation();
-            return this;
-        },
-
+        openBlogRessourcesInNewTab: function(event){
+            window.open("http://blog.heartbit.io/", '_blank');
+            event.preventDefault();
+        }
 
     });
 
