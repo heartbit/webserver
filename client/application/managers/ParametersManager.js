@@ -30,7 +30,7 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
     };
 
     ParametersManager.prototype.initInternalParams = function() {
-
+        var self = this;
         var platformdIds = [];
         _.each(this.items.models, function(item) {
             var currencies = _.keys(item.currencies);
@@ -40,7 +40,21 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
         });
         this.platforms = new Platforms();
         this.platforms.initFromIds(platformdIds);
-
+        
+        _.each(this.platforms.models, function(platform) {
+          var pairPlatformsIds =[];
+          _.each(self.items.models, function(item) {
+            pairPlatformsIds = _.union(pairPlatformsIds, _.chain(item.currencies)
+                .keys()
+                .map(function(currency) {
+                    if( item.currencies[currency].indexOf(platform.id) != -1) {
+                      return item.id + '/' + currency;
+                    }
+                }).value());
+          });
+          platform.pairs = pairPlatformsIds;
+        });
+        
         var currencyIds = [];
         _.each(this.items.models, function(item) {
             var currencies = _.keys(item.currencies);
@@ -59,7 +73,20 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
         });
         this.pairs = new Pairs();
         this.pairs.initFromIds(pairIds);
-
+        _.each(this.pairs.models, function(pair) {
+            self.platformsIds = [];
+            _.each(self.items.models, function(item) {
+                if ( pair.id.split("/")[0] === item.id ) {
+                    var currencies = _.keys(item.currencies);
+                    _.each(currencies, function(currency) {
+                        if ( pair.id.split("/")[1] === currency ) {
+                            self.platformsIds = _.union(self.platformsdIds, item.currencies[currency]);
+                        }
+                    });
+                }
+            });
+            pair.platforms = self.platformsIds;
+        });
         this.currentParams = config.defaultparams;
 
         return this;
@@ -75,17 +102,17 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
         return 'app?item=' + params.item + "&platform=" + params.platform + "&currency=" + params.currency;
     };
 
-    ParametersManager.prototype.changeGlobalPair = function(pairId) {
-        console.log(platformId);
-        var params = config.defaultitems[platformId];
-        params.platform = platformId;
+    ParametersManager.prototype.changeGlobalPair = function(pairId,platform) {
+        var params = {};
+        params.item = pairId.split("/")[0];
+        params.currency=pairId.split("/")[1];
+        params.platform=platform||this.currentParams.platform;
         var url = this.computeUrl(params);
         Backbone.history.navigate(url, true);
         return false;
     };
 
     ParametersManager.prototype.changeGlobalPlatform = function(platformId) {
-        console.log(platformId);
         var params = config.defaultplatforms[platformId];
         params.platform = platformId;
         var url = this.computeUrl(params);
@@ -94,14 +121,27 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
     };
 
     ParametersManager.prototype.changeGlobalItem = function(itemid) {
-        console.log(itemid);
         var params = config.defaultitems[itemid];
         params.item = itemid;
         var url = this.computeUrl(params);
         Backbone.history.navigate(url, true);
         return false;
     };
-
+     ParametersManager.prototype.getCurrentPlatformPairs = function(){
+         var platform= this.currentParams.platform;
+         return this.platforms.findByName(platform);
+     };
+     
+    ParametersManager.prototype.getPlatformByPairId = function(pairId) {
+        var result;
+        _.each(this.platforms.models,function(model){
+            if ( _.contains(model.pairs,pairId) ) {
+              result = model.id;
+              return;
+            }
+        });
+        return result;
+    };
     /* Getters */
     ParametersManager.prototype.getCurrentParams = function() {
         return this.currentParams;

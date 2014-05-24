@@ -1,4 +1,4 @@
-define('items', ['config', 'item', 'platforms', 'currencies', 'pairs', 'fuse'], function(config, Item, Platforms, Currencies, Pairs, Fuse) {
+define('items', ['config', 'item', 'platforms', 'currencies', 'pairs', 'fuse','FormatUtils'], function(config, Item, Platforms, Currencies, Pairs, Fuse,FormatUtils) {
 
     var Items = Backbone.Collection.extend({
 
@@ -26,6 +26,9 @@ define('items', ['config', 'item', 'platforms', 'currencies', 'pairs', 'fuse'], 
         parse: function(response) {
             this.models = _.uniq(response, function(item) {
                 return item.id;
+            });
+            _.each(this.models,function(model){
+                model.active = !FormatUtils.isEmpty(model.currencies);
             });
             this.trigger('change');
         },

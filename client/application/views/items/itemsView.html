@@ -1,12 +1,16 @@
 <div>
-    <ul>
+    <ul class="list">
         <%_.each(items, function(item){%>
-            <li>
-                <a class="js-item" id="<%=item.id%>">
-                    <%=item.id%>
+          <% if ( item.active) {%>
+            <li class="columns small-6">
+            	<a >
+	            	<div class="pair js-item columns small-6" id="<%=item.id%>">
+		                    <%=item.id%>
+	            	</div>
                 </a>
             </li>
-            <%})%>
+          <%}%>
+        <%})%>
     </ul>
 </div>
 <a class="close-reveal-modal">&#215;</a>

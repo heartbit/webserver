@@ -1,12 +1,47 @@
-<div>
-    <ul>
+<div class="columns small-6">
+
+    <h1>
+        <%=platform.id%>
+    </h1>
+    <ul class="list">
+
         <%_.each(pairs, function(pair){%>
-            <li>
-                <a>
-                    <%=pair.id%>
-                </a>
-            </li>
-            <%})%>
+            <%if(_.contains(pair.platforms,platform.id)){%>
+                <li class="columns small-6 ">
+                	<a class="<% if(pair.id.split("/")[0] === item){%>selected<%}%>" >
+	                    <div class="pair js-pair" data-pair-id="<%=pair.id%>">
+	                        <%=pair.id%>
+	                    </div>
+                    </a>
+                </li>
+                <%}%>
+        <%})%>
+
     </ul>
+
 </div>
+<div class="columns small-6">
+
+    <h1>Other Pairs</h1>
+    <ul class="list">
+
+        <%_.each(pairs, function(pair){%>
+            <%if(!_.contains(pair.platforms,platform.id)){%>
+                <li class="columns small-6  ">
+                        <a class=" <% if(pair.id.split("/")[0] === item){%>selected<%}%>" >
+                        	<div class="pair js-pair" data-pair-id="<%=pair.id%>">
+                              <%=pair.id%>
+                            </div>
+                                <!--<br/><i class="tiny-platform"> (<%_.each(pair.platforms,function(platform){%>
+						  <%=platform%>
+					  <%})%>)</i>-->
+                        </a>
+                </li>
+                <%}%>
+        <%})%>
+
+    </ul>
+
+</div>
+
 <a class="close-reveal-modal">&#215;</a>

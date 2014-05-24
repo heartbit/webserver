@@ -1,0 +1,35 @@
+.selected {
+	font-size:1.5em;
+}
+.pair {
+	border: solid thin;
+	padding: 1.3em;
+	height: 100%;
+	margin-bottom: 0.8em;
+	text-align: center;
+	-moz-box-shadow: 10px 10px 5px 0px #c0c0c0;
+	-webkit-box-shadow: 10px 10px 5px 0px #c0c0c0;
+	-o-box-shadow: 10px 10px 5px 0px #c0c0c0;
+	box-shadow: 10px 10px 5px 0px #c0c0c0;
+	filter:progid:DXImageTransform.Microsoft.Shadow(color=#c0c0c0, Direction=134, Strength=5);
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+.list a {
+	color:black;
+
+}
+.list a:hover {
+	color:#cacaca;
+	background-color:black;
+}
+.list {
+	list-style-type:none;
+}
+.list li{
+	list-style-type:none;
+}
+.tiny-platform {
+	font-size:0.7em;
+}

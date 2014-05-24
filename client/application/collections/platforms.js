@@ -24,7 +24,7 @@ define('platforms', ['config', 'platform', 'fuse'], function(config, Platform, F
 
 		findByName: function(name) {
 			return _.find(this.models, function(platform) {
-				return platform.get('name') === name;
+				return platform.get('id') === name;
 			});
 		}
 

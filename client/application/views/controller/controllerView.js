@@ -12,6 +12,11 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             'click .js-item': 'changeGlobalItem',
             'click .js-pair': 'changeGlobalPair',
             'click .js-platform': 'changeGlobalPlatform',
+            
+            
+            'click .js-item-search': 'displayCurrency',
+            'click .js-pair-search': 'changeGlobalPair',
+            'click .js-platform-search': 'displayItems',
 
             'keyup #js-searchbar': 'search',
             'click #js-searchbar': 'showSearchView'
@@ -63,23 +68,24 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
         },
 
         search: function() {
+            var self = this;
             var query = $('#js-searchbar').val();
             if (query && query != "") {
-                var matchItems = _.uniq(ParametersManager.getItems().search(query), function(item) {
+                self.matchItems = _.uniq(ParametersManager.getItems().search(query), function(item) {
                     return item.id;
                 });
-                var matchPlatforms = _.uniq(ParametersManager.getPlatforms().search(query), function(platform) {
+                self.matchPlatforms = _.uniq(ParametersManager.getPlatforms().search(query), function(platform) {
                     return platform.id;
                 });
 
-                var matchPairs = _.uniq(ParametersManager.getPairs().search(query), function(pair) {
+                self.matchPairs = _.uniq(ParametersManager.getPairs().search(query), function(pair) {
                     return pair.id;
                 });
 
                 var tplVariables = {
-                    platforms: matchPlatforms,
-                    items: matchItems,
-                    pairs: matchPairs
+                    platforms: self.matchPlatforms,
+                    items: self.matchItems,
+                    pairs: self.matchPairs
                 };
 
                 var htmlResults = this.templateSearch(tplVariables);
@@ -110,7 +116,14 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
 
         changeGlobalPair: function(event) {
             var pairId = $(event.target).attr('id');
-            ParametersManager.changeGlobalPair(pairId);
+            var currentPlatform =  ParametersManager.getCurrentPlatformPairs();
+            var platformId = currentPlatform.id;
+            if ( !_.contains(currentPlatform.pairs,pairId) ){
+                platformId = ParametersManager.getPlatformByPairId(pairId);
+            }
+            ParametersManager.changeGlobalPair(pairId,platformId);
+        
+            $('#js-pairsViewModal').foundation('hide', 'close');
             return false;
         },
 
@@ -133,6 +146,14 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
         showItemsView: function() {
             $('#js-itemsViewModal').foundation('reveal', 'open');
             return false;
+        },
+        displayCurrency: function(){
+        },
+        displayPlatforms:function(){
+       
+        },
+        displayItems:function(){
+            
         }
 
     });

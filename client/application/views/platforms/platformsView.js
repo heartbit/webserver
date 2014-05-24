@@ -26,7 +26,8 @@ define('platformsView', ['config', 'text!platformsView.html', 'ParametersManager
 		changeGlobalPlatform: function(event) {
 			var platformId = $(event.target).attr('id');
 			ParametersManager.changeGlobalPlatform(platformId);
-			return false;
+            this.$el.foundation('reveal', 'close');
+			return true;
 		},
 
 	});

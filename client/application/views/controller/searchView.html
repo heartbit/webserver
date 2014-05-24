@@ -3,9 +3,9 @@
     <div class="large-4 medium-4 small-4 columns">
         Items
         <ul>
-        <%_.each(items,function(item){%>
-            <li class="js-item"><a class="js-item item" id="<%=item.id%>"><%=item.name%></a></li>
-        <%})%>
+        <%_.each(items,function(item){ if (item.active) {%>
+            <li class="js-item-search"><a class="js-item item" id="<%=item.id%>"><%=item.name%></a></li>
+        <%}})%>
         </ul>
     </div>
 
@@ -13,7 +13,7 @@
         Platforms
         <ul>
             <%_.each(platforms,function(platform){%>
-            <li><a class="js-platform" id="<%=platform.id%>"><%=platform.get('id')%></a></li>
+            <li><a class="js-platform-search" id="<%=platform.id%>"><%=platform.get('id')%></a></li>
         <%})%>
         </ul>
     </div>
@@ -22,7 +22,7 @@
         Pair
         <ul>
             <%_.each(pairs,function(pair){%>
-            <li><a class="js-pair" id="<%=pair.id%>"><%=pair.get('id')%></a></li>
+            <li><a class="js-pair-search" id="<%=pair.id%>"><%=pair.get('id')%></a></li>
         <%})%>
         </ul>
     </div>

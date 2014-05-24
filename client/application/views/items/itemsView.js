@@ -17,7 +17,7 @@ define('itemsView', ['config', 'text!itemsView.html', 'ParametersManager'], func
 
         render: function() {
             this.$el.html(this.template({
-                items: ParametersManager.getItems().models,
+                items: ParametersManager.getItems().models
             }));
             $(document).foundation();
             return this;
@@ -26,6 +26,7 @@ define('itemsView', ['config', 'text!itemsView.html', 'ParametersManager'], func
         changeGlobalItems: function(event) {
             var itemId = $(event.target).attr('id');
             ParametersManager.changeGlobalItem(itemId);
+            this.$el.foundation('reveal', 'close');
             return false;
         },
 
