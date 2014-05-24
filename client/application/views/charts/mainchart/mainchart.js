@@ -61,8 +61,8 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         this.timeScale = d3.time.scale()
             .range([0, this.width]);
 
-        this.zoom = d3.behavior.zoom().on("zoom", this.doZoom);
-        this.chart.call(this.zoom);
+        // this.zoom = d3.behavior.zoom().on("zoom", this.doZoom);
+        // this.chart.call(this.zoom);
 
         this.timeAxis = d3.svg.axis()
             .scale(this.timeScale)
@@ -104,7 +104,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         })), d3.max(last30.map(function(candle) {
             return candle.endDate;
         }))]);
-        this.zoom.x(this.timeScale);
+        // this.zoom.x(this.timeScale);
         this.timeAxisInstance.call(this.timeAxis);
     };
 
@@ -149,7 +149,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
             .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
         this.timeScale.range([0, this.width]);
-        this.zoom.x(this.timeScale);
+        // this.zoom.x(this.timeScale);
         this.timeAxisInstance.call(this.timeAxis);
         this.draw(this.maingraphes);
     };
