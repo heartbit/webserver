@@ -38,43 +38,34 @@ $primary_color: #ffffff;
     padding-top: 2em !important;
     border-radius:6px;
 }
+
 .title-area.webappTitle {
     text-align: center;
     margin-left: 5em;
 }
+
 .loading {
     background: url("/images/loaders/spiffygif_30x30.gif");
     background-repeat: no-repeat;
     background-position: center;
 }
-.bottomTopBorder {
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-top: 20px;
-    padding-bottom: 5px;
-}
-.withoutBorder {
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
+
 body {
     background: #a3a3a3;
 }
+
 .hidden {
     visibility:hidden;
 }
+
 .top-bar-section ul li.item {
     float: none;
 }
-#subheader {
-    position:fixed;
-    z-index: 5;
-}
+
 #firstRow {
-    padding-top: 15px;
+    padding-top: 45px;
 }
+
 .datawidget {
     padding-left: 2%;
     padding-right: 2%;

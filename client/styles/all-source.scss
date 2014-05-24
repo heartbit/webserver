@@ -3,8 +3,15 @@
 @import "./external/fontello/css/fontello-embedded.css";
 @import "./external/normalize.scss";
 
-@import "./common.scss";
+@import "./charts/depthchart.scss";
+@import "./charts/mainchart.scss";
+@import "./charts/tooltip.scss";
+@import "./charts/misc-bignumber.scss";
+@import "./charts/miskbarchart.scss";
+@import "./charts/miskhorizbarchart.scss";
+@import "./charts/timelinejs/timeline.css";
 
+@import "./views/header.scss";
 @import "./views/indicatorsView.scss";
 @import "./views/keyfact.scss";
 @import "./views/mainView.scss";
@@ -19,13 +26,7 @@
 @import "./views/price.scss";
 @import "./views/widgets.scss";
 
-@import "./charts/depthchart.scss";
-@import "./charts/mainchart.scss";
-@import "./charts/tooltip.scss";
-@import "./charts/misc-bignumber.scss";
-@import "./charts/miskbarchart.scss";
-@import "./charts/miskhorizbarchart.scss";
-@import "./charts/timelinejs/timeline.css";
-
 // Embeds
 @import "./embeds/common.scss";
+
+@import "./common.scss";
