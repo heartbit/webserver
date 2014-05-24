@@ -21,10 +21,18 @@ define('offcanvasmenuView', ['config', 'text!offcanvasmenuView.html', 'backbone'
             this.weeknewsView = new WeeknewsView();
             this.shortcutsView = new ShortcutsView();
             this.lastupdateView = new LastupdateView();
+            
         },
 
         render: function(params) {
             this.$el.html(this.template());
+
+            $('.js-offcanvasToggle').click(function() {
+                $('body').animate({
+                    scrollTop: 0
+                });
+            });
+
             this.lastupdateView
                 .setElement('#js-lastUpdate')
                 .render();
@@ -53,7 +61,7 @@ define('offcanvasmenuView', ['config', 'text!offcanvasmenuView.html', 'backbone'
             $('#js-weeknewsModal').foundation('reveal', 'open');
         },
 
-        openBlogRessourcesInNewTab: function(event){
+        openBlogRessourcesInNewTab: function(event) {
             window.open("http://blog.heartbit.io/", '_blank');
             event.preventDefault();
         }
