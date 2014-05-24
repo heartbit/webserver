@@ -60,6 +60,7 @@ requirejs.config({
         calculatorView: 'application/views/calculator/calculatorView',
         lastupdateView: 'application/views/lastupdate/lastupdateView',
         indicatorsView: 'application/views/indicators/indicatorsView',
+        shortcutsView: 'application/views/shortcuts/shortcutsView',
         marketcapView: 'application/views/marketcap/marketcapView',
         weeknewsView: 'application/views/weeknews/weeknewsView',
         keyFactsView: 'application/views/keyfacts/keyFactsView',
@@ -70,7 +71,8 @@ requirejs.config({
         boxView: 'application/views/price/boxView',
 
         // Menu
-        graphmenuView: 'application/views/menu/graphmenuView',
+        graphmenuView: 'application/views/menus/graphmenuView',
+        offcanvasmenuView: 'application/views/menus/offcanvasmenuView',
 
         // Charts
         /// Mainchart

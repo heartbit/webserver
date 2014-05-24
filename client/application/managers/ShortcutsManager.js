@@ -1,5 +1,14 @@
 define('ShortcutsManager', ['keymaster'], function() {
 
+	var Shortcut = function(params) {
+		this.params = params;
+
+		this.toString = function() {
+			return JSON.stringify(this.params);
+		};
+
+	};
+
 	var ShortcutsManager = function ShortcutsManager() {
 		if (instance !== null) {
 			throw new Error("Cannot instantiate more than one ShortcutsManager, use ShortcutsManager.getInstance() faggot ;-) ");
@@ -7,13 +16,23 @@ define('ShortcutsManager', ['keymaster'], function() {
 	};
 
 	ShortcutsManager.prototype.init = function() {
-		key('h', function() {
-			console.log('Press h -> help');
-		});
+		this.shortcuts = [];
+		var helpShortcutsParams = {
+			combo: 'h',
+			action: 'Show this page!'
+		};
+		var helpShortcut = new Shortcut(helpShortcutsParams);
+		this.shortcuts.push(helpShortcut);
 	};
 
-	ShortcutsManager.prototype.addShortcut = function(combo, callback){
+	ShortcutsManager.prototype.addShortcut = function(combo, callback) {
 		key(combo, callback);
+	};
+
+	ShortcutsManager.prototype.getList = function() {
+		return [{
+
+		}];
 	};
 
 	var instance = null;
