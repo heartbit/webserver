@@ -55,7 +55,7 @@ requirejs.config({
         selectCurrencyView: 'application/views/price/selectCurrencyView',
         calculatorView: 'application/views/calculator/calculatorView',
         lastupdateView: 'application/views/lastupdate/lastupdateView',
-        indicatorsView: 'application/views/indicators/indicatorsView',
+        depthView: 'application/views/depth/depthView',
         shortcutsView: 'application/views/shortcuts/shortcutsView',
         marketcapView: 'application/views/marketcap/marketcapView',
         weeknewsView: 'application/views/weeknews/weeknewsView',

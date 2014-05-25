@@ -1,7 +1,5 @@
-// require(['backbone', 'config', 'ParametersManager', 'EventManager', 'NewsSocketManager', 'DataSocketManager', 'ChatSocketManager', 'ShortcutsManager', 'items', 'headerView', 'marketcapView', 'keyFactsView', 'mainView', 'controllerView', 'indicatorsView', 'miskView', 'newsView', 'offcanvasmenuView'], function(Backbone, config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, ShortcutsManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, IndicatorsView, MiskView, NewsView, OffcanvasmenuView) {
 define(function(require) {
 
-	require('backbone');
 	var ParametersManager = require('ParametersManager'),
 	EventManager = require('EventManager');
 	NewsSocketManager = require('NewsSocketManager');
@@ -15,7 +13,7 @@ define(function(require) {
 		KeyFactsView = require('keyFactsView'),
 		MainView = require('mainView'),
 		ControllerView = require('controllerView'),
-		IndicatorsView = require('indicatorsView'),
+		DepthView = require('depthView'),
 		MiskView = require('miskView'),
 		NewsView = require('newsView'),
 		OffcanvasmenuView = require('offcanvasmenuView');
@@ -39,7 +37,7 @@ define(function(require) {
 				controller: new ControllerView(),
 				main: new MainView(),
 				news: new NewsView(),
-				indicators: new IndicatorsView()
+				depth: new DepthView()
 			};
 
 			Backbone.history.start({

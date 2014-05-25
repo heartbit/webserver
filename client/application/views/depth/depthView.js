@@ -1,10 +1,10 @@
-define('indicatorsView', ['config', 'depth', 'text!indicatorsView.html', 'depthchart'], function(config, Depth, IndicatorsTemplate, DepthChart) {
+define('depthView', ['config', 'depth', 'text!depthView.html', 'depthchart'], function(config, Depth, DepthTemplate, DepthChart) {
 
     return Backbone.View.extend({
 
         el: '#js-indicators',
 
-        template: _.template(IndicatorsTemplate),
+        template: _.template(DepthTemplate),
 
         initialize: function() {
             this.depth = new Depth();
