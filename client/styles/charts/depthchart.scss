@@ -1,15 +1,7 @@
-/*.depth {
-	min-height: 400px;
-}*/
-
-.depthLayer path {
- 
-}
-
 .depthAreaBids {
-	fill:#ccc;
+	fill:#cacaca;
 	stroke-width:0;
-	opacity: 0.5;
+	opacity: 1;
 }
 
 .depthBid {
@@ -19,9 +11,9 @@
 }
 
 .depthAreaAsks {
-	fill:#ccc;
+	fill:#cacaca;
 	stroke-width:0;
-	opacity: 0.5;
+	opacity: 1;
 }
 
 .depthAsk {

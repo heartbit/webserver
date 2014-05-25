@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">69.86</p>
+      <p class="stat">70.45</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">235</p>
+      <p class="stat">245</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">26.80</p>
+      <p class="stat">28.48</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">2.15</p>
+      <p class="stat">2.51</p>
     </div>
   </div>
 </div>
@@ -101,10 +101,10 @@
         );
 
         this.margin = {
-            top: 30,
-            right: 50,
+            top: 20,
+            right: 10,
             bottom: 30,
-            left: 50
+            left: 40
         };
 
         this.dataHelper = new DataHelper();
@@ -116,11 +116,11 @@
         this.chart = d3.select(el).append(&quot;svg&quot;)
             .attr(&quot;class&quot;, &#039;playground&#039;)
             .attr(&quot;width&quot;, this.width + this.margin.left + this.margin.right)
-            .attr(&quot;height&quot;, this.height + this.margin.top + this.margin.bottom);
+            .attr(&quot;height&quot;, this.height + this.margin.top + this.margin.bottom)
+            .call(this.initOnMouseOverEvents);
 
         this.mainLayer = this.chart.append(&quot;g&quot;).attr(&quot;class&quot;, &#039;mainLayer&#039;)
-            .attr(&quot;transform&quot;, &quot;translate(&quot; + this.margin.left + &quot;,&quot; + this.margin.top + &quot;)&quot;)
-            .call(this.initOnMouseOverEvents);
+            .attr(&quot;transform&quot;, &quot;translate(&quot; + this.margin.left + &quot;,&quot; + this.margin.top + &quot;)&quot;);
 
         this.xScale = d3.scale.linear()
             .range([0, this.width]);
@@ -178,6 +178,7 @@
         var lines = this.dataHelper.computeDepth(depth);
         if (!lines) return;
 
+        this.circlesData = lines.Circles;
         var depthMin = lines.DepthMin;
         var depthMax = lines.DepthMax;
         var murBids = lines.MurBids;
@@ -205,19 +206,49 @@
             .call(self.yAxis);
 
         this.depthLayer = self.mainLayer.append(&quot;g&quot;).attr(&quot;class&quot;, &quot;depthLayer&quot;);
-        this.depthLayer.append(&quot;path&quot;).attr(&quot;d&quot;, self.line(murBids)).attr(&quot;class&quot;, &quot;depthBid&quot;);
-        this.depthLayer.append(&quot;path&quot;).attr(&quot;d&quot;, self.line(murAsks)).attr(&quot;class&quot;, &quot;depthAsk&quot;);
-        this.depthLayer.append(&quot;path&quot;).datum(murBids).attr(&quot;d&quot;, self.area).attr(&quot;class&quot;, &quot;depthAreaBids&quot;);
-        this.depthLayer.append(&quot;path&quot;).datum(murAsks).attr(&quot;d&quot;, self.area).attr(&quot;class&quot;, &quot;depthAreaAsks&quot;);
+        // this.depthLayer.append(&quot;path&quot;).attr(&quot;d&quot;, self.line(murBids)).attr(&quot;class&quot;, &quot;depthBid&quot;);
+        // this.depthLayer.append(&quot;path&quot;).attr(&quot;d&quot;, self.line(murAsks)).attr(&quot;class&quot;, &quot;depthAsk&quot;);
+        this.depthLayer.append(&quot;path&quot;).datum(murAsks).attr(&quot;d&quot;, self.area).attr(&quot;class&quot;, &quot;depthAreaBids&quot;);
+        this.depthLayer.append(&quot;path&quot;).datum(murBids).attr(&quot;d&quot;, self.area).attr(&quot;class&quot;, &quot;depthAreaAsks&quot;);
+
+        this.circlesLayer = this.depthLayer
+            .append(&quot;g&quot;)
+            .attr(&#039;class&#039;, &quot;circles_layer&quot;);
+
+        this.circles = this.circlesLayer
+            .selectAll(&quot;.circle&quot;)
+            .data(this.circlesData, function(d) {
+                return d.price;
+            });
+
+        var circleRadius = 3;
+        this.circles
+            .enter()
+            .insert(&quot;circle&quot;)
+            .attr(&quot;class&quot;, &quot;circle&quot;);
+        this.circles
+            .exit()
+            .remove();
+        this.circles
+            .attr(&#039;cx&#039;, function(d) {
+                return self.xScale(d.price);
+            })
+            .attr(&#039;cy&#039;, function(d) {
+                return self.yScale(d.amount);
+            })
+            .attr(&#039;r&#039;, 0)
+            .attr(&#039;class&#039;, &#039;circle&#039;)
+
         this.isDrawn = true;
     };
 
     DepthChart.prototype.initOnMouseOverEvents = function(element) {
-
         var self = this;
         element
             .on(&quot;mouseover&quot;, function() {
+                console.log(&#039;over&#039;);
                 self.tooltip.mouseover();
+
                 // self.currentPositionXLine
                 //     .transition()
                 //     .duration(400)
@@ -234,7 +265,12 @@
                 // self.volumeBarChart.attr(&#039;opacity&#039;, function(volumeBar, index) {
                 //     return 0.5;
                 // });
+                console.log(&#039;out&#039;);
                 self.tooltip.mouseout();
+                self.circles
+                    .transition()
+                    .duration(100)
+                    .attr(&#039;r&#039;, 0);
                 // self.currentPositionXLine
                 //     .transition()
                 //     .duration(400)
@@ -245,83 +281,57 @@
                 //     .attr(&#039;opacity&#039;, 0);
             })
             .on(&quot;mousemove&quot;, function() {
+                console.log(&#039;move&#039;);
                 if (!self.depth) {
                     return;
                 }
+
                 var mouse = d3.mouse(this);
                 var mousex = +mouse[0];
                 var mousey = +mouse[1];
-                var minDiff = 5000;
 
-                var findClosestPoint = function(x) {
-
-                    var pointX = self.xScale.invert(x);
-
-                    // Find closest
-                    // var closestPoint = self.candleCircles[0];
-                    // var pointIndex = 0;
-                    // self.candleCircles.each(function(candleCircle, index) {
-                    //     var circleX = +d3.select(this).attr(&#039;cx&#039;);
-                    //     var diff = Math.abs((circleX) - (x));
-                    //     if (diff &lt; minDiff) {
-                    //         minDiff = diff;
-                    //         pointIndex = index;
-                    //         closestPoint = this;
-                    //     }
-                    // });
-
+                var findClosestPrice = function(x) {
+                    var price = self.xScale.invert(x);
+                    var fakePoint = {
+                        price: price
+                    }
+                    var pointIndex = _.sortedIndex(self.circlesData, fakePoint, &#039;price&#039;);
 
                     return {
-                        index: pointX || 0,
-                        // candle: d3.select(closestPoint)
+                        index: pointIndex,
+                        circle: self.circles[pointIndex]
                     };
                 };
 
-                var closestPoint = findClosestPoint(mousex - self.margin.left);
+                self.closestPoint = findClosestPrice(mousex - self.margin.left);
 
-                var tooltipVariables = {};
-                // self.candleCircles
-                //     .transition()
-                //     .duration(0)
-                //     .attr(&#039;opacity&#039;, function(circle, index) {
-                //         if (index == closestPoint.index) {
-                //             tooltipVariables.candle = circle;
-                //             return 1;
-                //         } else {
-                //             return 0.5;
-                //         }
-                //     });
-                // self.volumeBarChart.transition()
-                //     .duration(0)
-                //     .attr(&#039;opacity&#039;, function(volumeBar, index) {
-                //         if (index == closestPoint.index) {
-                //             tooltipVariables.volume = volumeBar;
-                //             return 1;
-                //         } else {
-                //             return 0.5;
-                //         }
-                //     });
+                // var left = 0;
+                // var top = 0;
 
-                // self.currentPositionXLine
-                //     .attr(&#039;x1&#039;, closestPoint.candle.attr(&#039;cx&#039;))
-                //     .attr(&#039;x2&#039;, closestPoint.candle.attr(&#039;cx&#039;))
-                //     .attr(&#039;y1&#039;, closestPoint.candle.attr(&#039;cy&#039;));
+                self.circles
+                    .transition()
+                    .duration(100)
+                    .attr(&#039;r&#039;, function(d, i) {
+                        if (i == self.closestPoint.index) {
+                            // left = d3.select(this).attr(&#039;cx&#039;);
+                            // top = d3.select(this).attr(&#039;cy&#039;);
+                            return 3;
+                        } else {
+                            return 0;
+                        }
+                    });
 
-                // self.currentPositionYLine
-                // .attr(&#039;x1&#039;, closestPoint.candle.attr(&#039;cx&#039;))
-                //     .attr(&#039;y1&#039;, closestPoint.candle.attr(&#039;cy&#039;))
-                //     .attr(&#039;y2&#039;, closestPoint.candle.attr(&#039;cy&#039;));
-
-                var position = {
-                    left: String(50 + mousex) + &#039;px&#039;,
-                    top: String(50 + mousey) + &#039;px&#039;
-                };
-
-                self.tooltip.render(tooltipVariables, position);
+                // var tooltipVariables = {};
+                // var position = {
+                //     left: String(50 + mousex) + &#039;px&#039;,
+                //     top: String(50 + mousey) + &#039;px&#039;
+                // };
+                // self.tooltip.render(tooltipVariables, position);
 
             });
 
     };
+
     return DepthChart;
 
 });</textarea>

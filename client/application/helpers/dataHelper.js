@@ -1,7 +1,6 @@
-define('dataHelper', ['FormatUtils'],function(FormatUtils) {
+define('dataHelper', ['FormatUtils'], function(FormatUtils) {
 
-   var DataHelper = function() {
-   };
+   var DataHelper = function() {};
 
    DataHelper.prototype.computeDepth = function(depth) {
       var data = depth.attributes;
@@ -47,11 +46,16 @@ define('dataHelper', ['FormatUtils'],function(FormatUtils) {
          DepthMax = MurAsks;
       };
 
+      var Circles = _.sortBy(_.union(MurAsks, MurBids), function(point) {
+         return point.price;
+      });
+
       return {
          DepthMax: DepthMax,
          DepthMin: DepthMin,
-         MurAsks: MurAsks,
-         MurBids: MurBids
+         Circles: Circles,
+         MurBids: MurBids,
+         MurAsks: MurAsks
       };
    };
 
@@ -70,10 +74,10 @@ define('dataHelper', ['FormatUtils'],function(FormatUtils) {
       return models;
    };
 
-   DataHelper.prototype.buildVolumesForPieChart = function(tickers)  {
+   DataHelper.prototype.buildVolumesForPieChart = function(tickers) {
       var self = this;
       this.volumesPieChart = new Array();
-      this.volumes = new Array();
+      this.volumes =  new Array();
       _.each(tickers.models, function(model) {
          //Pure Json for PieChart
          var modelPieChart = model.toJSON();
@@ -84,8 +88,8 @@ define('dataHelper', ['FormatUtils'],function(FormatUtils) {
          model.currency = FormatUtils.formatCurrencyLabel(model.currency);
          self.volumes.push(model);
       });
-      if ( this.volumes.length > 0 ) {
-            this.volumeTotal = FormatUtils.formatPrice(tickers.volumeTotal, this.volumes[0].item);
+      if (this.volumes.length > 0) {
+         this.volumeTotal = FormatUtils.formatPrice(tickers.volumeTotal, this.volumes[0].item);
       }
       return this;
    };

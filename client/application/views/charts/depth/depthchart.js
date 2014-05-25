@@ -9,10 +9,10 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
         );
 
         this.margin = {
-            top: 30,
-            right: 50,
+            top: 20,
+            right: 10,
             bottom: 30,
-            left: 50
+            left: 40
         };
 
         this.dataHelper = new DataHelper();
@@ -24,11 +24,11 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
         this.chart = d3.select(el).append("svg")
             .attr("class", 'playground')
             .attr("width", this.width + this.margin.left + this.margin.right)
-            .attr("height", this.height + this.margin.top + this.margin.bottom);
+            .attr("height", this.height + this.margin.top + this.margin.bottom)
+            .call(this.initOnMouseOverEvents);
 
         this.mainLayer = this.chart.append("g").attr("class", 'mainLayer')
-            .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
-            .call(this.initOnMouseOverEvents);
+            .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
         this.xScale = d3.scale.linear()
             .range([0, this.width]);
@@ -86,6 +86,7 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
         var lines = this.dataHelper.computeDepth(depth);
         if (!lines) return;
 
+        this.circlesData = lines.Circles;
         var depthMin = lines.DepthMin;
         var depthMax = lines.DepthMax;
         var murBids = lines.MurBids;
@@ -113,19 +114,49 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
             .call(self.yAxis);
 
         this.depthLayer = self.mainLayer.append("g").attr("class", "depthLayer");
-        this.depthLayer.append("path").attr("d", self.line(murBids)).attr("class", "depthBid");
-        this.depthLayer.append("path").attr("d", self.line(murAsks)).attr("class", "depthAsk");
-        this.depthLayer.append("path").datum(murBids).attr("d", self.area).attr("class", "depthAreaBids");
-        this.depthLayer.append("path").datum(murAsks).attr("d", self.area).attr("class", "depthAreaAsks");
+        // this.depthLayer.append("path").attr("d", self.line(murBids)).attr("class", "depthBid");
+        // this.depthLayer.append("path").attr("d", self.line(murAsks)).attr("class", "depthAsk");
+        this.depthLayer.append("path").datum(murAsks).attr("d", self.area).attr("class", "depthAreaBids");
+        this.depthLayer.append("path").datum(murBids).attr("d", self.area).attr("class", "depthAreaAsks");
+
+        this.circlesLayer = this.depthLayer
+            .append("g")
+            .attr('class', "circles_layer");
+
+        this.circles = this.circlesLayer
+            .selectAll(".circle")
+            .data(this.circlesData, function(d) {
+                return d.price;
+            });
+
+        var circleRadius = 3;
+        this.circles
+            .enter()
+            .insert("circle")
+            .attr("class", "circle");
+        this.circles
+            .exit()
+            .remove();
+        this.circles
+            .attr('cx', function(d) {
+                return self.xScale(d.price);
+            })
+            .attr('cy', function(d) {
+                return self.yScale(d.amount);
+            })
+            .attr('r', 0)
+            .attr('class', 'circle')
+
         this.isDrawn = true;
     };
 
     DepthChart.prototype.initOnMouseOverEvents = function(element) {
-
         var self = this;
         element
             .on("mouseover", function() {
+                console.log('over');
                 self.tooltip.mouseover();
+
                 // self.currentPositionXLine
                 //     .transition()
                 //     .duration(400)
@@ -142,7 +173,12 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                 // self.volumeBarChart.attr('opacity', function(volumeBar, index) {
                 //     return 0.5;
                 // });
+                console.log('out');
                 self.tooltip.mouseout();
+                self.circles
+                    .transition()
+                    .duration(100)
+                    .attr('r', 0);
                 // self.currentPositionXLine
                 //     .transition()
                 //     .duration(400)
@@ -153,83 +189,57 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                 //     .attr('opacity', 0);
             })
             .on("mousemove", function() {
+                console.log('move');
                 if (!self.depth) {
                     return;
                 }
+
                 var mouse = d3.mouse(this);
                 var mousex = +mouse[0];
                 var mousey = +mouse[1];
-                var minDiff = 5000;
 
-                var findClosestPoint = function(x) {
-
-                    var pointX = self.xScale.invert(x);
-
-                    // Find closest
-                    // var closestPoint = self.candleCircles[0];
-                    // var pointIndex = 0;
-                    // self.candleCircles.each(function(candleCircle, index) {
-                    //     var circleX = +d3.select(this).attr('cx');
-                    //     var diff = Math.abs((circleX) - (x));
-                    //     if (diff < minDiff) {
-                    //         minDiff = diff;
-                    //         pointIndex = index;
-                    //         closestPoint = this;
-                    //     }
-                    // });
-
+                var findClosestPrice = function(x) {
+                    var price = self.xScale.invert(x);
+                    var fakePoint = {
+                        price: price
+                    }
+                    var pointIndex = _.sortedIndex(self.circlesData, fakePoint, 'price');
 
                     return {
-                        index: pointX || 0,
-                        // candle: d3.select(closestPoint)
+                        index: pointIndex,
+                        circle: self.circles[pointIndex]
                     };
                 };
 
-                var closestPoint = findClosestPoint(mousex - self.margin.left);
+                self.closestPoint = findClosestPrice(mousex - self.margin.left);
 
-                var tooltipVariables = {};
-                // self.candleCircles
-                //     .transition()
-                //     .duration(0)
-                //     .attr('opacity', function(circle, index) {
-                //         if (index == closestPoint.index) {
-                //             tooltipVariables.candle = circle;
-                //             return 1;
-                //         } else {
-                //             return 0.5;
-                //         }
-                //     });
-                // self.volumeBarChart.transition()
-                //     .duration(0)
-                //     .attr('opacity', function(volumeBar, index) {
-                //         if (index == closestPoint.index) {
-                //             tooltipVariables.volume = volumeBar;
-                //             return 1;
-                //         } else {
-                //             return 0.5;
-                //         }
-                //     });
+                // var left = 0;
+                // var top = 0;
 
-                // self.currentPositionXLine
-                //     .attr('x1', closestPoint.candle.attr('cx'))
-                //     .attr('x2', closestPoint.candle.attr('cx'))
-                //     .attr('y1', closestPoint.candle.attr('cy'));
+                self.circles
+                    .transition()
+                    .duration(100)
+                    .attr('r', function(d, i) {
+                        if (i == self.closestPoint.index) {
+                            // left = d3.select(this).attr('cx');
+                            // top = d3.select(this).attr('cy');
+                            return 3;
+                        } else {
+                            return 0;
+                        }
+                    });
 
-                // self.currentPositionYLine
-                // .attr('x1', closestPoint.candle.attr('cx'))
-                //     .attr('y1', closestPoint.candle.attr('cy'))
-                //     .attr('y2', closestPoint.candle.attr('cy'));
-
-                var position = {
-                    left: String(50 + mousex) + 'px',
-                    top: String(50 + mousey) + 'px'
-                };
-
-                self.tooltip.render(tooltipVariables, position);
+                // var tooltipVariables = {};
+                // var position = {
+                //     left: String(50 + mousex) + 'px',
+                //     top: String(50 + mousey) + 'px'
+                // };
+                // self.tooltip.render(tooltipVariables, position);
 
             });
 
     };
+
     return DepthChart;
 
 });
