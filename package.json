@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "matchdep": "*",
+    "requirejs": "*",
     "grunt": "~0.4.1",
     "grunt-contrib-concat": "*",
     "grunt-contrib-copy": "~0.4.1",

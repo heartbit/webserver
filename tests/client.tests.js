@@ -1,17 +1,39 @@
-if (typeof define !== 'function') {
-	var define = require('amdefine')(module);
-}
-
+var assert = require("assert");
 var requirejs = require('requirejs');
+
+var baseUrl = __dirname + '/../';
+
 requirejs.config({
-	mainConfigFile: '../client/modules/common.js'
+  baseUrl: baseUrl,
+  nodeRequire: require,
 });
 
-var params = {};
-params._ = requirejs('underscore');
-var Mocha = requirejs('mocha');
-params.mocha = new Mocha();
-params.chai = requirejs('chai');
-params.sinon = requirejs('sinon');
-var suite = requirejs('parametersManagerTests');
-// suite.run(params);
+describe('ParametersManager tests', function() {
+
+  var ParametersManager;
+
+  before(function(done) {
+  	console.log('Before tests');
+  	done();
+    // Load config file
+    // requirejs(['./client/modules/common'], function() {
+    //   // Load global environment variables
+    //   requirejs(['ParametersManager'], function(ParametersManager) {
+    //     // Load tested modules
+    //     ParametersManager = ParametersManager;
+    //     done();
+    //   });
+    // });
+  });
+
+  after(function(done) {
+    console.log('After tests')
+    done();
+  });
+
+  it('Should init a ParametersManager', function(done) {
+    assert.ok('true');
+    done();
+  });
+
+});
