@@ -57,7 +57,7 @@ define('parametersManagerConfig', function() {
 			currency: "USD"
 		},
 		DOGE: {
-			platform: "CRYPTSY",
+			platform: "KRAKEN",
 			currency: "BTC"
 		},
 		NMC : {

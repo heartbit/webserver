@@ -14,9 +14,9 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             'click .js-platform': 'changeGlobalPlatform',
             
             
-            'click .js-item-search': 'displayCurrency',
+            'click .js-item-search': 'changeGlobalItem',
             'click .js-pair-search': 'changeGlobalPair',
-            'click .js-platform-search': 'displayItems',
+            'click .js-platform-search': 'changeGlobalPlatform',
 
             'keyup #js-searchbar': 'search',
             'click #js-searchbar': 'showSearchView'
@@ -122,14 +122,18 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
                 platformId = ParametersManager.getPlatformByPairId(pairId);
             }
             ParametersManager.changeGlobalPair(pairId,platformId);
-        
-            $('#js-pairsViewModal').foundation('hide', 'close');
+                    $('#js-pairsViewModal').foundation('hide', 'close');
             return false;
         },
 
         changeGlobalPlatform: function(event) {
             var platformId = $(event.target).attr('id');
-            ParametersManager.changeGlobalPlatform(platformId);
+            var currentPlatform =  ParametersManager.getCurrentPlatformPairs();
+            var pairId = ParametersManager.getCurrentParams().item+"/"+ParametersManager.getCurrentParams().currency;
+            if ( !_.contains(currentPlatform.pairs,pairId) ){
+                pairId = null;
+            }
+            ParametersManager.changeGlobalPlatform(platformId,pairId);
             return false;
         },
 

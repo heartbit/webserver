@@ -112,9 +112,13 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
         return false;
     };
 
-    ParametersManager.prototype.changeGlobalPlatform = function(platformId) {
+    ParametersManager.prototype.changeGlobalPlatform = function(platformId,pairId) {
         var params = config.defaultplatforms[platformId];
         params.platform = platformId;
+        if ( pairId ) {
+            params.item = pairId.split("/")[0];
+            params.currency=pairId.split("/")[1];
+        }
         var url = this.computeUrl(params);
         Backbone.history.navigate(url, true);
         return false;
