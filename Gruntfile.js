@@ -11,6 +11,8 @@ module.exports = function(grunt) {
         failOnError: true
     };
 
+    var minified = (grunt.option('minified') && grunt.option('minified') === "no") ? 'none' : 'uglify2';
+
     grunt.initConfig({
 
         /**
@@ -30,7 +32,8 @@ module.exports = function(grunt) {
             buildClientDir: './build/client',
             cssDir: './client/styles',
             dev: 'heartbit-dev',
-            master: 'heartbit-prod'
+            master: 'heartbit-prod',
+            appbuild: './build/modules/app.js'
         },
 
         /**
@@ -56,29 +59,74 @@ module.exports = function(grunt) {
             }
         },
 
+        concat: {
+            app: {
+                src: ['client/libs/require/require.js', '<%= props.appbuild %>'],
+                dest: '<%= props.appbuild %>'
+            },
+        },
+
+        uglify: {
+            app: {
+                src: '<%= props.appbuild %>',
+                dest: 'build/modules/app.min.js'
+            },
+        },
+
         // Minify, compress, uglify javascript files
         requirejs: {
-            main: {
+            app: {
                 options: {
-                    appDir: '<%= props.clientDir %>',
-                    baseUrl: './modules',
+                    // appDir: '<%= props.clientDir %>',
+                    // dir: '<%= props.buildClientDir %>',
+                    // modules: [{
+                    //     name: 'common',
+                    // }, {
+                    //     name: 'app',
+                    // }, {
+                    //     name: 'embed-keyfacts',
+                    // }, {
+                    //     name: 'embed-maingraph',
+                    // }],
+                    // baseUrl: './modules',
+                    // mainConfigFile: '<%= props.clientDir %>/modules/common.js',
+                    // fileExclusionRegExp: /^(bower_components|build|node_modules)$/,
+                    // optimize: 'uglify2',
+                    // inlineText: true,
+                    // preserveLicenseComments: false
+                    // baseUrl: './modules',
+                    logLevel: 0,
+                    baseUrl: './client/',
+                    name: 'modules/app',
                     mainConfigFile: '<%= props.clientDir %>/modules/common.js',
-                    dir: '<%= props.buildClientDir %>',
                     fileExclusionRegExp: /^(bower_components|build|node_modules)$/,
                     optimize: 'uglify2',
-                    modules: [{
-                        name: 'common',
-                    }, {
-                        name: 'app',
-                    }, {
-                        name: 'embed-keyfacts',
-                    }, {
-                        name: 'embed-maingraph',
-                    }],
+                    out: '<%= props.appbuild %>',
                     inlineText: true,
                     preserveLicenseComments: false
                 }
             },
+
+            main: {
+                options: {
+                    dir: '<%= props.buildClientDir %>',
+                    appDir: '<%= props.clientDir %>',
+                    baseUrl: '.',
+                    mainConfigFile: '<%= props.clientDir %>/modules/common.js',
+                    logLevel: 0,
+                    optimize: 'uglify2',
+                    modules: [{
+                        name: 'modules/common',
+                    }, {
+                        name: 'modules/app',
+                        include: ['application/routers/app.router']
+                    }],
+                    fileExclusionRegExp: /^(bower_components|build|node_modules)$/,
+                    inlineText: true,
+                    preserveLicenseComments: false
+                }
+            },
+
             css: {
                 options: {
                     logLevel: 3,
@@ -156,18 +204,6 @@ module.exports = function(grunt) {
             }
         },
 
-        express: {
-            options: {
-                port: 9090,
-                delay: 1000
-            },
-            local: {
-                options: {
-                    script: path.resolve(__dirname, 'webserver.js')
-                }
-            }
-        },
-
         nodemon: {
             prod: {
                 options: {
@@ -221,9 +257,9 @@ module.exports = function(grunt) {
                 options: shellDefaultOptions,
                 command: ['cd ./build', 'git init', 'echo "node_modules/*" > .gitignore', 'git add .', 'echo "before commit"', 'git commit -m "deployment..."', 'echo "before add remote"', 'git remote add <%= props.dev %> git@heroku.com:<%= props.dev %>.git', 'echo "before push master"', 'git push --force <%= props.dev %> master:master', 'echo "after push dev branch"'].join('&&')
             },
-            gitmaster: {
+            gitpreprod: {
                 options: shellDefaultOptions,
-                command: ['cd ./build', 'git init', 'echo "node_modules/*" > .gitignore', 'git add .', 'echo "before commit"', 'git commit -m "deployment..."', 'echo "before add remote"', 'git remote add <%= props.master %> git@heroku.com:<%= props.master %>.git', 'echo "before push master"', 'git push --force <%= props.master %> master:master', 'echo "after push dev branch"'].join('&&')
+                command: ['cd ./build', 'git init', 'echo "node_modules/*" > .gitignore', 'git add .', 'echo "before commit"', 'git commit -m "deployment..."', 'echo "before add remote"', 'git remote add <%= props.master %> git@heroku.com:<%= props.master %>.git', 'echo "before push master"', 'git push --force <%= props.master %> master:master', 'echo "after push pre prod branch"'].join('&&')
             }
         },
 
@@ -275,8 +311,8 @@ module.exports = function(grunt) {
     grunt.registerTask('localServer', ['css', 'nodemon:local']);
     grunt.registerTask('deploy-dev', ['build', 'shell:gitdev']);
     grunt.registerTask('documentation', ['clean', 'markdown:all']);
-    grunt.registerTask('deploy-master', ['build', 'shell:gitmaster']);
+    grunt.registerTask('deploy-preprod', ['build', 'shell:gitpreprod']);
 
     grunt.registerTask('build', ['clean', 'css', 'requirejs:main', 'copy:main']);
-    grunt.registerTask('buildapp', ['test', 'clean', 'css', 'requirejs:main', 'copy:main']);
+    grunt.registerTask('buildapp', ['test', 'clean', 'css', 'requirejs:app']); //, 'concat:app', 'uglify:app', 'copy:main']);
 };

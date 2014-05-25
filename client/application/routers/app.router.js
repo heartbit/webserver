@@ -1,4 +1,24 @@
-define('appRouter', ['backbone', 'config', 'ParametersManager', 'EventManager', 'NewsSocketManager', 'DataSocketManager', 'ChatSocketManager', 'ShortcutsManager', 'items', 'headerView', 'marketcapView', 'keyFactsView', 'mainView', 'controllerView', 'indicatorsView', 'miskView', 'newsView', 'offcanvasmenuView'], function(Backbone, config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, ShortcutsManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, IndicatorsView, MiskView, NewsView, OffcanvasmenuView) {
+// require(['backbone', 'config', 'ParametersManager', 'EventManager', 'NewsSocketManager', 'DataSocketManager', 'ChatSocketManager', 'ShortcutsManager', 'items', 'headerView', 'marketcapView', 'keyFactsView', 'mainView', 'controllerView', 'indicatorsView', 'miskView', 'newsView', 'offcanvasmenuView'], function(Backbone, config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, ShortcutsManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, IndicatorsView, MiskView, NewsView, OffcanvasmenuView) {
+define(function(require) {
+
+	require('backbone');
+	var ParametersManager = require('ParametersManager'),
+	EventManager = require('EventManager');
+	NewsSocketManager = require('NewsSocketManager');
+	DataSocketManager = require('DataSocketManager');
+	ChatSocketManager = require('ChatSocketManager');
+	ShortcutsManager = require('ShortcutsManager');
+
+	var config = require('config');
+
+	var HeaderView = require('headerView'),
+		KeyFactsView = require('keyFactsView'),
+		MainView = require('mainView'),
+		ControllerView = require('controllerView'),
+		IndicatorsView = require('indicatorsView'),
+		MiskView = require('miskView'),
+		NewsView = require('newsView'),
+		OffcanvasmenuView = require('offcanvasmenuView');
 
 	var Router = Backbone.Router.extend({
 

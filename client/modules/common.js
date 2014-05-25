@@ -1,9 +1,5 @@
 requirejs.config({
 
-    baseUrl: "../",
-
-    waitSeconds: 10,
-
     paths: {
         // Tests
         parametersManagerTests: 'tests/parametersManager.test',
