@@ -23,9 +23,7 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
             this.maingraphmenu.initParent(this.$el);
             this.timeperiods = config.maingraph.timeperiods;
             this.currentTimeperiodId = config.maingraph.defaultTimeperiodId;
-            $(window).resize(function(){
-                self.mainChart.resize();
-            });
+            
         },
 
         update: function(params) {
@@ -71,9 +69,11 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
                         };
 
                         self.mainChart.draw(maingraphes, mainGraphParams);
+                        $(window).resize(_.debounce(self.mainChart.resize, 100));
                     }
                 }
             );
+
             return this;
         },
 

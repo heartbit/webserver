@@ -276,5 +276,7 @@ module.exports = function(grunt) {
     grunt.registerTask('deploy-dev', ['build', 'shell:gitdev']);
     grunt.registerTask('documentation', ['clean', 'markdown:all']);
     grunt.registerTask('deploy-master', ['build', 'shell:gitmaster']);
+
     grunt.registerTask('build', ['clean', 'css', 'requirejs:main', 'copy:main']);
+    grunt.registerTask('buildapp', ['test', 'clean', 'css', 'requirejs:main', 'copy:main']);
 };

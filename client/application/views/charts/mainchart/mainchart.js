@@ -9,7 +9,8 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         _.bindAll(
             this,
             'initOnMouseOverEvents',
-            'doZoom'
+            'doZoom',
+            'resize'
         );
 
         this.dataHelper = new DataHelper();
@@ -35,11 +36,11 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
             left: 40
         };
 
-        this.width = $(this.el).width() - this.margin.left - this.margin.right;
-        this.height = $(this.el).height() - this.margin.top - this.margin.bottom;
-
         var visWidth = $(this.el).width();
         var visHeigth = $(this.el).height();
+
+        this.width = visWidth - this.margin.left - this.margin.right;
+        this.height = visHeigth - this.margin.top - this.margin.bottom;
 
         this.chart = d3.select(this.el)
             .append('svg')
@@ -116,7 +117,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
     */
     MainChart.prototype.draw = function(maingraphes, params) {
         this.params = params;
-        this.maingraphes = maingraphes || this.maingraphes;
+        // this.maingraphes = maingraphes || this.maingraphes;
         this.parseMainGraphes(maingraphes);
         this.updateXAxis();
         _.each(_.values(this.layers), function(layer) {
@@ -126,32 +127,35 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
 
     MainChart.prototype.update = function(maingraphes, params) {
         //Do something else?
-        this.maingraphes = maingraphes || this.maingraphes;
+        // this.maingraphes = maingraphes || this.maingraphes;
         this.draw(maingraphes, params);
     };
 
-    MainChart.prototype.resize = function(){
+    MainChart.prototype.resize = function() {
         var self = this;
 
-        this.width = $(this.el).width() - this.margin.left - this.margin.right;
-        this.height = $(this.el).height() - this.margin.top - this.margin.bottom;
+        var visWidth = $(self.el).width();
+        var visHeigth = $(self.el).height();
 
-        var visWidth = $(this.el).width();
-        var visHeigth = $(this.el).height();
+        self.width = visWidth - self.margin.left - self.margin.right;
+        self.height = visHeigth - self.margin.top - self.margin.bottom;
 
-        this.chart
+        self.chart
             .attr("width", visWidth)
             .attr("height", visHeigth)
             .attr('viewBox', "0 0 " + visWidth + " " + visHeigth)
-            .call(this.initOnMouseOverEvents)
+            .call(self.initOnMouseOverEvents);
 
-        this.mainLayer
-            .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+        self.mainLayer
+            .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")");
 
-        this.timeScale.range([0, this.width]);
-        // this.zoom.x(this.timeScale);
-        this.timeAxisInstance.call(this.timeAxis);
-        this.draw(this.maingraphes);
+        self.timeScale.range([0, self.width]);
+        // self.zoom.x(self.timeScale);
+        self.timeAxisInstance.call(self.timeAxis);
+        _.each(_.values(self.layers), function(layer) {
+            layer.resize();
+        });
+
     };
 
     MainChart.prototype.clear = function() {};
@@ -191,6 +195,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
                 //     .transition()
                 //     .duration(400)
                 //     .attr('opacity', 1);
+                return false;
             })
             .on("mouseout", function() {
                 self.layers.areaLayer.mouseout();
@@ -203,6 +208,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
                 //     .transition()
                 //     .duration(400)
                 //     .attr('opacity', 0);
+                return false;
             })
             .on("mousemove", function() {
                 if (!self.models) {

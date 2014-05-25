@@ -153,6 +153,15 @@ define('areaLayer', ['d3', 'tooltip', 'FormatUtils', 'moment'], function(d3, Too
             .attr('d', self.candlesLine(self.candles))
     };
 
+    AreaLayer.prototype.resize = function(){
+        this.candleYScale.range([3 * this.chart.height / 4, 0]);
+        this.candleYAxisInstance
+            .transition()
+            .duration(defaultDuration)
+            .call(this.candleYAxis);
+        this.update();
+    };
+
     AreaLayer.prototype.hide = function() {};
 
     AreaLayer.prototype.updateTooltip = function(date) {

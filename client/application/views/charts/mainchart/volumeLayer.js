@@ -9,6 +9,7 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
             .append("g")
             .attr("class", "volume_layer");
         this.isVisible = true;
+
         var volumeTickValues = function(d, i, j) {
             return d3.extent(self.volumes.map(function(volume) {
                 return volume.amount > 0 ? volume.amount : 1;
@@ -44,7 +45,7 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
         this.params = params;
         this.update();
     };
-    
+
     VolumeLayer.prototype.update = function(params) {
         var self = this;
         var offsetFactor = 0.1;
@@ -103,6 +104,15 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
             .attr('y', function(d) {
                 return d.amount == 0 ? self.chart.height : self.volumeYScale(d.amount);
             });
+    };
+
+    VolumeLayer.prototype.resize = function() {
+        this.volumeYScale.range([this.chart.height, 3 * this.chart.height / 4]);
+        this.volumeYAxisInstance
+            .transition()
+            .duration(defaultDuration)
+            .call(this.volumeYAxis);
+        this.update();
     };
 
     VolumeLayer.prototype.hide = function() {
