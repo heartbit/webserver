@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">74.31</p>
+      <p class="stat">74.26</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">204</p>
+      <p class="stat">214</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">48.88</p>
+      <p class="stat">50.94</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">2.27</p>
+      <p class="stat">2.39</p>
     </div>
   </div>
 </div>
@@ -101,6 +101,7 @@
             .append(&quot;g&quot;)
             .attr(&quot;class&quot;, &quot;volume_layer&quot;);
         this.isVisible = true;
+
         var volumeTickValues = function(d, i, j) {
             return d3.extent(self.volumes.map(function(volume) {
                 return volume.amount &gt; 0 ? volume.amount : 1;
@@ -136,7 +137,7 @@
         this.params = params;
         this.update();
     };
-    
+
     VolumeLayer.prototype.update = function(params) {
         var self = this;
         var offsetFactor = 0.1;
@@ -195,6 +196,15 @@
             .attr(&#039;y&#039;, function(d) {
                 return d.amount == 0 ? self.chart.height : self.volumeYScale(d.amount);
             });
+    };
+
+    VolumeLayer.prototype.resize = function() {
+        this.volumeYScale.range([this.chart.height, 3 * this.chart.height / 4]);
+        this.volumeYAxisInstance
+            .transition()
+            .duration(defaultDuration)
+            .call(this.volumeYAxis);
+        this.update();
     };
 
     VolumeLayer.prototype.hide = function() {

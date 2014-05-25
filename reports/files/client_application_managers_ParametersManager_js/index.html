@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">73.86</p>
+      <p class="stat">74.19</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">135</p>
+      <p class="stat">179</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">30.83</p>
+      <p class="stat">44.71</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">1.29</p>
+      <p class="stat">1.98</p>
     </div>
   </div>
 </div>
@@ -122,7 +122,7 @@
     };
 
     ParametersManager.prototype.initInternalParams = function() {
-
+        var self = this;
         var platformdIds = [];
         _.each(this.items.models, function(item) {
             var currencies = _.keys(item.currencies);
@@ -132,7 +132,21 @@
         });
         this.platforms = new Platforms();
         this.platforms.initFromIds(platformdIds);
-
+        
+        _.each(this.platforms.models, function(platform) {
+          var pairPlatformsIds =[];
+          _.each(self.items.models, function(item) {
+            pairPlatformsIds = _.union(pairPlatformsIds, _.chain(item.currencies)
+                .keys()
+                .map(function(currency) {
+                    if( item.currencies[currency].indexOf(platform.id) != -1) {
+                      return item.id + &#039;/&#039; + currency;
+                    }
+                }).value());
+          });
+          platform.pairs = pairPlatformsIds;
+        });
+        
         var currencyIds = [];
         _.each(this.items.models, function(item) {
             var currencies = _.keys(item.currencies);
@@ -151,7 +165,20 @@
         });
         this.pairs = new Pairs();
         this.pairs.initFromIds(pairIds);
-
+        _.each(this.pairs.models, function(pair) {
+            self.platformsIds = [];
+            _.each(self.items.models, function(item) {
+                if ( pair.id.split(&quot;/&quot;)[0] === item.id ) {
+                    var currencies = _.keys(item.currencies);
+                    _.each(currencies, function(currency) {
+                        if ( pair.id.split(&quot;/&quot;)[1] === currency ) {
+                            self.platformsIds = _.union(self.platformsdIds, item.currencies[currency]);
+                        }
+                    });
+                }
+            });
+            pair.platforms = self.platformsIds;
+        });
         this.currentParams = config.defaultparams;
 
         return this;
@@ -167,33 +194,50 @@
         return &#039;app?item=&#039; + params.item + &quot;&amp;platform=&quot; + params.platform + &quot;&amp;currency=&quot; + params.currency;
     };
 
-    ParametersManager.prototype.changeGlobalPair = function(pairId) {
-        console.log(platformId);
-        var params = config.defaultitems[platformId];
-        params.platform = platformId;
+    ParametersManager.prototype.changeGlobalPair = function(pairId,platform) {
+        var params = {};
+        params.item = pairId.split(&quot;/&quot;)[0];
+        params.currency=pairId.split(&quot;/&quot;)[1];
+        params.platform=platform||this.currentParams.platform;
         var url = this.computeUrl(params);
         Backbone.history.navigate(url, true);
         return false;
     };
 
-    ParametersManager.prototype.changeGlobalPlatform = function(platformId) {
-        console.log(platformId);
+    ParametersManager.prototype.changeGlobalPlatform = function(platformId,pairId) {
         var params = config.defaultplatforms[platformId];
         params.platform = platformId;
+        if ( pairId ) {
+            params.item = pairId.split(&quot;/&quot;)[0];
+            params.currency=pairId.split(&quot;/&quot;)[1];
+        }
         var url = this.computeUrl(params);
         Backbone.history.navigate(url, true);
         return false;
     };
 
     ParametersManager.prototype.changeGlobalItem = function(itemid) {
-        console.log(itemid);
         var params = config.defaultitems[itemid];
         params.item = itemid;
         var url = this.computeUrl(params);
         Backbone.history.navigate(url, true);
         return false;
     };
-
+     ParametersManager.prototype.getCurrentPlatformPairs = function(){
+         var platform= this.currentParams.platform;
+         return this.platforms.findByName(platform);
+     };
+     
+    ParametersManager.prototype.getPlatformByPairId = function(pairId) {
+        var result;
+        _.each(this.platforms.models,function(model){
+            if ( _.contains(model.pairs,pairId) ) {
+              result = model.id;
+              return;
+            }
+        });
+        return result;
+    };
     /* Getters */
     ParametersManager.prototype.getCurrentParams = function() {
         return this.currentParams;

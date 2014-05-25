@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">72.12</p>
+      <p class="stat">71.56</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">140</p>
+      <p class="stat">165</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">15.87</p>
+      <p class="stat">18.76</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">1.16</p>
+      <p class="stat">1.45</p>
     </div>
   </div>
 </div>
@@ -104,6 +104,11 @@
             &#039;click .js-item&#039;: &#039;changeGlobalItem&#039;,
             &#039;click .js-pair&#039;: &#039;changeGlobalPair&#039;,
             &#039;click .js-platform&#039;: &#039;changeGlobalPlatform&#039;,
+            
+            
+            &#039;click .js-item-search&#039;: &#039;changeGlobalItem&#039;,
+            &#039;click .js-pair-search&#039;: &#039;changeGlobalPair&#039;,
+            &#039;click .js-platform-search&#039;: &#039;changeGlobalPlatform&#039;,
 
             &#039;keyup #js-searchbar&#039;: &#039;search&#039;,
             &#039;click #js-searchbar&#039;: &#039;showSearchView&#039;
@@ -155,23 +160,24 @@
         },
 
         search: function() {
+            var self = this;
             var query = $(&#039;#js-searchbar&#039;).val();
             if (query &amp;&amp; query != &quot;&quot;) {
-                var matchItems = _.uniq(ParametersManager.getItems().search(query), function(item) {
+                self.matchItems = _.uniq(ParametersManager.getItems().search(query), function(item) {
                     return item.id;
                 });
-                var matchPlatforms = _.uniq(ParametersManager.getPlatforms().search(query), function(platform) {
+                self.matchPlatforms = _.uniq(ParametersManager.getPlatforms().search(query), function(platform) {
                     return platform.id;
                 });
 
-                var matchPairs = _.uniq(ParametersManager.getPairs().search(query), function(pair) {
+                self.matchPairs = _.uniq(ParametersManager.getPairs().search(query), function(pair) {
                     return pair.id;
                 });
 
                 var tplVariables = {
-                    platforms: matchPlatforms,
-                    items: matchItems,
-                    pairs: matchPairs
+                    platforms: self.matchPlatforms,
+                    items: self.matchItems,
+                    pairs: self.matchPairs
                 };
 
                 var htmlResults = this.templateSearch(tplVariables);
@@ -202,13 +208,24 @@
 
         changeGlobalPair: function(event) {
             var pairId = $(event.target).attr(&#039;id&#039;);
-            ParametersManager.changeGlobalPair(pairId);
+            var currentPlatform =  ParametersManager.getCurrentPlatformPairs();
+            var platformId = currentPlatform.id;
+            if ( !_.contains(currentPlatform.pairs,pairId) ){
+                platformId = ParametersManager.getPlatformByPairId(pairId);
+            }
+            ParametersManager.changeGlobalPair(pairId,platformId);
+                    $(&#039;#js-pairsViewModal&#039;).foundation(&#039;hide&#039;, &#039;close&#039;);
             return false;
         },
 
         changeGlobalPlatform: function(event) {
             var platformId = $(event.target).attr(&#039;id&#039;);
-            ParametersManager.changeGlobalPlatform(platformId);
+            var currentPlatform =  ParametersManager.getCurrentPlatformPairs();
+            var pairId = ParametersManager.getCurrentParams().item+&quot;/&quot;+ParametersManager.getCurrentParams().currency;
+            if ( !_.contains(currentPlatform.pairs,pairId) ){
+                pairId = null;
+            }
+            ParametersManager.changeGlobalPlatform(platformId,pairId);
             return false;
         },
 
@@ -225,6 +242,14 @@
         showItemsView: function() {
             $(&#039;#js-itemsViewModal&#039;).foundation(&#039;reveal&#039;, &#039;open&#039;);
             return false;
+        },
+        displayCurrency: function(){
+        },
+        displayPlatforms:function(){
+       
+        },
+        displayItems:function(){
+            
         }
 
     });

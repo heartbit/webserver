@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">72.69</p>
+      <p class="stat">69.09</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">100</p>
+      <p class="stat">119</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">14.00</p>
+      <p class="stat">14.26</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.74</p>
+      <p class="stat">0.83</p>
     </div>
   </div>
 </div>
@@ -90,7 +90,27 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;appRouter&#039;, [&#039;backbone&#039;, &#039;config&#039;, &#039;ParametersManager&#039;, &#039;EventManager&#039;, &#039;NewsSocketManager&#039;, &#039;DataSocketManager&#039;, &#039;ChatSocketManager&#039;, &#039;ShortcutsManager&#039;, &#039;items&#039;, &#039;headerView&#039;, &#039;marketcapView&#039;, &#039;keyFactsView&#039;, &#039;mainView&#039;, &#039;controllerView&#039;, &#039;indicatorsView&#039;, &#039;miskView&#039;, &#039;newsView&#039;, &#039;offcanvasmenuView&#039;], function(Backbone, config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, ShortcutsManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, IndicatorsView, MiskView, NewsView, OffcanvasmenuView) {
+    <textarea id="file-source" class="col-md-12">// require([&#039;backbone&#039;, &#039;config&#039;, &#039;ParametersManager&#039;, &#039;EventManager&#039;, &#039;NewsSocketManager&#039;, &#039;DataSocketManager&#039;, &#039;ChatSocketManager&#039;, &#039;ShortcutsManager&#039;, &#039;items&#039;, &#039;headerView&#039;, &#039;marketcapView&#039;, &#039;keyFactsView&#039;, &#039;mainView&#039;, &#039;controllerView&#039;, &#039;indicatorsView&#039;, &#039;miskView&#039;, &#039;newsView&#039;, &#039;offcanvasmenuView&#039;], function(Backbone, config, ParametersManager, EventManager, NewsSocketManager, DataSocketManager, ChatSocketManager, ShortcutsManager, Items, HeaderView, MarketcapView, KeyFactsView, MainView, ControllerView, IndicatorsView, MiskView, NewsView, OffcanvasmenuView) {
+define(function(require) {
+
+	require(&#039;backbone&#039;);
+	var ParametersManager = require(&#039;ParametersManager&#039;),
+	EventManager = require(&#039;EventManager&#039;);
+	NewsSocketManager = require(&#039;NewsSocketManager&#039;);
+	DataSocketManager = require(&#039;DataSocketManager&#039;);
+	ChatSocketManager = require(&#039;ChatSocketManager&#039;);
+	ShortcutsManager = require(&#039;ShortcutsManager&#039;);
+
+	var config = require(&#039;config&#039;);
+
+	var HeaderView = require(&#039;headerView&#039;),
+		KeyFactsView = require(&#039;keyFactsView&#039;),
+		MainView = require(&#039;mainView&#039;),
+		ControllerView = require(&#039;controllerView&#039;),
+		IndicatorsView = require(&#039;indicatorsView&#039;),
+		MiskView = require(&#039;miskView&#039;),
+		NewsView = require(&#039;newsView&#039;),
+		OffcanvasmenuView = require(&#039;offcanvasmenuView&#039;);
 
 	var Router = Backbone.Router.extend({
 

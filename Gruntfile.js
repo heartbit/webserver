@@ -305,14 +305,15 @@ module.exports = function(grunt) {
     TASKS
     **/
     grunt.registerTask('test', ['simplemocha']);
-    grunt.registerTask('css', ['sass', 'requirejs:css']);
     grunt.registerTask('analyze', ['plato:analyze']);
+    
+    grunt.registerTask('css', ['sass', 'requirejs:css']);
     grunt.registerTask('local', ['concurrent:concurrentLocal']);
     grunt.registerTask('localServer', ['css', 'nodemon:local']);
+
+    grunt.registerTask('build', ['test', 'clean', 'css', 'requirejs:main', 'copy:main']);
     grunt.registerTask('deploy-dev', ['build', 'shell:gitdev']);
-    grunt.registerTask('documentation', ['clean', 'markdown:all']);
     grunt.registerTask('deploy-preprod', ['build', 'shell:gitpreprod']);
 
-    grunt.registerTask('build', ['clean', 'css', 'requirejs:main', 'copy:main']);
-    grunt.registerTask('buildapp', ['test', 'clean', 'css', 'requirejs:app']); //, 'concat:app', 'uglify:app', 'copy:main']);
+    grunt.registerTask('documentation', ['clean', 'markdown:all']);
 };

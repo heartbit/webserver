@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">68.87</p>
+      <p class="stat">69.90</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">238</p>
+      <p class="stat">244</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">46.57</p>
+      <p class="stat">42.52</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">2.83</p>
+      <p class="stat">2.64</p>
     </div>
   </div>
 </div>
@@ -101,7 +101,8 @@
         _.bindAll(
             this,
             &#039;initOnMouseOverEvents&#039;,
-            &#039;doZoom&#039;
+            &#039;doZoom&#039;,
+            &#039;resize&#039;
         );
 
         this.dataHelper = new DataHelper();
@@ -127,11 +128,11 @@
             left: 40
         };
 
-        this.width = $(this.el).width() - this.margin.left - this.margin.right;
-        this.height = $(this.el).height() - this.margin.top - this.margin.bottom;
-
         var visWidth = $(this.el).width();
         var visHeigth = $(this.el).height();
+
+        this.width = visWidth - this.margin.left - this.margin.right;
+        this.height = visHeigth - this.margin.top - this.margin.bottom;
 
         this.chart = d3.select(this.el)
             .append(&#039;svg&#039;)
@@ -153,8 +154,8 @@
         this.timeScale = d3.time.scale()
             .range([0, this.width]);
 
-        this.zoom = d3.behavior.zoom().on(&quot;zoom&quot;, this.doZoom);
-        this.chart.call(this.zoom);
+        // this.zoom = d3.behavior.zoom().on(&quot;zoom&quot;, this.doZoom);
+        // this.chart.call(this.zoom);
 
         this.timeAxis = d3.svg.axis()
             .scale(this.timeScale)
@@ -196,7 +197,7 @@
         })), d3.max(last30.map(function(candle) {
             return candle.endDate;
         }))]);
-        this.zoom.x(this.timeScale);
+        // this.zoom.x(this.timeScale);
         this.timeAxisInstance.call(this.timeAxis);
     };
 
@@ -208,7 +209,7 @@
     */
     MainChart.prototype.draw = function(maingraphes, params) {
         this.params = params;
-        this.maingraphes = maingraphes || this.maingraphes;
+        // this.maingraphes = maingraphes || this.maingraphes;
         this.parseMainGraphes(maingraphes);
         this.updateXAxis();
         _.each(_.values(this.layers), function(layer) {
@@ -218,32 +219,35 @@
 
     MainChart.prototype.update = function(maingraphes, params) {
         //Do something else?
-        this.maingraphes = maingraphes || this.maingraphes;
+        // this.maingraphes = maingraphes || this.maingraphes;
         this.draw(maingraphes, params);
     };
 
-    MainChart.prototype.resize = function(){
+    MainChart.prototype.resize = function() {
         var self = this;
 
-        this.width = $(this.el).width() - this.margin.left - this.margin.right;
-        this.height = $(this.el).height() - this.margin.top - this.margin.bottom;
+        var visWidth = $(self.el).width();
+        var visHeigth = $(self.el).height();
 
-        var visWidth = $(this.el).width();
-        var visHeigth = $(this.el).height();
+        self.width = visWidth - self.margin.left - self.margin.right;
+        self.height = visHeigth - self.margin.top - self.margin.bottom;
 
-        this.chart
+        self.chart
             .attr(&quot;width&quot;, visWidth)
             .attr(&quot;height&quot;, visHeigth)
             .attr(&#039;viewBox&#039;, &quot;0 0 &quot; + visWidth + &quot; &quot; + visHeigth)
-            .call(this.initOnMouseOverEvents)
+            .call(self.initOnMouseOverEvents);
 
-        this.mainLayer
-            .attr(&quot;transform&quot;, &quot;translate(&quot; + this.margin.left + &quot;,&quot; + this.margin.top + &quot;)&quot;);
+        self.mainLayer
+            .attr(&quot;transform&quot;, &quot;translate(&quot; + self.margin.left + &quot;,&quot; + self.margin.top + &quot;)&quot;);
 
-        this.timeScale.range([0, this.width]);
-        this.zoom.x(this.timeScale);
-        this.timeAxisInstance.call(this.timeAxis);
-        this.draw(this.maingraphes);
+        self.timeScale.range([0, self.width]);
+        // self.zoom.x(self.timeScale);
+        self.timeAxisInstance.call(self.timeAxis);
+        _.each(_.values(self.layers), function(layer) {
+            layer.resize();
+        });
+
     };
 
     MainChart.prototype.clear = function() {};
@@ -283,6 +287,7 @@
                 //     .transition()
                 //     .duration(400)
                 //     .attr(&#039;opacity&#039;, 1);
+                return false;
             })
             .on(&quot;mouseout&quot;, function() {
                 self.layers.areaLayer.mouseout();
@@ -295,6 +300,7 @@
                 //     .transition()
                 //     .duration(400)
                 //     .attr(&#039;opacity&#039;, 0);
+                return false;
             })
             .on(&quot;mousemove&quot;, function() {
                 if (!self.models) {
