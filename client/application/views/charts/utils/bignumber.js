@@ -3,36 +3,11 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, 
     function BigNumber(el) {
         var self = this;
         this.el = el;
-        this.padding = {
-            top: 0,
-            bottom: 10,
-            left: 0,
-            right: 0
-        };
 
         this.width = $(this.el).width();
         this.height = $(this.el).height();
 
-        this.chart = d3.select(this.el).append("svg")
-            .attr("class", 'playground')
-            .attr("width", this.width)
-            .attr("height", this.height);
-
-        this.bigNumber = this.chart.append('text')
-            .text('0')
-            .attr('opacity', 0)
-            .attr('y', function() {
-                return self.height - self.padding.bottom;
-            });
-        this.bigNumber.attr('x', function() {
-            var length = self.bigNumber.node().getComputedTextLength();
-            return Math.round((self.width - length) / 2);
-        });
         this.addLoader();
-    };
-
-    BigNumber.prototype.calculateY = function() {
-        return this.height - this.padding.bottom;
     };
 
     BigNumber.prototype.render = function(params) {
@@ -54,7 +29,7 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, 
         this.fontSize = params.fontSize || this.fontSize || "20px";
 
         this.removeLoader();
-        this.bigNumber.transition()
+        d3.select(this.el).transition()
             .delay(self.delay)
             .duration(self.duration)
             .attr('opacity', 1)
@@ -63,10 +38,6 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, 
                 var i = d3.interpolate(self.initValue, self.value);
                 return function(t) {
                     this.textContent = self.valueToLabel(i(t));
-                    self.bigNumber.attr('x', function() {
-                        var length = self.bigNumber.node().getComputedTextLength() + 5;
-                        return Math.round((self.width - length) / 2);
-                    });
                 };
             });
         if (this.trend) {
@@ -82,36 +53,6 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, 
         var self = this;
         var delay = this.delay + this.duration;
         var fadeInfadeOutDuration = 600;
-
-        if (this.trendSvg) {
-            this.trendSvg.transition().duration(fadeInfadeOutDuration / 2).attr('opacity', 0);
-            if (this.reset) return;
-        } else {
-            this.trendSvg = this.chart.append('text')
-                .attr('y', function() {
-                    return self.height - self.padding.bottom;
-                })
-                .text('')
-                .attr('font-size', self.fontSize)
-                .attr('class', 'trend');
-        }
-
-        var symbol = "";
-        if (this.value > this.initValue && this.initValue != 0) {
-            symbol = "+";
-        }
-        if (this.value < this.initValue && this.initValue != 0) {
-            symbol = "-";
-        }
-
-        this.trendSvg.transition()
-            .delay(delay + fadeInfadeOutDuration / 2).duration(fadeInfadeOutDuration / 2)
-            .attr('x', function() {
-                var length = self.bigNumber.node().getComputedTextLength() + 5;
-                return Math.round((self.width + length) / 2);
-            })
-            .text(symbol)
-            .attr('opacity', 1);
     };
 
     BigNumber.prototype.valueToLabel = function(raw) {
@@ -146,13 +87,11 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, 
     };
 
     BigNumber.prototype.addLoader = function() {
-        // $(this.el).addClass('loading');
-        // this.chart.attr('opacity', 0);
+        $(this.el).addClass('icon-spin4');
     };
 
     BigNumber.prototype.removeLoader = function() {
-        // $(this.el).removeClass('loading');
-        // this.chart.attr('opacity', 1);
+        $(this.el).removeClass('icon-spin4');
     };
 
     return BigNumber;
