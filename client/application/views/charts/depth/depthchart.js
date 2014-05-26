@@ -66,16 +66,41 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
             .y(function(d) {
                 return this.yScale(d.amount);
             });
+
+        this.depthLayer = self.mainLayer.append("g").attr("class", "depthLayer");
+
+        this.currentPositionXLine = this.mainLayer
+            .append("svg:line")
+            .attr('class', 'currentPositionXLine')
+            .attr('y1', this.height)
+            .attr('y2', this.height)
+            .attr('x1', 0)
+            .attr('x2', 0)
+            .attr('stroke', 'gray')
+            .attr('stroke-width', 1)
+            .attr('opacity', 0);
+
+        this.currentPositionYLine = this.mainLayer
+            .append("svg:line")
+            .attr('class', 'currentPositionYLine')
+            .attr('y1', 0)
+            .attr('y2', 0)
+            .attr('x1', 0)
+            .attr('x2', 0)
+            .attr('stroke', 'gray')
+            .attr('stroke-width', 1)
+            .attr('opacity', 0);
     };
 
     DepthChart.prototype.clearGraph = function() {
-        this.mainLayer.selectAll('.depthLayer').remove();
+        this.mainLayer.selectAll('.depthLayer').html();
         this.mainLayer.selectAll('.x_axis').remove();
         this.mainLayer.selectAll('.y_axis').remove();
     };
 
     DepthChart.prototype.draw = function(depth) {
         if (!depth) return;
+        this.depth = depth;
         var self = this;
         if (this.isDrawn) {
             this.clearGraph();
@@ -109,7 +134,6 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
             .attr("class", "y_axis")
             .call(self.yAxis);
 
-        this.depthLayer = self.mainLayer.append("g").attr("class", "depthLayer");
         // this.depthLayer.append("path").attr("d", self.line(murBids)).attr("class", "depthBid");
         // this.depthLayer.append("path").attr("d", self.line(murAsks)).attr("class", "depthAsk");
         this.depthLayer.append("path").datum(murAsks).attr("d", self.area).attr("class", "depthAreaBids");
@@ -129,19 +153,14 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
         this.circles
             .enter()
             .insert("circle")
-            .attr("class", "circle");
-        this.circles
-            .exit()
-            .remove();
-        this.circles
+            .attr("class", "circle")
             .attr('cx', function(d) {
                 return self.xScale(d.price);
             })
             .attr('cy', function(d) {
                 return self.yScale(d.amount);
             })
-            .attr('r', 0)
-            .attr('class', 'circle')
+            .attr('r', 0);
 
         this.isDrawn = true;
     };
@@ -150,42 +169,33 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
         var self = this;
         element
             .on("mouseover", function() {
-                console.log('over');
-                self.tooltip.mouseover();
-
-                // self.currentPositionXLine
-                //     .transition()
-                //     .duration(400)
-                //     .attr('opacity', 1);
-                // self.currentPositionYLine
-                //     .transition()
-                //     .duration(400)
-                //     .attr('opacity', 1);
+                // self.tooltip.mouseover();
+                self.currentPositionXLine
+                    .transition()
+                    .duration(400)
+                    .attr('opacity', 1);
+                self.currentPositionYLine
+                    .transition()
+                    .duration(400)
+                    .attr('opacity', 1);
             })
             .on("mouseout", function() {
-                // self.candleCircles.attr('opacity', function(circle, index) {
-                //     return 0.5;
-                // });
-                // self.volumeBarChart.attr('opacity', function(volumeBar, index) {
-                //     return 0.5;
-                // });
-                console.log('out');
-                self.tooltip.mouseout();
+                // self.tooltip.mouseout();
                 self.circles
                     .transition()
                     .duration(100)
                     .attr('r', 0);
-                // self.currentPositionXLine
-                //     .transition()
-                //     .duration(400)
-                //     .attr('opacity', 0);
-                // self.currentPositionYLine
-                //     .transition()
-                //     .duration(400)
-                //     .attr('opacity', 0);
+                self.currentPositionXLine
+                    .transition()
+                    .duration(400)
+                    .attr('opacity', 0);
+                self.currentPositionYLine
+                    .transition()
+                    .duration(400)
+                    .attr('opacity', 0);
             })
             .on("mousemove", function() {
-                console.log('move');
+                // console.log('move');
                 if (!self.depth) {
                     return;
                 }
@@ -200,10 +210,10 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                         price: price
                     }
                     var pointIndex = _.sortedIndex(self.circlesData, fakePoint, 'price');
-
+                    var circle = self.circles[0][pointIndex];
                     return {
                         index: pointIndex,
-                        circle: self.circles[pointIndex]
+                        circle: circle
                     };
                 };
 
@@ -224,6 +234,17 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                             return 0;
                         }
                     });
+
+                var currentCircle = d3.select(self.closestPoint.circle);
+                self.currentPositionXLine
+                    .attr('x1', currentCircle.attr('cx'))
+                    .attr('y1', currentCircle.attr('cy'))
+                    .attr('x2', currentCircle.attr('cx'))
+
+                self.currentPositionYLine
+                    .attr('x1', currentCircle.attr('cx'))
+                    .attr('y1', currentCircle.attr('cy'))
+                    .attr('y2', currentCircle.attr('cy'))
 
                 // var tooltipVariables = {};
                 // var position = {
