@@ -46,9 +46,15 @@ define('dataHelper', ['FormatUtils'], function(FormatUtils) {
          DepthMax = MurAsks;
       };
 
-      var Circles = _.sortBy(_.union(MurAsks, MurBids), function(point) {
-         return point.price;
-      });
+      // On garde seulement 1/10 points de l'union des 2 tableaux triée par prix croissant
+      var Circles = _.chain(_.union(MurAsks, MurBids))
+         .sortBy(function(point) {
+            return point.price;
+         })
+         .filter(function(item, index) {
+            return index % 10 == 0;
+         })
+         .value();
 
       return {
          DepthMax: DepthMax,
