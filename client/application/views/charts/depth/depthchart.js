@@ -75,22 +75,18 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
     };
 
     DepthChart.prototype.draw = function(depth) {
+        if (!depth) return;
         var self = this;
-
-        this.depth = depth;
         if (this.isDrawn) {
             this.clearGraph();
         }
         var ymargin = 30;
 
-        var lines = this.dataHelper.computeDepth(depth);
-        if (!lines) return;
-
-        this.circlesData = lines.Circles;
-        var depthMin = lines.DepthMin;
-        var depthMax = lines.DepthMax;
-        var murBids = lines.MurBids;
-        var murAsks = lines.MurAsks;
+        this.circlesData = depth.Circles;
+        var depthMin = depth.DepthMin;
+        var depthMax = depth.DepthMax;
+        var murBids = depth.MurBids;
+        var murAsks = depth.MurAsks;
 
         self.yScale.domain([d3.min(depthMin.map(function(depth) {
             return depth.amount;

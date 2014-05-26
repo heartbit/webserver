@@ -89,7 +89,8 @@ requirejs.config({
 
         // DataHelpers
         dataHelper: 'application/helpers/dataHelper',
-
+        depthDataHelper: 'application/helpers/depthDataHelper',
+        
         // Models
         information: 'application/models/information',
         maingraphe: 'application/models/maingraphe',

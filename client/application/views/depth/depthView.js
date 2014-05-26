@@ -1,4 +1,4 @@
-define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart', 'bignumber'], function(config, Depth, d3, DepthTemplate, DepthChart, BigNumber) {
+define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart', 'bignumber', 'depthDataHelper'], function(config, Depth, d3, DepthTemplate, DepthChart, BigNumber, DepthDataHelper) {
 
     return Backbone.View.extend({
 
@@ -8,6 +8,7 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
 
         initialize: function() {
             this.depth = new Depth();
+            this.depthDataHelper = new DepthDataHelper();
             _.bindAll(this, 'render', 'update');
         },
 
@@ -23,30 +24,33 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
 
         update: function(params) {
 
-            this.depthChart.draw(this.depth);
+            this.computedDepth = this.depthDataHelper.computeDepth(this.depth);
 
-            // d3.select('#js-maxBid')
-            //     .transition()
-            //     .text()
-            //     .duration(600)
-            //     .tween("text", function(d) {
-            //         var i = d3.interpolate(0, 450);
-            //         return function(t) {
-            //             this.textContent = i(t);
-            //         };
-            //     });
-            // this.maxBidNumber.render(updateParams);
+            this.depthChart.draw(this.computedDepth);
 
-            // var timestamp = +moment(update.date).format('X') || +moment().format('X');
-            // var updateParams = {
-            //     unit: 'timestamp',
-            //     value: timestamp,
-            //     type: 'timestamp',
-            //     delay: 100,
-            //     duration: 600,
-            //     fontSize: '15px'
-            // };
-            // this.updateTimestamp.render(updateParams);
+            var updateParams = {
+                unit: '$',
+                value: this.computedDepth.maxBid.price,
+                type: 'price',
+                delay: 0,
+                duration: 600,
+                fontSize: '35px',
+                trend: true
+            };
+
+            this.maxBidNumber.render(updateParams);
+
+            var updateParams = {
+                unit: '$',
+                value: this.computedDepth.minAsk.price,
+                type: 'price',
+                delay: 0,
+                duration: 600,
+                fontSize: '35px',
+                trend: true
+            };
+
+            this.minAskNumber.render(updateParams);
         }
 
     });
