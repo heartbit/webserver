@@ -90,123 +90,123 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;keyFactsView&#039;, [&#039;ticker&#039;, &#039;trade&#039;, &#039;config&#039;, &#039;text!keyFactsView.html&#039;, &#039;bignumber&#039;, &#039;FormatUtils&#039;,&#039;graphmenuView&#039;], 
-    function(Ticker, Trade, config, KeyfactsTemplate, BigNumber, FormatUtils,GraphmenuView) {
+    <textarea id="file-source" class="col-md-12">define(&#039;keyFactsView&#039;, [&#039;ticker&#039;, &#039;trade&#039;, &#039;config&#039;, &#039;text!keyFactsView.html&#039;, &#039;bignumber&#039;, &#039;FormatUtils&#039;, &#039;graphmenuView&#039;],
+    function(Ticker, Trade, config, KeyfactsTemplate, BigNumber, FormatUtils, GraphmenuView) {
 
-    return Backbone.View.extend({
+        return Backbone.View.extend({
 
-        events: {},
+            events: {},
 
-        el: &#039;#js-keyfacts&#039;,
-        exportToolEl: &#039;#js-keyFactExportTools&#039;,
-        template: _.template(KeyfactsTemplate),
+            el: &#039;#js-keyfacts&#039;,
+            exportToolEl: &#039;#js-keyFactExportTools&#039;,
+            template: _.template(KeyfactsTemplate),
 
-        /**
+            /**
             initialize keyfactsview
             var options = {
                 platforms : [],
                 tickerAttributes:[&#039;last&#039;, &#039;wavg&#039;, &#039;high&#039;, &#039;low&#039;, &#039;daily&#039;, &#039;vol&#039;]
             }
          */
-        initialize: function(options) {
-            if (!options) {
-                options = {};
-            }
-            this.options = options;
-            this.ticker = new Ticker();
-            this.trade = new Trade();
-            this.exportTools = new GraphmenuView();
-            this.exportTools.initParent(this.$el);
-            _.bindAll(this, &#039;render&#039;, &#039;update&#039;);
-        },
-       
-        renderBigNumbers: function(tickerAttributes) {
-            var self = this;
-            this.bigNumberViews = [];
-            var tickerAttributes = tickerAttributes || config.keyfactsview.defaultAttributes;
-            this.tickerAttributes = this.addHtmlSelectors(tickerAttributes);
-            this.$el.html(this.template({
-                tickerAttributes: this.tickerAttributes
-            }));
-            _.each(this.tickerAttributes, function(tickerAttribute) {
-                var bigNumberView = {
-                    bigNumberChart: new BigNumber(&#039;#&#039; + tickerAttribute.htmlSelector),
-                    tickerAttribute: tickerAttribute
+            initialize: function(options) {
+                if (!options) {
+                    options = {};
                 }
-                self.bigNumberViews.push(bigNumberView);
-            });
-            $(document).foundation();
-        },
+                this.options = options;
+                this.ticker = new Ticker();
+                this.trade = new Trade();
+                this.exportTools = new GraphmenuView();
+                this.exportTools.initParent(this.$el);
+                _.bindAll(this, &#039;render&#039;, &#039;update&#039;);
+            },
 
-        addHtmlSelectors: function(tickerAttributes) {
-            _.each(tickerAttributes, function(tickerAttribute) {
-                tickerAttribute.htmlSelector = &#039;js-&#039; + tickerAttribute.id + &#039;BigNumber&#039;;
-            });
-            return tickerAttributes;
-        },
+            renderBigNumbers: function(tickerAttributes) {
+                var self = this;
+                this.bigNumberViews = [];
+                var tickerAttributes = tickerAttributes || config.keyfactsview.defaultAttributes;
+                this.tickerAttributes = this.addHtmlSelectors(tickerAttributes);
+                this.$el.html(this.template({
+                    tickerAttributes: this.tickerAttributes
+                }));
+                _.each(this.tickerAttributes, function(tickerAttribute) {
+                    var bigNumberView = {
+                        bigNumberChart: new BigNumber(&#039;#&#039; + tickerAttribute.htmlSelector),
+                        tickerAttribute: tickerAttribute
+                    }
+                    self.bigNumberViews.push(bigNumberView);
+                });
+                $(document).foundation();
+            },
 
-        render: function(params) {
-            this.ticker.socketSync(params);
-            this.trade.socketSync(params);
-            this.renderBigNumbers(this.options.tickerAttributes);
-            this.ticker.on(&#039;update&#039;, this.update, this);
-            this.trade.on(&#039;update&#039;, this.update, this);
-            this.update(true);
-            this.exportTools.setElement($(this.exportToolEl)).render();
-            return this;
-        },
+            addHtmlSelectors: function(tickerAttributes) {
+                _.each(tickerAttributes, function(tickerAttribute) {
+                    tickerAttribute.htmlSelector = &#039;js-&#039; + tickerAttribute.id + &#039;BigNumber&#039;;
+                });
+                return tickerAttributes;
+            },
 
-        update: function(reset) {
-            var self = this;
+            render: function(params) {
+                this.ticker.socketSync(params);
+                this.trade.socketSync(params);
+                this.renderBigNumbers(this.options.tickerAttributes);
+                this.ticker.on(&#039;update&#039;, this.update, this);
+                this.trade.on(&#039;update&#039;, this.update, this);
+                this.update(true);
+                this.exportTools.setElement($(this.exportToolEl)).render();
+                return this;
+            },
 
-            _.each(this.bigNumberViews, function(bigNumberView, index) {
-                var unit = null;
-                switch (bigNumberView.tickerAttribute.type) {
-                    case &quot;volume&quot;:
-                        unit = self.ticker.get(&#039;item&#039;);
-                        break;
-                    case &quot;price&quot;:
-                        unit = self.ticker.get(&#039;currency&#039;);
-                        break;
-                    case &quot;percent&quot;:
-                        unit = &quot;%&quot;;
-                        break;
-                    default:
-                        break;
-                }
+            update: function(reset) {
+                var self = this;
 
-                var value = self.ticker.get(bigNumberView.tickerAttribute.id) || self.trade.get(bigNumberView.tickerAttribute.id);
+                _.each(this.bigNumberViews, function(bigNumberView, index) {
+                    var unit = null;
+                    switch (bigNumberView.tickerAttribute.type) {
+                        case &quot;volume&quot;:
+                            unit = self.ticker.get(&#039;item&#039;);
+                            break;
+                        case &quot;price&quot;:
+                            unit = self.ticker.get(&#039;currency&#039;);
+                            break;
+                        case &quot;percent&quot;:
+                            unit = &quot;%&quot;;
+                            break;
+                        default:
+                            break;
+                    }
 
-                var updateParams = {
-                    unit: unit,
-                    value: value,
-                    type: bigNumberView.tickerAttribute.type,
-                    delay: index * 100,
-                    duration: 500,
-                    trend: true,
-                    reset: reset,
-                    fontSize: &#039;16px&#039;
-                };
+                    var value = self.ticker.get(bigNumberView.tickerAttribute.id) || self.trade.get(bigNumberView.tickerAttribute.id);
 
-                bigNumberView.bigNumberChart.render(updateParams);
-            });
-            // this.changePageTitle();
-        },
+                    var updateParams = {
+                        unit: unit,
+                        value: value,
+                        type: bigNumberView.tickerAttribute.type,
+                        delay: index * 100,
+                        duration: 500,
+                        trend: true,
+                        reset: reset,
+                        fontSize: &#039;16px&#039;
+                    };
 
-        // changePageTitle: function() {
-        //     var $title = $(&quot;title&quot;);
-        //     var title = &quot;Coin&quot;;
-        //     if (this.modelSelectedTicker.get(&#039;last&#039;) &amp;&amp; this.modelSelectedTicker.get(&#039;currency&#039;)) {
-        //         title = FormatUtils.formatPrice(this.modelSelectedTicker.get(&#039;last&#039;), this.modelSelectedTicker.get(&#039;currency&#039;).id);
-        //         title += &quot; &quot; + this.modelSelectedTicker.get(&#039;platform&#039;).label + &quot; &quot; + this.modelSelectedTicker.get(&#039;item&#039;).symbol + &quot;/&quot; + this.modelSelectedTicker.get(&#039;currency&#039;).symbol;
-        //     }
-        //     $title.html(title);
-        //     return false;
-        // },
+                    bigNumberView.bigNumberChart.render(updateParams);
+                });
+                // this.changePageTitle();
+            },
 
-    });
+            // changePageTitle: function() {
+            //     var $title = $(&quot;title&quot;);
+            //     var title = &quot;Coin&quot;;
+            //     if (this.modelSelectedTicker.get(&#039;last&#039;) &amp;&amp; this.modelSelectedTicker.get(&#039;currency&#039;)) {
+            //         title = FormatUtils.formatPrice(this.modelSelectedTicker.get(&#039;last&#039;), this.modelSelectedTicker.get(&#039;currency&#039;).id);
+            //         title += &quot; &quot; + this.modelSelectedTicker.get(&#039;platform&#039;).label + &quot; &quot; + this.modelSelectedTicker.get(&#039;item&#039;).symbol + &quot;/&quot; + this.modelSelectedTicker.get(&#039;currency&#039;).symbol;
+            //     }
+            //     $title.html(title);
+            //     return false;
+            // },
 
-});</textarea>
+        });
+
+    });</textarea>
   </div>
 </div>
 

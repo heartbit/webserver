@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">76.38</p>
+      <p class="stat">76.85</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">28</p>
+      <p class="stat">54</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">8.47</p>
+      <p class="stat">8.75</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.19</p>
+      <p class="stat">0.34</p>
     </div>
   </div>
 </div>
@@ -90,11 +90,11 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;depthView&#039;, [&#039;config&#039;, &#039;depth&#039;, &#039;text!depthView.html&#039;, &#039;depthchart&#039;], function(config, Depth, DepthTemplate, DepthChart) {
+    <textarea id="file-source" class="col-md-12">define(&#039;depthView&#039;, [&#039;config&#039;, &#039;depth&#039;, &#039;d3&#039;, &#039;text!depthView.html&#039;, &#039;depthchart&#039;, &#039;bignumber&#039;], function(config, Depth, d3, DepthTemplate, DepthChart, BigNumber) {
 
     return Backbone.View.extend({
 
-        el: &#039;#js-indicators&#039;,
+        el: &#039;#js-depthView&#039;,
 
         template: _.template(DepthTemplate),
 
@@ -107,12 +107,38 @@
             this.$el.html(this.template());
             this.depth.socketSync(params);
             this.depth.on(&#039;update&#039;, this.update, this);
-            this.depthChart = new DepthChart(&#039;#js-depth&#039;);
+            this.depthChart = new DepthChart(&#039;#js-depthChart&#039;);
+            this.maxBidNumber = new BigNumber(&#039;#js-maxBid&#039;);
+            this.minAskNumber = new BigNumber(&#039;#js-minAsk&#039;);
             return this;
         },
 
         update: function(params) {
+
             this.depthChart.draw(this.depth);
+
+            d3.select(&#039;#js-maxBid&#039;)
+                .transition()
+                .text()
+                .duration(600)
+                .tween(&quot;text&quot;, function(d) {
+                    var i = d3.interpolate(0, 450);
+                    return function(t) {
+                        this.textContent = i(t);
+                    };
+                });
+            // this.maxBidNumber.render(updateParams);
+
+            // var timestamp = +moment(update.date).format(&#039;X&#039;) || +moment().format(&#039;X&#039;);
+            // var updateParams = {
+            //     unit: &#039;timestamp&#039;,
+            //     value: timestamp,
+            //     type: &#039;timestamp&#039;,
+            //     delay: 100,
+            //     duration: 600,
+            //     fontSize: &#039;15px&#039;
+            // };
+            // this.updateTimestamp.render(updateParams);
         }
 
     });

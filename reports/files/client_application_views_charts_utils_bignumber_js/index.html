@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">67.54</p>
+      <p class="stat">66.30</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">160</p>
+      <p class="stat">111</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">46.06</p>
+      <p class="stat">29.16</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">1.79</p>
+      <p class="stat">1.09</p>
     </div>
   </div>
 </div>
@@ -93,38 +93,16 @@
     <textarea id="file-source" class="col-md-12">define(&#039;bignumber&#039;, [&#039;config&#039;, &#039;FormatUtils&#039;, &#039;d3&#039;, &#039;moment&#039;], function(config, FormatUtils, d3) {
 
     function BigNumber(el) {
-        var self = this;
         this.el = el;
-        this.padding = {
-            top: 0,
-            bottom: 10,
-            left: 0,
-            right: 0
-        };
 
-        this.width = $(this.el).width();
-        this.height = $(this.el).height();
+        this.$bigvalue = d3.select(this.el)
+            .append(&#039;span&#039;)
+            .attr(&#039;class&#039;, &#039;bigvalue&#039;)
 
-        this.chart = d3.select(this.el).append(&quot;svg&quot;)
-            .attr(&quot;class&quot;, &#039;playground&#039;)
-            .attr(&quot;width&quot;, this.width)
-            .attr(&quot;height&quot;, this.height);
+        $(this.el).append(&#039;&lt;span class=&quot;trend&quot;&gt;&lt;span&gt;&#039;);
+        this.$trend = $(this.el).children(&#039;.trend&#039;);
 
-        this.bigNumber = this.chart.append(&#039;text&#039;)
-            .text(&#039;0&#039;)
-            .attr(&#039;opacity&#039;, 0)
-            .attr(&#039;y&#039;, function() {
-                return self.height - self.padding.bottom;
-            });
-        this.bigNumber.attr(&#039;x&#039;, function() {
-            var length = self.bigNumber.node().getComputedTextLength();
-            return Math.round((self.width - length) / 2);
-        });
         this.addLoader();
-    };
-
-    BigNumber.prototype.calculateY = function() {
-        return this.height - this.padding.bottom;
     };
 
     BigNumber.prototype.render = function(params) {
@@ -139,14 +117,14 @@
         this.trend = params.trend || false;
         this.reset = params.reset || false;
         this.value = params.value;
-        this.unit = params.unit || this
+        this.unit = params.unit || this.unit;
         this.delay = params.delay || 0;
         this.duration = params.duration || 0;
         this.type = params.type || this.type;
         this.fontSize = params.fontSize || this.fontSize || &quot;20px&quot;;
 
         this.removeLoader();
-        this.bigNumber.transition()
+        this.$bigvalue.transition()
             .delay(self.delay)
             .duration(self.duration)
             .attr(&#039;opacity&#039;, 1)
@@ -155,12 +133,9 @@
                 var i = d3.interpolate(self.initValue, self.value);
                 return function(t) {
                     this.textContent = self.valueToLabel(i(t));
-                    self.bigNumber.attr(&#039;x&#039;, function() {
-                        var length = self.bigNumber.node().getComputedTextLength() + 5;
-                        return Math.round((self.width - length) / 2);
-                    });
                 };
             });
+
         if (this.trend) {
             this.addTrend();
         }
@@ -171,39 +146,17 @@
     };
 
     BigNumber.prototype.addTrend = function() {
-        var self = this;
-        var delay = this.delay + this.duration;
-        var fadeInfadeOutDuration = 600;
+        this.$trend.removeClass();
 
-        if (this.trendSvg) {
-            this.trendSvg.transition().duration(fadeInfadeOutDuration / 2).attr(&#039;opacity&#039;, 0);
-            if (this.reset) return;
-        } else {
-            this.trendSvg = this.chart.append(&#039;text&#039;)
-                .attr(&#039;y&#039;, function() {
-                    return self.height - self.padding.bottom;
-                })
-                .text(&#039;&#039;)
-                .attr(&#039;font-size&#039;, self.fontSize)
-                .attr(&#039;class&#039;, &#039;trend&#039;);
-        }
-
-        var symbol = &quot;&quot;;
+        var trendclass = &quot;icon-right-dir&quot;;
         if (this.value &gt; this.initValue &amp;&amp; this.initValue != 0) {
-            symbol = &quot;+&quot;;
+            trendclass = &quot;icon-up-dir&quot;;
         }
         if (this.value &lt; this.initValue &amp;&amp; this.initValue != 0) {
-            symbol = &quot;-&quot;;
+            trendclass = &quot;icon-down-dir&quot;;
         }
 
-        this.trendSvg.transition()
-            .delay(delay + fadeInfadeOutDuration / 2).duration(fadeInfadeOutDuration / 2)
-            .attr(&#039;x&#039;, function() {
-                var length = self.bigNumber.node().getComputedTextLength() + 5;
-                return Math.round((self.width + length) / 2);
-            })
-            .text(symbol)
-            .attr(&#039;opacity&#039;, 1);
+        this.$trend.addClass(trendclass);
     };
 
     BigNumber.prototype.valueToLabel = function(raw) {
@@ -238,13 +191,11 @@
     };
 
     BigNumber.prototype.addLoader = function() {
-        // $(this.el).addClass(&#039;loading&#039;);
-        // this.chart.attr(&#039;opacity&#039;, 0);
+        $(this.el).addClass(&#039;icon-spin4&#039;);
     };
 
     BigNumber.prototype.removeLoader = function() {
-        // $(this.el).removeClass(&#039;loading&#039;);
-        // this.chart.attr(&#039;opacity&#039;, 1);
+        $(this.el).removeClass(&#039;icon-spin4&#039;);
     };
 
     return BigNumber;
