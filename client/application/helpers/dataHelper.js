@@ -61,7 +61,8 @@ define('dataHelper', ['FormatUtils'], function(FormatUtils) {
          DepthMin: DepthMin,
          Circles: Circles,
          MurBids: MurBids,
-         MurAsks: MurAsks
+         MurAsks: MurAsks,
+         
       };
    };
 

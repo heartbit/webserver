@@ -47,7 +47,7 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, 
         this.trend = params.trend || false;
         this.reset = params.reset || false;
         this.value = params.value;
-        this.unit = params.unit || this
+        this.unit = params.unit || this.unit;
         this.delay = params.delay || 0;
         this.duration = params.duration || 0;
         this.type = params.type || this.type;
