@@ -25,16 +25,16 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
 
             this.depthChart.draw(this.depth);
 
-            d3.select('#js-maxBid')
-                .transition()
-                .text()
-                .duration(600)
-                .tween("text", function(d) {
-                    var i = d3.interpolate(0, 450);
-                    return function(t) {
-                        this.textContent = i(t);
-                    };
-                });
+            // d3.select('#js-maxBid')
+            //     .transition()
+            //     .text()
+            //     .duration(600)
+            //     .tween("text", function(d) {
+            //         var i = d3.interpolate(0, 450);
+            //         return function(t) {
+            //             this.textContent = i(t);
+            //         };
+            //     });
             // this.maxBidNumber.render(updateParams);
 
             // var timestamp = +moment(update.date).format('X') || +moment().format('X');
