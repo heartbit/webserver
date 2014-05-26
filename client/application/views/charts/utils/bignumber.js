@@ -1,11 +1,14 @@
 define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, FormatUtils, d3) {
 
     function BigNumber(el) {
-        var self = this;
         this.el = el;
 
-        this.width = $(this.el).width();
-        this.height = $(this.el).height();
+        this.$bigvalue = d3.select(this.el)
+            .append('span')
+            .attr('class', 'bigvalue')
+
+        $(this.el).append('<span class="trend"><span>');
+        this.$trend = $(this.el).children('.trend');
 
         this.addLoader();
     };
@@ -29,7 +32,7 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, 
         this.fontSize = params.fontSize || this.fontSize || "20px";
 
         this.removeLoader();
-        d3.select(this.el).transition()
+        this.$bigvalue.transition()
             .delay(self.delay)
             .duration(self.duration)
             .attr('opacity', 1)
@@ -40,6 +43,7 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, 
                     this.textContent = self.valueToLabel(i(t));
                 };
             });
+
         if (this.trend) {
             this.addTrend();
         }
@@ -50,9 +54,17 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, 
     };
 
     BigNumber.prototype.addTrend = function() {
-        var self = this;
-        var delay = this.delay + this.duration;
-        var fadeInfadeOutDuration = 600;
+        this.$trend.removeClass();
+
+        var trendclass = "icon-right-dir";
+        if (this.value > this.initValue && this.initValue != 0) {
+            trendclass = "icon-up-dir";
+        }
+        if (this.value < this.initValue && this.initValue != 0) {
+            trendclass = "icon-down-dir";
+        }
+
+        this.$trend.addClass(trendclass);
     };
 
     BigNumber.prototype.valueToLabel = function(raw) {
