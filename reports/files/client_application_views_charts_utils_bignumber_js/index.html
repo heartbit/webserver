@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">66.30</p>
+      <p class="stat">64.97</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">111</p>
+      <p class="stat">123</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">29.16</p>
+      <p class="stat">32.44</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">1.09</p>
+      <p class="stat">1.22</p>
     </div>
   </div>
 </div>
@@ -92,14 +92,23 @@
   <div class="row">
     <textarea id="file-source" class="col-md-12">define(&#039;bignumber&#039;, [&#039;config&#039;, &#039;FormatUtils&#039;, &#039;d3&#039;, &#039;moment&#039;], function(config, FormatUtils, d3) {
 
-    function BigNumber(el) {
+    function BigNumber(el, options) {
         this.el = el;
+
+        this.options = options;
+
+        if (options &amp;&amp; options.trend &amp;&amp; options.trend.before) {
+            $(this.el).append(&#039;&lt;span class=&quot;trend&quot;&gt;&lt;span&gt;&#039;);
+        }
 
         this.$bigvalue = d3.select(this.el)
             .append(&#039;span&#039;)
-            .attr(&#039;class&#039;, &#039;bigvalue&#039;)
+            .attr(&#039;class&#039;, &#039;bigvalue&#039;);
 
-        $(this.el).append(&#039;&lt;span class=&quot;trend&quot;&gt;&lt;span&gt;&#039;);
+        if (options &amp;&amp; options.trend &amp;&amp; options.trend.after) {
+            $(this.el).append(&#039;&lt;span class=&quot;trend&quot;&gt;&lt;span&gt;&#039;);
+        }
+
         this.$trend = $(this.el).children(&#039;.trend&#039;);
 
         this.addLoader();
@@ -147,15 +156,18 @@
 
     BigNumber.prototype.addTrend = function() {
         this.$trend.removeClass();
-
-        var trendclass = &quot;icon-right-dir&quot;;
+        var trendclass;
+        if (this.options.trend.before) {
+            trendclass = &quot;icon-left-dir&quot;;
+        } else {
+            trendclass = &quot;icon-right-dir&quot;;
+        }
         if (this.value &gt; this.initValue &amp;&amp; this.initValue != 0) {
             trendclass = &quot;icon-up-dir&quot;;
         }
         if (this.value &lt; this.initValue &amp;&amp; this.initValue != 0) {
             trendclass = &quot;icon-down-dir&quot;;
         }
-
         this.$trend.addClass(trendclass);
     };
 
