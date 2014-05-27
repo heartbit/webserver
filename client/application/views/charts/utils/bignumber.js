@@ -66,15 +66,15 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, 
         this.$trend.removeClass();
         var trendclass;
         if (this.options.trend.before) {
-            trendclass = "icon-left-open";
+            trendclass = "icon-left-dir";
         } else {
-            trendclass = "icon-right-open";
+            trendclass = "icon-right-dir";
         }
         if (this.value > this.initValue && this.initValue != 0) {
-            trendclass = "icon-up-open";
+            trendclass = "icon-up-dir";
         }
         if (this.value < this.initValue && this.initValue != 0) {
-            trendclass = "icon-down-open";
+            trendclass = "icon-down-dir";
         }
         this.$trend.addClass(trendclass);
     };
