@@ -103,6 +103,12 @@
       "src": "modernpics"
     },
     {
+      "uid": "am79573ydakwiicuct1odx7f2e9zv8lv",
+      "css": "left-dir",
+      "code": 59418,
+      "src": "modernpics"
+    },
+    {
       "uid": "gypcofts1tkouwkxbv8d33eanqpreyy9",
       "css": "right-dir",
       "code": 59406,
@@ -119,6 +125,30 @@
       "css": "chart",
       "code": 59403,
       "src": "modernpics"
+    },
+    {
+      "uid": "d9be617b7f2fe7843118ca2d3a1b8cca",
+      "css": "down-open",
+      "code": 59419,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "b714be5a812a474811604f700dfc87ce",
+      "css": "left-open",
+      "code": 59420,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "37910a1398001a5ccb541cb2a253a2c7",
+      "css": "right-open",
+      "code": 59421,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "440e148d0e21100118eae7036bcd2067",
+      "css": "up-open",
+      "code": 59422,
+      "src": "mfglabs"
     },
     {
       "uid": "c46c42ae95f46394bd2f9c9a9cc5f768",

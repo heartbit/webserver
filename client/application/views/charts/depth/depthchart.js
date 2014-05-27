@@ -96,6 +96,7 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
         this.mainLayer.selectAll('.depthLayer').html();
         this.mainLayer.selectAll('.x_axis').remove();
         this.mainLayer.selectAll('.y_axis').remove();
+        this.circles.remove();
     };
 
     DepthChart.prototype.draw = function(depth) {
