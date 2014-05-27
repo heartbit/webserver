@@ -17,8 +17,18 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
             this.depth.socketSync(params);
             this.depth.on('update', this.update, this);
             this.depthChart = new DepthChart('#js-depthChart');
-            this.maxBidNumber = new BigNumber('#js-maxBid');
-            this.minAskNumber = new BigNumber('#js-minAsk');
+            var optionMaxBid = {
+                trend: {
+                    after: true
+                }
+            };
+            this.maxBidNumber = new BigNumber('#js-maxBid', optionMaxBid);
+            var optionsMinAsk = {
+                trend: {
+                    before: true
+                }
+            };
+            this.minAskNumber = new BigNumber('#js-minAsk', optionsMinAsk);
             return this;
         },
 

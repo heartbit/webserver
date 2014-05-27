@@ -37,8 +37,13 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
                     tickerAttributes: this.tickerAttributes
                 }));
                 _.each(this.tickerAttributes, function(tickerAttribute) {
+                    var options = {
+                        trend: {
+                            after: true
+                        }
+                    };
                     var bigNumberView = {
-                        bigNumberChart: new BigNumber('#' + tickerAttribute.htmlSelector),
+                        bigNumberChart: new BigNumber('#' + tickerAttribute.htmlSelector, options),
                         tickerAttribute: tickerAttribute
                     }
                     self.bigNumberViews.push(bigNumberView);

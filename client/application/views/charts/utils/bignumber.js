@@ -1,13 +1,20 @@
 define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, FormatUtils, d3) {
 
-    function BigNumber(el) {
+    function BigNumber(el, options) {
         this.el = el;
+
+        if (options && options.trend && options.trend.before) {
+            $(this.el).append('<span class="trend"><span>');
+        }
 
         this.$bigvalue = d3.select(this.el)
             .append('span')
-            .attr('class', 'bigvalue')
+            .attr('class', 'bigvalue');
 
-        $(this.el).append('<span class="trend"><span>');
+        if (options && options.trend && options.trend.after) {
+            $(this.el).append('<span class="trend"><span>');
+        }
+
         this.$trend = $(this.el).children('.trend');
 
         this.addLoader();
