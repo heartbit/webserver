@@ -15,7 +15,7 @@ define('parametersManagerConfig', function() {
 		},
 		KRAKEN: {
 			item: 'BTC',
-			currency: 'USD'
+			currency: 'EUR'
 		},
 		BITSTAMP: {
 			item: 'BTC',
@@ -48,6 +48,18 @@ define('parametersManagerConfig', function() {
 	};
 
 	parametersManagerConfig.defaultitems = {
+		BC: {
+			platform: "CRYPTSY",
+			currency: "BTC"
+		},
+		NXT: {
+			platform: "CRYPTSY",
+			currency: "BTC"
+		},
+		BC: {
+			platform: "CRYPTSY",
+			currency: "BTC"
+		},
 		BTC: {
 			platform: "BITSTAMP",
 			currency: "USD"

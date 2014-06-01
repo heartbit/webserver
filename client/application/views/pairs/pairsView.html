@@ -5,39 +5,63 @@
     </h1>
     <ul class="list">
 
-        <%_.each(pairs, function(pair){%>
-            <%if(_.contains(pair.platforms,platform.id)){%>
-                <li class="columns small-12 medium-8 large-6 ">
-                	<a class="<% if(pair.id.split("/")[0] === item){%>selected<%}%>" >
-	                    <div class="pair js-pair" data-pair-id="<%=pair.id%>">
-	                        <%=pair.id%>
-	                    </div>
-                    </a>
-                </li>
-                <%}%>
+        <%_.each(platformItems, function(it){%>
+		<div id="<%=it%>">
+		  <li class="columns small-12 medium-12 large-12 ">
+			<a class="<% if(it === item){%>selected<%}%>" >
+				<div class="item js-item" data-item-id="<%=it%>">
+					<img src="../../images/Logoscrypto/<%=it.toLowerCase()%>.png"/>
+					<%=it%>
+				</div>
+			</a>
+		  </li>
+		  <div class="<%=it%>" style="display:none">
+			  <%_.each(pairs,function(pair){%>
+				<%if(_.contains(pair.platforms,platform.id) && pair.id.split("/")[0] === it){%>
+					<li class="columns small-12 medium-8 large-6 ">
+						<a class="<% if(pair.id.split("/")[0] === item){%>selected<%}%>" >
+							<div class="pair js-pair" data-pair-id="<%=pair.id%>">
+								<%=pair.id%>
+							</div>
+						</a>
+					</li>
+					<%}%>
+			   <%})%>
+		   </div>
+		 </div>
         <%})%>
-
     </ul>
 
 </div>
 <div class="columns small-12 medium-8 large-6">
 
-    <h1>Other Pairs</h1>
+    <h1>Other Platform's pairs</h1>
     <ul class="list">
 
-        <%_.each(pairs, function(pair){%>
-            <%if(!_.contains(pair.platforms,platform.id)){%>
-                <li class="columns small-12 medium-8 large-6">
-                        <a class=" <% if(pair.id.split("/")[0] === item){%>selected<%}%>" >
-                        	<div class="pair js-pair" data-pair-id="<%=pair.id%>">
-                              <%=pair.id%>
-                            </div>
-                                <!--<br/><i class="tiny-platform"> (<%_.each(pair.platforms,function(platform){%>
-						  <%=platform%>
-					  <%})%>)</i>-->
-                        </a>
-                </li>
-                <%}%>
+       <%_.each(items, function(it){%>
+		<div id="otherpair-<%=it%>">
+		  <li class="columns small-12 medium-8 large-12 ">
+			<a class="<% if(it === item){%>selected<%}%>" >
+				<div class="item js-item" data-item-id="otherpair-<%=it%>">
+					<img src="../../images/Logoscrypto/<%=it.toLowerCase()%>.png"/>
+					<%=it%>
+				</div>
+			</a>
+		  </li>
+		  <div class="otherpair-<%=it%>" style="display:none">
+			  <%_.each(pairs,function(pair){%>
+				<%if(!_.contains(pair.platforms,platform.id) && pair.id.split("/")[0] === it){%>
+					<li class="columns small-12 medium-8 large-6 ">
+						<a class="<% if(pair.id.split("/")[0] === item){%>selected<%}%>" >
+							<div class="pair js-pair" data-pair-id="<%=pair.id%>">
+								<%=pair.id%>
+							</div>
+						</a>
+					</li>
+					<%}%>
+			   <%})%>
+		   </div>
+		 </div>
         <%})%>
 
     </ul>

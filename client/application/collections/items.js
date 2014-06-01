@@ -3,7 +3,7 @@ define('items', ['config', 'item', 'platforms', 'currencies', 'pairs', 'fuse','F
     var Items = Backbone.Collection.extend({
 
         model: Item,
-
+        
         url: config.item.urlCollection,
 
         initialize: function() {
@@ -32,7 +32,9 @@ define('items', ['config', 'item', 'platforms', 'currencies', 'pairs', 'fuse','F
             });
             this.trigger('change');
         },
-
+        comparator: function(model) {
+            return model.id;
+        },
         getPlatforms: function() {
             var platformdIds = [];
             _.each(this.models, function(item) {

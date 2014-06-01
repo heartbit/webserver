@@ -27,7 +27,6 @@ define('platforms', ['config', 'platform', 'fuse'], function(config, Platform, F
 				return platform.get('id') === name;
 			});
 		}
-
 	});
 
 	return Platforms;

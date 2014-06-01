@@ -31,6 +31,7 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
 
     ParametersManager.prototype.initInternalParams = function() {
         var self = this;
+        this.items.sort();
         var platformdIds = [];
         _.each(this.items.models, function(item) {
             var currencies = _.keys(item.currencies);
@@ -40,7 +41,8 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
         });
         this.platforms = new Platforms();
         this.platforms.initFromIds(platformdIds);
-        
+        this.platforms.comparator = 'id';
+         
         _.each(this.platforms.models, function(platform) {
           var pairPlatformsIds =[];
           _.each(self.items.models, function(item) {
@@ -62,7 +64,8 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
         });
         this.currencies = new Currencies();
         this.currencies.initFromIds(currencyIds);
-
+        this.currencies.comparator ='id';
+        this.currencies.sort();
         var pairIds = [];
         _.each(this.items.models, function(item) {
             pairIds = _.union(pairIds, _.chain(item.currencies)
@@ -85,7 +88,7 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
                     });
                 }
             });
-            pair.platforms = self.platformsIds;
+            pair.platforms = _.filter(self.platformsIds,function(platform){return typeof platform !== 'undefined'});
         });
         this.currentParams = config.defaultparams;
 
