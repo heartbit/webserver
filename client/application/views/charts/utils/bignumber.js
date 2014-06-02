@@ -65,11 +65,11 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'moment'], function(config, 
     BigNumber.prototype.addTrend = function() {
         this.$trend.removeClass();
         var trendclass;
-        if (this.options.trend.before) {
-            trendclass = "icon-left-dir";
-        } else {
-            trendclass = "icon-right-dir";
-        }
+        // if (this.options.trend.before) {
+        //     trendclass = "icon-left-dir";
+        // } else {
+        //     trendclass = "icon-right-dir";
+        // }
         if (this.value > this.initValue && this.initValue != 0) {
             trendclass = "icon-up-dir";
         }
