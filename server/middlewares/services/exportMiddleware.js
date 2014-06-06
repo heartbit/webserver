@@ -1,4 +1,4 @@
-var wkhtmltox = require('../libs/wkhtmltox/wkhtmltox');
+var wkhtmltox = require('../../libs/wkhtmltox/wkhtmltox');
 var fs = require('fs');
 
 exports.exportPdf = function(req, res, next) {
@@ -6,7 +6,6 @@ exports.exportPdf = function(req, res, next) {
 	var type = req.body.type;
 	var now = new Date();
 
-	// var filename = "hearbit-" + type + "-" + now.toString() + ".pdf";
 	var filename = "hearbit-" + type + ".pdf";
 
 	wkhtmltox.pdf(html, {
@@ -14,7 +13,8 @@ exports.exportPdf = function(req, res, next) {
 	}, function(code, signal) {
 		console.log('pdf created!')
 		res.send(200, filename);
-	})
+	});
+	
 };
 
 exports.getPdf = function(req, res, next) {

@@ -32,7 +32,8 @@
     "prettyjson": "*",
     "slang": "*",
     "mocha": "*",
-    "amdefine": "*"
+    "amdefine": "*",
+    "mailgun": "*"
   },
   "devDependencies": {
     "matchdep": "*",

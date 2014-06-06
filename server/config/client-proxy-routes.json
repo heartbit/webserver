@@ -8,6 +8,7 @@
         "/embed/marketcap": "file:templates/embed/marketcap.html",
         "/embed/volume": "file:templates/embed/volume.html",
         "/embed/price": "file:templates/embed/price.html",
-        "/embed/news": "file:templates/embed/news.html"
+        "/embed/news": "file:templates/embed/news.html",
+        "/embed/depth": "file:templates/embed/depth.html"
     }
 }

@@ -31,13 +31,13 @@ define(function(require) {
 			this.isRender = false;
 
 			this.views = {
-				header: new HeaderView(),
 				offcanvasmenu: new OffcanvasmenuView(),
-				keyfacts: new KeyFactsView(),
 				controller: new ControllerView(),
-				main: new MainView(),
-				news: new NewsView(),
-				depth: new DepthView()
+				keyfacts: new KeyFactsView(),
+				header: new HeaderView(),
+				// main: new MainView(),
+				depth: new DepthView(),
+				news: new NewsView()
 			};
 
 			Backbone.history.start({
