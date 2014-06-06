@@ -18,7 +18,12 @@ exports.sendUserFeedback = function(req, res, next) {
 	console.log('email', email);
 	console.log('msg', msg);
 
-	sendEmail(email, ["support@heartbit.io", "schonfeld.david@gmail.com", "bertrand.richard8@gmail.com", "francois.richard12@gmail.com"],
+	sendEmail(email, [
+			"schonfeld.david@gmail.com",
+			// "support@heartbit.io",
+			// "bertrand.richard8@gmail.com",
+			// "francois.richard12@gmail.com"
+		],
 		"[HOME FORMULAIRE]",
 		msg,
 		function() {

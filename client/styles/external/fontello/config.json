@@ -55,6 +55,12 @@
       "src": "fontawesome"
     },
     {
+      "uid": "98687378abd1faf8f6af97c254eb6cd6",
+      "css": "cog-alt",
+      "code": 59423,
+      "src": "fontawesome"
+    },
+    {
       "uid": "531bc468eecbb8867d822f1c11f1e039",
       "css": "calendar",
       "code": 59408,
@@ -94,6 +100,18 @@
       "uid": "wh8nbtrxjl2f67dpybsww6mri0xcaklm",
       "css": "export",
       "code": 59393,
+      "src": "typicons"
+    },
+    {
+      "uid": "56da5324fc5a04f131ab65668c36b931",
+      "css": "news",
+      "code": 59425,
+      "src": "typicons"
+    },
+    {
+      "uid": "e45a44236f3f1ac013a1287bb60cd965",
+      "css": "flow-cross",
+      "code": 59424,
       "src": "typicons"
     },
     {
@@ -185,6 +203,12 @@
       "css": "acrobat",
       "code": 59395,
       "src": "zocial"
+    },
+    {
+      "uid": "93faa7cec68bf69ec455bbab61e58e48",
+      "css": "th",
+      "code": 59426,
+      "src": "elusive"
     },
     {
       "uid": "84d19120538dd143b9cf5433f2417f48",
