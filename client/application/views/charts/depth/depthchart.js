@@ -173,10 +173,8 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
 
     DepthChart.prototype.initOnMouseOverEvents = function(element) {
         var self = this;
-        this.tooltip = new Tooltip(element);
         element
             .on("mouseover", function() {
-                self.tooltip.mouseover();
                 self.currentPositionXLine
                     .transition()
                     .duration(100)
@@ -191,7 +189,6 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                     .attr('opacity', 1);
             })
             .on("mouseout", function() {
-                // self.tooltip.mouseout();
                 self.circles
                     .transition()
                     .duration(100)
@@ -210,7 +207,6 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                     .attr('opacity', 0);
             })
             .on("mousemove", function() {
-                // console.log('move');
                 if (!self.depth) {
                     return;
                 }
@@ -234,20 +230,11 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
 
                 self.closestPoint = findClosestPrice(mousex - self.margin.left);
 
-                // var left = 0;
-                // var top = 0;
-
                 self.circles
                     .transition()
                     .duration(100)
                     .attr('r', function(d, i) {
-                        if (i == self.closestPoint.index) {
-                            // left = d3.select(this).attr('cx');
-                            // top = d3.select(this).attr('cy');
-                            return 3;
-                        } else {
-                            return 0;
-                        }
+                        return i == self.closestPoint.index ? 3 : 0;
                     });
 
                 var currentCircle = d3.select(self.closestPoint.circle);
@@ -255,7 +242,12 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                 self.currentPositionXLine
                     .attr('x1', currentCircle.attr('cx'))
                     .attr('y1', currentCircle.attr('cy'))
-                    .attr('x2', currentCircle.attr('cx'))
+                    .attr('x2', currentCircle.attr('cx'));
+
+                self.currentPositionYLine
+                    .attr('x1', currentCircle.attr('cx'))
+                    .attr('y1', currentCircle.attr('cy'))
+                    .attr('y2', currentCircle.attr('cy'));
 
                 self.currentPositionLabel
                     .style("text-anchor", "middle")
@@ -263,19 +255,6 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                         return "translate(" + currentCircle.attr('cx') + "," + String(+currentCircle.attr('cy') - 20) + ")";
                     })
                     .text('Amount: ' + FormatUtils.formatValue(currentCircle.data()[0].amount, 0)); // + "<br/>" + 'Price: ' + currentCircle.data()[0].price)
-
-                self.currentPositionYLine
-                    .attr('x1', currentCircle.attr('cx'))
-                    .attr('y1', currentCircle.attr('cy'))
-                    .attr('y2', currentCircle.attr('cy'))
-
-                // var tooltipVariables = {};
-                // var position = {
-                //     left: String(60 + +currentCircle.attr('cx')) + 'px',
-                //     top: currentCircle.attr('cy') + 'px'
-                // };
-                // self.tooltip.render(tooltipVariables, position);
-
             });
 
     };

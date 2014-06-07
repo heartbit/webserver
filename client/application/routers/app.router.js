@@ -35,7 +35,7 @@ define(function(require) {
 				controller: new ControllerView(),
 				keyfacts: new KeyFactsView(),
 				header: new HeaderView(),
-				// main: new MainView(),
+				main: new MainView(),
 				depth: new DepthView(),
 				news: new NewsView()
 			};

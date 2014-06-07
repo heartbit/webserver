@@ -40,23 +40,19 @@ requirejs.config({
         appRouter: 'application/routers/app.router',
 
         // Views
+        selectCurrencyView: 'application/views/price/selectCurrencyView',
         currenciesView: 'application/views/currencies/currenciesView',
         controllerView: 'application/views/controller/controllerView',
         platformsView: 'application/views/platforms/platformsView',
+        shortcutsView: 'application/views/shortcuts/shortcutsView',
         headerView: 'application/views/header/headerView',
         itemsView: 'application/views/items/itemsView',
         pairsView: 'application/views/pairs/pairsView',
-        homeView: 'application/views/home/homeView',
 
         // Embeddable views
-        mainchartcheckcontrollerView: 'application/views/controller/mainchartcheckcontrollerView',
-        indicatorscontrollerView: 'application/views/controller/indicatorscontrollerView',
-        sidecontrollerView: 'application/views/controller/sidecontrollerView',
         volumewidgetView: 'application/views/volumewidget/volumewidgetView',
-        selectCurrencyView: 'application/views/price/selectCurrencyView',
         calculatorView: 'application/views/calculator/calculatorView',
         lastupdateView: 'application/views/lastupdate/lastupdateView',
-        shortcutsView: 'application/views/shortcuts/shortcutsView',
         marketcapView: 'application/views/marketcap/marketcapView',
         weeknewsView: 'application/views/weeknews/weeknewsView',
         keyFactsView: 'application/views/keyfacts/keyFactsView',

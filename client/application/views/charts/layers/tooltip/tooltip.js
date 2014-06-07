@@ -1,22 +1,11 @@
 define('tooltip', ['config', 'text!./tooltip.html', 'd3', 'FormatUtils', 'moment'], function(config, TooltipTpl, d3, formatutils) {
 
 	var Tooltip = function(el, appliedClass) {
-		this.el = el
-			.append('g')
-			.append('text')
+		this.el = d3.select(el)
+			.append('div')
 			.attr('class', 'tooltip ' + appliedClass)
 			.style("visibility", "hidden")
 			.style('display', 'block');
-
-		this.el.on("mouseover", function(){
-			console.log('mouseover')
-		})
-		this.el.on("mouseout", function(){
-			console.log('mouseout')
-		})
-		this.el.on("mousemove", function(){
-			console.log('mousemove')
-		})
 	};
 
 	Tooltip.prototype.mouseover = function() {
@@ -35,7 +24,7 @@ define('tooltip', ['config', 'text!./tooltip.html', 'd3', 'FormatUtils', 'moment
 	Tooltip.prototype.render = function(variables, position) {
 		// var html = this.formatTooltipContent(variables);
 
-		this.el.html("je t'aime <3")
+		this.el.html(variables)
 			.style('left', position.left)
 			.style('top', position.top);
 		return this;
