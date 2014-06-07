@@ -123,13 +123,13 @@
 			this.isRender = false;
 
 			this.views = {
-				header: new HeaderView(),
 				offcanvasmenu: new OffcanvasmenuView(),
-				keyfacts: new KeyFactsView(),
 				controller: new ControllerView(),
+				keyfacts: new KeyFactsView(),
+				header: new HeaderView(),
 				main: new MainView(),
-				news: new NewsView(),
-				depth: new DepthView()
+				depth: new DepthView(),
+				news: new NewsView()
 			};
 
 			Backbone.history.start({

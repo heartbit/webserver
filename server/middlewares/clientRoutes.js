@@ -4,7 +4,7 @@ var _ = require('underscore');
 // Configure basic auth
 var auth = require('http-auth');
 var basic = auth.basic({
-	realm: 'SUPER SECRET STUFF'
+	realm: 'We are currently in alpha but we need beta testers, please contact us to receive an invitation!'
 }, function(username, password, callback) {
 	callback(username == 'test' && password == 'f00lpr00f');
 });

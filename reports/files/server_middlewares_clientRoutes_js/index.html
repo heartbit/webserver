@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">75.09</p>
+      <p class="stat">75.38</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">36</p>
+      <p class="stat">63</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">10.23</p>
+      <p class="stat">18.79</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.31</p>
+      <p class="stat">0.56</p>
     </div>
   </div>
 </div>
@@ -93,6 +93,15 @@
     <textarea id="file-source" class="col-md-12">var fs = require(&#039;fs&#039;);
 var _ = require(&#039;underscore&#039;);
 
+// Configure basic auth
+var auth = require(&#039;http-auth&#039;);
+var basic = auth.basic({
+	realm: &#039;We are currently in alpha but we need beta testers, please contact us to receive an invitation!&#039;
+}, function(username, password, callback) {
+	callback(username == &#039;test&#039; &amp;&amp; password == &#039;f00lpr00f&#039;);
+});
+var authMiddleware = auth.connect(basic);
+
 function ClientRoutes() {};
 
 ClientRoutes.prototype.init = function(params, callback) {
@@ -104,23 +113,41 @@ ClientRoutes.prototype.init = function(params, callback) {
 	this.app = params.app;
 
 	fs.readFile(this.filename, &#039;utf8&#039;, function(err, data) {
+
 		if (err) {
 			return console.log(err);
 		}
-		var routes = JSON.parse(data).routes;
-		_.each(routes, function(file, route) {
+
+		// Unprotected routes
+		var unprotectedRoutes = JSON.parse(data).unprotectedRoutes;
+		console.log(&#039;Unprotected routes:&#039;);
+		_.each(unprotectedRoutes, function(file, route) {
 			if (file.indexOf(&#039;:&#039;) &gt; -1) {
 				var filename = file.replace(&#039;file:&#039;, &#039;&#039;);
-				console.log(&#039;Route &#039; + route + &#039; -&gt; &#039; + filename);
+				console.log(&#039;\tRoute &#039; + route + &#039; -&gt; &#039; + filename);
 				self.app.all(route, function(req, res) {
-					console.log(&#039;route :&#039; + route);
 					res.sendfile(self.clientPath + filename);
 				});
 			}
 		});
+
+		// Protected routes
+		var protectedRoutes = JSON.parse(data).protectedRoutes;
+		console.log(&#039;Protected routes:&#039;);
+		_.each(protectedRoutes, function(file, route) {
+			if (file.indexOf(&#039;:&#039;) &gt; -1) {
+				var filename = file.replace(&#039;file:&#039;, &#039;&#039;);
+				console.log(&#039;\tRoute &#039; + route + &#039; -&gt; &#039; + filename);
+				self.app.all(route, authMiddleware, function(req, res) {
+					res.sendfile(self.clientPath + filename);
+				});
+			}
+		});
+
 		if (callback) {
 			callback();
 		}
+
 	});
 
 };

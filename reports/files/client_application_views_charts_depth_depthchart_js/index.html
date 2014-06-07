@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">69.58</p>
+      <p class="stat">69.42</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">263</p>
+      <p class="stat">264</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">33.13</p>
+      <p class="stat">35.01</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">3.01</p>
+      <p class="stat">3.40</p>
     </div>
   </div>
 </div>
@@ -112,12 +112,12 @@
         this.width = $(el).width() - this.margin.left - this.margin.right,
         this.height = $(el).height() - this.margin.top - this.margin.bottom;
 
-        this.tooltip = new Tooltip(this.el);
         this.chart = d3.select(el).append(&quot;svg&quot;)
             .attr(&quot;class&quot;, &#039;playground&#039;)
             .attr(&quot;width&quot;, this.width + this.margin.left + this.margin.right)
-            .attr(&quot;height&quot;, this.height + this.margin.top + this.margin.bottom)
-            .call(this.initOnMouseOverEvents);
+            .attr(&quot;height&quot;, this.height + this.margin.top + this.margin.bottom);
+
+        this.chart.call(this.initOnMouseOverEvents);
 
         this.mainLayer = this.chart.append(&quot;g&quot;).attr(&quot;class&quot;, &#039;mainLayer&#039;)
             .attr(&quot;transform&quot;, &quot;translate(&quot; + this.margin.left + &quot;,&quot; + this.margin.top + &quot;)&quot;);
@@ -170,6 +170,11 @@
             .attr(&#039;x2&#039;, 0)
             .attr(&#039;stroke&#039;, &#039;gray&#039;)
             .attr(&#039;stroke-width&#039;, 1)
+            .attr(&#039;opacity&#039;, 0);
+
+        this.currentPositionLabel = this.mainLayer
+            .append(&#039;text&#039;)
+            .attr(&#039;class&#039;, &#039;currentPositionLabel&#039;)
             .attr(&#039;opacity&#039;, 0);
 
         this.currentPositionYLine = this.mainLayer
@@ -227,8 +232,8 @@
             .attr(&quot;class&quot;, &quot;y_axis&quot;)
             .call(self.yAxis);
 
-        // this.depthLayer.append(&quot;path&quot;).attr(&quot;d&quot;, self.line(murBids)).attr(&quot;class&quot;, &quot;depthBid&quot;);
-        // this.depthLayer.append(&quot;path&quot;).attr(&quot;d&quot;, self.line(murAsks)).attr(&quot;class&quot;, &quot;depthAsk&quot;);
+        this.depthLayer.append(&quot;path&quot;).attr(&quot;d&quot;, self.line(murBids)).attr(&quot;class&quot;, &quot;depthBid&quot;);
+        this.depthLayer.append(&quot;path&quot;).attr(&quot;d&quot;, self.line(murAsks)).attr(&quot;class&quot;, &quot;depthAsk&quot;);
         this.depthLayer.append(&quot;path&quot;).datum(murAsks).attr(&quot;d&quot;, self.area).attr(&quot;class&quot;, &quot;depthAreaBids&quot;);
         this.depthLayer.append(&quot;path&quot;).datum(murBids).attr(&quot;d&quot;, self.area).attr(&quot;class&quot;, &quot;depthAreaAsks&quot;);
 
@@ -262,33 +267,38 @@
         var self = this;
         element
             .on(&quot;mouseover&quot;, function() {
-                // self.tooltip.mouseover();
                 self.currentPositionXLine
                     .transition()
-                    .duration(400)
+                    .duration(100)
+                    .attr(&#039;opacity&#039;, 1);
+                self.currentPositionLabel
+                    .transition()
+                    .duration(100)
                     .attr(&#039;opacity&#039;, 1);
                 self.currentPositionYLine
                     .transition()
-                    .duration(400)
+                    .duration(100)
                     .attr(&#039;opacity&#039;, 1);
             })
             .on(&quot;mouseout&quot;, function() {
-                // self.tooltip.mouseout();
                 self.circles
                     .transition()
                     .duration(100)
                     .attr(&#039;r&#039;, 0);
                 self.currentPositionXLine
                     .transition()
-                    .duration(400)
+                    .duration(100)
+                    .attr(&#039;opacity&#039;, 0);
+                self.currentPositionLabel
+                    .transition()
+                    .duration(100)
                     .attr(&#039;opacity&#039;, 0);
                 self.currentPositionYLine
                     .transition()
-                    .duration(400)
+                    .duration(100)
                     .attr(&#039;opacity&#039;, 0);
             })
             .on(&quot;mousemove&quot;, function() {
-                // console.log(&#039;move&#039;);
                 if (!self.depth) {
                     return;
                 }
@@ -312,40 +322,31 @@
 
                 self.closestPoint = findClosestPrice(mousex - self.margin.left);
 
-                // var left = 0;
-                // var top = 0;
-
                 self.circles
                     .transition()
                     .duration(100)
                     .attr(&#039;r&#039;, function(d, i) {
-                        if (i == self.closestPoint.index) {
-                            // left = d3.select(this).attr(&#039;cx&#039;);
-                            // top = d3.select(this).attr(&#039;cy&#039;);
-                            return 3;
-                        } else {
-                            return 0;
-                        }
+                        return i == self.closestPoint.index ? 3 : 0;
                     });
 
                 var currentCircle = d3.select(self.closestPoint.circle);
+
                 self.currentPositionXLine
                     .attr(&#039;x1&#039;, currentCircle.attr(&#039;cx&#039;))
                     .attr(&#039;y1&#039;, currentCircle.attr(&#039;cy&#039;))
-                    .attr(&#039;x2&#039;, currentCircle.attr(&#039;cx&#039;))
+                    .attr(&#039;x2&#039;, currentCircle.attr(&#039;cx&#039;));
 
                 self.currentPositionYLine
                     .attr(&#039;x1&#039;, currentCircle.attr(&#039;cx&#039;))
                     .attr(&#039;y1&#039;, currentCircle.attr(&#039;cy&#039;))
-                    .attr(&#039;y2&#039;, currentCircle.attr(&#039;cy&#039;))
+                    .attr(&#039;y2&#039;, currentCircle.attr(&#039;cy&#039;));
 
-                // var tooltipVariables = {};
-                // var position = {
-                //     left: String(50 + mousex) + &#039;px&#039;,
-                //     top: String(50 + mousey) + &#039;px&#039;
-                // };
-                // self.tooltip.render(tooltipVariables, position);
-
+                self.currentPositionLabel
+                    .style(&quot;text-anchor&quot;, &quot;middle&quot;)
+                    .attr(&quot;transform&quot;, function(d) {
+                        return &quot;translate(&quot; + currentCircle.attr(&#039;cx&#039;) + &quot;,&quot; + String(+currentCircle.attr(&#039;cy&#039;) - 20) + &quot;)&quot;;
+                    })
+                    .text(&#039;Amount: &#039; + FormatUtils.formatValue(currentCircle.data()[0].amount, 0)); // + &quot;&lt;br/&gt;&quot; + &#039;Price: &#039; + currentCircle.data()[0].price)
             });
 
     };
