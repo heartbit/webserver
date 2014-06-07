@@ -6,7 +6,7 @@ var sendEmail = function(sender, recipients, subject, text, cb) {
 		if (err) console.log('Oh noes: ' + err);
 		else console.log('Success');
 		if (cb) {
-			cb();
+			cb(err);
 		}
 	});
 };
@@ -26,8 +26,8 @@ exports.sendUserFeedback = function(req, res, next) {
 		],
 		"[HOME FORMULAIRE]",
 		msg,
-		function() {
-			res.send(200);
+		function(error) {
+			error ? res.send(500) : res.send(200);
 		});
 
 };

@@ -1,6 +1,6 @@
 $(document).foundation();
 
-$('#js-sendMessage').on('click', function() {
+$('#js-sendMessage').on('click', function(e) {
 
 	var email = $('#email').val();
 	var message = $('#message').val();
@@ -18,11 +18,13 @@ $('#js-sendMessage').on('click', function() {
 		type: 'POST',
 		url: '/services/feedback',
 		success: function(response) {
-			console.log("Thank you");
+			$('#js-sendMessage').html("Thank you! We come back to you soon.");
 		},
 		error: function(error) {
-			console.log(error);
+			$('#js-sendMessage').html('An error occured :/');
 		}
 	});
+
+	e.preventDefault();
 
 });
