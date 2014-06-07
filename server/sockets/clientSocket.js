@@ -75,14 +75,14 @@ ClientSocket.prototype.initDataNamespace = function() {
 						if (pair.item + sep + pair.currency == dataroom) {
 							_.each(config.measures, function(measure) {
 								var cacheKey = platform.name + sep + pair.item + sep + pair.currency + sep + measure.key;
-								console.log('Cachekey ', cacheKey);
+								// console.log('Cachekey ', cacheKey);
 								CacheManager.get(cacheKey, function(data) {
 									var payload = {
 										key: cacheKey,
 										data: data,
 										dataroom: dataroom
 									};
-									console.log('Send cache : ', cacheKey);
+									// console.log('Send cache : ', cacheKey);
 									socket.emit(cacheKey, payload)
 								});
 							});

@@ -33,7 +33,8 @@
     "slang": "*",
     "mocha": "*",
     "amdefine": "*",
-    "mailgun": "*"
+    "mailgun": "*",
+    "http-auth": "*"
   },
   "devDependencies": {
     "matchdep": "*",
