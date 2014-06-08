@@ -30,7 +30,8 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
             .tickFormat(function(d) {
                 return FormatUtils.formatValueShort(d, 3);
             })
-            .tickValues(volumeTickValues)
+            .ticks(3)
+            // .tickValues(volumeTickValues)
             .tickSize(-this.chart.width);
 
         this.volumeYAxisInstance = this.volumeLayer.append("g")

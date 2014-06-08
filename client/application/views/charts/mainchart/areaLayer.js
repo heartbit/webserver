@@ -39,7 +39,8 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
         this.candleYAxis = d3.svg.axis()
             .scale(this.candleYScale)
             .orient("right")
-            .tickValues(candleTickValues)
+            .ticks(6)
+            // .tickValues(candleTickValues)
             .tickFormat(function(d) {
                 return FormatUtils.formatValueShort(d, 3);
             })
