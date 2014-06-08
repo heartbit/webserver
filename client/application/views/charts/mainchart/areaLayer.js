@@ -1,4 +1,4 @@
-define('areaLayer', ['d3', 'tooltip', 'FormatUtils', 'moment'], function(d3, Tooltip, FormatUtils) {
+define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
 
     var defaultDuration = 200;
 
@@ -9,8 +9,6 @@ define('areaLayer', ['d3', 'tooltip', 'FormatUtils', 'moment'], function(d3, Too
         this.candleLayer = this.chart.mainLayer
             .append("g")
             .attr("class", "candle_layer");
-
-        this.tooltip = new Tooltip(this.chart.el, 'areaLayerTooltip');
 
         // Min, Max and Last value
         var candleTickValues = function(d, i, j) {
@@ -86,6 +84,31 @@ define('areaLayer', ['d3', 'tooltip', 'FormatUtils', 'moment'], function(d3, Too
         this.candlesCirclesLayer = this.candleLayer
             .append("g")
             .attr('class', "candle_circles_layer");
+
+        this.tooltipLayer = this.candleLayer
+            .append("g")
+            .attr("class", "tooltipLayer")
+            .attr('opacity', 0);
+
+        this.currentPositionXLine = this.tooltipLayer
+            .append("line")
+            .attr('class', 'currentPositionXLine')
+            .attr('y1', 10)
+            .attr('y2', 2 * this.chart.height / 3)
+            .attr('x1', 0)
+            .attr('x2', 0)
+            .attr('stroke', 'gray')
+            .attr('stroke-width', 1);
+
+        this.currentPositionLabelTime = this.tooltipLayer
+            .append('text')
+            .attr("y", 20)
+            .attr('class', 'currentPositionLabelAmount');
+
+        this.currentPositionLabelPrice = this.tooltipLayer
+            .append('text')
+            .attr("y", 20)
+            .attr('class', 'currentPositionLabelPrice');
     };
 
     AreaLayer.prototype.draw = function(params) {
@@ -153,7 +176,7 @@ define('areaLayer', ['d3', 'tooltip', 'FormatUtils', 'moment'], function(d3, Too
             .attr('d', self.candlesLine(self.candles))
     };
 
-    AreaLayer.prototype.resize = function(){
+    AreaLayer.prototype.resize = function() {
         this.candleYScale.range([3 * this.chart.height / 4, 0]);
         this.candleYAxisInstance
             .transition()
@@ -193,40 +216,60 @@ define('areaLayer', ['d3', 'tooltip', 'FormatUtils', 'moment'], function(d3, Too
 
         this.closestPoint = finclosestCandle(date);
 
-        var left = 0;
-        var top = 0;
+        if (this.closestPoint && this.closestPoint.candle && this.closestPoint.candle.startDate) {
+            var currentX = 0;
+            var currentY = 0;
 
-        this.candleCircles
-            .transition()
-            .duration(100)
-            .attr('r', function(d, i) {
-                if (i == self.closestPoint.index) {
-                    left = d3.select(this).attr('cx');
-                    top = d3.select(this).attr('cy');
-                    return 3;
-                } else {
-                    return 0;
-                }
-            });
+            this.candleCircles
+                .attr('r', function(d, i) {
+                    if (i == self.closestPoint.index) {
+                        currentX = d3.select(this).attr('cx');
+                        currentY = d3.select(this).attr('cy');
+                        return 3;
+                    } else {
+                        return 0;
+                    }
+                });
 
-        var position = {
-            left: String(Math.round(left + this.chart.margin.left + 40)) + "px",
-            top: String(Math.round(top)) + "px"
-        };
+            this.currentPositionXLine
+                .attr('x1', currentX)
+                .attr('x2', currentX);
 
-        this.tooltip.render(this.closestPoint.candle.startDate, position);
+            this.currentPositionLabelTime
+                .style("text-anchor", function() {
+                    return currentX > self.chart.width / 2 ? "end" : "start";
+                })
+                .attr("x", currentX)
+                .text(" " + FormatUtils.formatDate(this.closestPoint.candle.startDate, 'lll'));
+
+            self.currentPositionLabelPrice
+                .style("text-anchor", function() {
+                    return currentX > self.chart.width / 2 ? "end" : "start";
+                })
+                .attr("x", function() {
+                    return currentX > self.chart.width / 2 ? currentX - 10 : currentX + 30;
+                })
+                .attr("y", currentY + 50)
+                .text("  " + FormatUtils.formatValue(this.closestPoint.candle.close, 2));
+        }
     };
 
     AreaLayer.prototype.mouseout = function() {
-        this.tooltip.mouseout();
         this.candleCircles
             .transition()
             .duration(100)
             .attr('r', 0);
+        this.tooltipLayer
+            .transition()
+            .duration(100)
+            .attr('opacity', 0);
     };
 
     AreaLayer.prototype.mouseover = function() {
-        this.tooltip.mouseover();
+        this.tooltipLayer
+            .transition()
+            .duration(100)
+            .attr('opacity', 1);
     };
 
     AreaLayer.prototype.updateRange = function(range) {

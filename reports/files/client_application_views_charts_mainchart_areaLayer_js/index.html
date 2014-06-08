@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">72.84</p>
+      <p class="stat">72.94</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">239</p>
+      <p class="stat">282</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">41.88</p>
+      <p class="stat">46.56</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">2.55</p>
+      <p class="stat">3.13</p>
     </div>
   </div>
 </div>
@@ -90,7 +90,7 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;areaLayer&#039;, [&#039;d3&#039;, &#039;tooltip&#039;, &#039;FormatUtils&#039;, &#039;moment&#039;], function(d3, Tooltip, FormatUtils) {
+    <textarea id="file-source" class="col-md-12">define(&#039;areaLayer&#039;, [&#039;d3&#039;, &#039;FormatUtils&#039;, &#039;moment&#039;], function(d3, FormatUtils) {
 
     var defaultDuration = 200;
 
@@ -101,8 +101,6 @@
         this.candleLayer = this.chart.mainLayer
             .append(&quot;g&quot;)
             .attr(&quot;class&quot;, &quot;candle_layer&quot;);
-
-        this.tooltip = new Tooltip(this.chart.el, &#039;areaLayerTooltip&#039;);
 
         // Min, Max and Last value
         var candleTickValues = function(d, i, j) {
@@ -178,6 +176,31 @@
         this.candlesCirclesLayer = this.candleLayer
             .append(&quot;g&quot;)
             .attr(&#039;class&#039;, &quot;candle_circles_layer&quot;);
+
+        this.tooltipLayer = this.candleLayer
+            .append(&quot;g&quot;)
+            .attr(&quot;class&quot;, &quot;tooltipLayer&quot;)
+            .attr(&#039;opacity&#039;, 0);
+
+        this.currentPositionXLine = this.tooltipLayer
+            .append(&quot;line&quot;)
+            .attr(&#039;class&#039;, &#039;currentPositionXLine&#039;)
+            .attr(&#039;y1&#039;, 10)
+            .attr(&#039;y2&#039;, 2 * this.chart.height / 3)
+            .attr(&#039;x1&#039;, 0)
+            .attr(&#039;x2&#039;, 0)
+            .attr(&#039;stroke&#039;, &#039;gray&#039;)
+            .attr(&#039;stroke-width&#039;, 1);
+
+        this.currentPositionLabelTime = this.tooltipLayer
+            .append(&#039;text&#039;)
+            .attr(&quot;y&quot;, 20)
+            .attr(&#039;class&#039;, &#039;currentPositionLabelAmount&#039;);
+
+        this.currentPositionLabelPrice = this.tooltipLayer
+            .append(&#039;text&#039;)
+            .attr(&quot;y&quot;, 20)
+            .attr(&#039;class&#039;, &#039;currentPositionLabelPrice&#039;);
     };
 
     AreaLayer.prototype.draw = function(params) {
@@ -245,7 +268,7 @@
             .attr(&#039;d&#039;, self.candlesLine(self.candles))
     };
 
-    AreaLayer.prototype.resize = function(){
+    AreaLayer.prototype.resize = function() {
         this.candleYScale.range([3 * this.chart.height / 4, 0]);
         this.candleYAxisInstance
             .transition()
@@ -285,40 +308,60 @@
 
         this.closestPoint = finclosestCandle(date);
 
-        var left = 0;
-        var top = 0;
+        if (this.closestPoint &amp;&amp; this.closestPoint.candle &amp;&amp; this.closestPoint.candle.startDate) {
+            var currentX = 0;
+            var currentY = 0;
 
-        this.candleCircles
-            .transition()
-            .duration(100)
-            .attr(&#039;r&#039;, function(d, i) {
-                if (i == self.closestPoint.index) {
-                    left = d3.select(this).attr(&#039;cx&#039;);
-                    top = d3.select(this).attr(&#039;cy&#039;);
-                    return 3;
-                } else {
-                    return 0;
-                }
-            });
+            this.candleCircles
+                .attr(&#039;r&#039;, function(d, i) {
+                    if (i == self.closestPoint.index) {
+                        currentX = d3.select(this).attr(&#039;cx&#039;);
+                        currentY = d3.select(this).attr(&#039;cy&#039;);
+                        return 3;
+                    } else {
+                        return 0;
+                    }
+                });
 
-        var position = {
-            left: String(Math.round(left + this.chart.margin.left + 40)) + &quot;px&quot;,
-            top: String(Math.round(top)) + &quot;px&quot;
-        };
+            this.currentPositionXLine
+                .attr(&#039;x1&#039;, currentX)
+                .attr(&#039;x2&#039;, currentX);
 
-        this.tooltip.render(this.closestPoint.candle.startDate, position);
+            this.currentPositionLabelTime
+                .style(&quot;text-anchor&quot;, function() {
+                    return currentX &gt; self.chart.width / 2 ? &quot;end&quot; : &quot;start&quot;;
+                })
+                .attr(&quot;x&quot;, currentX)
+                .text(&quot; &quot; + FormatUtils.formatDate(this.closestPoint.candle.startDate, &#039;lll&#039;));
+
+            self.currentPositionLabelPrice
+                .style(&quot;text-anchor&quot;, function() {
+                    return currentX &gt; self.chart.width / 2 ? &quot;end&quot; : &quot;start&quot;;
+                })
+                .attr(&quot;x&quot;, function() {
+                    return currentX &gt; self.chart.width / 2 ? currentX - 10 : currentX + 30;
+                })
+                .attr(&quot;y&quot;, currentY + 50)
+                .text(&quot;  &quot; + FormatUtils.formatValue(this.closestPoint.candle.close, 2));
+        }
     };
 
     AreaLayer.prototype.mouseout = function() {
-        this.tooltip.mouseout();
         this.candleCircles
             .transition()
             .duration(100)
             .attr(&#039;r&#039;, 0);
+        this.tooltipLayer
+            .transition()
+            .duration(100)
+            .attr(&#039;opacity&#039;, 0);
     };
 
     AreaLayer.prototype.mouseover = function() {
-        this.tooltip.mouseover();
+        this.tooltipLayer
+            .transition()
+            .duration(100)
+            .attr(&#039;opacity&#039;, 1);
     };
 
     AreaLayer.prototype.updateRange = function(range) {

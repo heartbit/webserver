@@ -203,11 +203,11 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
 
             this.volumeLabel
                 .transition()
-                .duration(100)
+                .duration(50)
                 .attr('opacity', 1)
                 .style("text-anchor", "middle")
-                .attr('x', +left)
-                .attr('y', +top - 20)
+                .attr('x', +left + 5)
+                .attr('y', +top - 15)
                 .text(FormatUtils.formatValue(this.closestPoint.candle.amount, 0));
         }
     };

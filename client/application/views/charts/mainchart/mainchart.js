@@ -73,32 +73,6 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         this.timeAxisInstance = this.mainLayer.append("g")
             .attr("class", "x_time_axis")
             .attr("transform", "translate(0," + self.height + ")");
-
-        this.tooltipLayer = this.mainLayer.append("g").attr("class", "tooltipLayer")
-            .attr('opacity', 0);
-
-        this.currentPositionXLine = this.tooltipLayer
-            .append("line")
-            .attr('class', 'currentPositionXLine')
-            .attr('y1', 0)
-            .attr('y2', this.height)
-            .attr('x1', 0)
-            .attr('x2', 0)
-            .attr('stroke', 'gray')
-            .attr('stroke-width', 1);
-
-        this.currentPositionLabelAmount = this.tooltipLayer
-            .append('text')
-            .attr('class', 'currentPositionLabelAmount');
-
-        var offset = 25;
-        this.currentPositionLabelPrice = this.tooltipLayer
-            .append('text')
-            .attr("transform", function() {
-                return "translate(0," + offset + ")";
-            })
-            .attr('class', 'currentPositionLabelPrice');
-
     };
 
     /* Update methods */
@@ -193,19 +167,11 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
             .on("mouseover", function() {
                 self.layers.areaLayer.mouseover();
                 self.layers.volumeLayer.mouseover();
-                self.tooltipLayer
-                    .transition()
-                    .duration(400)
-                    .attr('opacity', 1);
                 return false;
             })
             .on("mouseout", function() {
                 self.layers.areaLayer.mouseout();
                 self.layers.volumeLayer.mouseout();
-                self.tooltipLayer
-                    .transition()
-                    .duration(400)
-                    .attr('opacity', 0);
                 return false;
             })
             .on("mousemove", function() {
@@ -223,9 +189,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
                     self.layers.areaLayer.updateTooltip(closestDate);
                     self.layers.volumeLayer.updateTooltip(closestDate);
                 }
-                self.currentPositionXLine
-                    .attr('x1', mousex - self.margin.left)
-                    .attr('x2', mousex - self.margin.left);
+                
                     
                 return false;
             });
