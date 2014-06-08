@@ -197,19 +197,19 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
                 //     .attr('opacity', 1);
                 return false;
             })
-            // .on("mouseout", function() {
-            //     self.layers.areaLayer.mouseout();
-            //     self.layers.volumeLayer.mouseout();
-            //     // self.currentPositionXLine
-            //     //     .transition()
-            //     //     .duration(400)
-            //     //     .attr('opacity', 0);
-            //     // self.currentPositionYLine
-            //     //     .transition()
-            //     //     .duration(400)
-            //     //     .attr('opacity', 0);
-            //     return false;
-            // })
+            .on("mouseout", function() {
+                self.layers.areaLayer.mouseout();
+                self.layers.volumeLayer.mouseout();
+                // self.currentPositionXLine
+                //     .transition()
+                //     .duration(400)
+                //     .attr('opacity', 0);
+                // self.currentPositionYLine
+                //     .transition()
+                //     .duration(400)
+                //     .attr('opacity', 0);
+                return false;
+            })
             .on("mousemove", function() {
                 if (!self.models) {
                     return;

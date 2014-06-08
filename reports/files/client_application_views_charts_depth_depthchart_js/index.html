@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">69.42</p>
+      <p class="stat">70.77</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">264</p>
+      <p class="stat">267</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">35.01</p>
+      <p class="stat">37.80</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">3.40</p>
+      <p class="stat">3.51</p>
     </div>
   </div>
 </div>
@@ -153,40 +153,48 @@
 
         this.line = d3.svg.line()
             .x(function(d) {
-                return this.xScale(d.price);
+                return self.xScale(d.price);
             })
             .y(function(d) {
-                return this.yScale(d.amount);
+                return self.yScale(d.amount);
             });
 
-        this.depthLayer = self.mainLayer.append(&quot;g&quot;).attr(&quot;class&quot;, &quot;depthLayer&quot;);
+        this.depthLayer = this.mainLayer.append(&quot;g&quot;).attr(&quot;class&quot;, &quot;depthLayer&quot;);
 
-        this.currentPositionXLine = this.mainLayer
-            .append(&quot;svg:line&quot;)
+        this.tooltipLayer = this.mainLayer.append(&quot;g&quot;).attr(&quot;class&quot;, &quot;tooltipLayer&quot;)
+            .attr(&#039;opacity&#039;, 0);
+
+        this.currentPositionXLine = this.tooltipLayer
+            .append(&quot;line&quot;)
             .attr(&#039;class&#039;, &#039;currentPositionXLine&#039;)
-            .attr(&#039;y1&#039;, this.height)
+            .attr(&#039;y1&#039;, 0)
             .attr(&#039;y2&#039;, this.height)
             .attr(&#039;x1&#039;, 0)
             .attr(&#039;x2&#039;, 0)
             .attr(&#039;stroke&#039;, &#039;gray&#039;)
-            .attr(&#039;stroke-width&#039;, 1)
-            .attr(&#039;opacity&#039;, 0);
+            .attr(&#039;stroke-width&#039;, 1);
 
-        this.currentPositionLabel = this.mainLayer
+        this.currentPositionLabelAmount = this.tooltipLayer
             .append(&#039;text&#039;)
-            .attr(&#039;class&#039;, &#039;currentPositionLabel&#039;)
-            .attr(&#039;opacity&#039;, 0);
+            .attr(&#039;class&#039;, &#039;currentPositionLabelAmount&#039;);
 
-        this.currentPositionYLine = this.mainLayer
-            .append(&quot;svg:line&quot;)
+        var offset = 25;
+        this.currentPositionLabelPrice = this.tooltipLayer
+            .append(&#039;text&#039;)
+            .attr(&quot;transform&quot;, function() {
+                return &quot;translate(0,&quot; + offset + &quot;)&quot;;
+            })
+            .attr(&#039;class&#039;, &#039;currentPositionLabelPrice&#039;);
+
+        this.currentPositionYLine = this.tooltipLayer
+            .append(&quot;line&quot;)
             .attr(&#039;class&#039;, &#039;currentPositionYLine&#039;)
             .attr(&#039;y1&#039;, 0)
             .attr(&#039;y2&#039;, 0)
             .attr(&#039;x1&#039;, 0)
             .attr(&#039;x2&#039;, 0)
             .attr(&#039;stroke&#039;, &#039;gray&#039;)
-            .attr(&#039;stroke-width&#039;, 1)
-            .attr(&#039;opacity&#039;, 0);
+            .attr(&#039;stroke-width&#039;, 1);
     };
 
     DepthChart.prototype.clearGraph = function() {
@@ -267,15 +275,7 @@
         var self = this;
         element
             .on(&quot;mouseover&quot;, function() {
-                self.currentPositionXLine
-                    .transition()
-                    .duration(100)
-                    .attr(&#039;opacity&#039;, 1);
-                self.currentPositionLabel
-                    .transition()
-                    .duration(100)
-                    .attr(&#039;opacity&#039;, 1);
-                self.currentPositionYLine
+                self.tooltipLayer
                     .transition()
                     .duration(100)
                     .attr(&#039;opacity&#039;, 1);
@@ -285,15 +285,7 @@
                     .transition()
                     .duration(100)
                     .attr(&#039;r&#039;, 0);
-                self.currentPositionXLine
-                    .transition()
-                    .duration(100)
-                    .attr(&#039;opacity&#039;, 0);
-                self.currentPositionLabel
-                    .transition()
-                    .duration(100)
-                    .attr(&#039;opacity&#039;, 0);
-                self.currentPositionYLine
+                self.tooltipLayer
                     .transition()
                     .duration(100)
                     .attr(&#039;opacity&#039;, 0);
@@ -333,7 +325,6 @@
 
                 self.currentPositionXLine
                     .attr(&#039;x1&#039;, currentCircle.attr(&#039;cx&#039;))
-                    .attr(&#039;y1&#039;, currentCircle.attr(&#039;cy&#039;))
                     .attr(&#039;x2&#039;, currentCircle.attr(&#039;cx&#039;));
 
                 self.currentPositionYLine
@@ -341,12 +332,24 @@
                     .attr(&#039;y1&#039;, currentCircle.attr(&#039;cy&#039;))
                     .attr(&#039;y2&#039;, currentCircle.attr(&#039;cy&#039;));
 
-                self.currentPositionLabel
-                    .style(&quot;text-anchor&quot;, &quot;middle&quot;)
+                self.currentPositionLabelAmount
+                    .style(&quot;text-anchor&quot;, function() {
+                        return currentCircle.attr(&#039;cx&#039;) &gt; self.width / 2 ? &quot;end&quot; : &quot;start&quot;;
+                    })
                     .attr(&quot;transform&quot;, function(d) {
-                        return &quot;translate(&quot; + currentCircle.attr(&#039;cx&#039;) + &quot;,&quot; + String(+currentCircle.attr(&#039;cy&#039;) - 20) + &quot;)&quot;;
+                        return &quot;translate(&quot; + currentCircle.attr(&#039;cx&#039;) + &quot;,0)&quot;;
                     })
                     .text(&#039;Amount: &#039; + FormatUtils.formatValue(currentCircle.data()[0].amount, 0)); // + &quot;&lt;br/&gt;&quot; + &#039;Price: &#039; + currentCircle.data()[0].price)
+
+                self.currentPositionLabelPrice
+                    .style(&quot;text-anchor&quot;, function() {
+                        return currentCircle.attr(&#039;cx&#039;) &gt; self.width / 2 ? &quot;end&quot; : &quot;start&quot;;
+                    })
+                    .attr(&quot;transform&quot;, function(d) {
+                        return &quot;translate(&quot; + currentCircle.attr(&#039;cx&#039;) + &quot;,25)&quot;;
+                    })
+                    .text(&#039;Price: &#039; + FormatUtils.formatValue(currentCircle.data()[0].price, 0));
+
             });
 
     };

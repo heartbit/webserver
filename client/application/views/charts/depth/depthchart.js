@@ -61,40 +61,48 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
 
         this.line = d3.svg.line()
             .x(function(d) {
-                return this.xScale(d.price);
+                return self.xScale(d.price);
             })
             .y(function(d) {
-                return this.yScale(d.amount);
+                return self.yScale(d.amount);
             });
 
-        this.depthLayer = self.mainLayer.append("g").attr("class", "depthLayer");
+        this.depthLayer = this.mainLayer.append("g").attr("class", "depthLayer");
 
-        this.currentPositionXLine = this.mainLayer
-            .append("svg:line")
+        this.tooltipLayer = this.mainLayer.append("g").attr("class", "tooltipLayer")
+            .attr('opacity', 0);
+
+        this.currentPositionXLine = this.tooltipLayer
+            .append("line")
             .attr('class', 'currentPositionXLine')
-            .attr('y1', this.height)
+            .attr('y1', 0)
             .attr('y2', this.height)
             .attr('x1', 0)
             .attr('x2', 0)
             .attr('stroke', 'gray')
-            .attr('stroke-width', 1)
-            .attr('opacity', 0);
+            .attr('stroke-width', 1);
 
-        this.currentPositionLabel = this.mainLayer
+        this.currentPositionLabelAmount = this.tooltipLayer
             .append('text')
-            .attr('class', 'currentPositionLabel')
-            .attr('opacity', 0);
+            .attr('class', 'currentPositionLabelAmount');
 
-        this.currentPositionYLine = this.mainLayer
-            .append("svg:line")
+        var offset = 25;
+        this.currentPositionLabelPrice = this.tooltipLayer
+            .append('text')
+            .attr("transform", function() {
+                return "translate(0," + offset + ")";
+            })
+            .attr('class', 'currentPositionLabelPrice');
+
+        this.currentPositionYLine = this.tooltipLayer
+            .append("line")
             .attr('class', 'currentPositionYLine')
             .attr('y1', 0)
             .attr('y2', 0)
             .attr('x1', 0)
             .attr('x2', 0)
             .attr('stroke', 'gray')
-            .attr('stroke-width', 1)
-            .attr('opacity', 0);
+            .attr('stroke-width', 1);
     };
 
     DepthChart.prototype.clearGraph = function() {
@@ -175,15 +183,7 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
         var self = this;
         element
             .on("mouseover", function() {
-                self.currentPositionXLine
-                    .transition()
-                    .duration(100)
-                    .attr('opacity', 1);
-                self.currentPositionLabel
-                    .transition()
-                    .duration(100)
-                    .attr('opacity', 1);
-                self.currentPositionYLine
+                self.tooltipLayer
                     .transition()
                     .duration(100)
                     .attr('opacity', 1);
@@ -193,15 +193,7 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                     .transition()
                     .duration(100)
                     .attr('r', 0);
-                self.currentPositionXLine
-                    .transition()
-                    .duration(100)
-                    .attr('opacity', 0);
-                self.currentPositionLabel
-                    .transition()
-                    .duration(100)
-                    .attr('opacity', 0);
-                self.currentPositionYLine
+                self.tooltipLayer
                     .transition()
                     .duration(100)
                     .attr('opacity', 0);
@@ -241,7 +233,6 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
 
                 self.currentPositionXLine
                     .attr('x1', currentCircle.attr('cx'))
-                    .attr('y1', currentCircle.attr('cy'))
                     .attr('x2', currentCircle.attr('cx'));
 
                 self.currentPositionYLine
@@ -249,12 +240,24 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                     .attr('y1', currentCircle.attr('cy'))
                     .attr('y2', currentCircle.attr('cy'));
 
-                self.currentPositionLabel
-                    .style("text-anchor", "middle")
+                self.currentPositionLabelAmount
+                    .style("text-anchor", function() {
+                        return currentCircle.attr('cx') > self.width / 2 ? "end" : "start";
+                    })
                     .attr("transform", function(d) {
-                        return "translate(" + currentCircle.attr('cx') + "," + String(+currentCircle.attr('cy') - 20) + ")";
+                        return "translate(" + currentCircle.attr('cx') + ",0)";
                     })
                     .text('Amount: ' + FormatUtils.formatValue(currentCircle.data()[0].amount, 0)); // + "<br/>" + 'Price: ' + currentCircle.data()[0].price)
+
+                self.currentPositionLabelPrice
+                    .style("text-anchor", function() {
+                        return currentCircle.attr('cx') > self.width / 2 ? "end" : "start";
+                    })
+                    .attr("transform", function(d) {
+                        return "translate(" + currentCircle.attr('cx') + ",25)";
+                    })
+                    .text('Price: ' + FormatUtils.formatValue(currentCircle.data()[0].price, 0));
+
             });
 
     };

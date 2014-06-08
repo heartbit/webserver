@@ -124,7 +124,7 @@ ClientRoutes.prototype.init = function(params, callback) {
 		_.each(unprotectedRoutes, function(file, route) {
 			if (file.indexOf(&#039;:&#039;) &gt; -1) {
 				var filename = file.replace(&#039;file:&#039;, &#039;&#039;);
-				console.log(&#039;\tRoute &#039; + route + &#039; -&gt; &#039; + filename);
+				console.log(&#039;\t&#039; + route + &#039; -&gt; &#039; + filename);
 				self.app.all(route, function(req, res) {
 					res.sendfile(self.clientPath + filename);
 				});
@@ -137,7 +137,7 @@ ClientRoutes.prototype.init = function(params, callback) {
 		_.each(protectedRoutes, function(file, route) {
 			if (file.indexOf(&#039;:&#039;) &gt; -1) {
 				var filename = file.replace(&#039;file:&#039;, &#039;&#039;);
-				console.log(&#039;\tRoute &#039; + route + &#039; -&gt; &#039; + filename);
+				console.log(&#039;\t&#039; + route + &#039; -&gt; &#039; + filename);
 				self.app.all(route, authMiddleware, function(req, res) {
 					res.sendfile(self.clientPath + filename);
 				});
