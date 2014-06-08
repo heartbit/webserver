@@ -38,6 +38,12 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
 
         this.volumeBarChartLayer = this.volumeLayer.append('g')
             .attr('class', 'volume_barchart_layer');
+
+        this.volumeLabel = this.volumeLayer
+            .append('text')
+            .attr('opacity', 0)
+            .attr('class', 'volume_label');
+
     };
 
     VolumeLayer.prototype.draw = function(params) {
@@ -179,25 +185,31 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
 
         this.closestPoint = finclosestVolume(date);
 
-        var left = 0;
-        var top = 0;
-        this.volumeBarChart
-            .transition()
-            .duration(100)
-            .attr('opacity', function(d, i) {
-                if (i == self.closestPoint.index) {
-                    left = d3.select(this).attr('x') + 5;
-                    top = d3.select(this).attr('y') + 5;
-                    return 1;
-                } else {
-                    return 0.5;
-                }
-            });
+        if (this.closestPoint) {
+            var left = 0;
+            var top = 0;
+            this.volumeBarChart
+                .transition()
+                .duration(100)
+                .attr('opacity', function(d, i) {
+                    if (i == self.closestPoint.index) {
+                        left = d3.select(this).attr('x');
+                        top = d3.select(this).attr('y');
+                        return 1;
+                    } else {
+                        return 0.5;
+                    }
+                });
 
-        var position = {
-            left: String(Math.round(left + this.chart.margin.left + 40)) + "px",
-            top: String(Math.round(top)) + "px"
-        };
+            this.volumeLabel
+                .transition()
+                .duration(100)
+                .attr('opacity', 1)
+                .style("text-anchor", "middle")
+                .attr('x', +left)
+                .attr('y', +top - 20)
+                .text(FormatUtils.formatValue(this.closestPoint.candle.amount, 0));
+        }
     };
 
     VolumeLayer.prototype.mouseout = function() {
@@ -205,6 +217,11 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
             .transition()
             .duration(100)
             .attr('opacity', 0.5);
+
+        this.volumeLabel
+            .transition()
+            .duration(100)
+            .attr('opacity', 0);
     };
 
     VolumeLayer.prototype.mouseover = function() {};

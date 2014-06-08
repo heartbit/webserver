@@ -74,25 +74,31 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
             .attr("class", "x_time_axis")
             .attr("transform", "translate(0," + self.height + ")");
 
-        this.currentPositionXLine = this.mainLayer.append("svg:line")
-            .attr('class', 'currentPositionXLine')
-            .attr('y1', this.height)
-            .attr('y2', this.height)
-            .attr('x1', 0)
-            .attr('x2', 0)
-            .attr('stroke', 'gray')
-            .attr('stroke-width', 1)
-            .attr('opacity', 0);
+        // this.tooltipLayer = this.mainLayer.append("g").attr("class", "tooltipLayer")
+        //     .attr('opacity', 0);
 
-        this.currentPositionYLine = this.mainLayer.append("svg:line")
-            .attr('class', 'currentPositionXLine')
-            .attr('y1', 0)
-            .attr('y2', 0)
-            .attr('x1', 0)
-            .attr('x2', this.width)
-            .attr('stroke', 'gray')
-            .attr('stroke-width', 1)
-            .attr('opacity', 0);
+        // this.currentPositionXLine = this.tooltipLayer
+        //     .append("line")
+        //     .attr('class', 'currentPositionXLine')
+        //     .attr('y1', 0)
+        //     .attr('y2', this.height)
+        //     .attr('x1', 0)
+        //     .attr('x2', 0)
+        //     .attr('stroke', 'gray')
+        //     .attr('stroke-width', 1);
+
+        // this.currentPositionLabelAmount = this.tooltipLayer
+        //     .append('text')
+        //     .attr('class', 'currentPositionLabelAmount');
+
+        // var offset = 25;
+        // this.currentPositionLabelPrice = this.tooltipLayer
+        //     .append('text')
+        //     .attr("transform", function() {
+        //         return "translate(0," + offset + ")";
+        //     })
+        //     .attr('class', 'currentPositionLabelPrice');
+
     };
 
     /* Update methods */
