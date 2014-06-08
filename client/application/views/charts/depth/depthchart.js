@@ -233,6 +233,7 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
 
                 self.currentPositionXLine
                     .attr('x1', currentCircle.attr('cx'))
+                    .attr('y1', currentCircle.attr('cy'))
                     .attr('x2', currentCircle.attr('cx'));
 
                 self.currentPositionYLine
