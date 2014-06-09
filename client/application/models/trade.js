@@ -13,7 +13,7 @@ define('trade', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
 
         socketSync: function(params) {
             var self = this;
-            this.params = params || this.params || {};
+            this.params = params ||  this.params ||  {};
             var updateCallback = function(payload) {
                 console.log('Trade update: ', payload);
                 var objTrade = payload.data;
@@ -34,7 +34,7 @@ define('trade', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
         },
 
         initialize: function(params) {
-            this.params=params;
+            this.params = params;
         },
 
         update: function(trade) {
@@ -46,9 +46,10 @@ define('trade', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
                 this.set('priceCurrency', trade.priceCurrency);
                 this.set('tid', trade.tid);
                 this.trigger('update');
-            } else {
-                this.set('last', +trade.price);
             }
+            //  else {
+            //     this.set('last', +trade.price);
+            // }
             // var lastUpdate = {
             //     date: new Date(),
             //     model: this.toString()

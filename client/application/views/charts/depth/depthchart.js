@@ -223,8 +223,8 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                 self.closestPoint = findClosestPrice(mousex - self.margin.left);
 
                 self.circles
-                    .transition()
-                    .duration(100)
+                    // .transition()
+                    // .duration(100)
                     .attr('r', function(d, i) {
                         return i == self.closestPoint.index ? 3 : 0;
                     });

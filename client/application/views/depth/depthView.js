@@ -36,6 +36,10 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
 
             this.computedDepth = this.depthDataHelper.computeDepth(this.depth);
 
+            if (!this.computedDepth) {
+                return false;
+            }
+
             this.depthChart.draw(this.computedDepth);
 
             var updateParams = {
@@ -61,6 +65,7 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
             };
 
             this.minAskNumber.render(updateParams);
+
         }
 
     });

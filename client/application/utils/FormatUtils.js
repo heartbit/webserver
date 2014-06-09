@@ -44,10 +44,10 @@ define('FormatUtils', ['cldr', 'moment'], function() {
 		if (value <= 100 && value >= 1) {
 			return this.formatCurrencyLabel(unit) + this.formatValue(value, 3);
 		}
-		if (value < 1) {
+		if (value < 1 && value >= 0.00001) {
 			return this.formatCurrencyLabel(unit) + this.formatValue(value, 5);
 		}
-		return this.formatCurrencyLabel(unit) + this.formatValue(value, 2);
+		return this.formatCurrencyLabel(unit) + String(value);
 	};
 
 	FormatUtils.formatValue = function(value, n) {
