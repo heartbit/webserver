@@ -49,7 +49,7 @@
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">231</p>
+      <p class="stat">232</p>
     </div>
   </div>
   <div class="row historical">
@@ -122,7 +122,8 @@
             .tickFormat(function(d) {
                 return FormatUtils.formatValueShort(d, 3);
             })
-            .tickValues(volumeTickValues)
+            .ticks(3)
+            // .tickValues(volumeTickValues)
             .tickSize(-this.chart.width);
 
         this.volumeYAxisInstance = this.volumeLayer.append(&quot;g&quot;)

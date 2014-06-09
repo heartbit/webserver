@@ -5,6 +5,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
     function AreaLayer(chart) {
         var self = this;
 
+        _.bindAll(this, 'brushed');
         this.chart = chart;
         this.candleLayer = this.chart.mainLayer
             .append("g")
@@ -40,16 +41,17 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .scale(this.candleYScale)
             .orient("right")
             .ticks(6)
-            // .tickValues(candleTickValues)
-            .tickFormat(function(d) {
-                return FormatUtils.formatValueShort(d, 3);
-            })
+        // .tickValues(candleTickValues)
+        .tickFormat(function(d) {
+            return FormatUtils.formatValueShort(d, 3);
+        })
             .tickSize(-this.chart.width, 0)
 
         this.candleYAxisInstance = this.candleLayer
             .append("g")
             .attr("class", "y_candle_axis")
             .attr("transform", "translate(" + self.chart.width + ",0)");
+
 
         this.candlesArea = d3.svg.area()
             .x(function(candle) {
@@ -110,6 +112,23 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .append('text')
             .attr("y", 20)
             .attr('class', 'currentPositionLabelPrice');
+
+        this.brush = d3.svg.brush()
+            .x(this.chart.timeScale)
+            .on("brush", function() {
+                var extent = d3.event.target.extent();
+                // console.log(extent);
+            });
+
+        this.gBrush = this.candleLayer
+            .append("g")
+            .attr("class", "brush")
+            .call(this.brush)
+            .selectAll("rect")
+            .attr("y", 0)
+            .attr("height", 2 * this.chart.height / 3);
+        // .attr("height", this.chart.height); // 2 * this.chart.height / 3);
+
     };
 
     AreaLayer.prototype.draw = function(params) {
@@ -276,6 +295,31 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
     AreaLayer.prototype.updateRange = function(range) {
         this.candleYScale.range(range);
         this.update();
+    };
+
+    AreaLayer.prototype.brushed = function() {
+        var extent0 = this.brush.extent(),
+            extent1;
+
+        // if dragging, preserve the width of the extent
+        // if (d3.event.mode === "move") {
+        //     var d0 = d3.time.day.round(extent0[0]),
+        //         d1 = d3.time.day.offset(d0, Math.round((extent0[1] - extent0[0]) / 864e5));
+        //     extent1 = [d0, d1];
+        // }
+
+        // // otherwise, if resizing, round both dates
+        // else {
+        //     extent1 = extent0.map(d3.time.day.round);
+
+        //     // if empty when rounded, use floor & ceil instead
+        //     if (extent1[0] >= extent1[1]) {
+        //         extent1[0] = d3.time.day.floor(extent0[0]);
+        //         extent1[1] = d3.time.day.ceil(extent0[1]);
+        //     }
+        // }
+
+        // d3.select(this).call(brush.extent(extent1));
     };
 
     return AreaLayer;

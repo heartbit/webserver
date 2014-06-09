@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">72.94</p>
+      <p class="stat">72.79</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">282</p>
+      <p class="stat">327</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">46.56</p>
+      <p class="stat">46.13</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">3.13</p>
+      <p class="stat">3.44</p>
     </div>
   </div>
 </div>
@@ -97,6 +97,7 @@
     function AreaLayer(chart) {
         var self = this;
 
+        _.bindAll(this, &#039;brushed&#039;);
         this.chart = chart;
         this.candleLayer = this.chart.mainLayer
             .append(&quot;g&quot;)
@@ -131,16 +132,18 @@
         this.candleYAxis = d3.svg.axis()
             .scale(this.candleYScale)
             .orient(&quot;right&quot;)
-            .tickValues(candleTickValues)
-            .tickFormat(function(d) {
-                return FormatUtils.formatValueShort(d, 3);
-            })
+            .ticks(6)
+        // .tickValues(candleTickValues)
+        .tickFormat(function(d) {
+            return FormatUtils.formatValueShort(d, 3);
+        })
             .tickSize(-this.chart.width, 0)
 
         this.candleYAxisInstance = this.candleLayer
             .append(&quot;g&quot;)
             .attr(&quot;class&quot;, &quot;y_candle_axis&quot;)
             .attr(&quot;transform&quot;, &quot;translate(&quot; + self.chart.width + &quot;,0)&quot;);
+
 
         this.candlesArea = d3.svg.area()
             .x(function(candle) {
@@ -201,6 +204,23 @@
             .append(&#039;text&#039;)
             .attr(&quot;y&quot;, 20)
             .attr(&#039;class&#039;, &#039;currentPositionLabelPrice&#039;);
+
+        this.brush = d3.svg.brush()
+            .x(this.chart.timeScale)
+            .on(&quot;brush&quot;, function() {
+                var extent = d3.event.target.extent();
+                // console.log(extent);
+            });
+
+        this.gBrush = this.candleLayer
+            .append(&quot;g&quot;)
+            .attr(&quot;class&quot;, &quot;brush&quot;)
+            .call(this.brush)
+            .selectAll(&quot;rect&quot;)
+            .attr(&quot;y&quot;, 0)
+            .attr(&quot;height&quot;, 2 * this.chart.height / 3);
+        // .attr(&quot;height&quot;, this.chart.height); // 2 * this.chart.height / 3);
+
     };
 
     AreaLayer.prototype.draw = function(params) {
@@ -367,6 +387,31 @@
     AreaLayer.prototype.updateRange = function(range) {
         this.candleYScale.range(range);
         this.update();
+    };
+
+    AreaLayer.prototype.brushed = function() {
+        var extent0 = this.brush.extent(),
+            extent1;
+
+        // if dragging, preserve the width of the extent
+        // if (d3.event.mode === &quot;move&quot;) {
+        //     var d0 = d3.time.day.round(extent0[0]),
+        //         d1 = d3.time.day.offset(d0, Math.round((extent0[1] - extent0[0]) / 864e5));
+        //     extent1 = [d0, d1];
+        // }
+
+        // // otherwise, if resizing, round both dates
+        // else {
+        //     extent1 = extent0.map(d3.time.day.round);
+
+        //     // if empty when rounded, use floor &amp; ceil instead
+        //     if (extent1[0] &gt;= extent1[1]) {
+        //         extent1[0] = d3.time.day.floor(extent0[0]);
+        //         extent1[1] = d3.time.day.ceil(extent0[1]);
+        //     }
+        // }
+
+        // d3.select(this).call(brush.extent(extent1));
     };
 
     return AreaLayer;
