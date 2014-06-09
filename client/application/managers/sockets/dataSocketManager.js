@@ -10,7 +10,9 @@ define('DataSocketManager', ['socketio'], function() {
 
     SocketManager.getInstance = function() {
         if (instance === null) {
-            instance = io.connect('/data');
+            instance = io.connect('/data', {
+                transports: ["xhr-polling", "flashsocket", "htmlfile", "jsonp-polling"]
+            });
 
             instance.off = function(name, fn) {
                 if (this.$events && this.$events[name]) {

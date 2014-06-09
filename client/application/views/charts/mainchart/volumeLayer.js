@@ -203,8 +203,8 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
                 });
 
             this.volumeLabel
-                .transition()
-                .duration(50)
+                // .transition()
+                // .duration(50)
                 .attr('opacity', 1)
                 .style("text-anchor", "middle")
                 .attr('x', +left + 5)

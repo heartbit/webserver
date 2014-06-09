@@ -41,17 +41,16 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .scale(this.candleYScale)
             .orient("right")
             .ticks(6)
-        // .tickValues(candleTickValues)
-        .tickFormat(function(d) {
-            return FormatUtils.formatValueShort(d, 3);
-        })
+            .tickFormat(function(d) {
+                return FormatUtils.formatValueShort(d, 3);
+            })
             .tickSize(-this.chart.width, 0)
+        // .tickValues(candleTickValues)
 
         this.candleYAxisInstance = this.candleLayer
             .append("g")
             .attr("class", "y_candle_axis")
             .attr("transform", "translate(" + self.chart.width + ",0)");
-
 
         this.candlesArea = d3.svg.area()
             .x(function(candle) {
@@ -97,7 +96,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .append("line")
             .attr('class', 'currentPositionXLine')
             .attr('y1', 10)
-            .attr('y2', 2 * this.chart.height / 3)
+            .attr('y2', this.chart.height)
             .attr('x1', 0)
             .attr('x2', 0)
             .attr('stroke', 'gray')
@@ -120,11 +119,20 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
         this.gBrush = this.candleLayer
             .append("g")
             .attr("class", "brush")
-            .call(this.brush)
-            .selectAll("rect")
+            .call(this.brush);
+
+        this.gBrush.selectAll("rect")
             .attr("y", 0)
-            .attr("height", 2 * this.chart.height / 3);
-        // .attr("height", this.chart.height); // 2 * this.chart.height / 3);
+            .attr("height", this.chart.height);
+
+        this.gExtent = d3.select("rect.extent");
+
+        this.gBrushLabel = this.gBrush.append("text")
+            .attr('y', this.chart.height / 2)
+            .attr('opacity', 0)
+            .style('font-size', '50px')
+            .style("text-anchor", "middle")
+            .text('')
 
     };
 
@@ -296,6 +304,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
 
     AreaLayer.prototype.brushed = function() {
         var extent = this.brush.extent();
+        // this.gBrush
 
         // Get candles between these 2 dates
         var currentCandles = _.chain(this.candles)
@@ -307,20 +316,47 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             })
             .value();
 
-        var first = _.first(currentCandles);
-        var last = _.last(currentCandles);
+        var newx = Math.round(+this.gExtent.attr('x') + +this.gExtent.attr('width') / 2);
 
-        console.log('\n\n\nCandles in brush : ' + currentCandles.length);
-        console.log('Start : ' + FormatUtils.formatDate(first.startDate, 'lll'));
-        console.log('End : ' + FormatUtils.formatDate(last.endDate, 'lll'));
-        console.log('Min : ' + _.min(currentCandles, function(candle) {
-            return candle.low;
-        }).low);
-        console.log('Max : ' + _.max(currentCandles, function(candle) {
-            return candle.high;
-        }).high);
-        var evol = 100 * (last.close - first.open) / first.open
-        console.log('Evolution : ' + FormatUtils.formatValue(evol, 2) + "%");
+        if (currentCandles && currentCandles.length > 2 && newx) {
+            var first = _.first(currentCandles);
+            var last = _.last(currentCandles);
+
+            // console.log('\n\n\nCandles in brush : ' + currentCandles.length);
+            // console.log('Start : ' + FormatUtils.formatDate(first.startDate, 'lll'));
+            // console.log('End : ' + FormatUtils.formatDate(last.endDate, 'lll'));
+            // console.log('Min : ' + _.min(currentCandles, function(candle) {
+            //     return candle.low;
+            // }).low);
+            // console.log('Max : ' + _.max(currentCandles, function(candle) {
+            //     return candle.high;
+            // }).high);
+
+            // console.log('Evolution : ' + FormatUtils.formatValue(evol, 2) + "%");
+
+            // if (d3.event.mode === "move") {
+            //     this.gBrushLabel
+            // } else {
+
+            var evol = 100 * (last.close - first.close) / first.close;
+
+            this.gBrushLabel
+                .transition()
+                .duration(50)
+                .attr('x', newx)
+                .attr('opacity', 1)
+                .text(FormatUtils.formatValue(evol, 2) + '%')
+                .attr('font-size', '50px')
+
+        } else {
+            this.gBrushLabel
+                .transition()
+                .duration(50)
+                .attr('x', newx)
+                .text('')
+                .attr('opacity', 0);
+        }
+
 
     };
 
