@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">72.79</p>
+      <p class="stat">71.67</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">327</p>
+      <p class="stat">368</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">46.13</p>
+      <p class="stat">50.28</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">3.44</p>
+      <p class="stat">4.08</p>
     </div>
   </div>
 </div>
@@ -99,6 +99,7 @@
 
         _.bindAll(this, &#039;brushed&#039;);
         this.chart = chart;
+
         this.candleLayer = this.chart.mainLayer
             .append(&quot;g&quot;)
             .attr(&quot;class&quot;, &quot;candle_layer&quot;);
@@ -133,17 +134,15 @@
             .scale(this.candleYScale)
             .orient(&quot;right&quot;)
             .ticks(6)
-        // .tickValues(candleTickValues)
-        .tickFormat(function(d) {
-            return FormatUtils.formatValueShort(d, 3);
-        })
-            .tickSize(-this.chart.width, 0)
+            .tickFormat(function(d) {
+                return FormatUtils.formatPrice(d);
+            })
+            .tickSize(-this.chart.width, 0);
 
         this.candleYAxisInstance = this.candleLayer
             .append(&quot;g&quot;)
             .attr(&quot;class&quot;, &quot;y_candle_axis&quot;)
             .attr(&quot;transform&quot;, &quot;translate(&quot; + self.chart.width + &quot;,0)&quot;);
-
 
         this.candlesArea = d3.svg.area()
             .x(function(candle) {
@@ -189,10 +188,11 @@
             .append(&quot;line&quot;)
             .attr(&#039;class&#039;, &#039;currentPositionXLine&#039;)
             .attr(&#039;y1&#039;, 10)
-            .attr(&#039;y2&#039;, 2 * this.chart.height / 3)
+            .attr(&#039;y2&#039;, this.chart.height)
             .attr(&#039;x1&#039;, 0)
             .attr(&#039;x2&#039;, 0)
-            .attr(&#039;stroke&#039;, &#039;gray&#039;)
+            .attr(&#039;stroke&#039;, &#039;#cacaca&#039;)
+            .attr(&#039;opacity&#039;, .5)
             .attr(&#039;stroke-width&#039;, 1);
 
         this.currentPositionLabelTime = this.tooltipLayer
@@ -207,19 +207,27 @@
 
         this.brush = d3.svg.brush()
             .x(this.chart.timeScale)
-            .on(&quot;brush&quot;, function() {
-                var extent = d3.event.target.extent();
-                // console.log(extent);
-            });
+            .on(&quot;brush&quot;, this.brushed);
 
         this.gBrush = this.candleLayer
             .append(&quot;g&quot;)
             .attr(&quot;class&quot;, &quot;brush&quot;)
-            .call(this.brush)
-            .selectAll(&quot;rect&quot;)
+            .call(this.brush);
+
+        this.gBrush.selectAll(&quot;rect&quot;)
             .attr(&quot;y&quot;, 0)
-            .attr(&quot;height&quot;, 2 * this.chart.height / 3);
-        // .attr(&quot;height&quot;, this.chart.height); // 2 * this.chart.height / 3);
+            .attr(&quot;height&quot;, this.chart.height);
+
+        this.gExtent = d3.select(&quot;rect.extent&quot;);
+
+        this.gBrushLabel = this.gBrush.append(&quot;text&quot;)
+            .attr(&#039;y&#039;, this.chart.height / 2)
+            .attr(&#039;opacity&#039;, 0)
+            .style(&#039;font-size&#039;, &#039;50px&#039;)
+            .style(&quot;text-anchor&quot;, &quot;middle&quot;)
+            .style(&quot;fill&quot;, &#039;#808080&#039;)
+            .style(&quot;stroke&quot;, &quot;none&quot;)
+            .text(&#039;&#039;)
 
     };
 
@@ -362,7 +370,7 @@
                     return currentX &gt; self.chart.width / 2 ? currentX - 10 : currentX + 30;
                 })
                 .attr(&quot;y&quot;, currentY + 50)
-                .text(&quot;  &quot; + FormatUtils.formatValue(this.closestPoint.candle.close, 2));
+                .text(&quot;  &quot; + FormatUtils.formatPrice(this.closestPoint.candle.close));
         }
     };
 
@@ -390,28 +398,61 @@
     };
 
     AreaLayer.prototype.brushed = function() {
-        var extent0 = this.brush.extent(),
-            extent1;
+        var extent = this.brush.extent();
+        // this.gBrush
 
-        // if dragging, preserve the width of the extent
-        // if (d3.event.mode === &quot;move&quot;) {
-        //     var d0 = d3.time.day.round(extent0[0]),
-        //         d1 = d3.time.day.offset(d0, Math.round((extent0[1] - extent0[0]) / 864e5));
-        //     extent1 = [d0, d1];
-        // }
+        // Get candles between these 2 dates
+        var currentCandles = _.chain(this.candles)
+            .filter(function(candle) {
+                return candle.startDate &gt;= extent[0] &amp;&amp; candle.endDate &lt;= extent[1];
+            })
+            .sortBy(function(candle) {
+                return candle.startDate;
+            })
+            .value();
 
-        // // otherwise, if resizing, round both dates
-        // else {
-        //     extent1 = extent0.map(d3.time.day.round);
+        var newx = Math.round(+this.gExtent.attr(&#039;x&#039;) + +this.gExtent.attr(&#039;width&#039;) / 2);
 
-        //     // if empty when rounded, use floor &amp; ceil instead
-        //     if (extent1[0] &gt;= extent1[1]) {
-        //         extent1[0] = d3.time.day.floor(extent0[0]);
-        //         extent1[1] = d3.time.day.ceil(extent0[1]);
-        //     }
-        // }
+        if (currentCandles &amp;&amp; currentCandles.length &gt; 2 &amp;&amp; newx) {
+            var first = _.first(currentCandles);
+            var last = _.last(currentCandles);
 
-        // d3.select(this).call(brush.extent(extent1));
+            // console.log(&#039;\n\n\nCandles in brush : &#039; + currentCandles.length);
+            // console.log(&#039;Start : &#039; + FormatUtils.formatDate(first.startDate, &#039;lll&#039;));
+            // console.log(&#039;End : &#039; + FormatUtils.formatDate(last.endDate, &#039;lll&#039;));
+            // console.log(&#039;Min : &#039; + _.min(currentCandles, function(candle) {
+            //     return candle.low;
+            // }).low);
+            // console.log(&#039;Max : &#039; + _.max(currentCandles, function(candle) {
+            //     return candle.high;
+            // }).high);
+
+            // console.log(&#039;Evolution : &#039; + FormatUtils.formatValue(evol, 2) + &quot;%&quot;);
+
+            // if (d3.event.mode === &quot;move&quot;) {
+            //     this.gBrushLabel
+            // } else {
+
+            var evol = 100 * (last.close - first.close) / first.close;
+
+            this.gBrushLabel
+                .transition()
+                .duration(50)
+                .attr(&#039;x&#039;, newx)
+                .attr(&#039;opacity&#039;, 1)
+                .text(FormatUtils.formatValue(evol, 2) + &#039;%&#039;)
+                .attr(&#039;font-size&#039;, &#039;50px&#039;)
+
+        } else {
+            this.gBrushLabel
+                .transition()
+                .duration(50)
+                .attr(&#039;x&#039;, newx)
+                .text(&#039;&#039;)
+                .attr(&#039;opacity&#039;, 0);
+        }
+
+
     };
 
     return AreaLayer;

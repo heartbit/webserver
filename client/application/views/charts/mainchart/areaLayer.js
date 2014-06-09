@@ -7,6 +7,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
 
         _.bindAll(this, 'brushed');
         this.chart = chart;
+
         this.candleLayer = this.chart.mainLayer
             .append("g")
             .attr("class", "candle_layer");
@@ -42,10 +43,9 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .orient("right")
             .ticks(6)
             .tickFormat(function(d) {
-                return FormatUtils.formatValueShort(d, 3);
+                return FormatUtils.formatPrice(d);
             })
-            .tickSize(-this.chart.width, 0)
-        // .tickValues(candleTickValues)
+            .tickSize(-this.chart.width, 0);
 
         this.candleYAxisInstance = this.candleLayer
             .append("g")
@@ -99,7 +99,8 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .attr('y2', this.chart.height)
             .attr('x1', 0)
             .attr('x2', 0)
-            .attr('stroke', 'gray')
+            .attr('stroke', '#cacaca')
+            .attr('opacity', .5)
             .attr('stroke-width', 1);
 
         this.currentPositionLabelTime = this.tooltipLayer
@@ -132,6 +133,8 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .attr('opacity', 0)
             .style('font-size', '50px')
             .style("text-anchor", "middle")
+            .style("fill", '#808080')
+            .style("stroke", "none")
             .text('')
 
     };
@@ -275,7 +278,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                     return currentX > self.chart.width / 2 ? currentX - 10 : currentX + 30;
                 })
                 .attr("y", currentY + 50)
-                .text("  " + FormatUtils.formatValue(this.closestPoint.candle.close, 2));
+                .text("  " + FormatUtils.formatPrice(this.closestPoint.candle.close));
         }
     };
 

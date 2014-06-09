@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">52.62</p>
+      <p class="stat">51.78</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">577</p>
+      <p class="stat">587</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">40.40</p>
+      <p class="stat">45.44</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">2.86</p>
+      <p class="stat">3.08</p>
     </div>
   </div>
 </div>
@@ -117,25 +117,28 @@
 
 	FormatUtils.isEmpty = function(obj) {
 		var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-		// null and undefined are &quot;empty&quot;
 		if (obj == null) return true;
-
-		// Assume if it has a length property with a non-zero value
-		// that that property is correct.
 		if (obj.length &gt; 0) return false;
 		if (obj.length === 0) return true;
-
-		// Otherwise, does it have any properties of its own?
-		// Note that this doesn&#039;t handle
-		// toString and valueOf enumeration bugs in IE &lt; 9
 		for (var key in obj) {
 			if (hasOwnProperty.call(obj, key)) return false;
 		}
-
 		return true;
-	}
+	};
+
 	FormatUtils.formatPrice = function(value, unit) {
+		if (value &gt; 1000) {
+			return this.formatCurrencyLabel(unit) + this.formatValueShort(value);
+		}
+		if (value &lt;= 999 &amp;&amp; value &gt;= 100) {
+			return this.formatCurrencyLabel(unit) + this.formatValue(value, 2);
+		}
+		if (value &lt;= 100 &amp;&amp; value &gt;= 1) {
+			return this.formatCurrencyLabel(unit) + this.formatValue(value, 3);
+		}
+		if (value &lt; 1) {
+			return this.formatCurrencyLabel(unit) + this.formatValue(value, 5);
+		}
 		return this.formatCurrencyLabel(unit) + this.formatValue(value, 2);
 	};
 
@@ -184,6 +187,9 @@
 		} else {
 			return this.truncToNdecimal(value, 0);
 		}
+
+
+
 		return valueStr.value + valueStr.multiple;
 	};
 
@@ -208,6 +214,10 @@
 	};
 
 	FormatUtils.formatCurrencyLabel = function(currencyId) {
+		if (!currencyId) {
+			return &quot;&quot;;
+		}
+
 		var symbol = currencyId;
 		switch (currencyId) {
 			// dollars

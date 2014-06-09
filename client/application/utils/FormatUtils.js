@@ -25,25 +25,28 @@ define('FormatUtils', ['cldr', 'moment'], function() {
 
 	FormatUtils.isEmpty = function(obj) {
 		var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-		// null and undefined are "empty"
 		if (obj == null) return true;
-
-		// Assume if it has a length property with a non-zero value
-		// that that property is correct.
 		if (obj.length > 0) return false;
 		if (obj.length === 0) return true;
-
-		// Otherwise, does it have any properties of its own?
-		// Note that this doesn't handle
-		// toString and valueOf enumeration bugs in IE < 9
 		for (var key in obj) {
 			if (hasOwnProperty.call(obj, key)) return false;
 		}
-
 		return true;
-	}
+	};
+
 	FormatUtils.formatPrice = function(value, unit) {
+		if (value > 1000) {
+			return this.formatCurrencyLabel(unit) + this.formatValueShort(value);
+		}
+		if (value <= 999 && value >= 100) {
+			return this.formatCurrencyLabel(unit) + this.formatValue(value, 2);
+		}
+		if (value <= 100 && value >= 1) {
+			return this.formatCurrencyLabel(unit) + this.formatValue(value, 3);
+		}
+		if (value < 1) {
+			return this.formatCurrencyLabel(unit) + this.formatValue(value, 5);
+		}
 		return this.formatCurrencyLabel(unit) + this.formatValue(value, 2);
 	};
 
@@ -92,6 +95,9 @@ define('FormatUtils', ['cldr', 'moment'], function() {
 		} else {
 			return this.truncToNdecimal(value, 0);
 		}
+
+
+
 		return valueStr.value + valueStr.multiple;
 	};
 
@@ -116,6 +122,10 @@ define('FormatUtils', ['cldr', 'moment'], function() {
 	};
 
 	FormatUtils.formatCurrencyLabel = function(currencyId) {
+		if (!currencyId) {
+			return "";
+		}
+
 		var symbol = currencyId;
 		switch (currencyId) {
 			// dollars
