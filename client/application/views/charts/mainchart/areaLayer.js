@@ -348,8 +348,11 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 .duration(50)
                 .attr('x', newx)
                 .attr('opacity', 1)
-                .text(FormatUtils.formatValue(evol, 2) + '%')
                 .attr('font-size', '50px')
+                .style('class', 'icon-uo-dir')
+                .text(function() {
+                    return evol >= 0 ? "+" + FormatUtils.formatValue(evol, 2) + '%' : FormatUtils.formatValue(evol, 2) + '%';
+                });
 
         } else {
             this.gBrushLabel
