@@ -393,9 +393,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 .attr('opacity', 1)
                 .attr('font-size', '50px')
                 .style('class', 'icon-uo-dir')
-                .text(function() {
-                    return evol >= 0 ? "+" + FormatUtils.formatValue(evol, 2) + '%' : FormatUtils.formatValue(evol, 2) + '%';
-                });
+                .text(FormatUtils.formatEvol(evol));
 
             var startPercent = String((+this.gExtent.attr('x') / this.chart.width) * 100) + '%';
             var endPercent = String(((+this.gExtent.attr('x') + +this.gExtent.attr('width')) / this.chart.width) * 100) + '%';

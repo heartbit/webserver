@@ -34,6 +34,14 @@ define('FormatUtils', ['cldr', 'moment'], function() {
 		return true;
 	};
 
+	FormatUtils.formatEvol = function(evol) {
+		var result = (Math.abs(evol) >= 10) ? this.formatValue(evol, 0) : this.formatValue(evol, 2);
+		if (evol >= 0) {
+			result = "+" + result;
+		}
+		return result + '%';
+	};
+
 	FormatUtils.formatPrice = function(value, unit) {
 		if (value > 1000) {
 			return this.formatCurrencyLabel(unit) + this.formatValueShort(value);
