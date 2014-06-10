@@ -29,7 +29,7 @@ $tick_color: #cccccc;
 }
 
 .candle_line {
-  stroke: #b7b7b7;
+  stroke: url(#line-gradient);  
   stroke-width: 1.5px;
   fill : none;
 }

@@ -8,6 +8,11 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
         _.bindAll(this, 'brushed');
         this.chart = chart;
 
+        this.colors = {
+            highlight: "red",
+            normal: "#b7b7b7"
+        };
+
         this.candleLayer = this.chart.mainLayer
             .append("g")
             .attr("class", "candle_layer");
@@ -112,6 +117,44 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .append('text')
             .attr("y", 20)
             .attr('class', 'currentPositionLabelPrice');
+
+        this.colorGradient = this.candleLayer
+            .append("defs")
+            .append("linearGradient")
+            .attr("id", "line-gradient")
+            .attr("x1", "0")
+            .attr("y1", "0")
+            .attr("x2", "1")
+            .attr("y2", "0")
+            .attr("spreadMethod", "pad");
+
+
+        this.colorGradient.append("stop")
+            .attr("offset", "0%")
+            .attr("stop-color", this.colors.normal)
+            .attr("stop-opacity", 1);
+
+        this.end1SegGrad = this.colorGradient.append("stop")
+            .attr("stop-color", this.colors.normal)
+            .attr("stop-opacity", 1);
+
+        this.start2SegGrad = this.colorGradient.append("stop")
+            .attr("stop-color", this.colors.highlight)
+            .attr("stop-opacity", 1);
+
+        this.end2SegGrad = this.colorGradient.append("stop")
+            .attr("stop-color", this.colors.highlight)
+            .attr("stop-opacity", 1);
+
+        this.start3SegGrad = this.colorGradient.append("stop")
+            .attr("stop-color", this.colors.normal)
+            .attr("stop-opacity", 1);
+
+        this.colorGradient.append("stop")
+            .attr("offset", "100%")
+            .attr("stop-color", this.colors.normal)
+            .attr("stop-opacity", 1);
+
 
         this.brush = d3.svg.brush()
             .x(this.chart.timeScale)
@@ -354,6 +397,14 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                     return evol >= 0 ? "+" + FormatUtils.formatValue(evol, 2) + '%' : FormatUtils.formatValue(evol, 2) + '%';
                 });
 
+            var startPercent = String(Math.round((+this.gExtent.attr('x') / this.chart.width) * 100)) + '%';
+            var endPercent = String(Math.round(((+this.gExtent.attr('x') + +this.gExtent.attr('width')) / this.chart.width) * 100)) + '%';
+
+            this.end1SegGrad.attr('offset', startPercent);
+            this.start2SegGrad.attr('offset', startPercent);
+            this.end2SegGrad.attr('offset', endPercent);
+            this.start3SegGrad.attr('offset', endPercent);
+
         } else {
             this.gBrushLabel
                 .transition()
@@ -361,6 +412,12 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 .attr('x', newx)
                 .text('')
                 .attr('opacity', 0);
+
+            this.end1SegGrad.attr('offset', 'null');
+            this.start2SegGrad.attr('offset', 'null');
+            this.end2SegGrad.attr('offset', 'null');
+            this.start3SegGrad.attr('offset', 'null');
+
         }
 
 
