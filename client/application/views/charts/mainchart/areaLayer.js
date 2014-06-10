@@ -397,8 +397,8 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                     return evol >= 0 ? "+" + FormatUtils.formatValue(evol, 2) + '%' : FormatUtils.formatValue(evol, 2) + '%';
                 });
 
-            var startPercent = String(Math.round((+this.gExtent.attr('x') / this.chart.width) * 100)) + '%';
-            var endPercent = String(Math.round(((+this.gExtent.attr('x') + +this.gExtent.attr('width')) / this.chart.width) * 100)) + '%';
+            var startPercent = String((+this.gExtent.attr('x') / this.chart.width) * 100) + '%';
+            var endPercent = String(((+this.gExtent.attr('x') + +this.gExtent.attr('width')) / this.chart.width) * 100) + '%';
 
             this.end1SegGrad.attr('offset', startPercent);
             this.start2SegGrad.attr('offset', startPercent);
@@ -413,10 +413,10 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 .text('')
                 .attr('opacity', 0);
 
-            this.end1SegGrad.attr('offset', 'null');
-            this.start2SegGrad.attr('offset', 'null');
-            this.end2SegGrad.attr('offset', 'null');
-            this.start3SegGrad.attr('offset', 'null');
+            this.end1SegGrad.attr('offset', '0');
+            this.start2SegGrad.attr('offset', '0');
+            this.end2SegGrad.attr('offset', '0');
+            this.start3SegGrad.attr('offset', '0');
 
         }
 
