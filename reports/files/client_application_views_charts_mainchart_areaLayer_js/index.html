@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">71.67</p>
+      <p class="stat">69.10</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">368</p>
+      <p class="stat">426</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">50.28</p>
+      <p class="stat">53.89</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">4.08</p>
+      <p class="stat">5.05</p>
     </div>
   </div>
 </div>
@@ -99,6 +99,11 @@
 
         _.bindAll(this, &#039;brushed&#039;);
         this.chart = chart;
+
+        this.colors = {
+            highlight: &quot;red&quot;,
+            normal: &quot;#b7b7b7&quot;
+        };
 
         this.candleLayer = this.chart.mainLayer
             .append(&quot;g&quot;)
@@ -204,6 +209,44 @@
             .append(&#039;text&#039;)
             .attr(&quot;y&quot;, 20)
             .attr(&#039;class&#039;, &#039;currentPositionLabelPrice&#039;);
+
+        this.colorGradient = this.candleLayer
+            .append(&quot;defs&quot;)
+            .append(&quot;linearGradient&quot;)
+            .attr(&quot;id&quot;, &quot;line-gradient&quot;)
+            .attr(&quot;x1&quot;, &quot;0&quot;)
+            .attr(&quot;y1&quot;, &quot;0&quot;)
+            .attr(&quot;x2&quot;, &quot;1&quot;)
+            .attr(&quot;y2&quot;, &quot;0&quot;)
+            .attr(&quot;spreadMethod&quot;, &quot;pad&quot;);
+
+
+        this.colorGradient.append(&quot;stop&quot;)
+            .attr(&quot;offset&quot;, &quot;0%&quot;)
+            .attr(&quot;stop-color&quot;, this.colors.normal)
+            .attr(&quot;stop-opacity&quot;, 1);
+
+        this.end1SegGrad = this.colorGradient.append(&quot;stop&quot;)
+            .attr(&quot;stop-color&quot;, this.colors.normal)
+            .attr(&quot;stop-opacity&quot;, 1);
+
+        this.start2SegGrad = this.colorGradient.append(&quot;stop&quot;)
+            .attr(&quot;stop-color&quot;, this.colors.highlight)
+            .attr(&quot;stop-opacity&quot;, 1);
+
+        this.end2SegGrad = this.colorGradient.append(&quot;stop&quot;)
+            .attr(&quot;stop-color&quot;, this.colors.highlight)
+            .attr(&quot;stop-opacity&quot;, 1);
+
+        this.start3SegGrad = this.colorGradient.append(&quot;stop&quot;)
+            .attr(&quot;stop-color&quot;, this.colors.normal)
+            .attr(&quot;stop-opacity&quot;, 1);
+
+        this.colorGradient.append(&quot;stop&quot;)
+            .attr(&quot;offset&quot;, &quot;100%&quot;)
+            .attr(&quot;stop-color&quot;, this.colors.normal)
+            .attr(&quot;stop-opacity&quot;, 1);
+
 
         this.brush = d3.svg.brush()
             .x(this.chart.timeScale)
@@ -440,8 +483,17 @@
                 .duration(50)
                 .attr(&#039;x&#039;, newx)
                 .attr(&#039;opacity&#039;, 1)
-                .text(FormatUtils.formatValue(evol, 2) + &#039;%&#039;)
                 .attr(&#039;font-size&#039;, &#039;50px&#039;)
+                .style(&#039;class&#039;, &#039;icon-uo-dir&#039;)
+                .text(FormatUtils.formatEvol(evol));
+
+            var startPercent = String((+this.gExtent.attr(&#039;x&#039;) / this.chart.width) * 100) + &#039;%&#039;;
+            var endPercent = String(((+this.gExtent.attr(&#039;x&#039;) + +this.gExtent.attr(&#039;width&#039;)) / this.chart.width) * 100) + &#039;%&#039;;
+
+            this.end1SegGrad.attr(&#039;offset&#039;, startPercent);
+            this.start2SegGrad.attr(&#039;offset&#039;, startPercent);
+            this.end2SegGrad.attr(&#039;offset&#039;, endPercent);
+            this.start3SegGrad.attr(&#039;offset&#039;, endPercent);
 
         } else {
             this.gBrushLabel
@@ -450,6 +502,12 @@
                 .attr(&#039;x&#039;, newx)
                 .text(&#039;&#039;)
                 .attr(&#039;opacity&#039;, 0);
+
+            this.end1SegGrad.attr(&#039;offset&#039;, &#039;0&#039;);
+            this.start2SegGrad.attr(&#039;offset&#039;, &#039;0&#039;);
+            this.end2SegGrad.attr(&#039;offset&#039;, &#039;0&#039;);
+            this.start3SegGrad.attr(&#039;offset&#039;, &#039;0&#039;);
+
         }
 
 

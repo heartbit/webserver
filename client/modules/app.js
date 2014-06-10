@@ -4,7 +4,7 @@ require.config({
 });
 
 requirejs(['modules/common'], function() {
-    require(['appRouter', 'underscore', 'backbone-params', 'foundation', 'backbone'], function(AppRouter, _ , Backbone, foundation) {
-        new AppRouter();
-    });
+	require(['appRouter', 'underscore', 'backbone-params', 'foundation', 'jquerySpin', 'backbone'], function(AppRouter, _, Backbone, foundation, $) {
+		new AppRouter();
+	});
 });

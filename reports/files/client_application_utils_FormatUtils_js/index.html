@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">51.78</p>
+      <p class="stat">52.37</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">587</p>
+      <p class="stat">595</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">45.44</p>
+      <p class="stat">47.17</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">3.08</p>
+      <p class="stat">3.22</p>
     </div>
   </div>
 </div>
@@ -126,6 +126,14 @@
 		return true;
 	};
 
+	FormatUtils.formatEvol = function(evol) {
+		var result = (Math.abs(evol) &gt;= 10) ? this.formatValue(evol, 0) : this.formatValue(evol, 2);
+		if (evol &gt;= 0) {
+			result = &quot;+&quot; + result;
+		}
+		return result + &#039;%&#039;;
+	};
+
 	FormatUtils.formatPrice = function(value, unit) {
 		if (value &gt; 1000) {
 			return this.formatCurrencyLabel(unit) + this.formatValueShort(value);
@@ -136,10 +144,10 @@
 		if (value &lt;= 100 &amp;&amp; value &gt;= 1) {
 			return this.formatCurrencyLabel(unit) + this.formatValue(value, 3);
 		}
-		if (value &lt; 1) {
+		if (value &lt; 1 &amp;&amp; value &gt;= 0.00001) {
 			return this.formatCurrencyLabel(unit) + this.formatValue(value, 5);
 		}
-		return this.formatCurrencyLabel(unit) + this.formatValue(value, 2);
+		return this.formatCurrencyLabel(unit) + String(value);
 	};
 
 	FormatUtils.formatValue = function(value, n) {

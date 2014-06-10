@@ -11,6 +11,7 @@ requirejs.config({
         // General imports
         'backbone-params': 'libs/backbone/backbone.queryparams',
         backbone: 'libs/backbone/backbone.min',
+        jquerySpin: 'libs/jquery/jquery.spin',
         foundation: 'libs/foundation.min',
         underscore: 'libs/underscore-min',
         jquery: 'libs/jquery/jquery.min',
@@ -20,6 +21,7 @@ requirejs.config({
         text: 'libs/require/text',
         moment: 'libs/moment.min',
         cldr: 'libs/twitter_cldr',
+        spin: 'libs/spin.min',
         fuse: 'libs/fuse.min',
         d3: 'libs/d3.min',
 
@@ -87,7 +89,7 @@ requirejs.config({
         // DataHelpers
         dataHelper: 'application/helpers/dataHelper',
         depthDataHelper: 'application/helpers/depthDataHelper',
-        
+
         // Models
         information: 'application/models/information',
         maingraphe: 'application/models/maingraphe',
@@ -129,13 +131,16 @@ requirejs.config({
     },
 
     shim: {
-        'storyjs': {
-        },
+        'storyjs': {},
         'timelinejs': {
-            deps: ['jquery','storyjs']
+            deps: ['jquery', 'storyjs']
         },
         'underscore': {
             exports: '_'
+        },
+        'jquerySpin': {
+            deps: ['jquery'],
+            exports: '$'
         },
         'backbone': {
             deps: ['underscore', 'jquery'],

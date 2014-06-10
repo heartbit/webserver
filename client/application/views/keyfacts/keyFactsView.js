@@ -31,23 +31,28 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
             renderBigNumbers: function(tickerAttributes) {
                 var self = this;
                 this.bigNumberViews = [];
+
                 var tickerAttributes = tickerAttributes || config.keyfactsview.defaultAttributes;
                 this.tickerAttributes = this.addHtmlSelectors(tickerAttributes);
                 this.$el.html(this.template({
                     tickerAttributes: this.tickerAttributes
                 }));
+
                 _.each(this.tickerAttributes, function(tickerAttribute) {
                     var options = {
                         trend: {
                             after: true
                         }
                     };
+
                     var bigNumberView = {
                         bigNumberChart: new BigNumber('#' + tickerAttribute.htmlSelector, options),
                         tickerAttribute: tickerAttribute
-                    }
+                    };
+
                     self.bigNumberViews.push(bigNumberView);
                 });
+
                 $(document).foundation();
             },
 
@@ -65,7 +70,7 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
                 this.ticker.on('update', this.update, this);
                 this.trade.on('update', this.update, this);
                 this.update(true);
-                this.exportTools.setElement($(this.exportToolEl)).render();
+                // this.exportTools.setElement($(this.exportToolEl)).render();
                 return this;
             },
 
@@ -103,6 +108,7 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
 
                     bigNumberView.bigNumberChart.render(updateParams);
                 });
+
                 // this.changePageTitle();
             },
 
