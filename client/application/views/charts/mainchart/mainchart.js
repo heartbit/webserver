@@ -1,7 +1,5 @@
 define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 'areaLayer', 'candleLayer', 'volumeLayer', 'moment'], function(config, DataHelper, d3, Maingraphes, Maingraphe, AreaLayer, CandleLayer, VolumeLayer) {
 
-    // tooltip sur les volumes et beaux wording à l'intérieur
-    // faire le menu de selection des layers
     function MainChart(view, el, params) {
         this.el = el;
         this.view = view;

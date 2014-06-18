@@ -292,6 +292,15 @@ module.exports = function(grunt) {
                     'save-live-edit': true
                 }
             }
+        },
+
+        forever: {
+            prodwebserver: {
+                options: {
+                    index: 'webserver.js',
+                    logDir: 'logs'
+                }
+            }
         }
 
     });
@@ -306,12 +315,15 @@ module.exports = function(grunt) {
     **/
     grunt.registerTask('test', ['simplemocha']);
     grunt.registerTask('analyze', ['plato:analyze']);
-    
+
     grunt.registerTask('css', ['sass', 'requirejs:css']);
     grunt.registerTask('local', ['concurrent:concurrentLocal']);
     grunt.registerTask('localServer', ['css', 'nodemon:local']);
 
     grunt.registerTask('build', ['test', 'clean', 'css', 'requirejs:main', 'copy:main']);
+    grunt.registerTask('prod-start', ['build', 'forever:prodwebserver:start']);
+    grunt.registerTask('prod-stop', ['forever:prodwebserver:stop']);
+    grunt.registerTask('prod-restart', ['forever:prodwebserver:restart']);
     grunt.registerTask('deploy-dev', ['build', 'shell:gitdev']);
     grunt.registerTask('deploy-preprod', ['build', 'shell:gitpreprod']);
 

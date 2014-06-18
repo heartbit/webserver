@@ -2,6 +2,7 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
 
     var DepthChart = function(el) {
         var self = this;
+        
         this.el = el;
         _.bindAll(
             this,
@@ -223,8 +224,6 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                 self.closestPoint = findClosestPrice(mousex - self.margin.left);
 
                 self.circles
-                    // .transition()
-                    // .duration(100)
                     .attr('r', function(d, i) {
                         return i == self.closestPoint.index ? 3 : 0;
                     });
@@ -248,7 +247,7 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                     .attr("transform", function(d) {
                         return "translate(" + currentCircle.attr('cx') + ",0)";
                     })
-                    .text('Amount: ' + FormatUtils.formatValue(currentCircle.data()[0].amount, 0)); // + "<br/>" + 'Price: ' + currentCircle.data()[0].price)
+                    .text('Volume: ' + FormatUtils.formatValue(currentCircle.data()[0].amount, 0)); // + "<br/>" + 'Price: ' + currentCircle.data()[0].price)
 
                 self.currentPositionLabelPrice
                     .style("text-anchor", function() {

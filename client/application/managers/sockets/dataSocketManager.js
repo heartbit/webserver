@@ -1,4 +1,4 @@
-define('DataSocketManager', ['socketio'], function() {
+define('DataSocketManager', ['socketio'], function(io) {
 
     var instance = null;
 
@@ -10,10 +10,8 @@ define('DataSocketManager', ['socketio'], function() {
 
     SocketManager.getInstance = function() {
         if (instance === null) {
-            instance = io.connect('/data', {
-                transports: ["xhr-polling", "flashsocket", "htmlfile", "jsonp-polling"]
-            });
-
+            instance = io('/data');
+            
             instance.off = function(name, fn) {
                 if (this.$events && this.$events[name]) {
                     var list = this.$events[name];

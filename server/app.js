@@ -79,7 +79,7 @@ App.prototype.initRedisAndCacheManager = function() {
 App.prototype.initExpressServer = function() {
     var deferred = Q.defer();
     this.app = express();
-    this.server = http.createServer(this.app);
+    this.server = http.Server(this.app);
     // if (this.options.isDebug) {
     // this.app.use(express.logger());
     // }

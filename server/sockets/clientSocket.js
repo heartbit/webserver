@@ -1,6 +1,8 @@
 var request = require('request');
 var fs = require('fs');
 var _ = require('underscore');
+var io = require('socket.io');
+
 var EventManager = require('../managers/EventManager');
 var APIManager = require('../managers/APIManager');
 var CacheManager = require('../managers/CacheManager');
@@ -11,7 +13,6 @@ function ClientSocket(params) {
 	this.server = params.server;
 	this.apiUrl = params.apiUrl;
 	this.dataPath = params.dataPath;
-	// this.news = {};
 };
 
 ClientSocket.prototype.run = function(callback) {
@@ -22,7 +23,7 @@ ClientSocket.prototype.run = function(callback) {
 			log: false
 		};
 	}
-	this.io = require('socket.io').listen(this.server, params);
+	this.io = io(this.server, params);
 	this.initDataNamespace();
 	this.initNewsfeedNamespace();
 	// this.initChatNamespace();
@@ -38,6 +39,7 @@ ClientSocket.prototype.initNewsfeedNamespace = function() {
 		.of("/news")
 		.on('connection', function(socket) {
 			socket.on('news', function(params) {
+				console.log('ask for news')
 				CacheManager.get('news', function(articles) {
 					socket.emit('news', articles)
 				})
@@ -58,31 +60,29 @@ ClientSocket.prototype.initDataNamespace = function() {
 	this.io
 		.of("/data")
 		.on('connection', function(socket) {
+			console.log('Socket connection')
+			socket.on('test', function() {
+				console.log('blatte');
+				socket.emit('bliite', "prout")
+			});
+
 			socket.on('dataroom', function(dataroom) {
 				console.log('client want to join dataroom : ' + dataroom);
-				 socket.get('dataroom', function(err, nameroom) {
-				 	if (nameroom === dataroom) {
-				 		socket.leave(nameroom);
-				 	}
-				 	else {
-				 	 	self.datarooms.push(dataroom);
-				 	}
-				 });
-
+				
 				// Send cached data :
 				_.each(self.platforms, function(platform) {
 					_.each(platform.pairs, function(pair) {
 						if (pair.item + sep + pair.currency == dataroom) {
 							_.each(config.measures, function(measure) {
 								var cacheKey = platform.name + sep + pair.item + sep + pair.currency + sep + measure.key;
-								// console.log('Cachekey ', cacheKey);
+								console.log('Cachekey ', cacheKey);
 								CacheManager.get(cacheKey, function(data) {
 									var payload = {
 										key: cacheKey,
 										data: data,
 										dataroom: dataroom
 									};
-									// console.log('Send cache : ', cacheKey);
+									console.log('Send cache : ', cacheKey);
 									socket.emit(cacheKey, payload)
 								});
 							});
@@ -91,14 +91,10 @@ ClientSocket.prototype.initDataNamespace = function() {
 				});
 
 				socket.join(dataroom);
-				socket.set('dataroom', dataroom);
 			});
 
 			socket.on('disconnect', function() {
-				var rooms = self.io.sockets.manager.roomClients[socket.id];
-				for (var room in rooms) {
-					socket.leave(room);
-				}
+
 			});
 
 		});
@@ -119,13 +115,14 @@ ClientSocket.prototype.initDataNamespace = function() {
 						}
 						self.io
 							.of("/data")
-							. in (room)
+							.in(room)
 							.emit(channel, payload);
 					});
 				});
 			});
 		});
 	});
+
 };
 
 // ClientSocket.prototype.initChatNamespace = function() {

@@ -1,4 +1,4 @@
-define('ChatSocketManager', ['socketio'], function() {
+define('ChatSocketManager', ['socketio'], function(io) {
 
     var instance = null;
 
@@ -10,7 +10,7 @@ define('ChatSocketManager', ['socketio'], function() {
 
     SocketManager.getInstance = function() {
         if (instance === null) {
-            instance = io.connect('/chat');
+            instance = io('/chat');
             instance.on('connect', function() {
                 console.log('chat socket connected!')
             });

@@ -1,4 +1,4 @@
-define('NewsSocketManager', ['socketio'], function() {
+define('NewsSocketManager', ['socketio'], function(io) {
 
     var instance = null;
 
@@ -10,7 +10,7 @@ define('NewsSocketManager', ['socketio'], function() {
 
     SocketManager.getInstance = function() {
         if (instance === null) {
-            instance = io.connect('/news');
+            instance = io('/news');
 
             instance.off = function(name, fn) {
                 if (this.$events && this.$events[name]) {

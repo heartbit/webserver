@@ -23,7 +23,6 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
             this.maingraphmenu.initParent(this.$el);
             this.timeperiods = config.maingraph.timeperiods;
             this.currentTimeperiodId = config.maingraph.defaultTimeperiodId;
-            
         },
 
         update: function(params) {

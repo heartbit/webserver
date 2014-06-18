@@ -55,7 +55,8 @@
     "grunt-node-inspector": "~0.1.2",
     "grunt-nodemon": "~0.1.2",
     "grunt-contrib-sass": "~0.6.0",
-    "grunt-simple-mocha": "*"
+    "grunt-simple-mocha": "*",
+    "grunt-forever":"*"
   },
   "license": "heartbit.io",
   "subdomain": "heartbit.io"

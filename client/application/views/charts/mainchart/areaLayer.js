@@ -128,7 +128,6 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .attr("y2", "0")
             .attr("spreadMethod", "pad");
 
-
         this.colorGradient.append("stop")
             .attr("offset", "0%")
             .attr("stop-color", this.colors.normal)
@@ -172,7 +171,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
         this.gExtent = d3.select("rect.extent");
 
         this.gBrushLabel = this.gBrush.append("text")
-            .attr('y', this.chart.height / 2)
+            .attr('y', (this.chart.height / 2) + 25)
             .attr('opacity', 0)
             .style('font-size', '50px')
             .style("text-anchor", "middle")
@@ -350,7 +349,6 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
 
     AreaLayer.prototype.brushed = function() {
         var extent = this.brush.extent();
-        // this.gBrush
 
         // Get candles between these 2 dates
         var currentCandles = _.chain(this.candles)
@@ -415,9 +413,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             this.start2SegGrad.attr('offset', '0');
             this.end2SegGrad.attr('offset', '0');
             this.start3SegGrad.attr('offset', '0');
-
         }
-
 
     };
 
