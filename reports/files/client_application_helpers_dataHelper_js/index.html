@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">67.04</p>
+      <p class="stat">73.26</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">106</p>
+      <p class="stat">42</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">40.23</p>
+      <p class="stat">19.50</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">1.22</p>
+      <p class="stat">0.51</p>
     </div>
   </div>
 </div>
@@ -93,70 +93,6 @@
     <textarea id="file-source" class="col-md-12">define(&#039;dataHelper&#039;, [&#039;FormatUtils&#039;], function(FormatUtils) {
 
    var DataHelper = function() {};
-
-   DataHelper.prototype.computeDepth = function(depth) {
-      var data = depth.attributes;
-      var bids = data.bids.slice(0, (data.bids.length) / 2); // on ne prend que 1/2 des résultats sinon échelle trop large &amp; mur non représentatif
-      var asks = data.asks.slice(0, (data.asks.length) / 2);
-      if (bids.length == 0 || asks.length == 0) return;
-
-      var MurBids = []; //Tableau Prix-Somme des amounts achats [Prix,AmountCumulé];
-      var AmountBids = [0];
-      var PriceBids = [];
-      var MurAsks = []; //Tableau Prix-Somme des amounts vente [Prix,AmountCumulé];
-      var AmountAsks = [0];
-      var PriceAsks = [];
-
-      _.each(bids, function(bid, index) {
-         if (index == 0) index = 1
-         AmountBids[index] = AmountBids[index - 1] + bid.amount;
-         PriceBids[index] = bid.price;
-         MurBids.push({
-            price: PriceBids[index],
-            amount: AmountBids[index]
-         });
-      });
-
-      _.each(asks, function(ask, index) {
-         if (index == 0) index = 1
-         AmountAsks[index] = AmountAsks[index - 1] + ask.amount;
-         PriceAsks[index] = ask.price;
-         MurAsks.push({
-            price: PriceAsks[index],
-            amount: AmountAsks[index]
-         });
-      });
-
-      LastBidsAmount = _.last(MurBids).amount;
-      LastAsksAmount = _.last(MurAsks).amount;
-
-      if (LastBidsAmount &gt; LastAsksAmount) {
-         DepthMin = MurAsks;
-         DepthMax = MurBids;
-      } else {
-         DepthMin = MurBids;
-         DepthMax = MurAsks;
-      };
-
-      // On garde seulement 1/10 points de l&#039;union des 2 tableaux triée par prix croissant
-      var Circles = _.chain(_.union(MurAsks, MurBids))
-         .sortBy(function(point) {
-            return point.price;
-         })
-         .filter(function(item, index) {
-            return index % 10 == 0;
-         })
-         .value();
-
-      return {
-         DepthMax: DepthMax,
-         DepthMin: DepthMin,
-         Circles: Circles,
-         MurBids: MurBids,
-         MurAsks: MurAsks,
-         
-      };
-   };
 
    DataHelper.prototype.sanitizeMainChartModels = function(maingraphes) {
       var models = {};

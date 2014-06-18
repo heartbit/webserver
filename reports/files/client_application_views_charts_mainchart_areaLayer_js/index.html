@@ -49,7 +49,7 @@
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">426</p>
+      <p class="stat">422</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">53.89</p>
+      <p class="stat">53.71</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">5.05</p>
+      <p class="stat">5.06</p>
     </div>
   </div>
 </div>
@@ -220,7 +220,6 @@
             .attr(&quot;y2&quot;, &quot;0&quot;)
             .attr(&quot;spreadMethod&quot;, &quot;pad&quot;);
 
-
         this.colorGradient.append(&quot;stop&quot;)
             .attr(&quot;offset&quot;, &quot;0%&quot;)
             .attr(&quot;stop-color&quot;, this.colors.normal)
@@ -264,7 +263,7 @@
         this.gExtent = d3.select(&quot;rect.extent&quot;);
 
         this.gBrushLabel = this.gBrush.append(&quot;text&quot;)
-            .attr(&#039;y&#039;, this.chart.height / 2)
+            .attr(&#039;y&#039;, (this.chart.height / 2) + 25)
             .attr(&#039;opacity&#039;, 0)
             .style(&#039;font-size&#039;, &#039;50px&#039;)
             .style(&quot;text-anchor&quot;, &quot;middle&quot;)
@@ -442,7 +441,6 @@
 
     AreaLayer.prototype.brushed = function() {
         var extent = this.brush.extent();
-        // this.gBrush
 
         // Get candles between these 2 dates
         var currentCandles = _.chain(this.candles)
@@ -507,9 +505,7 @@
             this.start2SegGrad.attr(&#039;offset&#039;, &#039;0&#039;);
             this.end2SegGrad.attr(&#039;offset&#039;, &#039;0&#039;);
             this.start3SegGrad.attr(&#039;offset&#039;, &#039;0&#039;);
-
         }
-
 
     };
 

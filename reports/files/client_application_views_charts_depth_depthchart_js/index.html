@@ -49,7 +49,7 @@
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">268</p>
+      <p class="stat">267</p>
     </div>
   </div>
   <div class="row historical">
@@ -94,6 +94,7 @@
 
     var DepthChart = function(el) {
         var self = this;
+        
         this.el = el;
         _.bindAll(
             this,
@@ -315,8 +316,6 @@
                 self.closestPoint = findClosestPrice(mousex - self.margin.left);
 
                 self.circles
-                    // .transition()
-                    // .duration(100)
                     .attr(&#039;r&#039;, function(d, i) {
                         return i == self.closestPoint.index ? 3 : 0;
                     });
@@ -340,7 +339,7 @@
                     .attr(&quot;transform&quot;, function(d) {
                         return &quot;translate(&quot; + currentCircle.attr(&#039;cx&#039;) + &quot;,0)&quot;;
                     })
-                    .text(&#039;Amount: &#039; + FormatUtils.formatValue(currentCircle.data()[0].amount, 0)); // + &quot;&lt;br/&gt;&quot; + &#039;Price: &#039; + currentCircle.data()[0].price)
+                    .text(&#039;Volume: &#039; + FormatUtils.formatValue(currentCircle.data()[0].amount, 0)); // + &quot;&lt;br/&gt;&quot; + &#039;Price: &#039; + currentCircle.data()[0].price)
 
                 self.currentPositionLabelPrice
                     .style(&quot;text-anchor&quot;, function() {
