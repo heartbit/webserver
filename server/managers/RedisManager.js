@@ -23,7 +23,7 @@ RedisManager.prototype.init = function(params) {
     };
 
     if (params.isDeployed) {
-        this.redisClient = redis.createClient(null, null, redisOptions);
+        this.redisClient = redis.createClient();
     } else {
         var redisCloudUrl = url.parse(params.url);
         this.redisClient = redis.createClient(redisCloudUrl.port, redisCloudUrl.hostname, redisOptions);
