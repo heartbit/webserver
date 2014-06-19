@@ -205,20 +205,9 @@ module.exports = function(grunt) {
         },
 
         nodemon: {
-            prod: {
-                options: {
-                    file: 'webserver.js',
-                    args: ['-d', 'yes'],
-                    ignoredFiles: ['node_modules/**'],
-                    env: {
-                        PORT: "<%= props.defaultportProd %>"
-                    },
-                }
-            },
             local: {
                 options: {
                     file: 'webserver.js',
-                    args: ['-d', 'no'],
                     nodeArgs: ['--debug'],
                     ignoredFiles: ['node_modules/**', 'RipplePairs/*', './client/application', './client/*.html'],
                     env: {
@@ -229,7 +218,7 @@ module.exports = function(grunt) {
             offline: {
                 options: {
                     file: 'webserver.js',
-                    args: ['-d', 'no', '-m', 'offline'],
+                    args: ['-m', 'offline'],
                     nodeArgs: ['--debug'],
                     ignoredFiles: ['node_modules/**'],
                     env: {
@@ -240,7 +229,7 @@ module.exports = function(grunt) {
             brk: {
                 options: {
                     file: 'webserver.js',
-                    args: ['-d', 'no', '-m', 'offline'],
+                    args: ['-m', 'offline'],
                     nodeArgs: ['--debug-brk'],
                     ignoredFiles: ['node_modules/**'],
                     env: {
@@ -295,14 +284,14 @@ module.exports = function(grunt) {
         },
 
         forever: {
-            prodwebserver: {
+            prod: {
                 options: {
                     index: 'webserver.js',
+                    command: 'node -d yes',
                     logDir: 'logs'
                 }
             }
         }
-
     });
 
     /**
