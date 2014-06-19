@@ -38,7 +38,19 @@ $primary_color: #ffffff;
     padding-top: 2em !important;
     border-radius:6px;
 }
+.myHr {
+    box-sizing: content-box;
+height: 0;
+width: 80%;
+text-align: center;
+align-content: center;
+margin-left: 10%;
+}
+.myVr{
+ width: 80%;   
+ top: 10%;
 
+}
 .title-area.webappTitle {
     text-align: center;
     margin-left: 5em;
@@ -53,7 +65,8 @@ $primary_color: #ffffff;
 */
 
 body {
-    background: #a3a3a3;
+    background: white;
+    font-family: 'Lato', sans-serif;
 }
 
 .hidden {
@@ -61,7 +74,6 @@ body {
 }
 
 .top-bar-section ul li.item {
-    float: none;
 }
 
 #firstRow {
@@ -77,4 +89,8 @@ body {
 
 #js-offcanvasmenu {
     padding-top:45px;
+}
+.searchPanel ul li{
+    list-style-type:none;
+    text-align:left;
 }

@@ -3,26 +3,26 @@
 
         <div class="row collapse">
 
-            <div class="right small-6 medium-6 large-12 columns">
-                <div class="button-bar">
+            <div class="right small-12 medium-12 large-12 columns" style="float:right">
+                <div class="button-bar" >
                     <ul class="button-group">
                         <li>
-                            <a href="#" id="js-showItemsView" class="tiny button">
+                            <button id="js-showItemsView" class="gray">
                                 <%=selectedItem%>
-                            </a>
+                            </button>
                             <div id="js-itemsViewModal" class="reveal-modal" data-reveal></div>
                         </li>
                         <li>
-                            <a href="#" id="js-showPairsView" class="tiny button">
+                            <button id="js-showPairsView" class="gray">
                                 <%=selectedPair%>
-                            </a>
+                            </button>
                             <div id="js-pairsViewModal" class="reveal-modal" data-reveal></div>
                         </li>
                        
                         <li>
-                            <a href="#" id="js-showPlatformsView" class="tiny button">
+                            <button id="js-showPlatformsView" class="gray">
                                 <%=selectedPlatform%>
-                            </a>
+                            </button>
                             <div id="js-platformsViewModal" class="reveal-modal" data-reveal></div>
                         </li>
                       
@@ -30,7 +30,8 @@
                 </div>
             </div>
 
-            <div class="small-6 medium-6 large-12 columns">
+
+            <div class="small-12 medium-12 large-12 columns" style="float:right">
                 <input type="text" class="searchbar" id="js-searchbar" placeholder="Search by platform, coin or currency...">
                 <div class="searchBox left columns small-12 medium-6 large-4" id="js-searchResults">
                 </div>

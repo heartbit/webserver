@@ -1,13 +1,13 @@
 <div class="mainView">
     <div id="graphtools" class="row">
         
-        <div class="small-8 large-8 medium-8 columns">
-            <ul class="inline-list timeperiods left">
+        <div class="small-8 large-8 medium-8 columns button-bar">
+            <ul class="button-group inline-list timeperiods left">
                 <%_.each(timeperiods, function(timeperiod){%>
                 <li class="<%=(timeperiod.id == currentTimeperiodId) ? 'current' : 'available'%>">
-                    <a href="#" id="<%=timeperiod.id%>" class="js-timeperiod ">
+                    <button id="<%=timeperiod.id%>" class="tiny button gray secondary js-timeperiod ">
                         <%=timeperiod.label%>
-                    </a>
+                    </button>
                 </li>
                 <%});%>
             </ul>

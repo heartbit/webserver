@@ -7,13 +7,16 @@
 
 .controllerView .controllerBox{
 	float:right;
-	padding-top: 15px;
+	padding-top: 2.3em;
 }
 
 .controllerView .searchbar{
 	max-height: 35px;	
 	padding-bottom: 0px;
 	margin:0px;
+	max-width: 35em;
+	margin-top: 1.0em;
+
 }
 
 .controllerView .searchbutton{
@@ -41,3 +44,19 @@
 	float:right;
 }
 */
+
+
+
+button.gray, a.gray, input[type=submit].gray {
+	
+	background-color:#dddddd;
+	
+}
+
+.gray:hover { 
+	background-color:#0096d8;
+}
+		
+.gray:active { 
+
+}

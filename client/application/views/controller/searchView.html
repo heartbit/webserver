@@ -1,16 +1,16 @@
 <div class="row panel">
 
-    <div class="large-4 medium-4 small-4 columns">
-        Items
+    <div class="large-4 medium-4 small-4 columns searchPanel">
+        <span style="text-align:center;margin-left: 1.5em;">Items</span>
         <ul>
         <%_.each(items,function(item){ if (item.active) {%>
-            <li class="js-item-search"><a class="js-item item" id="<%=item.id%>"><%=item.name%></a></li>
+            <li ><a class="js-item" id="<%=item.id%>"><%=item.name%></a></li>
         <%}})%>
         </ul>
     </div>
 
-    <div class="large-4 medium-4 small-4 columns">
-        Platforms
+    <div class="large-4 medium-4 small-4 columns searchPanel">
+        <span style="margin-left: 1.5em;">Platforms</span>
         <ul>
             <%_.each(platforms,function(platform){%>
             <li><a class="js-platform-search" id="<%=platform.id%>"><%=platform.get('id')%></a></li>
@@ -18,8 +18,8 @@
         </ul>
     </div>
 
-    <div class="large-4 medium-4 small-4 columns">
-        Pair
+    <div class="large-4 medium-4 small-4 columns searchPanel">
+        <pans style="margin-left: 1.5em;">Pair</style>
         <ul>
             <%_.each(pairs,function(pair){%>
             <li><a class="js-pair-search" id="<%=pair.id%>"><%=pair.get('id')%></a></li>
