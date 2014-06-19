@@ -287,7 +287,7 @@ module.exports = function(grunt) {
             prod: {
                 options: {
                     index: 'webserver.js',
-                    command: 'node -d yes',
+                    command: 'node',
                     logDir: 'logs'
                 }
             }
@@ -310,9 +310,9 @@ module.exports = function(grunt) {
     grunt.registerTask('localServer', ['css', 'nodemon:local']);
 
     grunt.registerTask('build', ['test', 'clean', 'css', 'requirejs:main', 'copy:main']);
-    grunt.registerTask('prod-start', ['build', 'forever:prodwebserver:start']);
-    grunt.registerTask('prod-stop', ['forever:prodwebserver:stop']);
-    grunt.registerTask('prod-restart', ['forever:prodwebserver:restart']);
+    grunt.registerTask('prod-start', ['build', 'forever:prod:start']);
+    grunt.registerTask('prod-stop', ['forever:prod:stop']);
+    grunt.registerTask('prod-restart', ['forever:prod:restart']);
     grunt.registerTask('deploy-dev', ['build', 'shell:gitdev']);
     grunt.registerTask('deploy-preprod', ['build', 'shell:gitpreprod']);
 

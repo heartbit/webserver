@@ -15,7 +15,7 @@ var argv = optimist.usage('\n node webserver.js -port port -d yes/no -m online')
         string: true,
         alias: "d",
         describe: 'reserved for compiled & deployed',
-        default: "no"
+        default: "yes"
     })
     .options('mode', {
         string: true,
@@ -51,17 +51,17 @@ console.log('');
 console.log('Client path : ', webapp_client_path, '\nServer path : ', webapp_server_path);
 console.log('');
 
-if (cluster.isMaster && isDeployed) {
-    var noOfWorkers = os.cpus().length;
-    for (i = 0; i < noOfWorkers; i += 1) {
-        console.log('Starting worker thread #' + i);
-        cluster.fork();
-    }
-    cluster.on('death', function(worker) {
-        console.log('Worker ' + worker.pid + ' died. Restarting worker thread...');
-        cluster.fork();
-    });
-} else {
+// if (cluster.isMaster && isDeployed) {
+//     var noOfWorkers = os.cpus().length;
+//     for (i = 0; i < noOfWorkers; i += 1) {
+//         console.log('Starting worker thread #' + i);
+//         cluster.fork();
+//     }
+//     cluster.on('death', function(worker) {
+//         console.log('Worker ' + worker.pid + ' died. Restarting worker thread...');
+//         cluster.fork();
+//     });
+// } else {
     var App = require(webapp_server_path + 'app');
     var app = new App();
 
@@ -75,4 +75,4 @@ if (cluster.isMaster && isDeployed) {
     };
 
     app.start(options);
-}
+// }
