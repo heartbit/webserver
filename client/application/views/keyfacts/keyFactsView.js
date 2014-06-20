@@ -103,7 +103,7 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
                         duration: 500,
                         trend: true,
                         reset: reset,
-                        fontSize: '16px'
+                        // fontSize: '16px'
                     };
 
                     bigNumberView.bigNumberChart.render(updateParams);

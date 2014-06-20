@@ -1,13 +1,16 @@
-define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'moment'], function(config, DataHelper, d3, Tooltip, FormatUtils) {
+define('depthchart', ['config', 'd3', 'FormatUtils', 'moment'], function(config, d3, FormatUtils, Moment) {
 
     var DepthChart = function(el) {
         var self = this;
-        
+
         this.el = el;
         _.bindAll(
             this,
             'initOnMouseOverEvents'
         );
+
+        this.maxBidNumber = d3.select('#js-maxBid');
+        this.minAskNumber = d3.select('#js-minAsk');
 
         this.margin = {
             top: 20,
@@ -15,8 +18,6 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
             bottom: 30,
             left: 40
         };
-
-        this.dataHelper = new DataHelper();
 
         this.width = $(el).width() - this.margin.left - this.margin.right,
         this.height = $(el).height() - this.margin.top - this.margin.bottom;
@@ -176,6 +177,26 @@ define('depthchart', ['config', 'dataHelper', 'd3', 'tooltip', 'FormatUtils', 'm
                 return self.yScale(d.amount);
             })
             .attr('r', 0);
+
+        // get max murbids
+        var maxBid = _.max(murBids, function(bid) {
+            return bid.price;
+        });
+        // get min murAsks
+        var minAsk = _.min(murAsks, function(ask) {
+            return ask.price;
+        });
+        
+        var leftOffsetMaxBid = this.xScale(maxBid.price) - this.margin.left - this.margin.right - 5;
+        var leftOffsetMinAsk = this.xScale(minAsk.price) - this.margin.left - this.margin.right;
+        this.maxBidNumber
+            .transition()
+            .duration(100)
+            .style('left', leftOffsetMaxBid + 'px');
+        this.minAskNumber
+            .transition()
+            .duration(100)
+            .style('left', leftOffsetMinAsk + 'px');
 
         this.isDrawn = true;
     };

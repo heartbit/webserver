@@ -2,7 +2,7 @@ var optimist = require('optimist');
 var os = require('os');
 var cluster = require('cluster');
 
-var argv = optimist.usage('\n node webserver.js -port port -d yes/no -m online')
+var argv = optimist.usage('\n node webserver.js -port port')
     .alias('h', 'help')
     .alias('h', '?')
     .options('port', {
@@ -11,37 +11,20 @@ var argv = optimist.usage('\n node webserver.js -port port -d yes/no -m online')
         describe: 'Http Port',
         default: 9090
     })
-    .options('deployed', {
-        string: true,
-        alias: "d",
-        describe: 'reserved for compiled & deployed',
-        default: "yes"
-    })
-    .options('mode', {
-        string: true,
-        alias: "m",
-        describe: 'mode online/offline',
-        default: "online"
-    })
     .argv;
 
 if (argv.help) {
     optimist.showHelp();
 }
 
-var port = process.env.PORT || argv.port || 9090;
-var env = argv.env;
-var isDeployed = (argv.deployed === 'yes');
-var isDebug = (argv.debug === 'yes');
-var mode = argv.mode;
+var port = argv.port || process.env.PORT || 9090;
+var isDeployed = process.env.LOCAL ? false : true;
 
 console.log('');
 console.log('Webserver - Heartbit');
 console.log('');
 console.log('Port #', port);
-console.log('Debug ?', isDebug);
 console.log('Deployed ?', isDeployed);
-console.log('Mode ?', mode);
 
 var webapp = process.cwd() + '/';
 var webapp_server_path = webapp + 'server/';
@@ -62,17 +45,17 @@ console.log('');
 //         cluster.fork();
 //     });
 // } else {
-    var App = require(webapp_server_path + 'app');
-    var app = new App();
+var App = require(webapp_server_path + 'app');
+var app = new App();
 
-    var options = {
-        port: port,
-        mode: mode,
-        isDebug: isDebug,
-        isDeployed: isDeployed,
-        serverPath: webapp_server_path,
-        clientPath: webapp_client_path
-    };
+var options = {
+    port: port,
+    mode: "online",
+    isDebug: false,
+    isDeployed: isDeployed,
+    serverPath: webapp_server_path,
+    clientPath: webapp_client_path
+};
 
-    app.start(options);
+app.start(options);
 // }

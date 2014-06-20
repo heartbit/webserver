@@ -59,13 +59,13 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'spin', 'moment'],
             this.delay = params.delay || 0;
             this.duration = params.duration || 0;
             this.type = params.type || this.type;
-            this.fontSize = params.fontSize || this.fontSize || "20px";
+            // this.fontSize = params.fontSize || this.fontSize || "20px";
 
             this.$bigvalue.transition()
                 .delay(self.delay)
                 .duration(self.duration)
                 .attr('opacity', 1)
-                .attr('font-size', self.fontSize)
+                // .attr('font-size', self.fontSize)
                 .tween("text", function(d) {
                     var i = d3.interpolate(self.initValue, self.value);
                     return function(t) {

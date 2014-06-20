@@ -208,36 +208,15 @@ module.exports = function(grunt) {
             local: {
                 options: {
                     file: 'webserver.js',
+                    args: ['-d', 'no'],
                     nodeArgs: ['--debug'],
                     ignoredFiles: ['node_modules/**', 'RipplePairs/*', './client/application', './client/*.html'],
                     env: {
-                        PORT: "<%= props.defaultport %>"
-                    },
-                }
-            },
-            offline: {
-                options: {
-                    file: 'webserver.js',
-                    args: ['-m', 'offline'],
-                    nodeArgs: ['--debug'],
-                    ignoredFiles: ['node_modules/**'],
-                    env: {
-                        PORT: "<%= props.defaultport %>"
-                    },
-                }
-            },
-            brk: {
-                options: {
-                    file: 'webserver.js',
-                    args: ['-m', 'offline'],
-                    nodeArgs: ['--debug-brk'],
-                    ignoredFiles: ['node_modules/**'],
-                    env: {
-                        PORT: "<%= props.defaultport %>"
+                        PORT: "<%= props.defaultport %>",
+                        LOCAL: true
                     },
                 }
             }
-
         },
 
         // Shell command lines (because the git plugin is shitty)
