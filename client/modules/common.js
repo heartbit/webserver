@@ -23,6 +23,7 @@ requirejs.config({
         cldr: 'libs/twitter_cldr',
         spin: 'libs/spin.min',
         fuse: 'libs/fuse.min',
+        d3tip: 'libs/d3tip',
         d3: 'libs/d3.min',
 
         // Screenshot
@@ -74,6 +75,7 @@ requirejs.config({
         candleLayer: 'application/views/charts/mainchart/candleLayer',
         volumeLayer: 'application/views/charts/mainchart/volumeLayer',
         areaLayer: 'application/views/charts/mainchart/areaLayer',
+        newsLayer: 'application/views/charts/mainchart/newsLayer',
         mainchart: 'application/views/charts/mainchart/mainchart',
 
         miskhorizbarchart: 'application/views/charts/misk/miskhorizbarchart',
@@ -158,6 +160,10 @@ requirejs.config({
             deps: ['jquery'],
             exports: 'd3'
         },
+        // 'd3tip': {
+        //     deps: ['d3'],
+        //     exports: 'd3tip'
+        // },
         'foundation': {
             deps: ['jquery'],
             exports: 'foundation'

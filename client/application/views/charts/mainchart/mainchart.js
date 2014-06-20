@@ -1,4 +1,4 @@
-define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 'areaLayer', 'candleLayer', 'volumeLayer', 'moment'], function(config, DataHelper, d3, Maingraphes, Maingraphe, AreaLayer, CandleLayer, VolumeLayer) {
+define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 'areaLayer', 'candleLayer', 'volumeLayer', 'newsLayer', 'moment'], function(config, DataHelper, d3, Maingraphes, Maingraphe, AreaLayer, CandleLayer, VolumeLayer, NewsLayer) {
 
     function MainChart(view, el, params) {
         this.el = el;
@@ -16,7 +16,8 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         this.initXAxis();
         this.layers = {
             areaLayer: new AreaLayer(this),
-            volumeLayer: new VolumeLayer(this)
+            volumeLayer: new VolumeLayer(this),
+            newsLayer: new NewsLayer(this)
         };
     };
 
@@ -187,8 +188,8 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
                     self.layers.areaLayer.updateTooltip(closestDate);
                     self.layers.volumeLayer.updateTooltip(closestDate);
                 }
-                
-                    
+
+
                 return false;
             });
     };
