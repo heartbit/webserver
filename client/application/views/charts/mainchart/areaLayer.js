@@ -383,6 +383,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             // } else {
 
             var evol = 100 * (last.close - first.close) / first.close;
+            var evolColor = evol >= 0 ? 'green' : 'red';
 
             this.gBrushLabel
                 .transition()
@@ -391,14 +392,19 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 .attr('opacity', 1)
                 .attr('font-size', '50px')
                 .style('class', 'icon-uo-dir')
-                .text(FormatUtils.formatEvol(evol));
+                .text(FormatUtils.formatEvol(evol))
+                .style("fill", evolColor);
 
             var startPercent = String((+this.gExtent.attr('x') / this.chart.width) * 100) + '%';
             var endPercent = String(((+this.gExtent.attr('x') + +this.gExtent.attr('width')) / this.chart.width) * 100) + '%';
 
             this.end1SegGrad.attr('offset', startPercent);
-            this.start2SegGrad.attr('offset', startPercent);
-            this.end2SegGrad.attr('offset', endPercent);
+            this.start2SegGrad
+                .attr('offset', startPercent)
+                .attr('stop-color', evolColor);
+            this.end2SegGrad
+                .attr('offset', endPercent)
+                .attr('stop-color', evolColor);
             this.start3SegGrad.attr('offset', endPercent);
 
         } else {
