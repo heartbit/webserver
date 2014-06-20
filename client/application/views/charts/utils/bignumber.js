@@ -38,7 +38,7 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'spin', 'moment'],
                 left: '50%' // Left position relative to parent
             };
 
-            $(this.el).spin(this.spinopts);
+            this.addLoader();
         };
 
         BigNumber.prototype.render = function(params) {
@@ -65,13 +65,13 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'spin', 'moment'],
                 .delay(self.delay)
                 .duration(self.duration)
                 .attr('opacity', 1)
-                // .attr('font-size', self.fontSize)
-                .tween("text", function(d) {
-                    var i = d3.interpolate(self.initValue, self.value);
-                    return function(t) {
-                        this.textContent = self.valueToLabel(i(t));
-                    };
-                });
+            // .attr('font-size', self.fontSize)
+            .tween("text", function(d) {
+                var i = d3.interpolate(self.initValue, self.value);
+                return function(t) {
+                    this.textContent = self.valueToLabel(i(t));
+                };
+            });
 
             if (this.trend) {
                 this.addTrend();
@@ -131,11 +131,15 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'spin', 'moment'],
         };
 
         BigNumber.prototype.addLoader = function() {
-            $(this.el).spin(this.spinopts);
+            if ($(this.el) && $(this.el).spin) {
+                $(this.el).spin(this.spinopts);
+            }
         };
 
         BigNumber.prototype.removeLoader = function() {
-            $(this.el).spin(false);
+            if ($(this.el) && $(this.el).spin) {
+                $(this.el).spin(false);
+            }
         };
 
         return BigNumber;

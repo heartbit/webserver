@@ -41,10 +41,11 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
                 createStoryJS({
                     type: 'timeline',
                     width: '100%',
-                    height: '400',
+                    height: '500',
                     start_at_end: true,
                     hash_bookmark: false,
                     lang: 'en',
+                    font: 'Lato',
                     maptype: 'osm',
                     source: this.news.toTimelineJSON(),
                     embed_id: 'timeline-news'
@@ -57,7 +58,7 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
             });
             return this;
         }
-        
+
     });
 
 });
