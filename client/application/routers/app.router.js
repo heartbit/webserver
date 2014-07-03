@@ -1,7 +1,7 @@
 define(function(require) {
 
 	var ParametersManager = require('ParametersManager'),
-	EventManager = require('EventManager');
+		EventManager = require('EventManager');
 	NewsSocketManager = require('NewsSocketManager');
 	DataSocketManager = require('DataSocketManager');
 	ChatSocketManager = require('ChatSocketManager');
@@ -27,6 +27,7 @@ define(function(require) {
 		initialize: function() {
 			_.bindAll(this, 'refresh', 'render', 'update', 'initSockets');
 
+			this.datarooms = [];
 			this.appEl = '#js-app';
 			this.isRender = false;
 
@@ -34,10 +35,10 @@ define(function(require) {
 				offcanvasmenu: new OffcanvasmenuView(),
 				controller: new ControllerView(),
 				keyfacts: new KeyFactsView(),
-				header: new HeaderView(),
-				main: new MainView(),
-				depth: new DepthView(),
-				news: new NewsView()
+				// header: new HeaderView(),
+				// main: new MainView(),
+				// depth: new DepthView(),
+				// news: new NewsView()
 			};
 
 			Backbone.history.start({
@@ -49,6 +50,11 @@ define(function(require) {
 			// 	console.log('t')
 			// });
 
+			DataSocketManager.once('roomlist', function(roomlist) {
+				console.log('roomlist', roomlist);
+				this.roomlist = roomlist;
+			});
+			DataSocketManager.emit('roomlist');
 			$(document).foundation();
 		},
 
@@ -91,7 +97,7 @@ define(function(require) {
 		},
 
 		initSockets: function() {
-			this.joinDataRoom(ParametersManager.getCurrentParams());
+			this.joinDataroom(ParametersManager.getCurrentParams());
 		},
 
 		update: function(callback) {
@@ -104,11 +110,31 @@ define(function(require) {
 			}
 		},
 
-		joinDataRoom: function(params) {
+		clearDatarooms: function() {
+			_.each(this.datarooms, function(dataroom) {
+				DataSocketManager.emit('leave-dataroom', dataroom);
+				DataSocketManager.once('leave-dataroom', function(response) {
+					if (response.error) console.log('LEAVE DATAROOM ERROR : ', response.error);
+				});
+			});
+		},
+
+		joinDataroom: function(params) {
 			var sep = ':';
 			var dataroom = params.item + sep + params.currency;
+
+			this.clearDatarooms();
+
+			DataSocketManager.once('roomlist', function(roomlist) {
+				console.log(roomlist);
+			});
+
 			console.log('dataroom', dataroom);
-			DataSocketManager.emit('dataroom', dataroom);
+			DataSocketManager.emit('enter-dataroom', dataroom);
+			DataSocketManager.once('enter-dataroom', function(response) {
+				if (response.error) console.log('ENTER DATAROOM ERROR : ', response.error);
+				else self.datarooms.push(dataroom);
+			});
 		}
 
 	});

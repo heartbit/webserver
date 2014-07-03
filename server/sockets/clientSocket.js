@@ -8,8 +8,6 @@ var APIManager = require('../managers/APIManager');
 var CacheManager = require('../managers/CacheManager');
 var config = require('../config/');
 
-
-
 function ClientSocket(params) {
 	this.isDebug = params.isDebug;
 	this.server = params.server;
@@ -39,12 +37,19 @@ ClientSocket.prototype.initNewsfeedNamespace = function() {
 
 	this.io
 		.of("/news")
+		.use(function(socket, next) {
+			if (socket) {
+				console.log('SOCKET NEWS CONNECTION MIDDLEWARE')
+				return next();
+			}
+			next(new Error('Authentication error'));
+		})
 		.on('connection', function(socket) {
 			socket.on('news', function(params) {
 				console.log('ask for news')
 				CacheManager.get('news', function(articles) {
-					socket.emit('news', articles)
-				})
+					socket.emit('news', articles);
+				});
 			});
 		});
 
@@ -55,74 +60,146 @@ ClientSocket.prototype.initNewsfeedNamespace = function() {
 	});
 };
 
-ClientSocket.prototype.initDataNamespace = function() {
+var generateRoomnames = function(callback) {
 	var self = this;
 	var sep = ":";
-	this.datarooms = [];
-	this.io
-		.of("/data")
-		.on('connection', function(socket) {
-			console.log('Socket connection')
-			socket.on('test', function() {
-				console.log('blatte');
-				socket.emit('bliite', "prout")
-			});
-
-			socket.on('dataroom', function(dataroom) {
-				console.log('client want to join dataroom : ' + dataroom);
-				
-				// Send cached data :
-				_.each(self.platforms, function(platform) {
-					_.each(platform.pairs, function(pair) {
-						if (pair.item + sep + pair.currency == dataroom) {
-							_.each(config.measures, function(measure) {
-								var cacheKey = platform.name + sep + pair.item + sep + pair.currency + sep + measure.key;
-								console.log('Cachekey ', cacheKey);
-								CacheManager.get(cacheKey, function(data) {
-									var payload = {
-										key: cacheKey,
-										data: data,
-										dataroom: dataroom
-									};
-									console.log('Send cache : ', cacheKey);
-									socket.emit(cacheKey, payload)
-								});
-							});
-						}
-					});
-				});
-
-				socket.join(dataroom);
-			});
-
-			socket.on('disconnect', function() {
-
-			});
-
-		});
-
 	APIManager.getPlatforms(function(platforms) {
+
+		var rooms = [];
+
 		self.platforms = platforms;
 		_.each(platforms, function(platform) {
 			_.each(platform.pairs, function(pair) {
+				var room = {
+					id: pair.item + sep + pair.currency,
+					channels: []
+				};
+
 				_.each(config.measures, function(measure) {
 					var channel = platform.name + sep + pair.item + sep + pair.currency + sep + measure.key;
-					var room = pair.item + sep + pair.currency;
-
-					EventManager.on(channel, function(data) {
-						var payload = {
-							key: channel,
-							data: data,
-							room: room
-						}
-						self.io
-							.of("/data")
-							.in(room)
-							.emit(channel, payload);
-					});
+					room.channels.push(channel);
 				});
+
+				rooms.push(room);
 			});
 		});
+
+		callback(rooms);
+
+	});
+};
+
+ClientSocket.prototype.initDataNamespace = function() {
+	var self = this;
+	var max_num_rooms = 5;
+
+	generateRoomnames(function(roomlist) {
+
+		self.io
+			.of("/data")
+			.use(function(socket, next) {
+				if (socket) {
+					console.log('SOCKET DATA CONNECTION MIDDLEWARE')
+					return next();
+				}
+				next(new Error('Authentication error'));
+			})
+			.on('connection', function(socket) {
+
+				socket.datarooms = [];
+
+				socket.on('roomlist', function() {
+					console.log('client want to have the rooms list');
+					socket.emit('roomlist', roomlist);
+				});
+
+				socket.on('enter-dataroom', function(dataroom) {
+					console.log('client want to join dataroom : ' + dataroom);
+
+					var checkDataroomRequest = function(dataroom) {
+						return _.contains(_.pluck(roomlist, 'id'), dataroom);
+					};
+
+					// Check if dataroom exists
+					if (!checkDataroomRequest(dataroom)) {
+						var payload = {
+							error: dataroom + ' is not available :/'
+						};
+						socket.emit('enter-dataroom', payload);
+						return false;
+					}
+
+					if (socket.datarooms && socket.datarooms.length > max_num_rooms) {
+						var payload = {
+							error: 'Max connections socket reached :/'
+						};
+						socket.emit('enter-dataroom', payload);
+						return false;
+					}
+
+					var room = _.find(roomlist, function(room) {
+						return room.id == dataroom;
+					});
+
+					_.each(room.channels, function(channel) {
+						CacheManager.get(channel, function(data) {
+							var payload = {
+								key: channel,
+								data: data,
+								dataroom: dataroom
+							};
+							console.log('Send cache : ', channel);
+							console.log(data);
+							socket.emit(channel, payload)
+						});
+					});
+
+					socket.join(dataroom, function(err) {
+						console.log('err dataroom join : ', err);
+					});
+					socket.datarooms.push(dataroom);
+
+					console.log(socket.rooms);
+
+				});
+
+				socket.on('leave-dataroom', function(dataroom) {
+					if (_.contains(socket.datarooms, dataroom)) {
+						socket.emit('leave-dataroom', 'success');
+						socket.leave(dataroom);
+						console.log('rooms : ', socket.rooms);
+					} else {
+						socket.emit('leave-dataroom', 'error');
+					}
+				});
+
+				socket.on('disconnect', function() {
+					console.log('socket disconnected');
+				});
+
+			});
+
+		_.each(roomlist, function(room) {
+			_.each(room.channels, function(channel) {
+				EventManager.on(channel, function(data) {
+					if (channel == 'BTCCHINA:BTC:CNY:TRD') {
+						console.log(channel);
+						console.log(room);
+					}
+					var payload = {
+						key: channel,
+						data: data,
+						dataroom: room.id
+					};
+					self.io
+						.of("/data")
+						.to(room.id)
+						.emit(channel, payload);
+				});
+
+			})
+		});
+
 	});
 
 };
@@ -135,70 +212,6 @@ ClientSocket.prototype.initDataNamespace = function() {
 // 			// 	test: "blatte"
 // 			// });
 // 		});
-// };
-
-// ClientSocket.prototype.initServices = function(socket) {
-// 	var self = this;
-// 	socket.on('subscribe:ticker:last', function(params) {
-// 		console.log('client subscribe!');
-// 		self.initTickerService(socket, params);
-// 		self.initTradeService(socket, params);
-// 	});
-// 	socket.on('disconnect', function() {
-// 		console.log('client disconnected !! ');
-// 	});
-// };
-
-// ClientSocket.prototype.initTradeService = function(socket, params) {
-// 	var self = this;
-// 	var sep = ":";
-// 	_.each(self.platforms, function(platform) {
-// 		_.each(platform.pairs, function(pair) {
-// 			var sendNewTrade = function(ticker) {
-// 				var eventIdUpdate = function(ticker) {
-// 					var sep = ":";
-// 					return "ticker" + sep + ticker.platform + sep + ticker.item + sep + ticker.currency + sep + 'last';
-// 				};
-// 				try {
-// 					var objTicker = ticker;
-// 					objTicker.platform = platform.id;
-// 					objTicker.item = pair.item.id;
-// 					objTicker.currency = pair.currency.id;
-// 					// console.log('SendNewTrade trade', JSON.stringify(objTicker));
-// 					socket.emit(eventIdUpdate(objTicker), objTicker);
-// 				} catch (r) {
-// 					console.log('err', r);
-// 				}
-// 			};
-// 			EventManager.on(platform.id + sep + pair.item.id + sep + pair.currency.id + sep + 'TRD', sendNewTrade);
-
-// 		});
-// 	});
-// };
-
-// ClientSocket.prototype.initTickerService = function(socket, params) {
-// 	var self = this;
-// 	var sep = ":";
-// 	_.each(self.platforms, function(platform) {
-// 		_.each(platform.pairs, function(pair) {
-// 			var sendNewTicker = function(ticker) {
-// 				var eventIdUpdate = function(ticker) {
-// 					var sep = ":";
-// 					return "ticker" + sep + ticker.platform + sep + ticker.item + sep + ticker.currency + sep + 'last';
-// 				};
-// 				try {
-// 					var objTicker = ticker;
-// 					objTicker.platform = platform.id;
-// 					objTicker.item = pair.item.id;
-// 					objTicker.currency = pair.currency.id;
-// 					socket.emit(eventIdUpdate(objTicker), objTicker);
-// 				} catch (r) {
-// 					console.log('err', r);
-// 				}
-// 			};
-// 			EventManager.on(platform.id + sep + pair.item.id + sep + pair.currency.id + sep + 'TCK', sendNewTicker)
-// 		});
-// 	});
 // };
 
 module.exports = ClientSocket;

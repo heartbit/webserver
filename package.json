@@ -27,6 +27,7 @@
     "cron": "*",
     "moment": "*",
     "socket.io": "*",
+    "socket.io-client": "*",
     "ws": "*",
     "githubhook": "*",
     "prettyjson": "*",
@@ -56,7 +57,7 @@
     "grunt-nodemon": "~0.1.2",
     "grunt-contrib-sass": "~0.6.0",
     "grunt-simple-mocha": "*",
-    "grunt-forever":"*"
+    "grunt-forever": "*"
   },
   "license": "heartbit.io",
   "subdomain": "heartbit.io"
