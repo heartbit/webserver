@@ -1,1 +1,0 @@
-var dashboard = require('statusdashboard').dashboard(settings);

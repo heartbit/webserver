@@ -56,6 +56,7 @@ ClientSocket.prototype.initNewsfeedNamespace = function() {
 	EventManager.on('news', function(data) {
 		self.io
 			.of("/news")
+			.volatile
 			.emit('news', data);
 	});
 };
@@ -86,7 +87,7 @@ var generateRoomnames = function(callback) {
 				} else {
 					rooms.push({
 						id: roomid,
-						channels: []
+						channels: channels
 					});
 				}
 
@@ -126,7 +127,14 @@ ClientSocket.prototype.initDataNamespace = function() {
 					console.log('client want to join dataroom : ' + dataroom);
 
 					var checkDataroomRequest = function(dataroom) {
-						return _.contains(_.pluck(roomlist, 'id'), dataroom);
+
+						var room = _.find(roomlist, function(room) {
+							return room.id == dataroom;
+						});
+
+						console.log('selected room ', room);
+
+						return room;
 					};
 
 					// Check if dataroom exists
@@ -163,17 +171,30 @@ ClientSocket.prototype.initDataNamespace = function() {
 					});
 
 					socket.join(dataroom, function(err) {
-						if (err)
+						if (err) {
+							var payload = {
+								error: err
+							};
 							console.log('err dataroom join : ', err);
+							socket.emit('enter-dataroom', payload);
+						} else {
+							socket.emit('enter-dataroom', 'success');
+						}
 					});
 					socket.datarooms.push(dataroom);
 				});
 
 				socket.on('leave-dataroom', function(dataroom) {
+					console.log('client want to leave dataroom : ' + dataroom);
 					if (_.contains(socket.datarooms, dataroom)) {
-						socket.emit('leave-dataroom', 'success');
-						socket.leave(dataroom);
-						console.log('rooms : ', socket.rooms);
+						socket.leave(dataroom, function(err) {
+							if (err) {
+								console.log('err dataroom leave : ', err);
+								socket.emit('leave-dataroom', 'error');
+							} else {
+								socket.emit('leave-dataroom', 'success');
+							}
+						});
 					} else {
 						socket.emit('leave-dataroom', 'error');
 					}
@@ -200,7 +221,8 @@ ClientSocket.prototype.initDataNamespace = function() {
 					self.io
 						.of("/data")
 						.to(room.id)
-						.emit(channel, payload);
+					// .volatile
+					.emit(channel, payload);
 				});
 
 			})

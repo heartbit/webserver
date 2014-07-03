@@ -10,8 +10,9 @@ define('DataSocketManager', ['socketio'], function(io) {
 
     SocketManager.getInstance = function() {
         if (instance === null) {
-            instance = io('/data');
             
+            instance = io('/data');
+
             instance.off = function(name, fn) {
                 if (this.$events && this.$events[name]) {
                     var list = this.$events[name];
@@ -42,6 +43,7 @@ define('DataSocketManager', ['socketio'], function(io) {
             instance.on('connect', function() {
                 console.log('data socket connected!')
             });
+
             instance.on('disconnect', function() {
                 console.log('data socket disconnected!')
             });

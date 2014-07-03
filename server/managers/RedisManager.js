@@ -48,13 +48,12 @@ RedisManager.prototype.init = function(params) {
 RedisManager.prototype.subscribeToChannels = function(callback) {
     var self = this;
     var sep = ":";
+
     apiManager.getPlatforms(function(platforms) {
-        console.log('platforms', platforms);
         _.each(platforms, function(platform) {
             _.each(platform.pairs, function(pair) {
                 _.each(config.measures, function(measure) {
                     var channel = platform.name + sep + pair.item + sep + pair.currency + sep + measure.key;
-                    console.log(channel);
                     self.redisClient.psubscribe(channel);
                 });
             });

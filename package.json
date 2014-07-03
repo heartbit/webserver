@@ -16,7 +16,11 @@
   ],
   "dependencies": {
     "grunt-cli": "*",
-    "express": "3.5.1",
+    "express": "*",
+    "morgan": "*",
+    "body-parser": "*",
+    "method-override": "*",
+    "compression": "*",
     "q": "*",
     "bash-color": "*",
     "optimist": "*",

@@ -35,10 +35,10 @@ define(function(require) {
 				offcanvasmenu: new OffcanvasmenuView(),
 				controller: new ControllerView(),
 				keyfacts: new KeyFactsView(),
-				// header: new HeaderView(),
-				// main: new MainView(),
-				// depth: new DepthView(),
-				// news: new NewsView()
+				header: new HeaderView(),
+				main: new MainView(),
+				depth: new DepthView(),
+				news: new NewsView()
 			};
 
 			Backbone.history.start({
@@ -115,6 +115,9 @@ define(function(require) {
 				DataSocketManager.emit('leave-dataroom', dataroom);
 				DataSocketManager.once('leave-dataroom', function(response) {
 					if (response.error) console.log('LEAVE DATAROOM ERROR : ', response.error);
+					else {
+						console.log('leave dataroom ok ', dataroom);
+					}
 				});
 			});
 		},
@@ -133,7 +136,9 @@ define(function(require) {
 			DataSocketManager.emit('enter-dataroom', dataroom);
 			DataSocketManager.once('enter-dataroom', function(response) {
 				if (response.error) console.log('ENTER DATAROOM ERROR : ', response.error);
-				else self.datarooms.push(dataroom);
+				else {
+					console.log('enter dataroom ok', dataroom);
+				}
 			});
 		}
 

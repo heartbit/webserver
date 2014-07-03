@@ -1,5 +1,3 @@
-var express = require('express');
-var http = require('http');
 var moment = require('moment');
 var _ = require('underscore');
 var Q = require('q');
@@ -21,7 +19,7 @@ App.prototype.start = function(options) {
             self.initClientRoutes();
             self.initServicesRoutes();
             self.initStaticContentManager();
-            self.initFourtyFourPage();
+            // self.initFourtyFourPage();
         })
         .then(function() {
             self.run();
@@ -78,15 +76,23 @@ App.prototype.initRedisAndCacheManager = function() {
 
 App.prototype.initExpressServer = function() {
     var deferred = Q.defer();
+    var express = require('express');
+    var http = require('http');
+
     this.app = express();
-    this.server = http.Server(this.app);
-    // if (this.options.isDebug) {
-    // this.app.use(express.logger());
-    // }
-    this.app.use(express.compress());
-    this.app.use(express.json());
-    this.app.use(express.urlencoded());
-    this.app.use(express.methodOverride());
+    this.server = http.createServer(this.app);
+
+    var morgan = require('morgan');
+    var bodyParser = require('body-parser');
+    var methodOverride = require('method-override');
+    var compress = require('compression');
+    this.app.use(bodyParser());
+    this.app.use(methodOverride());
+    this.app.use(compress());
+    if (this.options.mode != 'prod') {
+        this.app.use(morgan('dev'));
+    }
+
     this.app.set('options', this.options);
     this.app.enable('trust proxy');
     console.log('Express server...OK');
