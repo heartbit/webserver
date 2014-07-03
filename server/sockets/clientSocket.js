@@ -66,21 +66,30 @@ var generateRoomnames = function(callback) {
 	APIManager.getPlatforms(function(platforms) {
 
 		var rooms = [];
-
 		self.platforms = platforms;
 		_.each(platforms, function(platform) {
 			_.each(platform.pairs, function(pair) {
-				var room = {
-					id: pair.item + sep + pair.currency,
-					channels: []
-				};
 
+				var channels = []
 				_.each(config.measures, function(measure) {
-					var channel = platform.name + sep + pair.item + sep + pair.currency + sep + measure.key;
-					room.channels.push(channel);
+					channels.push(platform.name + sep + pair.item + sep + pair.currency + sep + measure.key);
 				});
 
-				rooms.push(room);
+				var roomid = pair.item + sep + pair.currency;
+				var room = _.find(rooms, function(room) {
+					return room.id == roomid;
+				});
+
+				// Room already exists
+				if (room) {
+					room.channels = _.union(room.channels, channels);
+				} else {
+					rooms.push({
+						id: roomid,
+						channels: []
+					});
+				}
+
 			});
 		});
 
@@ -149,18 +158,15 @@ ClientSocket.prototype.initDataNamespace = function() {
 								dataroom: dataroom
 							};
 							console.log('Send cache : ', channel);
-							console.log(data);
 							socket.emit(channel, payload)
 						});
 					});
 
 					socket.join(dataroom, function(err) {
-						console.log('err dataroom join : ', err);
+						if (err)
+							console.log('err dataroom join : ', err);
 					});
 					socket.datarooms.push(dataroom);
-
-					console.log(socket.rooms);
-
 				});
 
 				socket.on('leave-dataroom', function(dataroom) {
@@ -182,7 +188,7 @@ ClientSocket.prototype.initDataNamespace = function() {
 		_.each(roomlist, function(room) {
 			_.each(room.channels, function(channel) {
 				EventManager.on(channel, function(data) {
-					if (channel == 'BTCCHINA:BTC:CNY:TRD') {
+					if (channel == 'BITSTAMP:BTC:CNY:TRD') {
 						console.log(channel);
 						console.log(room);
 					}
