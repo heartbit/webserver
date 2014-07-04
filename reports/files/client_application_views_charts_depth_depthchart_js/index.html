@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">70.74</p>
+      <p class="stat">70.57</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">267</p>
+      <p class="stat">288</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">37.90</p>
+      <p class="stat">37.45</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">3.52</p>
+      <p class="stat">3.85</p>
     </div>
   </div>
 </div>
@@ -90,16 +90,19 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;depthchart&#039;, [&#039;config&#039;, &#039;dataHelper&#039;, &#039;d3&#039;, &#039;tooltip&#039;, &#039;FormatUtils&#039;, &#039;moment&#039;], function(config, DataHelper, d3, Tooltip, FormatUtils) {
+    <textarea id="file-source" class="col-md-12">define(&#039;depthchart&#039;, [&#039;config&#039;, &#039;d3&#039;, &#039;FormatUtils&#039;, &#039;moment&#039;], function(config, d3, FormatUtils, Moment) {
 
     var DepthChart = function(el) {
         var self = this;
-        
+
         this.el = el;
         _.bindAll(
             this,
             &#039;initOnMouseOverEvents&#039;
         );
+
+        this.maxBidNumber = d3.select(&#039;#js-maxBid&#039;);
+        this.minAskNumber = d3.select(&#039;#js-minAsk&#039;);
 
         this.margin = {
             top: 20,
@@ -107,8 +110,6 @@
             bottom: 30,
             left: 40
         };
-
-        this.dataHelper = new DataHelper();
 
         this.width = $(el).width() - this.margin.left - this.margin.right,
         this.height = $(el).height() - this.margin.top - this.margin.bottom;
@@ -268,6 +269,26 @@
                 return self.yScale(d.amount);
             })
             .attr(&#039;r&#039;, 0);
+
+        // get max murbids
+        var maxBid = _.max(murBids, function(bid) {
+            return bid.price;
+        });
+        // get min murAsks
+        var minAsk = _.min(murAsks, function(ask) {
+            return ask.price;
+        });
+        
+        var leftOffsetMaxBid = this.xScale(maxBid.price) - this.margin.left - this.margin.right - 5;
+        var leftOffsetMinAsk = this.xScale(minAsk.price) - this.margin.left - this.margin.right;
+        this.maxBidNumber
+            .transition()
+            .duration(100)
+            .style(&#039;left&#039;, leftOffsetMaxBid + &#039;px&#039;);
+        this.minAskNumber
+            .transition()
+            .duration(100)
+            .style(&#039;left&#039;, leftOffsetMinAsk + &#039;px&#039;);
 
         this.isDrawn = true;
     };

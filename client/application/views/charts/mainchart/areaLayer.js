@@ -79,8 +79,9 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 return self.chart.timeScale(candle.middleDate);
             })
             .y(function(candle) {
-                var meanValue = (candle.high + candle.low) / 2;
-                return self.candleYScale(meanValue);
+                // var meanValue = (candle.high + candle.low) / 2;
+                // return self.candleYScale(meanValue);
+                return self.candleYScale(candle.close);
             })
             .interpolate("monotone");
 
@@ -154,7 +155,6 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .attr("stop-color", this.colors.normal)
             .attr("stop-opacity", 1);
 
-
         this.brush = d3.svg.brush()
             .x(this.chart.timeScale)
             .on("brush", this.brushed);
@@ -169,6 +169,16 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .attr("height", this.chart.height);
 
         this.gExtent = d3.select("rect.extent");
+
+        this.startBrushLabelTime = this.gBrush
+            .append('text')
+            .attr("y", 20)
+            .attr('class', 'startBrushLabelTime');
+
+        this.endBrushLabelTime = this.gBrush
+            .append('text')
+            .attr("y", 20)
+            .attr('class', 'endBrushLabelTime');
 
         this.gBrushLabel = this.gBrush.append("text")
             .attr('y', (this.chart.height / 2) + 25)
@@ -229,8 +239,9 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 return self.chart.timeScale(candle.middleDate);
             })
             .attr('cy', function(candle) {
-                var meanValue = (candle.high + candle.low) / 2;
-                return self.candleYScale(meanValue);
+                // var meanValue = (candle.high + candle.low) / 2;
+                // return self.candleYScale(meanValue);
+                return self.candleYScale(candle.close);
             })
             .attr('r', 0)
             .attr('class', 'circle')
@@ -350,6 +361,9 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
     AreaLayer.prototype.brushed = function() {
         var extent = this.brush.extent();
 
+        var startDateBrush = extent[0];
+        var endDateBrush = extent[1];
+
         // Get candles between these 2 dates
         var currentCandles = _.chain(this.candles)
             .filter(function(candle) {
@@ -395,6 +409,30 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 .text(FormatUtils.formatEvol(evol))
                 .style("fill", evolColor);
 
+            this.startBrushLabelTime
+                .transition()
+                .duration(50)
+                .attr('y', 0)
+                .attr('x', this.chart.timeScale(startDateBrush))
+                .attr('opacity', 1)
+                .attr('font-size', '16px')
+                .attr('text-anchor', 'middle')
+                .style('class', 'icon-uo-dir')
+                .text(FormatUtils.formatDate(startDateBrush, 'lll'))
+                .style("fill", evolColor);
+
+            this.endBrushLabelTime
+                .transition()
+                .duration(50)
+                .attr('y', 0)
+                .attr('x', this.chart.timeScale(endDateBrush))
+                .attr('opacity', 1)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '16px')
+                .style('class', 'icon-uo-dir')
+                .text(FormatUtils.formatDate(endDateBrush, 'lll'))
+                .style("fill", evolColor);
+
             var startPercent = String((+this.gExtent.attr('x') / this.chart.width) * 100) + '%';
             var endPercent = String(((+this.gExtent.attr('x') + +this.gExtent.attr('width')) / this.chart.width) * 100) + '%';
 
@@ -409,6 +447,20 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
 
         } else {
             this.gBrushLabel
+                .transition()
+                .duration(50)
+                .attr('x', newx)
+                .text('')
+                .attr('opacity', 0);
+
+            this.startBrushLabelTime
+                .transition()
+                .duration(50)
+                .attr('x', newx)
+                .text('')
+                .attr('opacity', 0);
+
+            this.endBrushLabelTime
                 .transition()
                 .duration(50)
                 .attr('x', newx)

@@ -19,8 +19,8 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
                 'update'
             );
             this.maingraphes = new Maingraphes();
-            this.maingraphmenu = new GraphmenuView();
-            this.maingraphmenu.initParent(this.$el);
+            // this.maingraphmenu = new GraphmenuView();
+            // this.maingraphmenu.initParent(this.$el);
             this.timeperiods = config.maingraph.timeperiods;
             this.currentTimeperiodId = config.maingraph.defaultTimeperiodId;
         },
@@ -46,7 +46,7 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
             };
 
             this.$el.html(this.template(tplVariables));
-            this.maingraphmenu.setElement($('#maingraphmenu')).render();
+            // this.maingraphmenu.setElement($('#maingraphmenu')).render();
             this.mainChart = new MainChart(this, '#js-mainchart', params);
 
             this.maingraphes.fetch({

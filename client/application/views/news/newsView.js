@@ -17,8 +17,8 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
                 "render"
             );
             this.news = new News();
-            this.news.socketSync();
             this.news.on('update', this.render);
+            this.news.socketSync();
         },
 
         clickOnArticle: function(event) {

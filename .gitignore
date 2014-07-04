@@ -1,5 +1,6 @@
 node_modules
 build
+reports
 logs
 .tmp
 .nodemonignore
@@ -8,4 +9,3 @@ logs
 client/components
 client/styles/all.css
 client/styles/all-sass.css
-
