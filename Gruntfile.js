@@ -210,7 +210,7 @@ module.exports = function(grunt) {
                     file: 'webserver.js',
                     args: ['-d', 'no'],
                     nodeArgs: ['--debug'],
-                    ignoredFiles: ['node_modules/**', 'RipplePairs/*', './client/application', './client/*.html'],
+                    ignore: ['**'],// 'RipplePairs/*', './client/application', './client/*.html'],
                     env: {
                         PORT: "<%= props.defaultport %>",
                         LOCAL: true
