@@ -78,6 +78,9 @@ requirejs.config({
         newsLayer: 'application/views/charts/mainchart/newsLayer',
         mainchart: 'application/views/charts/mainchart/mainchart',
 
+        //marketcap
+        marketcapchart:'application/views/charts/marketcap/marketcapchart',
+
         miskhorizbarchart: 'application/views/charts/misk/miskhorizbarchart',
         bignumber: 'application/views/charts/utils/bignumber',
         miskpiechart: 'application/views/charts/misk/miskpiechart',

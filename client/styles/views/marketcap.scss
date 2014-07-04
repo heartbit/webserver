@@ -2,7 +2,7 @@
     margin: 10px;
     height: 135px;
 }
-#js-marketcapDiv {
+#js-marketcapChart {
    /* background:white;*/
 }
 .infos-marketcap {
@@ -11,14 +11,14 @@
 .makertcap-italic {
     margin-top: 0.8em;
 }
-.marketcap .globalDiv {
+.marketcap{
     border-radius: 6px;
    /* border:solid 1px;*/
     padding: 12px;
     margin-left: 12px;
     margin-top: -7px;
     position:relative;
-    min-height: 100px;
+    min-height: 500px;
     /*box-shadow: 10px 10px 5px #888888;*/
 
 }
