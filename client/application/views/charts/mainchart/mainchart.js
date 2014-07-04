@@ -29,8 +29,8 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         var self = this;
 
         this.margin = {
-            top: 5,
-            right: 50,
+            top: 20,
+            right: 60,
             bottom: 20,
             left: 40
         };

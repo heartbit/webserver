@@ -2,6 +2,7 @@ define(function(require) {
 
 	var ParametersManager = require('ParametersManager'),
 		EventManager = require('EventManager');
+
 	NewsSocketManager = require('NewsSocketManager');
 	DataSocketManager = require('DataSocketManager');
 	ChatSocketManager = require('ChatSocketManager');
@@ -33,12 +34,12 @@ define(function(require) {
 
 			this.views = {
 				offcanvasmenu: new OffcanvasmenuView(),
-				controller: new ControllerView(),
-				keyfacts: new KeyFactsView(),
-				header: new HeaderView(),
+				// controller: new ControllerView(),
+				// keyfacts: new KeyFactsView(),
+				// header: new HeaderView(),
 				main: new MainView(),
-				depth: new DepthView(),
-				news: new NewsView()
+				// depth: new DepthView(),
+				// news: new NewsView()
 			};
 
 			Backbone.history.start({

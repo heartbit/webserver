@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">63.56</p>
+      <p class="stat">63.29</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">63</p>
+      <p class="stat">64</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">11.34</p>
+      <p class="stat">11.24</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.59</p>
+      <p class="stat">0.60</p>
     </div>
   </div>
 </div>
@@ -109,8 +109,8 @@
                 &quot;render&quot;
             );
             this.news = new News();
-            this.news.socketSync();
             this.news.on(&#039;update&#039;, this.render);
+            this.news.socketSync();
         },
 
         clickOnArticle: function(event) {
@@ -133,10 +133,11 @@
                 createStoryJS({
                     type: &#039;timeline&#039;,
                     width: &#039;100%&#039;,
-                    height: &#039;400&#039;,
+                    height: &#039;500&#039;,
                     start_at_end: true,
                     hash_bookmark: false,
                     lang: &#039;en&#039;,
+                    font: &#039;Lato&#039;,
                     maptype: &#039;osm&#039;,
                     source: this.news.toTimelineJSON(),
                     embed_id: &#039;timeline-news&#039;
@@ -149,7 +150,7 @@
             });
             return this;
         }
-        
+
     });
 
 });</textarea>
