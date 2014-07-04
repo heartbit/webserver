@@ -10,7 +10,7 @@ define('marketcapchart', ['config', 'dataHelper', 'd3','moment'], function(confi
     	// console.log(marketcaps.marketcaps.length);
     	var self=this;
     	var positionnement= {
-    		milieu_h:2.4375,
+    		milieu_h:1.125,
     		milieu_h_moins:2,
     		milieu_h_plus:2.875
     	}
