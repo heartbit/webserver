@@ -1,5 +1,5 @@
 define('calculatorView', ['backbone','text!calculatorView.html','FormatUtils'], function(Backbone, calculatorViewTemplate,FormatUtils) {
-
+    
     return Backbone.View.extend({
 
         el: '#js-calculatorModal',
@@ -13,6 +13,7 @@ define('calculatorView', ['backbone','text!calculatorView.html','FormatUtils'], 
         },
 
         render: function(update) {
+            
             var self = this;
             var tplVariables = {
                 difficulty:6119726089,

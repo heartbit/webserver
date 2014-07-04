@@ -1,0 +1,125 @@
+{
+		"marketcap":{
+		"bitcoin": {
+			"name":"",
+			"currencyId":"BTC",
+			"symbol":"",
+			"marketcap":8416052278,
+			"price":648,
+			"supply":12435678,
+			"volume_24":54657897,
+			"priceChange":7.84,
+			"volumeChange":20.43,
+			"correlation":1
+		},
+		"litecoin": {
+			"name":"",
+			"currencyId":"LTC",
+			"symbol":"",
+			"marketcap":264890458,
+			"price":8.89,
+			"supply":29804154,
+			"volume_24":3542127,
+			"priceChange":-0.07,
+			"volumeChange":3.46,
+			"correlation":0.86
+		},
+		"darkcoin": {
+			"name":"",
+			"currencyId":"DRK",
+			"symbol":"",
+			"marketcap":37231668,
+			"price":8.40,
+			"supply":4431786,
+			"volume_24":423526,
+			"priceChange":-5.68,
+			"volumeChange":-10.32,
+			"correlation":0.96
+		},
+		"blackcoin": {
+			"name":"",
+			"currencyId":"BC",
+			"symbol":"",
+			"marketcap":10724734,
+			"price":0.1438,
+			"supply":745810009,
+			"volume_24":190917,
+			"priceChange":-1.20,
+			"volumeChange":5.90,
+			"correlation":0.94
+		},
+		"dogecoin": {
+			"name":"",
+			"currencyId":"DOGE",
+			"symbol":"",
+			"marketcap":22325843,
+			"price":0.000262,
+			"supply":85252081277,
+			"volume_24":520074,
+			"priceChange":-3.76,
+			"volumeChange":-1.75,
+			"correlation":0.74
+		},
+		"feathercoin": {
+			"name":"",
+			"currencyId":"FTC",
+			"symbol":"",
+			"marketcap":1935082,
+			"price":0.040384,
+			"supply":47904770,
+			"volume_24":20384,
+			"priceChange":-9.14,
+			"volumeChange":15.3,
+			"correlation":0.98
+		},
+		"namecoin": {
+			"name":"",
+			"currencyId":"NMC",
+			"symbol":"",
+			"marketcap":16914837,
+			"price":1.85,
+			"supply":9162582,
+			"volume_24":154087,
+			"priceChange":8.34,
+			"volumeChange":12.3,
+			"correlation":0.98
+		},
+		"novacoin": {
+			"name":"",
+			"currencyId":"NVC",
+			"symbol":"",
+			"marketcap":1061222,
+			"price":1.44,
+			"supply":734527,
+			"volume_24":16757,
+			"priceChange":-0.07,
+			"volumeChange":3.46,
+			"correlation":0.92
+		},
+		"peercoin": {
+			"name":"",
+			"currencyId":"PPC",
+			"symbol":"",
+			"marketcap":31438470,
+			"price":1.46,
+			"supply":21524189,
+			"volume_24":257632,
+			"priceChange":0.55,
+			"volumeChange":4,
+			"correlation":0.95
+		},
+		"terracoin": {
+			"name":"",
+			"currencyId":"TRC",
+			"symbol":"",
+			"marketcap":297106,
+			"price":0.044920,
+			"supply":6614136,
+			"volume_24":2581,
+			"priceChange":1.72,
+			"volumeChange":0.35,
+			"correlation":0.87
+		}
+
+	}
+}
