@@ -116,7 +116,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
 
         this.currentPositionLabelPrice = this.tooltipLayer
             .append('text')
-            .attr("y", 20)
+            .attr("y", 40)
             .attr('class', 'currentPositionLabelPrice');
 
         this.colorGradient = this.candleLayer
@@ -164,17 +164,18 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .attr("class", "brush")
             .call(this.brush);
 
-        this.gBrushLabel = this.gBrush.append("text")
-        // .attr('y', (this.chart.height / 2) + 25)
-        .attr('y', this.chart.height - 30)
+        this.gBrushLabel = this.gBrush
+            .append("text")
+            .attr('y', this.chart.height - 30)
             .attr('opacity', 0)
             .style('font-size', '40px')
             .style("text-anchor", "middle")
             .style("fill", '#808080')
             .style("stroke", "none")
-            .text('')
+            .text('');
 
-        this.gBrush.selectAll("rect")
+        this.gBrush
+            .selectAll("rect")
             .attr("y", 0)
             .attr("height", this.chart.height);
 
@@ -341,17 +342,16 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                     return currentX > self.chart.width / 2 ? "end" : "start";
                 })
                 .attr("x", currentX)
-                .text(" " + FormatUtils.formatDate(this.closestPoint.candle.startDate, 'lll'));
+                .text(' ' + FormatUtils.formatDate(this.closestPoint.candle.startDate, 'lll'));
 
-            self.currentPositionLabelPrice
+            this.currentPositionLabelPrice
                 .style("text-anchor", function() {
                     return currentX > self.chart.width / 2 ? "end" : "start";
                 })
                 .attr("x", function() {
-                    return currentX > self.chart.width / 2 ? currentX - 10 : currentX + 30;
+                    return currentX;
                 })
-                .attr("y", currentY + 50)
-                .text("  " + FormatUtils.formatPrice(this.closestPoint.candle.close));
+                .text(' Price: ' + FormatUtils.formatPrice(this.closestPoint.candle.close));
         }
     };
 
@@ -404,8 +404,6 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             var last = _.last(currentCandles);
 
             var nbCandles = currentCandles.length;
-            // console.log('Start : ' + FormatUtils.formatDate(first.startDate, 'lll'));
-            // console.log('End : ' + FormatUtils.formatDate(last.endDate, 'lll'));
 
             var lowestCandle = _.min(currentCandles, function(candle) {
                 return candle.close;
@@ -413,9 +411,6 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             var highestCandle = _.max(currentCandles, function(candle) {
                 return candle.close;
             });
-            // if (d3.event.mode === "move") {
-            //     this.gBrushLabel
-            // } else {
 
             var evol = 100 * (last.close - first.close) / first.close;
             var evolColor = evol >= 0 ? 'green' : 'red';
@@ -426,7 +421,6 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 .attr('x', newx)
                 .attr('opacity', 1)
                 .attr('font-size', '50px')
-                .style('class', 'icon-uo-dir')
                 .text(FormatUtils.formatEvol(evol))
                 .style("fill", evolColor);
 
@@ -440,7 +434,6 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 .attr('text-anchor', function() {
                     return nbCandles < 10 ? 'end' : 'middle';
                 })
-                .style('class', 'icon-uo-dir')
                 .text(FormatUtils.formatDate(startDateBrush, 'lll'));
 
             this.endBrushLabelTime
@@ -453,7 +446,6 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                     return nbCandles < 10 ? 'start' : 'middle';
                 })
                 .attr('font-size', '16px')
-                .style('class', 'icon-uo-dir')
                 .text(FormatUtils.formatDate(endDateBrush, 'lll'));
 
             this.lowCandleBrushLabel
@@ -467,24 +459,6 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 .text(FormatUtils.formatPrice(lowestCandle.close));
 
             var lowCircle = this.finclosestCandle(lowestCandle.middleDate);
-            this.candleCircles
-                .attr('r', function(d, i) {
-                    if (i == lowCircle.index) {
-                        d.highlight = 'lowCircle';
-                        return 3;
-                    } else if (d.highlight == 'lowCircle') {
-                        delete d.highlight;
-                        return 0;
-                    }
-                })
-                .attr('fill', function(d, i) {
-                    if (i == lowCircle.index) {
-                        return 'red';
-                    } else if (d.highlight == 'lowCircle') {
-                        delete d.highlight;
-                        return 'white';
-                    }
-                });
 
             this.highCandleBrashLabel
                 .transition()
@@ -497,24 +471,38 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 .text(FormatUtils.formatPrice(highestCandle.close));
 
             var highCircle = this.finclosestCandle(highestCandle.middleDate);
+
             this.candleCircles
+                .transition()
+                .duration(100)
+                .style('fill', function(d, i) {
+                    if (i == highCircle.index) {
+                        return 'green';
+                    } else if (i == lowCircle.index) {
+                        return 'red';
+                    } else if (d.highlight == 'lowCircle') {
+                        return 'white';
+                    } else if (d.highlight == 'highCircle') {
+                        return 'white';
+                    }
+                    return 'white';
+                })
                 .attr('r', function(d, i) {
                     if (i == highCircle.index) {
                         d.highlight = 'highCircle';
                         return 3;
+                    } else if (i == lowCircle.index) {
+                        d.highlight = 'lowCircle';
+                        return 3;
+                    } else if (d.highlight == 'lowCircle') {
+                        delete d.highlight;
+                        return 0;
                     } else if (d.highlight == 'highCircle') {
                         delete d.highlight;
                         return 0;
                     }
+                    return 0;
                 })
-                .attr('fill', function(d, i) {
-                    if (i == highCircle.index) {
-                        return 'green';
-                    } else if (d.highlight == 'highCircle') {
-                        delete d.highlight;
-                        return 'white';
-                    }
-                });;
 
             var startPercent = String((+this.gExtent.attr('x') / this.chart.width) * 100) + '%';
             var endPercent = String(((+this.gExtent.attr('x') + +this.gExtent.attr('width')) / this.chart.width) * 100) + '%';

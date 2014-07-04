@@ -31,8 +31,8 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
                 return FormatUtils.formatValueShort(d, 3);
             })
             .ticks(3)
-            // .tickValues(volumeTickValues)
-            .tickSize(-this.chart.width);
+        // .tickValues(volumeTickValues)
+        .tickSize(-this.chart.width);
 
         this.volumeYAxisInstance = this.volumeLayer.append("g")
             .attr("class", "y_volume_axis");
@@ -204,10 +204,12 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
 
             this.volumeLabel
                 .attr('opacity', 1)
-                .style("text-anchor", "middle")
                 .attr('x', +left + 5)
-                .attr('y', +top - 15)
-                .text(FormatUtils.formatValue(this.closestPoint.candle.amount, 0));
+                .attr('y', 60)
+                .style("text-anchor", function() {
+                    return left > self.chart.width / 2 ? "end" : "start";
+                })
+                .text(' Volume: ' + FormatUtils.formatValue(this.closestPoint.candle.amount, 0));
         }
     };
 
