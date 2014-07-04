@@ -165,9 +165,10 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .call(this.brush);
 
         this.gBrushLabel = this.gBrush.append("text")
-            .attr('y', (this.chart.height / 2) + 25)
+        // .attr('y', (this.chart.height / 2) + 25)
+        .attr('y', this.chart.height - 30)
             .attr('opacity', 0)
-            .style('font-size', '50px')
+            .style('font-size', '40px')
             .style("text-anchor", "middle")
             .style("fill", '#808080')
             .style("stroke", "none")
@@ -475,6 +476,14 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                         delete d.highlight;
                         return 0;
                     }
+                })
+                .attr('fill', function(d, i) {
+                    if (i == lowCircle.index) {
+                        return 'red';
+                    } else if (d.highlight == 'lowCircle') {
+                        delete d.highlight;
+                        return 'white';
+                    }
                 });
 
             this.highCandleBrashLabel
@@ -497,9 +506,15 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                         delete d.highlight;
                         return 0;
                     }
-                });
-
-            this.closestPoint = this.finclosestCandle(date);
+                })
+                .attr('fill', function(d, i) {
+                    if (i == highCircle.index) {
+                        return 'green';
+                    } else if (d.highlight == 'highCircle') {
+                        delete d.highlight;
+                        return 'white';
+                    }
+                });;
 
             var startPercent = String((+this.gExtent.attr('x') / this.chart.width) * 100) + '%';
             var endPercent = String(((+this.gExtent.attr('x') + +this.gExtent.attr('width')) / this.chart.width) * 100) + '%';
