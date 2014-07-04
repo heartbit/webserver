@@ -24,7 +24,13 @@ define('itemsView', ['config', 'text!itemsView.html', 'ParametersManager'], func
         },
 
         changeGlobalItems: function(event) {
-            var itemId = $(event.target).attr('id');
+            var itemId;
+            if ( $(event.target).hasClass("js-item") ) {
+                itemId = $(event.target).attr('id');
+            }
+            else {
+                itemId = $(event.target).parents('.js-item').attr('id')
+            }
             ParametersManager.changeGlobalItem(itemId);
             this.$el.foundation('reveal', 'close');
             return false;

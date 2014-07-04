@@ -2,20 +2,15 @@
 	font-size:1.5em;
 }
 .pair {
-	border: solid thin;
-	padding: 1.3em;
+	padding: 0.5em;
 	height: 100%;
 	margin-bottom: 0.8em;
 	text-align: center;
 	width:70%;
-	-moz-box-shadow: 10px 10px 5px 0px #c0c0c0;
-	-webkit-box-shadow: 10px 10px 5px 0px #c0c0c0;
-	-o-box-shadow: 10px 10px 5px 0px #c0c0c0;
-	box-shadow: 10px 10px 5px 0px #c0c0c0;
-	filter:progid:DXImageTransform.Microsoft.Shadow(color=#c0c0c0, Direction=134, Strength=5);
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
+	background:#F0FCFF;
 }
 .list a {
 	color:black;
@@ -41,13 +36,23 @@
 	top: 0;
 }
 .item {
-	border: solid 2px;
-	padding: 1.3em;
+	padding: 0.6em;
 	height: 100%;
 	margin-bottom: 0.8em;
 	text-align: center;
+	border: solid thin;
+	border-radius: 20px;
 }
 .displayed {
-	text-align: center;
-	margin-left: 5em;
+	width:100%%;
+}
+.pairButton{
+	width:20em;
+	height:auto;
+}
+#js-pairsViewModal{
+	width:45%;
+	margin:auto;
+	margin-top: 2.7em;
+	align:center;
 }
