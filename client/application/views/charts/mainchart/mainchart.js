@@ -47,8 +47,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
             .attr("width", visWidth)
             .attr("height", visHeigth)
             .attr('viewBox', "0 0 " + visWidth + " " + visHeigth)
-        // .attr('perserveAspectRatio', "xMidYMid")
-        .call(this.initOnMouseOverEvents)
+            .call(this.initOnMouseOverEvents)
 
         this.mainLayer = this.chart
             .append("g")

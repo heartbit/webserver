@@ -98,11 +98,11 @@ define('config', function() {
 		type: 'price'
 	}, {
 		id: 'daily',
-		label: 'Daily change',
+		label: 'Daily',
 		type: 'percent'
 	}, {
 		id: 'vol',
-		label: '24h volume',
+		label: '24h vol.',
 		type: 'volume'
 	}];
 

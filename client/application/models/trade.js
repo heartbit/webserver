@@ -22,9 +22,7 @@ define('trade', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
             var eventId
             if (this.isListening) {
                 eventId = this.eventIdUpdate();
-
                 DataSocketManager.removeAllListeners(eventId) //, updateCallback);
-
             }
 
             this.set('platform', this.params.platform);

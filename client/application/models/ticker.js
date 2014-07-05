@@ -40,6 +40,7 @@ define('ticker', ['config', 'moment', 'DataSocketManager', 'EventManager', 'Form
                 this.set('id', ticker.id);
                 this.set('updated', new Date(+ticker.updated * 1000));
                 this.set('vol', +ticker.volume.amount);
+                this.set('daily', +ticker.volume.dailyChange);
             } else {
                 this.set('last', +ticker.price);
             }
