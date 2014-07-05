@@ -92,4 +92,13 @@ $tick_color: #cccccc;
 
 .marketcap .tick line { 
   stroke: $label_color; 
+  fill: none;
+  shape-rendering: crispEdges;
 } 
+
+.marketcap path,
+.marketcap line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
