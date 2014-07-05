@@ -79,7 +79,9 @@ requirejs.config({
         mainchart: 'application/views/charts/mainchart/mainchart',
 
         //marketcap
-        marketcapchart:'application/views/charts/marketcap/marketcapchart',
+        marketcapchart: 'application/views/charts/marketcap/marketcapchart',
+        bubbleMarketcapChart: 'application/views/charts/marketcap/bubblemarketcapChart',
+        bubbleTooltip: 'application/views/charts/marketcap/bubbleTooltip',
 
         miskhorizbarchart: 'application/views/charts/misk/miskhorizbarchart',
         bignumber: 'application/views/charts/utils/bignumber',
