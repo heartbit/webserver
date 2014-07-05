@@ -72,7 +72,7 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
 
             this.marketCapJson.marketcaps = new Array();
 
-            _.each(this.marketCapJson.marketcap, function(marketcap, index) {
+            _.each(this.marketCapJson.marketcap, function(marketcap,index) {
                 self.marketCapJson.marketcaps.push({
                     "name": marketcap.name,
                     "currencyID": marketcap.currencyId,

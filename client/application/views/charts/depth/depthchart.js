@@ -115,6 +115,7 @@ define('depthchart', ['config', 'd3', 'FormatUtils', 'moment'], function(config,
     };
 
     DepthChart.prototype.draw = function(depth) {
+       
         if (!depth) return;
         this.depth = depth;
         var self = this;

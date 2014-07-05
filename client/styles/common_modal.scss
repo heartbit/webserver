@@ -8,12 +8,18 @@
 	overflow-x:hidden;
 }
 
-#marketcapTable {
-
+#marketcapTable tr{
+		height:4em;
 }
 
 #marketcapTable td {
 	font-size:0.875em;
-	height:4em;
+		height:4em;
+	
+}
+.marketcap_correlation {
+	text-anchor:middle;
+	font-size:1em;
+	fill:white;
 	
 }
