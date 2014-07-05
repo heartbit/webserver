@@ -5,6 +5,22 @@ define('marketcapchart', ['config', 'dataHelper', 'd3', 'moment'], function(conf
         this.el = el;
     };
 
+    MarketcapChart.prototype.minipiechart.init =function() {
+
+    	var height=26em,
+    		radius=height/2;
+
+    	var color=["#FA0202","#2C677A"];
+
+    	var arc= d3.svg.arc()outerRadius(radius-5);
+
+    	var pie= d3.layout.pie()
+    		.sort(null)
+    		.value(function(d) {
+    			return d.correlation;
+    		});
+    }
+
     MarketcapChart.prototype.draw = function(marketcaps) {
         var self = this;
 
@@ -67,8 +83,12 @@ define('marketcapchart', ['config', 'dataHelper', 'd3', 'moment'], function(conf
             case_price_volume(data, index);
             case_change(data, index);
             case_correlation(data, index);
-            // console.log(data[name]);
+
+            this.minipiechart.init();
         });
+
+        
+       // this.minipiechart.draw(marketcaps.marketcap);
 
     }
 
