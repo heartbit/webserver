@@ -53,6 +53,11 @@
 .activebutton {
     background-color: #970b0e;
 }
+
+#bubbleMarketCapChart {
+    margin-left: -50px;
+}
+
 .tooltip {
     position: absolute;
     top: 100px;
@@ -76,3 +81,11 @@
 .tooltip .name {
     font-weight:bold;
 }
+
+$label_color: #666666;
+$tick_color: #cccccc;
+
+.marketcap .domain { 
+  fill: $label_color; 
+  stroke-width: 1;  
+} 

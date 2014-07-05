@@ -15,7 +15,7 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 	BubbleChart.prototype.draw = function(marketcaps) {
 		var self = this;
 		this.marketcaps = marketcaps;
-		self._width = $('#js-marketcapModal').width();
+		self._width = $('#js-marketcapModal').width() + 100;
 		self._height = 400;
 		self.width = self._width;
 		self.height = self._height;
@@ -102,8 +102,9 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 			.attr("fill", this.fill_color)
 			.attr("stroke-width", 2)
 			.attr("stroke", function(d) {
-				return d3.rgb(this.fill_color);
-			}).attr("id", function(d) {
+				return d3.rgb(this.fill_color).brighter(1);
+			})
+			.attr("id", function(d) {
 				return "bubble_" + d.id;
 			})
 			.on("mouseover", function(marketcap, i) {
@@ -112,12 +113,19 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 				return _this.hide_details(marketcap, i, this);
 			});
 
-
 		this.xAxis = d3.svg.axis()
 			.scale(this.priceScale)
 			.orient("top")
-			.tickSubdivide(3)
-			.tickSize(12, 4, -10);
+			.tickValues([1000, 100, 10, 1, .1, .01, .001, .0001, .00001])
+			.tickSize(12, 4, -10)
+			.tickFormat(function(supply, i, j) {
+				return FormatUtils.formatPrice(supply, 'USD');
+			});
+		// .tickSubdivide(3)
+		// .tickSize(12, 4, -10)
+		// .tickFormat(function(price) {
+		// 	return FormatUtils.formatPrice(price);
+		// });
 
 		this.svg_xAxis = this.vis
 			.append('g')
@@ -129,8 +137,11 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 		this.yAxis = d3.svg.axis()
 			.scale(this.supplyScale)
 			.orient("left")
-			.tickSubdivide(3)
-			.tickSize(12, 4, -10);
+			.tickValues([1000000, 10000000, 100000000, 1000000000, 10000000000, 100000000000])
+			.tickSize(12, 4, -10)
+			.tickFormat(function(supply, i, j) {
+				return FormatUtils.formatValueShort(supply, 4);
+			});
 
 		this.svg_yAxis = this.vis
 			.append('g')
