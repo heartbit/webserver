@@ -104,8 +104,6 @@ define('FormatUtils', ['cldr', 'moment'], function() {
 			return this.truncToNdecimal(value, 0);
 		}
 
-
-
 		return valueStr.value + valueStr.multiple;
 	};
 

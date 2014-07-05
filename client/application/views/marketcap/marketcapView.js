@@ -9,6 +9,10 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
         item: "BTC",
         currency: "USD",
 
+        events: {
+            'click .js-bubbleOption': 'changeBubbleChartOption',
+        },
+
         initialize: function(params) {
             var self = this;
 
@@ -17,6 +21,7 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
                 url: config.marketcap.urlModel
             });
 
+            this.bubblechartOption = 'bubbleAll';
             this.marketcap.fetch();
             // this.trades = new Trades();
             // console.log(this.trades);
@@ -26,6 +31,30 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
             // this.trades.on('update',this.update,this);
             // this.render();
             //this.listenTo(this.marketcap,'change', this.render({viewName:'marketcap'}));
+        },
+
+        changeBubbleChartOption: function(event) {
+            var option = $(event.target).attr('id').split('-')[1];
+
+            if (option == this.bubblechartOption) {
+                return false;
+            } else {
+                switch (option) {
+                    case 'bubbleSplitPrice':
+                        this.bubblechartOption = 'bubbleSplitPrice';
+                        this.bubbleMarketcapChart.display_by_price();
+                        break;
+                    case 'bubbleSplitSupply':
+                        this.bubblechartOption = 'bubbleSplitSupply';
+                        this.bubbleMarketcapChart.display_by_supply();
+                        break;
+                    case 'bubbleAll':
+                        this.bubblechartOption = 'bubbleAll';
+                        defaut: this.bubbleMarketcapChart.display_all();
+                        break;
+                }
+                return false;
+            }
         },
 
         render: function(params) {
@@ -64,9 +93,10 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
             this.marketcapChart = new MarketcapChart("#js-marketcapChart");
             this.marketcapChart.draw(this.marketCapJson);
 
-            bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
-            bubbleMarketcapChart.draw(this.marketCapJson.marketcap);
-
+            this.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
+            setTimeout(function() {
+                self.bubbleMarketcapChart.draw(self.marketCapJson.marketcap);
+            }, 500);
             return this;
         },
 
