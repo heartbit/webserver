@@ -89,3 +89,7 @@ $tick_color: #cccccc;
   fill: $label_color; 
   stroke-width: 1;  
 } 
+
+.marketcap .tick line { 
+  stroke: $label_color; 
+} 

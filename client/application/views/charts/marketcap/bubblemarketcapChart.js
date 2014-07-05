@@ -90,6 +90,44 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 			.attr("height", this._height)
 			.attr("id", "bubbleMarketCapChart");
 
+
+
+		this.xAxis = d3.svg.axis()
+			.scale(this.priceScale)
+			.orient("bottom")
+			.tickValues([100, 10, 1, .1, .01, .001])
+			.tickFormat(function(supply, i, j) {
+				return FormatUtils.formatPrice(supply, 'USD');
+			});
+		// .tickSubdivide(3)
+		// .tickSize(12, 4, -10)
+		// .tickFormat(function(price) {
+		// 	return FormatUtils.formatPrice(price);
+		// });
+
+		this.svg_xAxis = this.vis
+			.append('g')
+			.attr('class', 'xAxis')
+			.attr("transform", "translate(0,0)")
+			.attr('opacity', 0)
+			.call(this.xAxis);
+
+		this.yAxis = d3.svg.axis()
+			.scale(this.supplyScale)
+			.orient("right")
+			.tickValues([1000000, 10000000, 100000000, 1000000000, 10000000000, 10000000000])
+			.tickSize(12, 4, -10)
+			.tickFormat(function(supply, i, j) {
+				return FormatUtils.formatValueShort(supply, 4);
+			});
+
+		this.svg_yAxis = this.vis
+			.append('g')
+			.attr('class', 'yAxis')
+			.attr("transform", "translate(50,0)")
+			.attr('opacity', 0)
+			.call(this.yAxis);
+
 		var svg_nodes = this.vis.append('g').attr('class', 'nodes');
 		this.circles = svg_nodes.selectAll("circle").data(this.nodes, function(d) {
 			return d.id;
@@ -112,43 +150,6 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 			}).on("mouseout", function(marketcap, i) {
 				return _this.hide_details(marketcap, i, this);
 			});
-
-		this.xAxis = d3.svg.axis()
-			.scale(this.priceScale)
-			.orient("top")
-			.tickValues([1000, 100, 10, 1, .1, .01, .001, .0001, .00001])
-			.tickSize(12, 4, -10)
-			.tickFormat(function(supply, i, j) {
-				return FormatUtils.formatPrice(supply, 'USD');
-			});
-		// .tickSubdivide(3)
-		// .tickSize(12, 4, -10)
-		// .tickFormat(function(price) {
-		// 	return FormatUtils.formatPrice(price);
-		// });
-
-		this.svg_xAxis = this.vis
-			.append('g')
-			.attr('class', 'xAxis')
-			.attr("transform", "translate(0,30)")
-			.attr('opacity', 0)
-			.call(this.xAxis);
-
-		this.yAxis = d3.svg.axis()
-			.scale(this.supplyScale)
-			.orient("left")
-			.tickValues([1000000, 10000000, 100000000, 1000000000, 10000000000, 100000000000])
-			.tickSize(12, 4, -10)
-			.tickFormat(function(supply, i, j) {
-				return FormatUtils.formatValueShort(supply, 4);
-			});
-
-		this.svg_yAxis = this.vis
-			.append('g')
-			.attr('class', 'yAxis')
-			.attr("transform", "translate(70,0)")
-			.attr('opacity', 0)
-			.call(this.yAxis);
 
 		this.circles
 			.transition()
