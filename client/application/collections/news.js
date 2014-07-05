@@ -16,7 +16,7 @@ define('news', ['config', 'information', 'NewsSocketManager', 'backbone', 'momen
         },
 
         update: function(news) {
-            console.log('News update: ', news);
+            // console.log('News update: ', news);
             this.models = this.parse(news);
             this.trigger('update');
         },
@@ -41,7 +41,7 @@ define('news', ['config', 'information', 'NewsSocketManager', 'backbone', 'momen
                 var news = {
                     startDate: new moment(model.pubDate).format('YYYY,M,D,H,m,s'),
                     headline: model.title + '<span class="icon-ok hide right"></span>',
-                    title: model.title.substring(0,20) +'...<span class="icon-ok hide right"></span>',
+                    title: model.title.substring(0, 20) + '...<span class="icon-ok hide right"></span>',
                     text: model.summary,
                     tag: model.params.name,
                     classname: "",

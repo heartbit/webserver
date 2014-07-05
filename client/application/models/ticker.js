@@ -7,7 +7,7 @@ define('ticker', ['config', 'moment', 'DataSocketManager', 'EventManager', 'Form
             this.params = params || this.params;
 
             var updateCallback = function(payload) {
-                console.log('Ticker update: ', JSON.stringify(payload));
+                // console.log('Ticker update: ', JSON.stringify(payload));
                 var objTicker = payload.data;
                 if (objTicker) {
                     self.update(objTicker);
@@ -17,7 +17,7 @@ define('ticker', ['config', 'moment', 'DataSocketManager', 'EventManager', 'Form
             var eventId;
             if (this.isListening) {
                 eventId = this.eventIdUpdate();
-                DataSocketManager.removeAllListeners(eventId)//, updateCallback);
+                DataSocketManager.removeAllListeners(eventId) //, updateCallback);
             }
 
             this.set('platform', this.params.platform);
