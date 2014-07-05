@@ -2,7 +2,7 @@
 
     <!-- <div class="marketcapChart" id="js-marketcapChart"></div> -->
 
-    <div class="globalDiv">
+    <div class="globalDiv row">
 
         <h1>Marketcap</h1>
 
@@ -26,35 +26,36 @@
             </ul>
         </div>
 
-        <div class="marketcapChart" id="js-bubbleMarketcapChart"></div>
-
-        <div id="marketcapContainer" style="margin-top: 10px;">
-            <table id="marketcapTable">
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>CryptoCurrencies</th>
-                        <th width="150">Marketcap</th>
-                        <th width="150">Price & Volume (24h)</th>
-                        <th width="150">%Change (24h)</th>
-                        <th width="150">Correlation index</th>
-                    </tr>
-                </thead>
-                <% _.each(marketcapTemplate.marketcap,function(marketcap){%>
-                    <tr>
-                        <td id="rank_<%=marketcap.name%>"></td>
-                        <td id="<%=marketcap.name%>"></td>
-                        <td id="marketcap_<%=marketcap.name%>"></td>
-                        <td id="price_volume_<%=marketcap.name%>"></td>
-                        <td id="change_<%=marketcap.name%>"></td>
-                        <td id="correlation_<%=marketcap.name%>"></td>
-
-                    </tr>
-                    <%})%>
-            </table>
+        <div class="small-12 large-12 medium-12 columns">
+            <div class="marketcapChart" id="js-bubbleMarketcapChart"></div>
         </div>
 
+        <div class="small-12 large-12 medium-12 columns">
+            <div id="marketcapContainer">
+                <table id="marketcapTable">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>CryptoCurrencies</th>
+                            <th width="150">Marketcap</th>
+                            <th width="150">Price & Volume (24h)</th>
+                            <th width="150">%Change (24h)</th>
+                            <th width="150">Correlation index</th>
+                        </tr>
+                    </thead>
+                    <% _.each(marketcapTemplate.marketcap,function(marketcap){%>
+                        <tr>
+                            <td id="rank_<%=marketcap.name%>"></td>
+                            <td id="<%=marketcap.name%>"></td>
+                            <td id="marketcap_<%=marketcap.name%>"></td>
+                            <td id="price_volume_<%=marketcap.name%>"></td>
+                            <td id="change_<%=marketcap.name%>"></td>
+                            <td id="correlation_<%=marketcap.name%>"></td>
+                        </tr>
+                        <%})%>
+                </table>
+            </div>
+
+        </div>
     </div>
-
-
 </div>

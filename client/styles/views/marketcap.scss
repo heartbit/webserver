@@ -2,8 +2,11 @@
     margin: 10px;
     height: 135px;
 }
+#js-marketcapModal {
+    height: 1000px;
+}
 #js-marketcapChart {
-   /* background:white;*/
+    /* background:white;*/
 }
 .infos-marketcap {
     font-size:0.8em;
@@ -11,25 +14,29 @@
 .makertcap-italic {
     margin-top: 0.8em;
 }
-.marketcap{
+.marketcap {
     border-radius: 6px;
-   /* border:solid 1px;*/
+    /* border:solid 1px;*/
     padding: 12px;
     margin-left: 12px;
     margin-top: -7px;
     position:relative;
     min-height: 500px;
     /*box-shadow: 10px 10px 5px #888888;*/
-
 }
 .marketcapRow {
-	/*background:white;*/
-	height: 100%;
+    /*background:white;*/
+    height: 100%;
 }
-
+#marketcapContainer {
+    margin-top: 10px;
+}
+#marketcapTable {
+    width: 100%
+}
 .globalDiv h1 {
-	margin-bottom:0.3em;
-	margin-top:0.15em;
+    margin-bottom:0.3em;
+    margin-top:0.15em;
 }
 .marketcap .globalDiv em {
     margin-top: 9px;
@@ -43,8 +50,29 @@
     margin: 0;
     display: inline-block;
 }
-
-.activebutton{
+.activebutton {
     background-color: #970b0e;
 }
-
+.tooltip {
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    -moz-border-radius:5px;
+    border-radius: 5px;
+    border: 2px solid #000;
+    /* background: #222222; */
+    background: #fff;
+    opacity: .9;
+    /* color: #eeeeee; */
+    color: black;
+    padding: 10px;
+    width: 300px;
+    font-size: 12px;
+    z-index: 999999999999999;
+}
+.tooltip .title {
+    font-size: 13px;
+}
+.tooltip .name {
+    font-weight:bold;
+}

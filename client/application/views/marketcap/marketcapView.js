@@ -90,13 +90,14 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
             this.$el.html(this.templateMarketCap({
                 marketcapTemplate: this.marketCapJson
             }));
-            this.marketcapChart = new MarketcapChart("#js-marketcapChart");
-            this.marketcapChart.draw(this.marketCapJson);
 
-            this.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
             setTimeout(function() {
+                self.marketcapChart = new MarketcapChart("#js-marketcapChart");
+                self.marketcapChart.draw(self.marketCapJson);
+                self.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
                 self.bubbleMarketcapChart.draw(self.marketCapJson.marketcap);
             }, 500);
+
             return this;
         },
 

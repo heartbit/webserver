@@ -37,7 +37,7 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 		});
 		self.priceScale = d3.scale.log()
 			.domain(min_max_price)
-			.range([120, self.width - 100]);
+			.range([120, self.width - 150]);
 
 		// Scale supply
 		var min_max_supply = d3.extent(self.marketcaps, function(marketcap) {
