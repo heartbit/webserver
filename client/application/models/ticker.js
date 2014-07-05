@@ -7,7 +7,7 @@ define('ticker', ['config', 'moment', 'DataSocketManager', 'EventManager', 'Form
             this.params = params || this.params;
 
             var updateCallback = function(payload) {
-                // console.log('Ticker update: ', JSON.stringify(payload));
+                console.log('Ticker update: ', JSON.stringify(payload));
                 var objTicker = payload.data;
                 if (objTicker) {
                     self.update(objTicker);
