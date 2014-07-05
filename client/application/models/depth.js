@@ -13,7 +13,7 @@ define('depth', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
         socketSync: function(params) {
             var self = this;
             var updateCallback = function(payload) {
-                console.log('Depth update: ', payload);
+                // console.log('Depth update: ', payload);
                 var objDepth = payload.data;
                 self.update(objDepth);
             };

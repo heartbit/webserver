@@ -8,6 +8,8 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
         _.bindAll(this, 'brushed');
         this.chart = chart;
 
+        this.radiusHighlightCircle = 3;
+
         this.colors = {
             highlight: "red",
             normal: "#b7b7b7"
@@ -218,6 +220,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
 
     AreaLayer.prototype.update = function() {
         var self = this;
+        this.hideBrush();
         this.candles = this.chart.models.candles;
 
         var candleYOffset = 0;
@@ -325,9 +328,9 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                     if (i == self.closestPoint.index) {
                         currentX = d3.select(this).attr('cx');
                         currentY = d3.select(this).attr('cy');
-                        return 3;
+                        return self.radiusHighlightCircle;
                     } else if (d.highlight) {
-                        return 3;
+                        return self.radiusHighlightCircle;
                     } else {
                         return 0;
                     }
@@ -356,11 +359,13 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
     };
 
     AreaLayer.prototype.mouseout = function() {
+        var self = this;
+
         this.candleCircles
             .transition()
             .duration(100)
             .attr('r', function(d, i, j) {
-                return d.highlight ? 3 : 0;
+                return d.highlight ? self.radiusHighlightCircle : 0;
             });
 
         this.tooltipLayer
@@ -490,10 +495,10 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 .attr('r', function(d, i) {
                     if (i == highCircle.index) {
                         d.highlight = 'highCircle';
-                        return 3;
+                        return self.radiusHighlightCircle;
                     } else if (i == lowCircle.index) {
                         d.highlight = 'lowCircle';
-                        return 3;
+                        return self.radiusHighlightCircle;
                     } else if (d.highlight == 'lowCircle') {
                         delete d.highlight;
                         return 0;
@@ -517,41 +522,49 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             this.start3SegGrad.attr('offset', endPercent);
 
         } else {
-            this.gBrushLabel
-                .transition()
-                .duration(50)
-                .attr('x', newx)
-                .text('')
-                .attr('opacity', 0);
+            this.hideBrush();
+        }
 
-            this.startBrushLabelTime
-                .transition()
-                .duration(50)
-                .attr('x', newx)
-                .text('')
-                .attr('opacity', 0);
+    };
 
-            this.endBrushLabelTime
-                .transition()
-                .duration(50)
-                .attr('x', newx)
-                .text('')
-                .attr('opacity', 0);
+    AreaLayer.prototype.hideBrush = function() {
 
-            this.highCandleBrashLabel
-                .transition()
-                .duration(50)
-                .attr('x', newx)
-                .text('')
-                .attr('opacity', 0);
+        this.gBrushLabel
+        // .transition()
+        // .duration(50)
+        .attr('x', 0)
+            .text('')
+            .attr('opacity', 0);
 
-            this.lowCandleBrushLabel
-                .transition()
-                .duration(50)
-                .attr('x', newx)
-                .text('')
-                .attr('opacity', 0);
+        this.startBrushLabelTime
+        // .transition()
+        // .duration(50)
+        .attr('x', 0)
+            .text('')
+            .attr('opacity', 0);
 
+        this.endBrushLabelTime
+        // .transition()
+        // .duration(50)
+        .attr('x', 0)
+            .text('')
+            .attr('opacity', 0);
+
+        this.highCandleBrashLabel
+        // .transition()
+        // .duration(50)
+        .attr('x', 0)
+            .text('')
+            .attr('opacity', 0);
+
+        this.lowCandleBrushLabel
+        // .transition()
+        // .duration(50)
+        .attr('x', 0)
+            .text('')
+            .attr('opacity', 0);
+
+        if (this.candleCircles) {
             this.candleCircles
                 .attr('r', function(d, i) {
                     if (d.highlight) {
@@ -559,14 +572,13 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                     }
                     return 0;
                 });
-
-            this.end1SegGrad.attr('offset', '0');
-            this.start2SegGrad.attr('offset', '0');
-            this.end2SegGrad.attr('offset', '0');
-            this.start3SegGrad.attr('offset', '0');
         }
 
-    };
+        this.end1SegGrad.attr('offset', '0');
+        this.start2SegGrad.attr('offset', '0');
+        this.end2SegGrad.attr('offset', '0');
+        this.start3SegGrad.attr('offset', '0');
+    }
 
     return AreaLayer;
 
