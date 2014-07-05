@@ -1,15 +1,18 @@
 #js-marketcapModal{
     top:50px;
+
+}
+#marketcapContainer {
+	height:26em;
+	overflow-y:scroll;
+	overflow-x:hidden;
 }
 
-#marketcapTable tr {
-
+#marketcapTable {
 
 }
 
 #marketcapTable td {
-	
-
 	font-size:0.875em;
 	height:4em;
 	

@@ -10,9 +10,9 @@ define('marketcapchart', ['config', 'dataHelper', 'd3','moment'], function(confi
     	// console.log(marketcaps.marketcaps.length);
     	var self=this;
     	var positionnement= {
-    		milieu_h:1.125,
-    		milieu_h_moins:2,
-    		milieu_h_plus:2.875
+    		milieu_h:1.5625,
+    		milieu_h_moins:1.125,
+    		milieu_h_plus:2
     	}
     	var case_rank=function(data,index) {
     		this.svg_rank=d3.select("#rank_"+data.name).append("svg").append("g");
