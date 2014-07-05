@@ -1,23 +1,18 @@
+$label_color: #666666;
+$tick_color: #cccccc;
+
 .mainchart {
   min-height: 300px;  
 }
 
 li.current a{
-	text-decoration:underline;
-	text-decoration:overline;
+  text-decoration:underline;
+  text-decoration:overline;
 }
 
 #mainChartTimeController {
-	margin-left: 50px;
+  margin-left: 50px;
 }
-
-$label_color: #666666;
-$tick_color: #cccccc;
-
-.domain { 
-  fill: none; 
-  stroke-width: 1;  
-} 
 
 .x_time_axis .domain {
   stroke: $tick_color;

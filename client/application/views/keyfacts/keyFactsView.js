@@ -93,7 +93,7 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
                             break;
                     }
 
-                    var value = self.ticker.get(bigNumberView.tickerAttribute.id) || self.trade.get(bigNumberView.tickerAttribute.id);
+                    var value = self.ticker.get(bigNumberView.tickerAttribute.id) || self.trade.get(bigNumberView.tickerAttribute.id) || 0;
 
                     var updateParams = {
                         unit: unit,
@@ -102,8 +102,7 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
                         delay: index * 100,
                         duration: 500,
                         trend: true,
-                        reset: reset,
-                        // fontSize: '16px'
+                        reset: reset
                     };
 
                     bigNumberView.bigNumberChart.render(updateParams);
@@ -121,7 +120,7 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
             //     }
             //     $title.html(title);
             //     return false;
-            // },
+            // }
 
         });
 

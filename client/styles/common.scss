@@ -1,12 +1,7 @@
 $primary_color: #ffffff;
- a {
+a {
     font-color:003366;
     text-decoration: none;
-}
-.panel {
-    background:$primary_color;
-    border:none !important;
-    margin-bottom: 0;
 }
 .row {
     max-width:none;
@@ -56,18 +51,15 @@ margin-left: 10%;
     margin-left: 5em;
 }
 
-/*
-.loading {
-    background: url("/images/loaders/spiffygif_30x30.gif");
-    background-repeat: no-repeat;
-    background-position: center;
-}
-*/
-
 body {
     background: white;
     font-family: 'Lato', sans-serif;
 }
+
+.domain { 
+  fill: none; 
+  stroke-width: 1;  
+} 
 
 .hidden {
     visibility:hidden;
