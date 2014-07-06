@@ -16,7 +16,6 @@ define('marketcapchart', ['config', 'dataHelper', 'd3', 'moment'], function(conf
     	this.arc= d3.svg.arc().outerRadius(radius);
 
     	this.pie= d3.layout.pie()
-    		.sort(null)
     		.value(function(d) {
     			console.log(d);
     			return d;
