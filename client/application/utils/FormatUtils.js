@@ -1,20 +1,22 @@
-define('FormatUtils', ['cldr', 'moment'], function() {
+define('FormatUtils', ['numeral', 'moment'], function(numeral) {
 
-	var numberFormatter = new TwitterCldr.DecimalFormatter();
-	var shortNumberFormatter = new TwitterCldr.ShortDecimalFormatter();
-	var abbreviatedNumberFormatter = new TwitterCldr.AbbreviatedNumberFormatter();
-	var currencyFormatter = new TwitterCldr.CurrencyFormatter();
-	var longDecimalFormatter = new TwitterCldr.LongDecimalFormatter();
-	var percentFormatter = new TwitterCldr.PercentFormatter();
-	var timespanFormatter = new TwitterCldr.TimespanFormatter();
+	// numeral.zeroFormat('N/A');
+	numeral.language('hearbit', {
+		delimiters: {
+			thousands: ',',
+			decimal: '.'
+		},
+		abbreviations: {
+			thousand: 'k',
+			million: 'm',
+			billion: 'b',
+			trillion: 't'
+		}
+	});
+	numeral.language('hearbit');
 
 	var roundToN = function(num, n) {
 		return +(Math.round(num + "e+" + n) + "e-" + n);
-	};
-
-	var roundToNString = function(num, n) {
-		var blatte = num.toFixed(n);
-		return blatte;
 	};
 
 	var FormatUtils = {};
@@ -42,77 +44,31 @@ define('FormatUtils', ['cldr', 'moment'], function() {
 		return result + '%';
 	};
 
-	FormatUtils.formatPrice = function(value, unit) {
-		if (value > 1000) {
-			return this.formatCurrencyLabel(unit) + this.formatValueShort(value);
-		}
-		if (value <= 999 && value >= 100) {
-			return this.formatCurrencyLabel(unit) + this.formatValue(value, 2);
-		}
-		if (value <= 100 && value >= 1) {
-			return this.formatCurrencyLabel(unit) + this.formatValue(value, 3);
-		}
-		if (value < 1 && value >= 0.00001) {
-			return this.formatCurrencyLabel(unit) + this.formatValue(value, 5);
-		}
-		return this.formatCurrencyLabel(unit) + String(value);
-	};
-
-	FormatUtils.formatValue = function(value, n) {
-		return numberFormatter.format(roundToN(value, n));
-	};
-
 	FormatUtils.formatItem = function(value, unit) {
 		return this.formatValue(value, 0) + ' ' + this.formatCurrencyLabel(unit);
 	};
 
-	FormatUtils.formatValueShort = function(value, maxDigits) {
-
-		var addCommas = function(value) {
-			if (value) {
-				var valueStr = value.toString();
-				var i = valueStr.length - 3;
-				while (i > 0) {
-					valueStr = valueStr.substring(0, i) + ',' + valueStr.substring(i, valueStr.length);
-					i -= 3;
-				}
-				return valueStr;
-			}
-			return "error";
-		};
-
-		var valueStr = {
-			value: addCommas(value),
-			multiple: ""
-		};
-
-		var thousandsOffset = 0;
-		var mults = ['k', 'M', 'Bn'];
-		if (value >= 1000) {
-			// If we have a very big number
-			while (String(valueStr.value).length > maxDigits && thousandsOffset < mults.length) {
-				value = Math.round(value / 1000);
-
-				valueStr = {
-					value: addCommas(value),
-					multiple: mults[thousandsOffset]
-				};
-
-				thousandsOffset++;
-			}
-		} else {
-			return this.truncToNdecimal(value, 0);
+	FormatUtils.formatPercent = function(value) {
+		var formatted;
+		// value = roundToN(value, 3);
+		if (value >= 100) {
+			formatted = numeral(value).format("0,0");
 		}
-
-		return valueStr.value + ' ' + valueStr.multiple;
+		if (value < 100 && value >= 10) {
+			formatted = numeral(value).format("0.[0]");
+		}
+		if (value < 10) {
+			formatted = numeral(value).format("0.[00]");
+		}
+		return formatted + '%';
 	};
 
-	FormatUtils.formatPercent = function(value) {
-		return roundToNString(value, 2) + '%';
+	FormatUtils.formatEvol = function(value) {
+		return value >= 0 ? '+' + this.formatPercent(value) : this.formatPercent(value);
 	};
 
 	FormatUtils.formatAgo = function(value) {
-		return roundToNString(value, 2) + 's. ago';
+		return roundToN(value, 2) + 's. ago';
 	};
 
 	FormatUtils.formatTime = function(time, format) {
@@ -121,6 +77,60 @@ define('FormatUtils', ['cldr', 'moment'], function() {
 		} else {
 			return time;
 		}
+	};
+
+	FormatUtils.formatValueShort = function(value, maxDigits, format) {
+		var formatted = value;
+		if (value > 1000000000) {
+			formatted = numeral(value).format("0.[0]a");
+		}
+		if (value <= 1000000000 && value >= 1000) {
+			formatted = numeral(value).format("0.[00]a");
+		}
+		if (value <= 999 && value >= 100) {
+			formatted = numeral(value).format("0");
+		}
+		if (value <= 100 && value >= 10) {
+			formatted = numeral(value).format("0");
+		}
+		if (value <= 10 && value >= 1) {
+			formatted = numeral(value).format("0.[0]");
+		}
+		if (value < 1 && value >= 0.00001) {
+			formatted = numeral(value).format("0.[000]");
+		}
+		return String(formatted);
+	};
+
+	FormatUtils.formatPriceShort = function(value, unit) {
+		return this.formatCurrencyLabel(unit) + this.formatValueShort(value);
+	};
+
+	FormatUtils.formatValue = function(value, maxDigits, format) {
+		var formatted = value;
+		if (value > 10000) {
+			formatted = numeral(value).format("0,0");
+		}
+		if (value <= 9999 && value >= 1000) {
+			formatted = numeral(value).format("0,0.[00]");
+		}
+		if (value <= 999 && value >= 100) {
+			formatted = numeral(value).format("0.[00]");
+		}
+		if (value <= 100 && value >= 10) {
+			formatted = numeral(value).format("0.[00]");
+		}
+		if (value <= 10 && value >= 1) {
+			formatted = numeral(value).format("0.[000]");
+		}
+		if (value < 1 && value >= 0.00001) {
+			formatted = numeral(value).format("0.[0000]");
+		}
+		return String(formatted);
+	};
+
+	FormatUtils.formatPrice = function(value, unit) {
+		return this.formatCurrencyLabel(unit) + this.formatValue(value);
 	};
 
 	FormatUtils.formatDate = function(date, format) {

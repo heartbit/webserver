@@ -10,6 +10,8 @@ define('depth', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
             bids: []
         },
 
+        maxNbPoints: 150,
+
         socketSync: function(params) {
             var self = this;
             var updateCallback = function(payload) {

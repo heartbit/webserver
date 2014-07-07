@@ -126,7 +126,6 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'spin', 'moment'],
                 default:
                     formattedlabel = FormatUtils.formatValue(raw, 2);
             }
-
             return formattedlabel;
         };
 

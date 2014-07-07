@@ -20,7 +20,7 @@ requirejs.config({
         keymaster: 'libs/keymaster',
         text: 'libs/require/text',
         moment: 'libs/moment.min',
-        cldr: 'libs/twitter_cldr',
+        numeral: 'libs/numeral',
         spin: 'libs/spin.min',
         fuse: 'libs/fuse.min',
         d3tip: 'libs/d3tip',
@@ -164,6 +164,9 @@ requirejs.config({
         'd3': {
             deps: ['jquery'],
             exports: 'd3'
+        },
+        'numeral': {
+            exports: 'numeral'
         },
         // 'd3tip': {
         //     deps: ['d3'],

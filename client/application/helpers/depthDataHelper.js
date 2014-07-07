@@ -4,8 +4,8 @@ define('depthDataHelper', ['FormatUtils'], function(FormatUtils) {
 
    DepthDataHelper.prototype.computeDepth = function(depth) {
       var data = depth.attributes;
-      var bids = data.bids.slice(0, (data.bids.length) / 2); // on ne prend que 1/2 des résultats sinon échelle trop large & mur non représentatif
-      var asks = data.asks.slice(0, (data.asks.length) / 2);
+      var bids = data.bids.slice(0, (data.bids.length / 3)); // on ne prend que 1/2 des résultats sinon échelle trop large & mur non représentatif
+      var asks = data.asks.slice(0, (data.asks.length / 3));
       if (bids.length == 0 || asks.length == 0) return;
 
       var MurBids = []; //Tableau Prix-Somme des amounts achats [Prix,AmountCumulé];
@@ -14,6 +14,16 @@ define('depthDataHelper', ['FormatUtils'], function(FormatUtils) {
       var MurAsks = []; //Tableau Prix-Somme des amounts vente [Prix,AmountCumulé];
       var AmountAsks = [0];
       var PriceAsks = [];
+      var maxNbPoints = 150;
+
+      if (bids.asks > maxNbPoints) {
+         bids = _.filter(bids, function(bid, index) {
+            return index % 2 == 0;
+         });
+         asks = _.filter(asks, function(ask, index) {
+            return index % 2 == 0;
+         });
+      }
 
       _.each(bids, function(bid, index) {
          if (index == 0) index = 1
@@ -73,7 +83,7 @@ define('depthDataHelper', ['FormatUtils'], function(FormatUtils) {
          maxBid: maxBid,
          minAsk: minAsk
       };
-      
+
    }
 
    return DepthDataHelper;
