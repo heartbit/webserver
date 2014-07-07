@@ -426,7 +426,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 .attr('x', newx)
                 .attr('opacity', 1)
                 .attr('font-size', '50px')
-                .text(FormatUtils.formatPercent(evol))
+                .text(FormatUtils.formatEvol(evol))
                 .style("fill", evolColor);
 
             this.startBrushLabelTime

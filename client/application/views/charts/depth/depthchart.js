@@ -115,7 +115,7 @@ define('depthchart', ['config', 'd3', 'FormatUtils', 'moment'], function(config,
     };
 
     DepthChart.prototype.draw = function(depth) {
-       
+
         if (!depth) return;
         this.depth = depth;
         var self = this;
@@ -180,20 +180,22 @@ define('depthchart', ['config', 'd3', 'FormatUtils', 'moment'], function(config,
             .attr('r', 0);
 
         // get max murbids
-        var maxBid = _.max(murBids, function(bid) {
+        this.maxBid = _.max(murBids, function(bid) {
             return bid.price;
         });
         // get min murAsks
-        var minAsk = _.min(murAsks, function(ask) {
+        this.minAsk = _.min(murAsks, function(ask) {
             return ask.price;
         });
-        
-        var leftOffsetMaxBid = this.xScale(maxBid.price) - this.margin.left - this.margin.right - 5;
-        var leftOffsetMinAsk = this.xScale(minAsk.price) - this.margin.left - this.margin.right;
+
+        var leftOffsetMaxBid = this.xScale(this.maxBid.price) - this.margin.left - this.margin.right - 5;
+        var leftOffsetMinAsk = this.xScale(this.minAsk.price) - this.margin.left - this.margin.right;
+
         this.maxBidNumber
             .transition()
             .duration(100)
             .style('left', leftOffsetMaxBid + 'px');
+
         this.minAskNumber
             .transition()
             .duration(100)
@@ -245,6 +247,10 @@ define('depthchart', ['config', 'd3', 'FormatUtils', 'moment'], function(config,
 
                 self.closestPoint = findClosestPrice(mousex - self.margin.left);
 
+                if (!self.closestPoint) {
+                    return;
+                }
+
                 self.circles
                     .attr('r', function(d, i) {
                         return i == self.closestPoint.index ? 3 : 0;
@@ -269,7 +275,11 @@ define('depthchart', ['config', 'd3', 'FormatUtils', 'moment'], function(config,
                     .attr("transform", function(d) {
                         return "translate(" + currentCircle.attr('cx') + ",0)";
                     })
-                    .text('Volume: ' + FormatUtils.formatValue(currentCircle.data()[0].amount, 0)); // + "<br/>" + 'Price: ' + currentCircle.data()[0].price)
+                    .text(function(d, i, j) {
+                        var currentPrice = currentCircle.data()[0].price;
+                        var askBid = currentPrice >= self.minAsk.price ? "Ask: " : 'Bid: '
+                        return askBid + FormatUtils.formatValue(currentCircle.data()[0].amount, 0);
+                    });
 
                 self.currentPositionLabelPrice
                     .style("text-anchor", function() {
@@ -278,7 +288,7 @@ define('depthchart', ['config', 'd3', 'FormatUtils', 'moment'], function(config,
                     .attr("transform", function(d) {
                         return "translate(" + currentCircle.attr('cx') + ",25)";
                     })
-                    .text('Price: ' + FormatUtils.formatValue(currentCircle.data()[0].price, 0));
+                    .text('Price: ' + FormatUtils.formatPrice(currentCircle.data()[0].price, 0));
 
             });
 

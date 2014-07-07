@@ -50,7 +50,7 @@ define('FormatUtils', ['numeral', 'moment'], function(numeral) {
 
 	FormatUtils.formatPercent = function(value) {
 		var formatted;
-		value = roundToN(value, 3);
+		// value = roundToN(value, 3);
 		if (value >= 100) {
 			formatted = numeral(value).format("0,0");
 		}
@@ -58,9 +58,13 @@ define('FormatUtils', ['numeral', 'moment'], function(numeral) {
 			formatted = numeral(value).format("0.[0]");
 		}
 		if (value < 10) {
-			formatted = numeral(value).format("0.[0]");
+			formatted = numeral(value).format("0.[00]");
 		}
 		return formatted + '%';
+	};
+
+	FormatUtils.formatEvol = function(value) {
+		return value >= 0 ? '+' + this.formatPercent(value) : this.formatPercent(value);
 	};
 
 	FormatUtils.formatAgo = function(value) {
