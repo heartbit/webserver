@@ -1,6 +1,6 @@
 define('FormatUtils', ['numeral', 'moment'], function(numeral) {
 
-	numeral.zeroFormat('N/A');
+	// numeral.zeroFormat('N/A');
 	numeral.language('hearbit', {
 		delimiters: {
 			thousands: ',',
@@ -49,7 +49,18 @@ define('FormatUtils', ['numeral', 'moment'], function(numeral) {
 	};
 
 	FormatUtils.formatPercent = function(value) {
-		return roundToN(value, 2) + '%';
+		var formatted;
+		value = roundToN(value, 3);
+		if (value >= 100) {
+			formatted = numeral(value).format("0,0");
+		}
+		if (value < 100 && value >= 10) {
+			formatted = numeral(value).format("0.[0]");
+		}
+		if (value < 10) {
+			formatted = numeral(value).format("0.[0]");
+		}
+		return formatted + '%';
 	};
 
 	FormatUtils.formatAgo = function(value) {
