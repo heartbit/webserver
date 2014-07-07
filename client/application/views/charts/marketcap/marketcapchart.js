@@ -16,13 +16,14 @@ define('marketcapchart', ['config', 'dataHelper', 'd3', 'moment'], function(conf
     	this.arc= d3.svg.arc().outerRadius(radius);
 
     	this.pie= d3.layout.pie()
+    		.sort(null)
     		.value(function(d) {
     			console.log(d);
     			return d;
     		});
 
     	this.svg_minipie=d3.select("#correlation_"+data.name).append("svg").append("g")
-    		.attr("transform","translate("+(75-radius)+","+height/2+")")
+    		.attr("transform","translate("+(75-radius)+","+(height/2)+")")
     		.attr("id","#correlation_pie_"+data.name);
     }
 
@@ -36,7 +37,8 @@ define('marketcapchart', ['config', 'dataHelper', 'd3', 'moment'], function(conf
         }
 
         var minipiechart=function(data,index) {
-        	var pieData=[data.correlation,1-data.correlation];
+        	var pieData=[];
+        		pieData=[data.correlation,1-data.correlation];
         	var g=self.svg_minipie.selectAll(".arc")
         		.data(self.pie(pieData))
         		.enter().append("g")

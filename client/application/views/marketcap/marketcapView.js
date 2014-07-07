@@ -17,20 +17,11 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
             var self = this;
 
             // this.marketcap = new Marketcap({url:config.marketcap.urlModel+"item="+this.item+"&currency="+this.currency});
-            this.marketcap = new Marketcap({
-                url: config.marketcap.urlModel
-            });
+            this.marketcap = new Marketcap();
 
             this.bubblechartOption = 'bubbleAll';
             this.marketcap.fetch();
-            // this.trades = new Trades();
-            // console.log(this.trades);
-            // this.trades.init();
-            // this.trades.fetchAllLastTrades();
-            // _.bindAll(this, 'render', 'update');
-            // this.trades.on('update',this.update,this);
-            // this.render();
-            //this.listenTo(this.marketcap,'change', this.render({viewName:'marketcap'}));
+          
         },
 
         changeBubbleChartOption: function(event) {
