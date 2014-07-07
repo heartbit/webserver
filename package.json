@@ -39,7 +39,8 @@
     "mocha": "*",
     "amdefine": "*",
     "mailgun": "*",
-    "http-auth": "*"
+    "http-auth": "*",
+    "numeral": "*"
   },
   "devDependencies": {
     "matchdep": "*",

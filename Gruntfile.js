@@ -50,12 +50,12 @@ module.exports = function(grunt) {
         simplemocha: {
             options: {
                 timeout: 60000,
-                ignoreLeaks: false,
+                ignoreLeaks: true,
                 ui: 'bdd',
                 reporter: 'spec'
             },
             all: {
-                src: ['tests/client.tests.js', 'tests/server.tests.js']
+                src: ['tests/formating.test.js'] // 'tests/client.tests.js', 'tests/server.tests.js']
             }
         },
 
@@ -77,24 +77,6 @@ module.exports = function(grunt) {
         requirejs: {
             app: {
                 options: {
-                    // appDir: '<%= props.clientDir %>',
-                    // dir: '<%= props.buildClientDir %>',
-                    // modules: [{
-                    //     name: 'common',
-                    // }, {
-                    //     name: 'app',
-                    // }, {
-                    //     name: 'embed-keyfacts',
-                    // }, {
-                    //     name: 'embed-maingraph',
-                    // }],
-                    // baseUrl: './modules',
-                    // mainConfigFile: '<%= props.clientDir %>/modules/common.js',
-                    // fileExclusionRegExp: /^(bower_components|build|node_modules)$/,
-                    // optimize: 'uglify2',
-                    // inlineText: true,
-                    // preserveLicenseComments: false
-                    // baseUrl: './modules',
                     logLevel: 0,
                     baseUrl: './client/',
                     name: 'modules/app',
@@ -210,7 +192,7 @@ module.exports = function(grunt) {
                     file: 'webserver.js',
                     args: ['-d', 'no'],
                     nodeArgs: ['--debug'],
-                    ignore: ['**'],// 'RipplePairs/*', './client/application', './client/*.html'],
+                    ignore: ['**'], // 'RipplePairs/*', './client/application', './client/*.html'],
                     env: {
                         PORT: "<%= props.defaultport %>",
                         LOCAL: true

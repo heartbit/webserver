@@ -17,12 +17,10 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
             var self = this;
 
             // this.marketcap = new Marketcap({url:config.marketcap.urlModel+"item="+this.item+"&currency="+this.currency});
-            this.marketcap = new Marketcap({
-                url: config.marketcap.urlModel
-            });
+            this.marketcap = new Marketcap();
 
             this.bubblechartOption = 'bubbleAll';
-            this.marketcap.fetch();
+
             // this.trades = new Trades();
             // console.log(this.trades);
             // this.trades.init();
@@ -58,8 +56,12 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
         },
 
         render: function(params) {
-            var self = this;
+            this.marketcap.fetch(this.update());
+            return this;
+        },
 
+        update: function() {
+            var self = this;
             this.marketCapJson = this.marketcap.toJSON();
             this.marketCapJson.marketcap = $.map(this.marketCapJson.marketcap, function(marketcap, index) {
                 marketcap.name = index;
@@ -72,7 +74,7 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
 
             this.marketCapJson.marketcaps = new Array();
 
-            _.each(this.marketCapJson.marketcap, function(marketcap,index) {
+            _.each(this.marketCapJson.marketcap, function(marketcap, index) {
                 self.marketCapJson.marketcaps.push({
                     "name": marketcap.name,
                     "currencyID": marketcap.currencyId,
@@ -94,15 +96,11 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
             setTimeout(function() {
                 self.marketcapChart = new MarketcapChart("#js-marketcapChart");
                 self.marketcapChart.draw(self.marketCapJson);
+
                 self.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
                 self.bubbleMarketcapChart.draw(self.marketCapJson.marketcap);
             }, 500);
 
-            return this;
-        },
-
-        update: function() {
-            this.render();
             return this;
         }
 

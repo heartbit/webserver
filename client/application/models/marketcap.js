@@ -15,9 +15,10 @@ define('marketcap', ['config', 'moment', 'backbone'], function(config, moment, B
 				volumeChange:0
 			}
 		},
-		initialize: function(props) {
-			this.url = props.url;
+
+		initialize: function() {
 		}
+
 	});
 
 	return Marketcap;

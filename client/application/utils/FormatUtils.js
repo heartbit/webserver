@@ -1,12 +1,4 @@
-define('FormatUtils', ['cldr', 'moment'], function() {
-
-	var numberFormatter = new TwitterCldr.DecimalFormatter();
-	var shortNumberFormatter = new TwitterCldr.ShortDecimalFormatter();
-	var abbreviatedNumberFormatter = new TwitterCldr.AbbreviatedNumberFormatter();
-	var currencyFormatter = new TwitterCldr.CurrencyFormatter();
-	var longDecimalFormatter = new TwitterCldr.LongDecimalFormatter();
-	var percentFormatter = new TwitterCldr.PercentFormatter();
-	var timespanFormatter = new TwitterCldr.TimespanFormatter();
+define('FormatUtils', ['numeral', 'moment'], function() {
 
 	var roundToN = function(num, n) {
 		return +(Math.round(num + "e+" + n) + "e-" + n);
@@ -44,7 +36,7 @@ define('FormatUtils', ['cldr', 'moment'], function() {
 
 	FormatUtils.formatPrice = function(value, unit) {
 		if (value > 1000) {
-			return this.formatCurrencyLabel(unit) + this.formatValueShort(value);
+			return this.formatCurrencyLabel(unit) + this.formatValueShort(value, 4);
 		}
 		if (value <= 999 && value >= 100) {
 			return this.formatCurrencyLabel(unit) + this.formatValue(value, 2);
@@ -58,53 +50,73 @@ define('FormatUtils', ['cldr', 'moment'], function() {
 		return this.formatCurrencyLabel(unit) + String(value);
 	};
 
+	FormatUtils.formatPriceShort = function(value, unit) {
+		// Format 
+		if (value > 1000) {
+			return this.formatCurrencyLabel(unit) + this.formatValueShort(value, 4);
+		}
+		if (value <= 999 && value >= 100) {
+			return this.formatCurrencyLabel(unit) + this.formatValue(value, 2);
+		}
+
+		if (value <= 100 && value >= 1) {
+			return this.formatCurrencyLabel(unit) + this.formatValue(value, 3);
+		}
+		if (value < 1 && value >= 0.00001) {
+			return this.formatCurrencyLabel(unit) + this.formatValue(value, 5);
+		}
+		return this.formatCurrencyLabel(unit) + String(this.formatValueShort(value, 4));
+	};
+
 	FormatUtils.formatValue = function(value, n) {
-		return numberFormatter.format(roundToN(value, n));
+		return numeral(roundToN(value, n)).format('0,0');
 	};
 
 	FormatUtils.formatItem = function(value, unit) {
 		return this.formatValue(value, 0) + ' ' + this.formatCurrencyLabel(unit);
 	};
 
-	FormatUtils.formatValueShort = function(value, maxDigits) {
+	FormatUtils.formatValueShort = function(value, maxDigits, format) {
 
-		var addCommas = function(value) {
-			if (value) {
-				var valueStr = value.toString();
-				var i = valueStr.length - 3;
-				while (i > 0) {
-					valueStr = valueStr.substring(0, i) + ',' + valueStr.substring(i, valueStr.length);
-					i -= 3;
-				}
-				return valueStr;
-			}
-			return "error";
-		};
+		return numeral(value).format('0[.000 a]');
 
-		var valueStr = {
-			value: addCommas(value),
-			multiple: ""
-		};
+		// var addCommas = function(value) {
+		// 	if (value) {
+		// 		var valueStr = value.toString();
+		// 		var i = valueStr.length - 3;
+		// 		while (i > 0) {
+		// 			valueStr = valueStr.substring(0, i) + ',' + valueStr.substring(i, valueStr.length);
+		// 			i -= 3;
+		// 		}
+		// 		return valueStr;
+		// 	}
+		// 	return "error";
+		// };
 
-		var thousandsOffset = 0;
-		var mults = ['k', 'M', 'Bn'];
-		if (value >= 1000) {
-			// If we have a very big number
-			while (String(valueStr.value).length > maxDigits && thousandsOffset < mults.length) {
-				value = Math.round(value / 1000);
+		// var valueStr = {
+		// 	value: addCommas(value),
+		// 	multiple: ""
+		// };
 
-				valueStr = {
-					value: addCommas(value),
-					multiple: mults[thousandsOffset]
-				};
+		// var thousandsOffset = 0;
+		// var mults = ['k', 'M', 'Bn'];
+		// if (value >= 1000) {
+		// 	// If we have a very big number
+		// 	while (String(valueStr.value).length > maxDigits && thousandsOffset < mults.length) {
+		// 		value = Math.round(value / 1000);
 
-				thousandsOffset++;
-			}
-		} else {
-			return this.truncToNdecimal(value, 0);
-		}
+		// 		valueStr = {
+		// 			value: addCommas(value),
+		// 			multiple: mults[thousandsOffset]
+		// 		};
 
-		return valueStr.value + ' ' + valueStr.multiple;
+		// 		thousandsOffset++;
+		// 	}
+		// } else {
+		// 	return this.truncToNdecimal(value, 0);
+		// }
+
+		// return valueStr.value + ' ' + valueStr.multiple;
 	};
 
 	FormatUtils.formatPercent = function(value) {

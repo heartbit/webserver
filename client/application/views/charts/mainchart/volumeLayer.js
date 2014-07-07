@@ -186,7 +186,7 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
 
         this.closestPoint = finclosestVolume(date);
 
-        if (this.closestPoint) {
+        if (this.closestPoint && this.closestPoint.candle) {
             var left = 0;
             var top = 0;
             this.volumeBarChart
