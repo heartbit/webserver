@@ -5,7 +5,7 @@ define('marketcap', ['config', 'moment', 'backbone'], function(config, moment, B
 		url: config.marketcap.urlModel,
 
 		defaults: {
-			// currencyName: "",
+		
 			marketcap: {
 				name: "",
 				currencyId: "",
@@ -19,6 +19,7 @@ define('marketcap', ['config', 'moment', 'backbone'], function(config, moment, B
 		},
 
 		initialize: function() {}
+
 
 	});
 

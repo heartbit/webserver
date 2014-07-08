@@ -16,7 +16,9 @@ define('config', function() {
 	config.ticker.url = apiprefix + "ticker/";
 
 	config.marketcap = {};
-	config.marketcap.urlModel = "/data/marketcap.json";
+
+	config.marketcap.urlModel = apiprefix + "networkdata";
+	config.marketcap.urlCollection = apiprefix + "networkdata";
 
 	config.maingraph = {};
 	config.maingraph.urlCollection = apiprefix + "maingraph";

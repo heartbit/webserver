@@ -1,4 +1,4 @@
-define('calculatorView', ['backbone','text!calculatorView.html','FormatUtils'], function(Backbone, calculatorViewTemplate,FormatUtils) {
+define('calculatorView', ['config','marketcap','text!calculatorView.html','FormatUtils'], function(config,Marketcap, calculatorViewTemplate,FormatUtils) {
     
     return Backbone.View.extend({
 
@@ -6,15 +6,21 @@ define('calculatorView', ['backbone','text!calculatorView.html','FormatUtils'], 
 
         template: _.template(calculatorViewTemplate),
 
-        initialize: function() {
+       
+        initialize: function(params) {
             var self = this;
 
-            // this.currencylabel=FormatUtils.formatCurrencyLabel;
+            this.marketcap = new Marketcap({
+                url: config.marketcap.urlModel
+            });
+            console.log(this);
+            this.marketcap.fetch();
+          
         },
-
         render: function(update) {
+            var self=this;
+            this.marketCapJson = this.marketcap.toJSON();
             
-            var self = this;
             var tplVariables = {
                 difficulty:6119726089,
                 price:430,
