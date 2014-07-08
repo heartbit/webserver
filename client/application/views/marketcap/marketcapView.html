@@ -43,16 +43,11 @@
                             <th width="150">Correlation index</th>
                         </tr>
                     </thead>
-                    <% _.each(marketcapTemplate.marketcap,function(marketcap){%>
+                    <% _.each(marketcaps, function(marketcap){ %>
                         <tr>
-                            <td id="rank_<%=marketcap.name%>"></td>
-                            <td id="<%=marketcap.name%>"></td>
-                            <td id="marketcap_<%=marketcap.name%>"></td>
-                            <td id="price_volume_<%=marketcap.name%>"></td>
-                            <td id="change_<%=marketcap.name%>"></td>
-                            <td id="correlation_<%=marketcap.name%>"></td>
+                            <td><%=marketcap.get('currencyName')%></td>
                         </tr>
-                        <%})%>
+                        <% }) %>
                 </table>
             </div>
 
