@@ -7,7 +7,14 @@ define('depthDataHelper', ['FormatUtils'], function(FormatUtils) {
 
       var bids = data.bids;
       var asks = data.asks;
-
+      bids.sort(function(a,b) {
+         return b.price-a.price;
+      });
+       
+      asks.sort(function(a,b) {
+         return a.price-b.price;
+      });
+   
       var maxBid = _.max(bids, function(bid) {
          return bid.price;
       });
@@ -85,7 +92,7 @@ define('depthDataHelper', ['FormatUtils'], function(FormatUtils) {
             return index % 10 == 0;
          })
          .value();
-
+   
       return {
          DepthMax: DepthMax,
          DepthMin: DepthMin,

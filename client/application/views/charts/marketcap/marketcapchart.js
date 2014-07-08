@@ -10,7 +10,7 @@ define('marketcapchart', ['config', 'dataHelper', 'd3', 'moment'], function(conf
     }
 
     MarketcapChart.prototype.draw = function(marketcaps) {
-      var self=this;
+        var self=this;
 
     }
 

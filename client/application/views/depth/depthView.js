@@ -36,13 +36,13 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
         },
 
         update: function(params) {
-
+          
             this.computedDepth = this.depthDataHelper.computeDepth(this.depth);
 
             if (!this.computedDepth) {
                 return false;
             }
-
+               
             this.depthChart.draw(this.computedDepth);
 
             var updateParams = {
@@ -56,7 +56,7 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
             };
 
             this.maxBidNumber.render(updateParams);
-
+            
             var updateParams = {
                 unit: '$',
                 value: this.computedDepth.minAsk.price,

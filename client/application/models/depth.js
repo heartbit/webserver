@@ -37,6 +37,7 @@ define('depth', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
         initialize: function() {},
 
         update: function(depth) {
+            
             if (depth && depth.order_book) {
                 var asks = _.filter(depth.order_book, function(order) {
                     return order.tradeType === 'ASK';

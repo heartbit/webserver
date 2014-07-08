@@ -76,9 +76,10 @@ define(function(require) {
 			}
 		*/
 		app: function(params) {
-			console.log('params : ', params);
+			
 			this.params = params || this.params || {};
 			ParametersManager.isInit ? this.refresh() : ParametersManager.init(this.refresh);
+			console.log('params : ', params);
 		},
 
 		refresh: function() {
