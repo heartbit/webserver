@@ -111,6 +111,9 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'spin', 'moment'],
                 case "volume":
                     formattedlabel = FormatUtils.formatItem(raw, this.unit);
                     break;
+                case "volume-short":
+                    formattedlabel = FormatUtils.formatVolumeShort(raw, this.unit);
+                    break;
                 case "timestamp":
                     formattedlabel = FormatUtils.formatTime(raw, 'timestamp');
                     break;

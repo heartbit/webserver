@@ -80,7 +80,9 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
                 _.each(this.bigNumberViews, function(bigNumberView, index) {
                     var unit = null;
                     switch (bigNumberView.tickerAttribute.type) {
+                        case "short":
                         case "volume":
+                        case "volume-short":
                             unit = self.ticker.get('item');
                             break;
                         case "price":

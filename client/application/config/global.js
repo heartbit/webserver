@@ -102,7 +102,8 @@ define('config', function() {
 	}, {
 		id: 'vol',
 		label: '24h vol.',
-		type: 'volume'
+		// type: 'volume'
+		type: 'volume-short'
 	}];
 
 	return config;

@@ -79,25 +79,26 @@ define('FormatUtils', ['numeral', 'moment'], function(numeral) {
 		}
 	};
 
+	FormatUtils.formatVolumeShort = function(value, unit) {
+		return this.formatValueShort(value) + ' ' + this.formatCurrencyLabel(unit);
+	};
+
 	FormatUtils.formatValueShort = function(value, maxDigits, format) {
 		var formatted = value;
 		if (value > 1000000000) {
 			formatted = numeral(value).format("0.[0]a");
-		}
-		if (value <= 1000000000 && value >= 1000) {
+		} else if (value <= 1000000000 && value >= 1000) {
 			formatted = numeral(value).format("0.[00]a");
-		}
-		if (value <= 999 && value >= 100) {
+		} else if (value <= 999 && value >= 100) {
 			formatted = numeral(value).format("0");
-		}
-		if (value <= 100 && value >= 10) {
+		} else if (value <= 100 && value >= 10) {
 			formatted = numeral(value).format("0");
-		}
-		if (value <= 10 && value >= 1) {
+		} else if (value <= 10 && value >= 1) {
 			formatted = numeral(value).format("0.[0]");
-		}
-		if (value < 1 && value >= 0.00001) {
-			formatted = numeral(value).format("0.[000]");
+		} else if (value < 1 && value >= 0.000001) {
+			formatted = numeral(value).format("0.[00000]");
+		} else if (value < 0.000001) {
+			formatted = roundToN(+value, 3); //numeral(value).format("0.[00000]");
 		}
 		return String(formatted);
 	};
@@ -110,21 +111,18 @@ define('FormatUtils', ['numeral', 'moment'], function(numeral) {
 		var formatted = value;
 		if (value > 10000) {
 			formatted = numeral(value).format("0,0");
-		}
-		if (value <= 9999 && value >= 1000) {
+		} else if (value <= 9999 && value >= 1000) {
 			formatted = numeral(value).format("0,0.[00]");
-		}
-		if (value <= 999 && value >= 100) {
+		} else if (value <= 999 && value >= 100) {
 			formatted = numeral(value).format("0.[00]");
-		}
-		if (value <= 100 && value >= 10) {
+		} else if (value <= 100 && value >= 10) {
 			formatted = numeral(value).format("0.[00]");
-		}
-		if (value <= 10 && value >= 1) {
+		} else if (value <= 10 && value >= 1) {
 			formatted = numeral(value).format("0.[000]");
-		}
-		if (value < 1 && value >= 0.00001) {
-			formatted = numeral(value).format("0.[0000]");
+		} else if (value < 1 && value >= 0.000001) {
+			formatted = numeral(value).format("0.[00000]");
+		} else if (value < 0.000001) {
+			formatted = roundToN(+value, 3); // numeral(value).format("0.[000]");
 		}
 		return String(formatted);
 	};
