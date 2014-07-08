@@ -18,12 +18,7 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
 
             // this.marketcap = new Marketcap({url:config.marketcap.urlModel+"item="+this.item+"&currency="+this.currency});
             this.marketcap = new Marketcap();
-
             this.bubblechartOption = 'bubbleAll';
-<<<<<<< HEAD
-            
-          
-=======
 
             // this.trades = new Trades();
             // console.log(this.trades);
@@ -33,7 +28,6 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
             // this.trades.on('update',this.update,this);
             // this.render();
             //this.listenTo(this.marketcap,'change', this.render({viewName:'marketcap'}));
->>>>>>> 24908957cbf0f45ef43f4597378f01f09bceddf5
         },
 
         changeBubbleChartOption: function(event) {
@@ -61,61 +55,7 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
         },
 
         render: function(params) {
-<<<<<<< HEAD
-           this.marketcap.fetch(this.update());
-           
-            
-        },
-
-        update: function() {
-            var self=this;
-            // console.log(this.marketcap.parseJSON());
-            console.log(this.marketcap);
-            console.log(this.marketcap.models);
-            //console.log(this.marketcap.models.marketcap.bitcoin);
-            // _.each(this.marketcap.changed,function(att,index) {
-            //     console.log(index);
-            //     console.log(att);
-            // });
-            //console.log(this.marketcap.toJSON());
-            //console.log(this.marketcap);
-         
-       
-            //this.marketCapJson = this.marketcap;
-            
-            //   console.log(this.marketCapJson);
-            // this.marketCapJson.marketcap = $.map(this.marketCapJson.marketcap, function(marketcap, index) {
-            //     marketcap.name = index;
-            //     return marketcap;
-            // });
-           // console.log(this.marketCapJson);
-            // this.marketCapJson.marketcap.sort(function(a, b) {
-            //     return (a.marketcap < b.marketcap);
-            // });
-
-            // this.marketCapJson.marketcaps = new Array();
-
-            // _.each(this.marketCapJson.marketcap, function(marketcap,index) {
-            //     self.marketCapJson.marketcaps.push({
-            //         "name": marketcap.name,
-            //         "currencyID": marketcap.currencyId,
-            //         "symbol": FormatUtils.formatCurrencyLabel(marketcap.currencyId),
-            //         "marketcap": FormatUtils.formatPrice(marketcap.marketcap, "$"),
-            //         "price": FormatUtils.formatPrice(marketcap.price, "$"),
-            //         "supply": FormatUtils.formatPrice(marketcap.supply, FormatUtils.formatCurrencyLabel(marketcap.currencyId)),
-            //         "volume_24": FormatUtils.formatPrice(marketcap.volume_24, "$"),
-            //         "priceChange": FormatUtils.formatPercent(marketcap.priceChange),
-            //         "volumeChange": FormatUtils.formatPercent(marketcap.volumeChange),
-            //         "correlation": FormatUtils.formatPrice(marketcap.correlation) 
-            //     });
-            // });
-
-            // this.$el.html(this.templateMarketCap({
-            //     marketcapTemplate: this.marketCapJson
-            // }));
-=======
             this.marketcap.fetch(this.update());
-            return this;
         },
 
         update: function() {
@@ -150,23 +90,12 @@ define('marketcapView', ['config', 'marketcap', 'text!marketcapView.html', 'mark
             this.$el.html(this.templateMarketCap({
                 marketcapTemplate: this.marketCapJson
             }));
->>>>>>> 24908957cbf0f45ef43f4597378f01f09bceddf5
-
             setTimeout(function() {
                 self.marketcapChart = new MarketcapChart("#js-marketcapChart");
                 self.marketcapChart.draw(self.marketCapJson);
-<<<<<<< HEAD
-                // self.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
-                // self.bubbleMarketcapChart.draw(self.marketCapJson.marketcap);
-            }, 500);
-            
-=======
-
                 self.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
                 self.bubbleMarketcapChart.draw(self.marketCapJson.marketcap);
             }, 500);
-
->>>>>>> 24908957cbf0f45ef43f4597378f01f09bceddf5
             return this;
         }
 

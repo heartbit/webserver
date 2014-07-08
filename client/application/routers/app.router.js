@@ -124,6 +124,7 @@ define(function(require) {
 		},
 
 		joinDataroom: function(params) {
+			var self = this;
 			var sep = ':';
 			var dataroom = params.item + sep + params.currency;
 
@@ -138,6 +139,7 @@ define(function(require) {
 			DataSocketManager.once('enter-dataroom', function(response) {
 				if (response.error) console.log('ENTER DATAROOM ERROR : ', response.error);
 				else {
+					self.datarooms.push(dataroom);
 					console.log('enter dataroom ok', dataroom);
 				}
 			});

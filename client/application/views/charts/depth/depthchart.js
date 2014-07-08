@@ -38,7 +38,10 @@ define('depthchart', ['config', 'd3', 'FormatUtils', 'moment'], function(config,
         this.xAxis = d3.svg.axis()
             .scale(this.xScale)
             .orient("bottom")
-            .ticks(10);
+            .ticks(6)
+            .tickFormat(function(d) {
+                return FormatUtils.formatValueShort(d);
+            });
 
         this.yScale = d3.scale
             .linear()

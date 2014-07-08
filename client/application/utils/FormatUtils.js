@@ -122,7 +122,7 @@ define('FormatUtils', ['numeral', 'moment'], function(numeral) {
 		} else if (value < 1 && value >= 0.000001) {
 			formatted = numeral(value).format("0.[00000]");
 		} else if (value < 0.000001) {
-			formatted = roundToN(+value, 3); // numeral(value).format("0.[000]");
+			formatted = +value.toPrecision(3); // numeral(value).format("0.[000]");
 		}
 		return String(formatted);
 	};
