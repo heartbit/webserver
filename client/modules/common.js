@@ -153,6 +153,10 @@ requirejs.config({
             deps: ['jquery'],
             exports: '$'
         },
+        'tablesorter': {
+            deps: ['jquery'],
+            exports: '$'
+        },
         'backbone': {
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
