@@ -98,7 +98,7 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
                 return width >= 0 ? width : 0;
             })
             .attr('fill', function(volume, i) {
-                return "#06031F";
+                return "#698791";
                 // if(self.chart.models.candles[i] && self.chart.models.volumes[i]) { 
                 //     if(self.chart.models.candles[i].close > self.chart.models.candles[i].open) {
                 //         return "gold" ;
