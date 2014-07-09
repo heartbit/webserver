@@ -57,6 +57,10 @@ define('newsView', ['news', 'storyjs', 'timelinejs', 'moment', 'text!./newsView.
                 }
             });
             return this;
+        },
+
+        update: function() {
+            return false;
         }
 
     });

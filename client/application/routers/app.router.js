@@ -76,7 +76,6 @@ define(function(require) {
 			}
 		*/
 		app: function(params) {
-
 			this.params = params || this.params || {};
 			ParametersManager.isInit ? this.refresh() : ParametersManager.init(this.refresh);
 			console.log('params : ', params);
@@ -89,10 +88,16 @@ define(function(require) {
 
 		render: function(callback) {
 			var self = this;
-			_.each(_.keys(this.views), function(viewKey) {
-				self.views[viewKey].render(ParametersManager.getCurrentParams());
-			});
-			this.isRender = true;
+			if (!this.isRender) {
+				_.each(_.keys(this.views), function(viewKey) {
+					self.views[viewKey].render(ParametersManager.getCurrentParams());
+				});
+				this.isRender = true;
+			} else {
+				_.each(_.keys(this.views), function(viewKey) {
+					self.views[viewKey].update(ParametersManager.getCurrentParams());
+				});
+			}
 			if (callback) {
 				callback();
 			}

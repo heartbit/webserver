@@ -17,7 +17,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         this.layers = {
             areaLayer: new AreaLayer(this),
             volumeLayer: new VolumeLayer(this),
-            newsLayer: new NewsLayer(this)
+            // newsLayer: new NewsLayer(this)
         };
     };
 
@@ -133,7 +133,6 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         _.each(_.values(self.layers), function(layer) {
             layer.resize();
         });
-
     };
 
     MainChart.prototype.clear = function() {};
@@ -187,8 +186,6 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
                     self.layers.areaLayer.updateTooltip(closestDate);
                     self.layers.volumeLayer.updateTooltip(closestDate);
                 }
-
-
                 return false;
             });
     };

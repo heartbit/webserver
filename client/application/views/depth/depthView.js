@@ -1,76 +1,74 @@
-define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart', 'bignumber', 'depthDataHelper'], function(config, Depth, d3, DepthTemplate, DepthChart, BigNumber, DepthDataHelper) {
+define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart', 'bignumber', 'depthDataHelper'],
+    function(config, Depth, d3, DepthTemplate, DepthChart, BigNumber, DepthDataHelper) {
 
-    return Backbone.View.extend({
+        return Backbone.View.extend({
 
-        el: '#js-depthView',
+            el: '#js-depthView',
 
-        template: _.template(DepthTemplate),
+            template: _.template(DepthTemplate),
 
-        initialize: function() {
-            this.depth = new Depth();
-            this.depthDataHelper = new DepthDataHelper();
-            _.bindAll(this, 'render', 'update');
-        },
+            initialize: function() {
+                _.bindAll(this, 'render', 'update', 'redraw');
+                this.depth = new Depth();
+                this.depth.on('update', this.redraw, this);
+                this.depthDataHelper = new DepthDataHelper();
+            },
 
-        render: function(params) {
-            this.$el.html(this.template());
-            this.depth.socketSync(params);
-            this.depth.on('update', this.update, this);
+            render: function(params) {
+                this.$el.html(this.template());
+                this.depthChart = new DepthChart('#js-depthChart');
+                this.depth.socketSync(params);
 
-            var optionMaxBid = {
-                trend: {
-                    after: true
-                }
-            };
-            this.maxBidNumber = new BigNumber('#js-maxBid', optionMaxBid);
+                var optionMaxBid = {
+                    trend: {
+                        after: true
+                    }
+                };
+                this.maxBidNumber = new BigNumber('#js-maxBid', optionMaxBid);
 
-            var optionsMinAsk = {
-                trend: {
-                    before: true
-                }
-            };
-            this.minAskNumber = new BigNumber('#js-minAsk', optionsMinAsk);
+                var optionsMinAsk = {
+                    trend: {
+                        before: true
+                    }
+                };
+                this.minAskNumber = new BigNumber('#js-minAsk', optionsMinAsk);
+                return this;
+            },
 
-            this.depthChart = new DepthChart('#js-depthChart');
-            return this;
-        },
+            update: function(params) {
+                this.depth.socketSync(params);
+            },
 
-        update: function(params) {
-          
-            this.computedDepth = this.depthDataHelper.computeDepth(this.depth);
+            redraw: function() {
+                this.computedDepth = this.depthDataHelper.computeDepth(this.depth);
+                this.depthChart.draw(this.computedDepth);
 
-            if (!this.computedDepth) {
-                return false;
-            }
-               
-            this.depthChart.draw(this.computedDepth);
+                var updateParams = {
+                    unit: '$',
+                    value: this.computedDepth.maxBid.price,
+                    type: 'price',
+                    delay: 0,
+                    duration: 600,
+                    fontSize: '35px',
+                    trend: true
+                };
 
-            var updateParams = {
-                unit: '$',
-                value: this.computedDepth.maxBid.price,
-                type: 'price',
-                delay: 0,
-                duration: 600,
-                fontSize: '35px',
-                trend: true
-            };
+                this.maxBidNumber.render(updateParams);
 
-            this.maxBidNumber.render(updateParams);
-            
-            var updateParams = {
-                unit: '$',
-                value: this.computedDepth.minAsk.price,
-                type: 'price',
-                delay: 0,
-                duration: 600,
-                fontSize: '35px',
-                trend: true
-            };
+                var updateParams = {
+                    unit: '$',
+                    value: this.computedDepth.minAsk.price,
+                    type: 'price',
+                    delay: 0,
+                    duration: 600,
+                    fontSize: '35px',
+                    trend: true
+                };
 
-            this.minAskNumber.render(updateParams);
+                this.minAskNumber.render(updateParams);
+            },
 
-        }
+
+        });
 
     });
-
-});

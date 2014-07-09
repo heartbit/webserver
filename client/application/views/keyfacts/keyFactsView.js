@@ -23,17 +23,23 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
                 this.options = options;
                 this.ticker = new Ticker();
                 this.trade = new Trade();
+                this.ticker.on('update', this.redraw, this);
+                this.trade.on('update', this.redraw, this);
                 this.exportTools = new GraphmenuView();
                 this.exportTools.initParent(this.$el);
-                _.bindAll(this, 'render', 'update');
+                _.bindAll(this, 'render', 'update', 'render');
             },
 
-            renderBigNumbers: function(tickerAttributes) {
+            render: function(params) {
                 var self = this;
                 this.bigNumberViews = [];
 
-                var tickerAttributes = tickerAttributes || config.keyfactsview.defaultAttributes;
-                this.tickerAttributes = this.addHtmlSelectors(tickerAttributes);
+                var tickerAttributes = this.options.tickerAttributes || config.keyfactsview.defaultAttributes;
+                _.each(tickerAttributes, function(tickerAttribute) {
+                    tickerAttribute.htmlSelector = 'js-' + tickerAttribute.id + 'BigNumber';
+                });
+                this.tickerAttributes = tickerAttributes;
+
                 this.$el.html(this.template({
                     tickerAttributes: this.tickerAttributes
                 }));
@@ -54,27 +60,19 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
                 });
 
                 $(document).foundation();
-            },
 
-            addHtmlSelectors: function(tickerAttributes) {
-                _.each(tickerAttributes, function(tickerAttribute) {
-                    tickerAttribute.htmlSelector = 'js-' + tickerAttribute.id + 'BigNumber';
-                });
-                return tickerAttributes;
-            },
-
-            render: function(params) {
                 this.ticker.socketSync(params);
                 this.trade.socketSync(params);
-                this.renderBigNumbers(this.options.tickerAttributes);
-                this.ticker.on('update', this.update, this);
-                this.trade.on('update', this.update, this);
-                this.update(true);
-                // this.exportTools.setElement($(this.exportToolEl)).render();
+
                 return this;
             },
 
-            update: function(reset) {
+            update: function(params) {
+                this.ticker.socketSync(params);
+                this.trade.socketSync(params);
+            },
+
+            redraw: function(reset) {
                 var self = this;
 
                 _.each(this.bigNumberViews, function(bigNumberView, index) {
@@ -109,20 +107,7 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
 
                     bigNumberView.bigNumberChart.render(updateParams);
                 });
-
-                // this.changePageTitle();
-            },
-
-            // changePageTitle: function() {
-            //     var $title = $("title");
-            //     var title = "Coin";
-            //     if (this.modelSelectedTicker.get('last') && this.modelSelectedTicker.get('currency')) {
-            //         title = FormatUtils.formatPrice(this.modelSelectedTicker.get('last'), this.modelSelectedTicker.get('currency').id);
-            //         title += " " + this.modelSelectedTicker.get('platform').label + " " + this.modelSelectedTicker.get('item').symbol + "/" + this.modelSelectedTicker.get('currency').symbol;
-            //     }
-            //     $title.html(title);
-            //     return false;
-            // }
+            }
 
         });
 
