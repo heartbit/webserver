@@ -157,11 +157,11 @@ define('FormatUtils', ['numeral', 'moment'], function(numeral) {
 				break;
 				// yuan
 			case 'CNY':
-				symbol: "¥";
+				symbol = "¥";
 				break;
 				// rouble
 			case 'RUR':
-				symbol: '&#8381;';
+				symbol = '&#8381;';
 				break;
 				// feathercoin
 			case 'FTC':
