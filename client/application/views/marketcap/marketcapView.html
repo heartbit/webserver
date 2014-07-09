@@ -32,25 +32,28 @@
 
         <div class="small-12 large-12 medium-12 columns">
             <div id="marketcapContainer">
-                <table id="marketcapTable">
+                <table id="marketcapTable" class"tablesorter">
                     <thead>
                         <tr>
-                            <th>Rank</th>
-                            <th>CryptoCurrencies</th>
-                            <th width="150">Marketcap</th>
-                            <th width="150">Price & Volume (24h)</th>
-                            <th width="150">%Change (24h)</th>
-                            <th width="150">Correlation index</th>
+                            <th><a href="#">Rank</a></th>
+                            <th><a href="#">CryptoCurrencies</a></th>
+                            <th width="150"><a href="#">Marketcap</a></th>
+                            <th width="150"><a href="#">Price & Volume (24h)</a></th>
+                            <th width="150"><a href="#">%Change (24h)</a></th>
+                            <th width="150"><a href="#">Correlation index</a></th>
                         </tr>
                     </thead>
+                    <tbody>
                     <% _.each(marketcaps, function(marketcap){ %>
                         <tr>
                             <td><%=marketcap.get('currencyName')%></td>
                         </tr>
                         <% }) %>
+                    </tbody>
                 </table>
             </div>
 
         </div>
     </div>
 </div>
+
