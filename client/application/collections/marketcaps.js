@@ -8,6 +8,7 @@ define('marketcaps', ['config', 'marketcap'], function(config, Marketcap) {
 		parse: function(response) {
 			console.log('Collection - parse');
 			this.reset(response);
+			return response;
 		}
 		
 	});

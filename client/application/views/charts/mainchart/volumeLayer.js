@@ -56,6 +56,7 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
     VolumeLayer.prototype.update = function(params) {
         var self = this;
         var offsetFactor = 0.1;
+
         this.volumes = this.chart.models.volumes;
         this.volumeYScale.domain([d3.min(self.volumes.map(function(volume) {
             return volume.amount > 0 ? volume.amount : 1;
@@ -86,7 +87,8 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
             .attr('y', self.chart.height)
             .remove();
 
-        // Update
+        //console.log(this.chart.models);
+        // Update 
         this.volumeBarChart
             .attr("x", function(d) {
                 return self.chart.timeScale(d.startDate);
@@ -96,7 +98,14 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
                 return width >= 0 ? width : 0;
             })
             .attr('fill', function(volume, i) {
-                return "grey";
+                return "#06031F";
+                // if(self.chart.models.candles[i] && self.chart.models.volumes[i]) { 
+                //     if(self.chart.models.candles[i].close > self.chart.models.candles[i].open) {
+                //         return "gold" ;
+                //     }else {
+                //         return "grey";
+                //     }
+                // }
             })
             .attr("height", 0)
             .attr('y', self.chart.height)

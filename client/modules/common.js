@@ -25,6 +25,10 @@ requirejs.config({
         fuse: 'libs/fuse.min',
         d3tip: 'libs/d3tip',
         d3: 'libs/d3.min',
+        tablesorter:'libs/jquery/jquery.tablesorter.min',
+        tablesorter_widget:'libs/jquery/jquery.tablesorter.widget.min',
+        metadata:'libs/jquery/jquery.metadata',
+
 
         // Screenshot
         stackBlur: 'libs/export/canvg/StackBlur',
