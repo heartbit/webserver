@@ -8,9 +8,9 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
             template: _.template(DepthTemplate),
 
             initialize: function() {
-                _.bindAll(this, 'render', 'update');
+                _.bindAll(this, 'render', 'update', 'redraw');
                 this.depth = new Depth();
-                this.depth.on('update', this.update, this);
+                this.depth.on('update', this.redraw, this);
                 this.depthDataHelper = new DepthDataHelper();
             },
 
@@ -35,7 +35,12 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
                 return this;
             },
 
+            update: function(params) {
+                this.depth.socketSync(params);
+            },
+
             redraw: function() {
+                this.computedDepth = this.depthDataHelper.computeDepth(this.depth);
                 this.depthChart.draw(this.computedDepth);
 
                 var updateParams = {
@@ -63,13 +68,6 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
                 this.minAskNumber.render(updateParams);
             },
 
-            update: function(params) {
-                this.computedDepth = this.depthDataHelper.computeDepth(this.depth);
-                if (!this.computedDepth) {
-                    return false;
-                }
-                this.redraw();
-            }
 
         });
 
