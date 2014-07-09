@@ -3,7 +3,7 @@ $label_color: #666666;
  $tick_color: #cccccc;
 
  .depthAreaBids {
-    fill:#b7b7b7;
+    fill:green;
     stroke-width:0;
     opacity: .8;
 }
@@ -13,7 +13,7 @@ $label_color: #666666;
     fill:none;
 }
 .depthAreaAsks {
-    fill:#b7b7b7;
+    fill:red;
     stroke-width:0;
     opacity:.8;
 }
