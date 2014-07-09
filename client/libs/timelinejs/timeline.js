@@ -2546,9 +2546,9 @@ LazyLoad = (function(doc) {
 			nodes.push(node);
 		}
 
-		// for (i = 0, len = nodes.length; i < len; ++i) {
-		// 	head.appendChild(nodes[i]);
-		// }
+		for (i = 0, len = nodes.length; i < len; ++i) {
+			head.appendChild(nodes[i]);
+		}
 	}
 
 	/**

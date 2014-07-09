@@ -13,7 +13,6 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
             'click .js-pair': 'changeGlobalPair',
             'click .js-platform': 'changeGlobalPlatform',
             
-            
             'click .js-item-search': 'changeGlobalItem',
             'click .js-pair-search': 'changeGlobalPair',
             'click .js-platform-search': 'changeGlobalPlatform',
