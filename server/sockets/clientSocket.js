@@ -127,13 +127,10 @@ ClientSocket.prototype.initDataNamespace = function() {
 					console.log('client want to join dataroom : ' + dataroom);
 
 					var checkDataroomRequest = function(dataroom) {
-
 						var room = _.find(roomlist, function(room) {
 							return room.id == dataroom;
 						});
-
 						console.log('selected room ', room);
-
 						return room;
 					};
 
@@ -192,6 +189,9 @@ ClientSocket.prototype.initDataNamespace = function() {
 								console.log('err dataroom leave : ', err);
 								socket.emit('leave-dataroom', 'error');
 							} else {
+								socket.datarooms = _.filter(socket.datarooms, function(room) {
+									return room != dataroom;
+								})
 								socket.emit('leave-dataroom', 'success');
 							}
 						});
