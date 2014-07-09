@@ -3,6 +3,7 @@
 	z-index: 99;
 	opacity: 0.94;
 	margin-right: 0;
+
 }
 
 .controllerView .controllerBox{
@@ -12,12 +13,13 @@
 
 .controllerView .searchbar{
 	max-height: 35px;	
-	padding-bottom: 0px;
+	padding: 0px;
 	margin:0px;
 	max-width: 35em;
-	margin-top: 1.0em;
+	margin-top: 0.15em;
 
 }
+
 
 .controllerView .searchbutton{
 	max-height: 35px;	
@@ -33,7 +35,14 @@
 .controllerView .row .row.collapse {
 	margin: 0 0 0 0;
 }
-
+.controllerView .searchdiv{
+	padding-bottom:5px;
+}
+.controllerView .button-bar {
+	padding-top:5px;
+	padding-bottom:0px;
+	margin:0px;
+}
 .controllerView .button-bar a {
 	max-height: 45px;	
 	margin:0px;
