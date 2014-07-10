@@ -17,10 +17,9 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
             initialize: function(params) {
                 //_.bindAll(this, 'render', 'update');
                 this.marketcaps = new Marketcaps();
+       
                 this.bubblechartOption = 'bubbleAll';
-                $(function(){
-                  $("#marketcapTable").tablesorter();
-                });
+              
             },
 
             changeBubbleChartOption: function(event) {
@@ -55,30 +54,43 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
 
             update: function() {
 
-                var self = this;
-                this.marketcap=[];
-                _.each(this.marketcaps.models,function(marketcap) {
-                 
-                    self.marketcap.push(marketcap.attributes);
-                });
-             
                 
-                //console.log(this.marketcap);
-            
+                var self = this;
+                console.log(this.marketcaps);
+                this.marketcap=[];
+                this.marketcapFormat=[];
+                _.each(this.marketcaps.models,function(marketcap,i) {
+                    self.marketcap.push(marketcap.attributes);
+                    self.marketcap[i].marketcap=self.marketcap[i].price*self.marketcap[i].totalCoin;  
+                    //fake correlation
+                    self.marketcap[i].correlation=Math.random();   
+                    self.marketcapFormat.push(_.clone(marketcap.attributes));                 
+                });
+               
 
-                // this.marketCapJson.marketcap.sort(function(a, b) {
-                //     return (a.marketcap < b.marketcap);
-                // });
+                _.each(this.marketcapFormat,function(d,i) {
+                    d.marketcap=FormatUtils.formatItem(d.marketcap,"$");
 
+                        // marketcap.marketcap,marketcap.currencyId);//                 +FormatUtils.formatCurrencyLabel(marketcap.currencyId);
+                    d.currencyId=d.currencyId;
+                    d.price=FormatUtils.formatPrice(d.price,"$");
+                    d.priceChange=FormatUtils.formatPercent(d.priceChange);
+                    d.volume=FormatUtils.formatItem(d.volume, d.currencyId);
+                    d.volumeChange=FormatUtils.formatPercent(d.volumeChange);
+                    d.correlation=FormatUtils.truncToNdecimal(d.correlation,2);
+
+                    console.log(d.date);
+                });
+               
                 this.$el.html(this.templateMarketCap({
-                    marketcaps: this.marketcaps.models
+                    marketcaps: this.marketcapFormat
                 }));
-
+ 
                 setTimeout(function() {
                     self.marketcapChart = new MarketcapChart("#js-marketcapChart");
                     self.marketcapChart.draw(self.marketcap);
-                    // self.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
-                    // self.bubbleMarketcapChart.draw(self.marketcaps.models);
+                    self.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
+                    self.bubbleMarketcapChart.draw(self.marketcap);
                 }, 500);
 
             },

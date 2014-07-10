@@ -26,8 +26,9 @@ requirejs.config({
         d3tip: 'libs/d3tip',
         d3: 'libs/d3.min',
         tablesorter:'libs/jquery/jquery.tablesorter.min',
-        tablesorter_widget:'libs/jquery/jquery.tablesorter.widget.min',
+        tablesorter_widget:'libs/jquery/jquery.tablesorter.widgets.min',
         metadata:'libs/jquery/jquery.metadata',
+        
 
 
         // Screenshot
@@ -154,6 +155,10 @@ requirejs.config({
             exports: '$'
         },
         'tablesorter': {
+            deps: ['jquery'],
+            exports: '$'
+        },
+        'tablesorter_widget': {
             deps: ['jquery'],
             exports: '$'
         },

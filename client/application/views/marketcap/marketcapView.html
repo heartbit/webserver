@@ -6,6 +6,7 @@
 
         <h1>Marketcap</h1>
 
+</script>
         <div class="small-8 large-8 medium-8 columns button-bar">
             <ul class="button-group inline-list left">
                 <li class="">
@@ -34,23 +35,36 @@
             <div id="marketcapContainer">
                 <table id="marketcapTable" class"tablesorter">
                     <thead>
-                        <tr>
-                            <th><a href="#">Rank</a></th>
-                            <th><a href="#">CryptoCurrencies</a></th>
-                            <th width="150"><a href="#">Marketcap</a></th>
-                            <th width="150"><a href="#">Price & Volume (24h)</a></th>
-                            <th width="150"><a href="#">%Change (24h)</a></th>
-                            <th width="150"><a href="#">Correlation index</a></th>
+                        <tr  class="tablesorter-stickyHeader">
+                            <th><a href="#marketcapContainer">Rank</a></th>
+                            <th><a href="#marketcapContainer">CryptoCurrencies</a></th>
+                            <th><a href="#marketcapContainer">Marketcap</a></th>
+                            <th><a href="#marketcapContainer">Price & Volume (24h)</a></th>
+                            <th><a href="#marketcapContainer">%Change (24h)</a></th>
+                            <th><a href="#marketcapContainer">Correlation index(BTC=1)</a></th>
                         </tr>
                     </thead>
                     <tbody>
-                    <% _.each(marketcaps, function(marketcap){ %>
+                    <% _.each(marketcaps, function(marketcap,i){ %>
                         <tr>
-                            <td><%=marketcap.get('currencyName')%></td>
+                            <td>#<%=i+1%></td>                
+                            <td><%=marketcap.currencyId%></td>
+                            <td><%=marketcap.marketcap%></td>
+                            <td>
+                                <%=marketcap.price%> </br>
+                                <%=marketcap.priceChange%>
+                            </td>
+                            <td>
+                                <%=marketcap.volume%> </br>
+                                <%=marketcap.volumeChange%>
+                            </td>
+                            <td><%=marketcap.correlation%> <progress value=<%=marketcap.correlation*100%> max="100"><div id="progress" class="graph"><div id="bar" style="width:34%"><p>34% complete</p></div></div></progress>
+                            </td>
                         </tr>
-                        <% }) %>
+                    <% }) %>
                     </tbody>
                 </table>
+
             </div>
 
         </div>

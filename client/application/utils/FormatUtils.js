@@ -60,6 +60,9 @@ define('FormatUtils', ['numeral', 'moment'], function(numeral) {
 		if (value < 10) {
 			formatted = numeral(value).format("0.[00]");
 		}
+		if(formatted>0) {
+			return "+"+formatted+"%";
+		}
 		return formatted + '%';
 	};
 

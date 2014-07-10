@@ -19,8 +19,8 @@ define('config', function() {
 
 	// config.marketcap.urlModel = apiprefix + "networkdata";
 	// config.marketcap.urlCollection = apiprefix + "networkdata";
-	config.marketcap.urlModel = "http://192.168.1.4:8080/api/marketcap?item=BTC ";
-	config.marketcap.urlCollection = "http://192.168.1.4:8080/api/marketcap?item=BTC ";
+	config.marketcap.urlModel = "http://192.168.1.4:8080/api/marketcap/all/";
+	config.marketcap.urlCollection = "http://192.168.1.4:8080/api/marketcap/all/";
 
 	config.maingraph = {};
 	config.maingraph.urlCollection = apiprefix + "maingraph";
