@@ -1,63 +1,52 @@
-<h1><b> Profitability Calculator </b>
-</h1>
+<div class="marketcap offcanvasmenu">
+
+    <div class="globalDiv row">
+        <h1> Profitability Calculator  </h1>
+
+        <div class="small-12 large-12 medium-12 columns">
+            <form id='calculatorForm'>
+                <div class="large-6 columns">  
+                    <div id="dataaaa" class="small-9 columns">
+                      <input id="hashpower" name="hashpower" type="text" placeholder="60" value="60">
+                      <input id="difficulty" name="difficulty" type="text" value=<%=price%>>
+                      <input id="price" type="text" name="price" value=<%=networkdata.marketcap.difficulty%>>
+                    </div>
+                    <div class="small-3 columns">
+                      <input type="button" class="button postfix radius" id="js-calculatorButton">Label</input>
+                    </div>
+                 </div>
+            </form>
+             <table id="calculatorTable">
+                        <thead>
+                            <tr>
+                                <th>CryptoCurrencies</th>
+                                <th>Difficulty</th>
+                                <th>Total Coin</th>
+                            </tr>
+                        </thead>
+                        <tbody>                          
+                                <tr>
+                                    <td><%=networkdata.currencyName%></td>
+                                    <!-- <td><%=networkdata.marketcap.date%></td> -->
+                                    <td><%=networkdata.marketcap.difficulty%></td>
+                                    <td><%=networkdata.marketcap.totalCoin%></td>
+                                </tr>
+                   
+                        </tbody>
+            </table>
+        </div>
 
 
-<h5 class="titrecalc">Actual Difficulty:
-    <%=difficulty%>
-</h5>
-<h5 class="titrecalc">Estimated Next Difficulty:
-    <%=estimated%>
-</h5>
-<h5 class="titrecalc">Exchange Rate:
-    <%=price%>$ (Bitstamp)</h5>
-
-<form method="POST" action="">
-    <table>
-        <tr>
-            <td>Hash Rate (Gh/s):</td>
-            <td>
-                <input type="text" name="hashrate" id="hrate" value="60">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="submit" name="calculate" value="calculate">
-            </td>
-        </tr>
-    </table>
 
 
-</form>
-<table id='result_block'></table>
 
-<table id='result'></table>
 
-<table id='result_estimated'></table>
 
-<script>
-var $form = $('form');
-$form.submit(function() {
-    var hashrate = $('#hrate').val();
-    var difficulty = <%= difficulty %> ;
-    var price = <%= price %> ;
-    var reward = <%= reward %> ;
-    var estimated = <%= estimated %> ;
 
-    var nbrjour_toblock = difficulty * Math.pow(2, 32) / (hashrate * Math.pow(10, 9)) / 60 / 60 / 24;
-    var dailygain = reward / nbrjour_toblock;
 
-    var nbrjour_toblock_est = estimated * Math.pow(2, 32) / (hashrate * Math.pow(10, 9)) / 60 / 60 / 24;
-    var dailygain_est = reward / nbrjour_toblock_est;
-    $('#result_block').html('<tr><td> Number of day to find a block:  ' + nbrjour_toblock + '</td></tr>');
 
-    $('#result').html('<caption class="titrecalc_caption">Result for this difficulty</caption><tr><th>Number of bitcoin earned </th> <th> Dollars earned</th></tr><tr><td> Daily ' + dailygain + '</td><td> ' + dailygain * price + '</td></tr><tr><td> Monthly ' + dailygain * 30 + '</td><td> ' + dailygain * price * 30 + '</td></tr><tr><td> Yearly ' + dailygain * 365 + '</td><td> Dollars earned:' + dailygain * price * 365 + '</td></tr>');
-    $('#result_estimated').html('<caption class="titrecalc_caption">Result for estimated difficulty</caption><tr><th>Number of bitcoin earned </th> <th> Dollars earned</th></tr><tr><td> Daily ' + dailygain + '</td><td> ' + dailygain_est * price + '</td></tr><tr><td> Monthly ' + dailygain_est * 30 + '</td><td> ' + dailygain_est * price * 30 + '</td></tr><tr><td> Yearly ' + dailygain_est * 365 + '</td><td> Dollars earned:' + dailygain_est * price * 365 + '</td></tr>');
 
-    // alert(nbrjour_toblock);	
-    // alert(price);
 
-    return false;
-});
-</script>
+    </div>
 
-<a class="close-reveal-modal">&#215;</a>
+</div>

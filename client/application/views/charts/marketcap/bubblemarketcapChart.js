@@ -14,7 +14,7 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 
 	BubbleChart.prototype.draw = function(marketcaps) {
 		var self = this;
-		console.log(marketcaps);
+	
 		this.marketcaps = marketcaps;
 		self._width = $('#js-marketcapModal').width() + 100;
 		self._height = 400;

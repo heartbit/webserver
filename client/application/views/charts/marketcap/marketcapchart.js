@@ -6,11 +6,11 @@ define('marketcapchart', ['config', 'dataHelper', 'd3', 'moment','tablesorter','
         $(function(){
           $("#marketcapTable").tablesorter({
             selectSort:'a',
-            widgets: ["stickyHeaders"],
-            widgetOptions : {
-            // css class name applied to the sticky header
-            stickyHeaders : "tablesorter-stickyHeader"
-            }
+            // widgets: ["stickyHeaders"],
+            // widgetOptions : {
+            
+            // stickyHeaders : "tablesorter-stickyHeader"
+            // }
           });
         });
      
@@ -25,7 +25,7 @@ define('marketcapchart', ['config', 'dataHelper', 'd3', 'moment','tablesorter','
 
     MarketcapChart.prototype.draw = function(marketcaps) {
         var self=this;
-        console.log(marketcaps);
+  
 
     }
 
