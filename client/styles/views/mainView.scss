@@ -1,13 +1,18 @@
 #js-mainview .inline-list>li {
-	margin-left: 0.1rem;
+    margin-left: 0.1rem;
 }
-
 .mainView {
-	padding-top:2%;
-	padding-bottom:2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
 }
-
-.mainView .button-group li button{
-	color:gold;
-	background-color:black;
+.mainView .button-group li button {
+    color: gold;
+    background-color: black;
+}
+#js-volumewidget rect {
+}
+#js-volumewidget text {
+    fill: black;
+    font: 1.5em sans-serif;
+    text-anchor: end;
 }

@@ -12,7 +12,12 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
         this.currentParams = {};
         this.isInit = false;
     };
-
+    Array.prototype.unset = function(val) {
+        var index = this.indexOf(val)
+        if (index > -1) {
+            this.splice(index, 1)
+        }
+    }
     ParametersManager.instance = null;
 
     ParametersManager.prototype.init = function(callback) {
@@ -42,21 +47,21 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
         this.platforms = new Platforms();
         this.platforms.initFromIds(platformdIds);
         this.platforms.comparator = 'id';
-         
+
         _.each(this.platforms.models, function(platform) {
-          var pairPlatformsIds =[];
-          _.each(self.items.models, function(item) {
-            pairPlatformsIds = _.union(pairPlatformsIds, _.chain(item.currencies)
-                .keys()
-                .map(function(currency) {
-                    if( item.currencies[currency].indexOf(platform.id) != -1) {
-                      return item.id + '/' + currency;
-                    }
-                }).value());
-          });
-          platform.pairs = pairPlatformsIds;
+            var pairPlatformsIds = [];
+            _.each(self.items.models, function(item) {
+                pairPlatformsIds = _.union(pairPlatformsIds, _.chain(item.currencies)
+                    .keys()
+                    .map(function(currency) {
+                        if (item.currencies[currency].indexOf(platform.id) != -1) {
+                            return item.id + '/' + currency;
+                        }
+                    }).value());
+            });
+            platform.pairs = pairPlatformsIds;
         });
-        
+
         var currencyIds = [];
         _.each(this.items.models, function(item) {
             var currencies = _.keys(item.currencies);
@@ -64,7 +69,7 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
         });
         this.currencies = new Currencies();
         this.currencies.initFromIds(currencyIds);
-        this.currencies.comparator ='id';
+        this.currencies.comparator = 'id';
         this.currencies.sort();
         var pairIds = [];
         _.each(this.items.models, function(item) {
@@ -79,16 +84,18 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
         _.each(this.pairs.models, function(pair) {
             self.platformsIds = [];
             _.each(self.items.models, function(item) {
-                if ( pair.id.split("/")[0] === item.id ) {
+                if (pair.id.split("/")[0] === item.id) {
                     var currencies = _.keys(item.currencies);
                     _.each(currencies, function(currency) {
-                        if ( pair.id.split("/")[1] === currency ) {
+                        if (pair.id.split("/")[1] === currency) {
                             self.platformsIds = _.union(self.platformsdIds, item.currencies[currency]);
                         }
                     });
                 }
             });
-            pair.platforms = _.filter(self.platformsIds,function(platform){return typeof platform !== 'undefined'});
+            pair.platforms = _.filter(self.platformsIds, function(platform) {
+                return typeof platform !== 'undefined'
+            });
         });
         this.currentParams = config.defaultparams;
 
@@ -100,27 +107,38 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
             this.currentParams = params;
         }
     };
-
+    ParametersManager.prototype.getTickerRoom = function(pair) {
+        if (typeof config.defaultTickerRoom[pair.item] !== 'undefined') {
+            return config.defaultTickerRoom[pair.item];
+        } else {
+            return [pair.item+":"+pair.currency];
+        }
+    };
+    ParametersManager.prototype.getDefaultPairs = function(item) {
+        if (typeof config.defaultPairs[item] !== 'undefined') {
+            return config.defaultPairs[item];
+        } 
+    };
     ParametersManager.prototype.computeUrl = function(params) {
         return 'app?item=' + params.item + "&platform=" + params.platform + "&currency=" + params.currency;
     };
 
-    ParametersManager.prototype.changeGlobalPair = function(pairId,platform) {
+    ParametersManager.prototype.changeGlobalPair = function(pairId, platform) {
         var params = {};
         params.item = pairId.split("/")[0];
-        params.currency=pairId.split("/")[1];
-        params.platform=platform||this.currentParams.platform;
+        params.currency = pairId.split("/")[1];
+        params.platform = platform || this.currentParams.platform;
         var url = this.computeUrl(params);
         Backbone.history.navigate(url, true);
         return false;
     };
 
-    ParametersManager.prototype.changeGlobalPlatform = function(platformId,pairId) {
+    ParametersManager.prototype.changeGlobalPlatform = function(platformId, pairId) {
         var params = config.defaultplatforms[platformId];
         params.platform = platformId;
-        if ( pairId ) {
+        if (pairId) {
             params.item = pairId.split("/")[0];
-            params.currency=pairId.split("/")[1];
+            params.currency = pairId.split("/")[1];
         }
         var url = this.computeUrl(params);
         Backbone.history.navigate(url, true);
@@ -134,17 +152,17 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
         Backbone.history.navigate(url, true);
         return false;
     };
-     ParametersManager.prototype.getCurrentPlatformPairs = function(){
-         var platform= this.currentParams.platform;
-         return this.platforms.findByName(platform);
-     };
-     
+    ParametersManager.prototype.getCurrentPlatformPairs = function() {
+        var platform = this.currentParams.platform;
+        return this.platforms.findByName(platform);
+    };
+
     ParametersManager.prototype.getPlatformByPairId = function(pairId) {
         var result;
-        _.each(this.platforms.models,function(model){
-            if ( _.contains(model.pairs,pairId) ) {
-              result = model.id;
-              return;
+        _.each(this.platforms.models, function(model) {
+            if (_.contains(model.pairs, pairId))  {
+                result = model.id;
+                return;
             }
         });
         return result;
