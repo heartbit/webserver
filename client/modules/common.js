@@ -88,7 +88,7 @@ requirejs.config({
         bubbleMarketcapChart: 'application/views/charts/marketcap/bubblemarketcapChart',
         bubbleTooltip: 'application/views/charts/marketcap/bubbleTooltip',
 
-        miskhorizbarchart: 'application/views/charts/misk/miskhorizbarchart',
+        horizBarChart: 'application/views/charts/misk/horizBarChart',
         bignumber: 'application/views/charts/utils/bignumber',
         miskpiechart: 'application/views/charts/misk/miskpiechart',
         tooltip: 'application/views/charts/layers/tooltip/tooltip',
