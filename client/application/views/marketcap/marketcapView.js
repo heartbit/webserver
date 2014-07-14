@@ -19,6 +19,8 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
                 this.marketcaps = new Marketcaps();
                 this.marketcaps.on('reset', this.update, this);
                 this.bubblechartOption = 'bubbleAll';
+                this.marketcapChart = new MarketcapChart("#js-marketcapChart");
+                this.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
             },
 
             changeBubbleChartOption: function(event) {
@@ -83,10 +85,8 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
                 }));
 
                 setTimeout(function() {
-                    self.marketcapChart = new MarketcapChart("#js-marketcapChart");
-                    self.marketcapChart.draw(self.marketcap);
-                    self.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
                     self.bubbleMarketcapChart.draw(self.marketcap);
+                    self.marketcapChart.draw(self.marketcap);
                 }, 500);
 
             },
