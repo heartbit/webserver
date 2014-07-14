@@ -176,7 +176,7 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 	};
 
 	BubbleChart.prototype.charge = function(marketcap) {
-		return -Math.pow(marketcap.radius, 2.1) / 6;
+		return -Math.pow(marketcap.radius, 2.1) / 8;
 	};
 
 	BubbleChart.prototype.start = function() {
