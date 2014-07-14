@@ -15,6 +15,7 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
             },
 
             render: function(params) {
+                this.params = params ;
                 this.$el.html(this.template());
                 this.depthChart = new DepthChart('#js-depthChart');
                 this.depth.socketSync(params);
@@ -36,6 +37,7 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
             },
 
             update: function(params) {
+                this.params = params;
                 this.depth.socketSync(params);
             },
 
@@ -44,7 +46,7 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
                 this.depthChart.draw(this.computedDepth);
 
                 var updateParams = {
-                    unit: '$',
+                    unit: this.params.currency,
                     value: this.computedDepth.maxBid.price,
                     type: 'price',
                     delay: 0,
@@ -56,7 +58,7 @@ define('depthView', ['config', 'depth', 'd3', 'text!depthView.html', 'depthchart
                 this.maxBidNumber.render(updateParams);
 
                 var updateParams = {
-                    unit: '$',
+                    unit: this.params.currency,
                     value: this.computedDepth.minAsk.price,
                     type: 'price',
                     delay: 0,

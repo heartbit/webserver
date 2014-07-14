@@ -9,7 +9,7 @@ define('parametersManagerConfig', function() {
 	};
 	parametersManagerConfig.defaultTickerRoom = {
 		BTC : ['BTC:USD','BTC:CNY','BTC:EUR'],
-		LTC : ['LTC:USD','LTC:CNY','LTC:EUR']
+		LTC : ['LTC:USD','LTC:CNY','LTC:EUR','LTC:BTC']
 	};
 	parametersManagerConfig.defaultPairs = {
 		BTC : {
@@ -20,7 +20,8 @@ define('parametersManagerConfig', function() {
 		LTC : {
 		  USD:['BITFINEX','BTCE'],
 		  CNY:['BTCCHINA'],
-		  EUR:['KRAKEN']
+		  EUR:['KRAKEN'],
+		  BTC:['CRYPTSY']
 		}
 	};
 	parametersManagerConfig.defaultplatforms = {

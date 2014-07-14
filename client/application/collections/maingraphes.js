@@ -34,6 +34,7 @@ define('maingraphes', ['config', 'maingraphe', 'moment'], function(config, Maing
 					}
 
 					var nbPoints = oResponse.candles.length;
+					self.candles = oResponse.candles;
 					if (nbPoints > self.maxNbPoints) {
 						self.candles = _.filter(oResponse.candles, function(candle, index) {
 							return index % Math.round(nbPoints / self.maxNbPoints) == 0;
@@ -41,10 +42,14 @@ define('maingraphes', ['config', 'maingraphe', 'moment'], function(config, Maing
 						self.volumes = _.filter(oResponse.volumes, function(volume, index) {
 							return index % Math.round(nbPoints / self.maxNbPoints) == 0;
 						});
-					} else {
-						self.candles = oResponse.candles;
-						self.volumes = oResponse.volumes;
-					}
+					} 
+
+					var maxClose = _.max(oResponse.candles, function(candle){ return candle.close; });
+					self.candles = _.filter(oResponse.candles, function(candle) {
+						return maxClose.close*2 > candle.high;
+					});
+					
+					self.volumes = oResponse.volumes;
 
 					_.each(self.candles, function(candle) {
 						candle.middleDate = new Date((candle.startDate + (candle.endDate - candle.startDate) / 2) * 1000);
