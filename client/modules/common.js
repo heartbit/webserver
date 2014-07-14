@@ -113,6 +113,7 @@ requirejs.config({
         depth: 'application/models/depth',
         pair: 'application/models/pair',
         item: 'application/models/item',
+        networkdata: 'application/models/networkdata',
 
         //Models util
         screenshot: 'application/models/utils/screenshot',
@@ -127,6 +128,7 @@ requirejs.config({
         pairs: 'application/collections/pairs',
         items: 'application/collections/items',
         news: 'application/collections/news',
+        networkdatas: 'application/collections/networkdatas',
 
         // Manager
         DataSocketManager: 'application/managers/sockets/dataSocketManager',

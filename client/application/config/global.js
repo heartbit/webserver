@@ -16,11 +16,14 @@ define('config', function() {
 	config.ticker.url = apiprefix + "ticker/";
 
 	config.marketcap = {};
+	config.marketcap.urlModel = apiprefix + "marketcap/all";
+	config.marketcap.urlCollection = apiprefix + "marketcap/all";
+	// config.marketcap.urlModel = "http://192.168.1.4:8080/api/marketcap/all/";
+	// config.marketcap.urlCollection = "http://192.168.1.4:8080/api/marketcap/all/";
 
-	// config.marketcap.urlModel = apiprefix + "networkdata";
-	// config.marketcap.urlCollection = apiprefix + "networkdata";
-	config.marketcap.urlModel = "http://192.168.1.4:8080/api/marketcap/all/";
-	config.marketcap.urlCollection = "http://192.168.1.4:8080/api/marketcap/all/";
+	config.networkdata={};
+	config.networkdata.urlModel=apiprefix + "networkdata";
+	config.networkdata.urlCollection=apiprefix + "networkdata";
 
 	config.maingraph = {};
 	config.maingraph.urlCollection = apiprefix + "maingraph";
