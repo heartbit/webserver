@@ -10,14 +10,16 @@
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
-	background:#F0FCFF;
+	background:#FADD65;
 }
+
+
 .list a {
 	color:black;
 
 }
 .list a:hover {
-	color:#cacaca;
+	color:black;
 	background-color:black;
 }
 .list {
@@ -36,12 +38,15 @@
 	top: 0;
 }
 .item {
-	padding: 0.6em;
-	height: 100%;
+	padding: 0.5em;
+}
+.pairButton:hover .item {
+	padding: 1em;
+	height: 150%;
 	margin-bottom: 0.8em;
 	text-align: center;
-	border: solid thin;
-	border-radius: 20px;
+	border-radius: 6px;
+	color:white;
 }
 .displayed {
 	width:100%%;

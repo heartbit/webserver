@@ -1,4 +1,5 @@
-define('miskView', ['config', 'text!miskView.html', 'miskbarchart', 'miskhorizbarchart', 'miskpiechart', 'FormatUtils'], function(config, MiskTemplate, MiskBarChart, MiskHorizBarChart, MiskPieChart) {
+define('miskView', ['config', 'text!miskView.html', 'miskbarchart', 'horizBarChart', 'miskpiechart', 'FormatUtils'],
+ function(config, MiskTemplate, MiskBarChart, MiskHorizBarChart, MiskPieChart) {
 
 	return Backbone.View.extend({
 

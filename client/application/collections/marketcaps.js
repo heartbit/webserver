@@ -6,12 +6,12 @@ define('marketcaps', ['config', 'marketcap'], function(config, Marketcap) {
 		url: config.marketcap.urlCollection,
 
 		parse: function(response) {
-			console.log('Collection - parse');
+			//console.log('AAAAAAAAAAAAAAAAAAAAAAAAA');
 			
 			responseFilter=[];
 			_.each(response, function(response) {
 				
-				console.log(response);
+				//console.log(response);
 				if(response!=null) {
 					//ugly trick pour corriger data ber non parsée
 					if(response.currencyId=="BTC") {

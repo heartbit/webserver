@@ -7,7 +7,23 @@ define('parametersManagerConfig', function() {
 		item: 'BTC',
 		currency: 'USD'
 	};
-
+	parametersManagerConfig.defaultTickerRoom = {
+		BTC : ['BTC:USD','BTC:CNY','BTC:EUR'],
+		LTC : ['LTC:USD','LTC:CNY','LTC:EUR','LTC:BTC']
+	};
+	parametersManagerConfig.defaultPairs = {
+		BTC : {
+		  USD:['BITSTAMP','BITFINEX','BTCE'],
+		  CNY:['BTCCHINA'],
+		  EUR:['KRAKEN']
+		},
+		LTC : {
+		  USD:['BITFINEX','BTCE'],
+		  CNY:['BTCCHINA'],
+		  EUR:['KRAKEN'],
+		  BTC:['CRYPTSY']
+		}
+	};
 	parametersManagerConfig.defaultplatforms = {
 		BTCE: {
 			item: 'BTC',
@@ -28,18 +44,6 @@ define('parametersManagerConfig', function() {
 		CRYPTSY: {
 			item: 'DOGE',
 			currency: 'BTC'
-		},
-		HUOBI: {
-			item: 'BTC',
-			currency: 'CNY'
-		},
-		OKCOIN: {
-			item: 'BTC',
-			currency: 'CNY'
-		},
-		BITCOINCENTRAL: {
-			item: 'BTC',
-			currency: 'EUR'
 		},
 		BITFINEX: {
 			item: 'BTC',

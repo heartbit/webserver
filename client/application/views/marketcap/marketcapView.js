@@ -17,12 +17,13 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
             initialize: function(params) {
                 //_.bindAll(this, 'render', 'update');
                 this.marketcaps = new Marketcaps();
-       
+                this.marketcaps.on('reset',  this.update,this);
                 this.bubblechartOption = 'bubbleAll';
               
             },
 
             changeBubbleChartOption: function(event) {
+                console.log(event);
                 var option = $(event.target).attr('id').split('-')[1];
 
                 if (option == this.bubblechartOption) {
@@ -48,7 +49,7 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
 
             render: function(params) {
                 this.marketcaps.fetch();
-                this.marketcaps.on('reset',  this.update,this);
+                
                 
             },
 
@@ -56,7 +57,7 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
 
                 
                 var self = this;
-                console.log(this.marketcaps);
+               
                 this.marketcap=[];
                 this.marketcapFormat=[];
                 _.each(this.marketcaps.models,function(marketcap,i) {
@@ -76,10 +77,14 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
                     d.price=FormatUtils.formatPrice(d.price,"$");
                     d.priceChange=FormatUtils.formatPercent(d.priceChange);
                     d.volume=FormatUtils.formatItem(d.volume, d.currencyId);
-                    d.volumeChange=FormatUtils.formatPercent(d.volumeChange);
+                    if(d.volumeChange>0) {
+                        d.volumeChange="+"+FormatUtils.formatPercent(d.volumeChange);
+                    }else {
+                        d.volumeChange=FormatUtils.formatPercent(d.volumeChange);
+                    }
                     d.correlation=FormatUtils.truncToNdecimal(d.correlation,2);
 
-                    console.log(d.date);
+             
                 });
                
                 this.$el.html(this.templateMarketCap({

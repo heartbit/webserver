@@ -20,50 +20,55 @@
             <aside class="left-off-canvas-menu" id="js-offcanvasmenu">
             </aside>
             <section class="row" id="firstRow" data-equalizer>
-                <div class="right small-12 medium-12 large-4 columns" data-equalizer-watch>
-                    <div id="js-controller">
+                <div class="large-10 small-12 medium-12 columns large-centered">
+                    <div class="right small-12 medium-12 large-4 columns" data-equalizer-watch>
+                        <div id="js-controller">
+                        </div>
                     </div>
-                </div>
 
-                <div class="small-12 medium-12 large-8 columns" style=" margin-top: 1.3em;" data-equalizer-watch>
-                    <hr/>
-                    <div id="js-keyfacts" class="datawidget">
+                    <div class="small-12 medium-12 large-8 columns" style=" margin-top: 1.3em;" data-equalizer-watch>
+                        <hr class="myHr" />
+                        <div id="js-keyfacts" class="datawidget">
+                        </div>
+                        <hr class="myHr" />
                     </div>
-                    <hr/>
                 </div>
             </section>
 
-            <section class="row">
-                <div class="large-12 medium-12 small-12 columns">
+            <section class="row ">
+                <div class="large-10 large-centered medium-12 small-12 columns">
                     <div id="js-mainview" class="datawidget">
                     </div>
                 </div>
             </section>
-            <hr class="myHr"/>
-            <section class="row" data-equalizer>
-                <div class="large-6 medium-12 small-12 columns" data-equalizer-watch>
-                    <div class="row" data-equalizer>
-
-                        <div class="large-11 medium-12 small-12 columns" data-equalizer-watch>
-                            <div id="js-depthView" class="depthView datawidget">
+            <section class="row ">
+                <div class="large-10 large-centered medium-12 small-12 columns">
+                    <hr class="myHr" />
+                </div>
+            </section>
+            <section class="row " data-equalizer>
+                <div class="large-10 small-12 medium-12 columns large-centered">
+                    <div class="large-5 medium-12 small-12 columns" data-equalizer-watch>
+                        <div class="row" data-equalizer>
+                            <div class="large-11 medium-12 small-12 columns" data-equalizer-watch>
+                                <h1>Order Book</h1>
+                                <div id="js-depthView" class="depthView datawidget">
+                                </div>
                             </div>
                         </div>
-
-                        <div class="large-12 medium-12 small-12 columns" data-equalizer-watch>
-                            <div class="datawidget">
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
+                        <hr class="myHr" style="margin-left: 0%;margin-top: 8%;" />
+                        <div class="row">
+                            <div class="large-12 medium-12 small-12 columns" data-equalizer-watch>
+                                <h1>Volumes</h1>
+                                <div id="js-volumewidget" class="datawidget">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="large-6 medium-12 small-12 columns" data-equalizer-watch>
-                    <div class="datawidget" id="js-news"></div>
+                    <div class="large-5 medium-12 small-12 columns" data-equalizer-watch>
+                        <h1>News</h1>
+                        <div class="datawidget" id="js-news"></div>
+                    </div>
                 </div>
             </section>
 
@@ -86,9 +91,11 @@
                     </li>
                     <li data-id="js-keyfacts" data-text="Next" data-options="tip_location:top;tip_animation:fade" data-class="custom so-awesome">
                         <h4>Real Time Data</h4>
-                        <p>This gives you the last price of your favorite coin on your favorite platform.</p></br>
-                        <p>It also gived you key metrics of the last 24hours, price average, high/low, volume...</p></br>
-                        <p>Real Time Data motherfucker! </p>
+                        <p>This gives you the last price of your favorite coin on your favorite platform.</p>
+                        </br>
+                        <p>It also gived you key metrics of the last 24hours, price average, high/low, volume...</p>
+                        </br>
+                        <p>Real Time Data motherfucker!</p>
                     </li>
 
                     <li data-id="js-showPlatformsView" data-class="custom so-awesome" data-text="Next" data-options="tip_location:left;tip_animation:fade">
@@ -155,7 +162,7 @@
             (i[r].q = i[r].q || []).push(arguments)
         }, i[r].l = 1 * new Date();
         a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0];
+            m = s.getElementsByTagName(o)[0];
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m)

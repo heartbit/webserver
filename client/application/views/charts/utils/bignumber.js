@@ -44,12 +44,7 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'spin', 'moment'],
         BigNumber.prototype.render = function(params) {
             var self = this;
 
-            if (!this.validate(params.value)) {
-                this.addLoader();
-                return;
-            }
-
-            this.removeLoader();
+           
 
             this.initValue = this.value || 0;
             this.trend = params.trend || false;
@@ -61,6 +56,13 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'spin', 'moment'],
             this.type = params.type || this.type;
             // this.fontSize = params.fontSize || this.fontSize || "20px";
 
+            if (!this.validate(params.value)) {
+                //this.remove(this.el+' span');
+                this.addLoader();
+                return;
+            }
+
+            this.removeLoader();
             this.$bigvalue.transition()
                 .delay(self.delay)
                 .duration(self.duration)
@@ -77,7 +79,10 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'spin', 'moment'],
                 this.addTrend();
             }
         };
-
+        BigNumber.prototype.remove = function(value){
+            $(value).html("");
+            this.$trend.removeClass();        
+        };
         BigNumber.prototype.validate = function(value) {
             return _.isNumber(value) && !_.isNaN(value);
         };

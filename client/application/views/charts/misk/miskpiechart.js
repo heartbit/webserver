@@ -25,15 +25,7 @@ define('miskpiechart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], 
 				self.volumes.push([volume.platform,vol,'',self.colors[volume.platform],true]);
 			});
 		}
-		// [
-		// 	["bitstamp",2680,"EU","#508F40",true],
-		// 	["btcChina",8245,"PRC","#D95050",true],
-		// 	["btc-e",21870,"BG","#64658C",true],
-		// 	["OKCoin",12098,"PRC","#99609C",false],
-		// 	["huobi",56696,"PRC","#DED143",false],
-		// 	["bitcoin-central",400,"EU","#042157",true],
-		// 	["kraken",1211,"EU","#D0D61A",true]
-		// ];
+
 
 		this.volumes.sort(function(a,b) {
 			return a[1]>b[1];		

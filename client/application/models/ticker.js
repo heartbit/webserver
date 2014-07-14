@@ -1,7 +1,6 @@
 define('ticker', ['config', 'moment', 'DataSocketManager', 'EventManager', 'FormatUtils'], function(config, moment, DataSocketManager, EventManager, FormatUtils) {
 
     var Ticker = Backbone.Model.extend({
-
         socketSync: function(params) {
             var self = this;
             this.params = params || this.params;
@@ -13,21 +12,23 @@ define('ticker', ['config', 'moment', 'DataSocketManager', 'EventManager', 'Form
                     self.update(objTicker);
                 }
             };
-
             var eventId;
             if (this.isListening) {
                 eventId = this.eventIdUpdate();
                 DataSocketManager.removeAllListeners(eventId) //, updateCallback);
             }
-
             this.set('platform', this.params.platform);
             this.set('currency', this.params.currency);
             this.set('item', this.params.item);
             eventId = this.eventIdUpdate();
+            this.set('idAttribute',eventId);
+
             DataSocketManager.on(eventId, updateCallback);
             this.isListening = true;
         },
-
+        killListener: function(){
+            DataSocketManager.removeAllListeners(this.eventIdUpdate());
+        },
         initialize: function(params) {
             this.params = params;
         },
@@ -44,8 +45,10 @@ define('ticker', ['config', 'moment', 'DataSocketManager', 'EventManager', 'Form
             } else {
                 this.set('last', +ticker.price);
             }
+            eventId = this.eventIdUpdate();
+            this.set('idAttribute',eventId);
             this.trigger('update');
-            // var lastUpdate = {
+           // var lastUpdate = {
             //     date: new Date(),
             //     model: this.toString()
             // };
