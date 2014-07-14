@@ -36,41 +36,41 @@ define('calculatorView', ['config', 'networkdatas','marketcaps', 'text!calculato
             reward=25,
             difficulty=data.difficulty,
             hashrate=data.hashpower,
+            hash_unit=data.hash_unit,
             price=data.price;
-          
+            
+            switch(hash_unit) {
+                case "GH":
+                    hashrate=data.hashpower;
+                    break;
+                 case "MH":
+                    hashrate=data.hashpower/1000;
+                    break;
+                 case "TH":
+                    hashrate=data.hashpower*1000;
+                    break;
+            }
+
             var nbrjourToBlock = difficulty * Math.pow(2, 32) / (hashrate * Math.pow(10, 9)) / 60 / 60 / 24,
                 dailyGain = reward / nbrjourToBlock,
                 weeklyGain = dailyGain*7,
                 monthlyGain= dailyGain*(365/12);
             console.log(nbrjourToBlock);
-            console.log(dailyGain);
+            var dayCoin=FormatUtils.truncToNdecimal(dailyGain,8),
+                dayDollar=FormatUtils.truncToNdecimal(dailyGain*price,2),
+                weekCoin=FormatUtils.truncToNdecimal(weeklyGain,8),
+                weekDollar=FormatUtils.truncToNdecimal(weeklyGain*price,2),
+                monthCoin=FormatUtils.truncToNdecimal(monthlyGain,8),
+                monthDollar=FormatUtils.truncToNdecimal(monthlyGain*price,2);
             console.log(weeklyGain);
             console.log(monthlyGain);
-            // var nbrjour_toblock_est = estimated * Math.pow(2, 32) / (hashrate * Math.pow(10, 9)) / 60 / 60 / 24;
-            // var dailygain_est = reward / nbrjour_toblock_est;
-            // var $form = $('form');
-// $form.submit(function() {
-//     var hashrate = $('#hrate').val();
-//     var difficulty = <%= difficulty %> ;
-//     var price = <%= price %> ;
-//     var reward = <%= reward %> ;
-//     var estimated = <%= estimated %> ;
-
-//     var nbrjour_toblock = difficulty * Math.pow(2, 32) / (hashrate * Math.pow(10, 9)) / 60 / 60 / 24;
-//     var dailygain = reward / nbrjour_toblock;
-
-//     var nbrjour_toblock_est = estimated * Math.pow(2, 32) / (hashrate * Math.pow(10, 9)) / 60 / 60 / 24;
-//     var dailygain_est = reward / nbrjour_toblock_est;
-//     $('#result_block').html('<tr><td> Number of day to find a block:  ' + nbrjour_toblock + '</td></tr>');
-
-//     $('#result').html('<caption class="titrecalc_caption">Result for this difficulty</caption><tr><th>Number of bitcoin earned </th> <th> Dollars earned</th></tr><tr><td> Daily ' + dailygain + '</td><td> ' + dailygain * price + '</td></tr><tr><td> Monthly ' + dailygain * 30 + '</td><td> ' + dailygain * price * 30 + '</td></tr><tr><td> Yearly ' + dailygain * 365 + '</td><td> Dollars earned:' + dailygain * price * 365 + '</td></tr>');
-//     $('#result_estimated').html('<caption class="titrecalc_caption">Result for estimated difficulty</caption><tr><th>Number of bitcoin earned </th> <th> Dollars earned</th></tr><tr><td> Daily ' + dailygain + '</td><td> ' + dailygain_est * price + '</td></tr><tr><td> Monthly ' + dailygain_est * 30 + '</td><td> ' + dailygain_est * price * 30 + '</td></tr><tr><td> Yearly ' + dailygain_est * 365 + '</td><td> Dollars earned:' + dailygain_est * price * 365 + '</td></tr>');
-
-    // alert(nbrjour_toblock);  
-    // alert(price);
-
-//     return false;
-// });
+            $("#dayCoin").html(dayCoin+"Ƀ");
+            $("#dayDollar").html(dayDollar+"$");
+            $("#weekCoin").html(weekCoin+"Ƀ");
+            $("#weekDollar").html(weekDollar+"$");
+            $("#monthCoin").html(monthCoin+"Ƀ");
+            $("#monthDollar").html(monthDollar+"$");
+   
         },
         render2:function() {
              this.networkdatas.fetch();  
