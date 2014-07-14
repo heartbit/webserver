@@ -2,21 +2,46 @@
 
     <div class="globalDiv row">
         <h1> Profitability Calculator  </h1>
-
+        </br></br>
         <div class="small-12 large-12 medium-12 columns">
-            <form id='calculatorForm'>
-                <div class="large-6 columns">  
-                    <div id="dataaaa" class="small-9 columns">
-                      <input id="hashpower" name="hashpower" type="text" placeholder="60" value="60">
-                      <input id="difficulty" name="difficulty" type="text" value=<%=price%>>
-                      <input id="price" type="text" name="price" value=<%=networkdata.marketcap.difficulty%>>
+            <form id='calculatorForm' class="small-6 large-6 medium-6 columns" >
+                
+                    <div  class="small-12 columns">
+                        <div class="row collapse">
+                            <div class="small-8 columns">
+                                <input id="hashpower" name="hashpower" type="text" placeholder="60" value="60">
+                            </div>
+                            <div class="small-4 columns">
+                                <select name="hash_unit" class="postfix">
+                                    <option value="GH">Gh/s</option>
+                                    <option value="MH">Mh/s</option>
+                                    <option value="TH">Th/s</option>
+                                <select>
+                            </div>
+                        </div>
+                         <div class="row collapse">
+                            <div  class="small-3 columns">
+                                <label for="difficulty" class="left inline"> Difficulty </label>
+                            </div>
+                            <div class="small-9 columns">
+                                <input id="difficulty" name="difficulty" type="text" value=<%=networkdata.marketcap.difficulty%>>
+                            </div>
+                        </div>
+                        <div class="row collapse">
+                            <div  class="small-3 columns">
+                                <label for="difficulty" class="left inline"> Price </label>
+                            </div>
+                            <div class="small-9 columns">
+                                <input id="price" type="text" name="price" value=<%=price%>>     
+                            </div>             
+                        </div>
                     </div>
-                    <div class="small-3 columns">
-                      <input type="button" class="button postfix radius" id="js-calculatorButton">Label</input>
-                    </div>
-                 </div>
+                    
+                    <input type="button" class="button postfix radius" id="js-calculatorButton" value="label"></input>
+                 
+                 
             </form>
-             <table id="calculatorTable">
+             <table id="calculatorTable" class="small-6 large-6 medium-6 columns">
                         <thead>
                             <tr>
                                 <th>CryptoCurrencies</th>
