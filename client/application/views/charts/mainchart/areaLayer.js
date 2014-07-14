@@ -64,10 +64,10 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 return self.chart.timeScale(candle.middleDate);
             })
             .y0(function(candle) {
-                return self.candleYScale(candle.high);
+                return self.candleYScale(candle.low);
             })
             .y1(function(candle) {
-                return self.candleYScale(candle.low);
+                return self.candleYScale(candle.high);
             })
             .interpolate("monotone");
 
@@ -85,7 +85,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 // return self.candleYScale(meanValue);
                 return self.candleYScale(candle.close);
             })
-            .interpolate("monotone");
+            //.interpolate("monotone");
 
         this.candleLineChart = this.candleLayer
             .append("path")

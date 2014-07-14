@@ -12,7 +12,6 @@ define('tickers', ['config', 'ticker', 'items'], function(config, Ticker, Items)
                 options = {};
             }
             this.on('change', this.update);
-
         },
         killAllListener:function(){
           _.each(this.models,function(model){
@@ -30,9 +29,9 @@ define('tickers', ['config', 'ticker', 'items'], function(config, Ticker, Items)
                   item:params.item,
                   currency: key
                 };
-                 var ticker = new Ticker();
-                 ticker.socketSync(initParams);
-                 self.add(ticker);
+                var ticker = new Ticker();
+                ticker.socketSync(initParams);
+                self.add(ticker);
               }); 
             });
             if (callback) {
