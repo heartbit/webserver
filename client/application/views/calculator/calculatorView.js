@@ -23,9 +23,12 @@ define('calculatorView', ['config', 'networkdatas','marketcaps', 'text!calculato
 
         userData: function() {
             
-            userdata = $("#calculatorForm").serializeArray();
+            var userdata = $("#calculatorForm").serializeArray();
+            _.each(userdata,function(data) {
+                userdata[data.name]=data.value;  
+            });
             console.log(userdata);
-            //this.calculate(userdata);
+            this.calculate(userdata);
         },
         calculate:function(data) {
             console.log(data);
