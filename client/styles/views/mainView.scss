@@ -6,13 +6,26 @@
     padding-bottom: 2%;
 }
 .mainView .button-group li button {
-    color: gold;
-    background-color: black;
+    color: white;
+    background-color: #1D5080;
 }
+.mainView .button-group li button:hover {
+    color: white;
+    background-color: #007095;
+}
+
 #js-volumewidget rect {
 }
 #js-volumewidget text {
     fill: black;
-    font: 1.5em sans-serif;
+    font: 1.2em sans-serif;
     text-anchor: end;
+}
+#js-volumewidget {
+    margin:0;
+    height: 18em;
+}
+.inner-wrap {
+    width : 80% !important;
+    margin:auto !important;
 }
