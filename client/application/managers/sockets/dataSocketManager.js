@@ -41,11 +41,11 @@ define('DataSocketManager', ['socketio'], function(io) {
             };
 
             instance.on('connect', function() {
-                console.log('data socket connected!')
+                // console.log('data socket connected!')
             });
 
             instance.on('disconnect', function() {
-                console.log('data socket disconnected!')
+                // console.log('data socket disconnected!')
             });
         }
         return instance;

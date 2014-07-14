@@ -207,8 +207,12 @@ App.prototype.initClientRoutes = function() {
 
 App.prototype.initFourtyFourPage = function() {
     var self = this;
-    this.app.use(function(req, res, next) {
-        res.sendfile(self.options.clientPath + "templates/404.html");
+    this.app.use(function(err, req, res, next) {
+        if (err.status == 404 || typeof err === typeof PageNotFoundError) {
+            res.status(404).sendfile(self.options.clientPath + "templates/404.html");
+        } else {
+            res.send(500, 'unexpected error');
+        }
     });
 };
 

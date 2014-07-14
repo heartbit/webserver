@@ -25,10 +25,9 @@ requirejs.config({
         fuse: 'libs/fuse.min',
         d3tip: 'libs/d3tip',
         d3: 'libs/d3.min',
-        tablesorter:'libs/jquery/jquery.tablesorter.min',
-        tablesorter_widget:'libs/jquery/jquery.tablesorter.widgets.min',
-        metadata:'libs/jquery/jquery.metadata',
-        
+        tablesorter: 'libs/jquery/jquery.tablesorter.min',
+        tablesorter_widget: 'libs/jquery/jquery.tablesorter.widgets.min',
+        metadata: 'libs/jquery/jquery.metadata',
 
 
         // Screenshot
@@ -136,6 +135,7 @@ requirejs.config({
         NewsSocketManager: 'application/managers/sockets/newsSocketManager',
         ParametersManager: 'application/managers/ParametersManager',
         ShortcutsManager: 'application/managers/ShortcutsManager',
+        AnalyticsManager: 'application/managers/AnalyticsManager',
         CacheManager: 'application/managers/CacheManager',
         EventManager: 'application/managers/EventManager',
 

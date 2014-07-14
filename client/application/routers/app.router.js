@@ -3,9 +3,10 @@ define(function(require) {
     var ParametersManager = require('ParametersManager'),
         EventManager = require('EventManager');
 
-    NewsSocketManager = require('NewsSocketManager');
-    DataSocketManager = require('DataSocketManager');
-    ChatSocketManager = require('ChatSocketManager');
+    AnalyticsManager = require('AnalyticsManager'),
+    NewsSocketManager = require('NewsSocketManager'),
+    DataSocketManager = require('DataSocketManager'),
+    ChatSocketManager = require('ChatSocketManager'),
     ShortcutsManager = require('ShortcutsManager');
 
     var config = require('config');
@@ -27,7 +28,7 @@ define(function(require) {
         },
 
         initialize: function() {
-			var self = this;
+            var self = this;
             _.bindAll(this, 'refresh', 'render', 'update', 'initSockets');
 
             this.datarooms = [];
@@ -55,29 +56,33 @@ define(function(require) {
             // });
 
             DataSocketManager.once('roomlist', function(roomlist) {
-                console.log('roomlist', roomlist);
+                // console.log('roomlist', roomlist);
                 this.roomlist = roomlist;
             });
             DataSocketManager.emit('roomlist');
-			DataSocketManager.once('leave-dataroom', function(response) {
-				if (response.error) console.log('LEAVE DATAROOM ERROR : ', response.error);
-				else {
-					self.datarooms.unset(response.dataroom);
-					console.log('leave dataroom ok ', response.dataroom);
-					console.log('LEAVE DATAROOMS ',self.datarooms);
-				}
-			});
-			DataSocketManager.once('enter-dataroom', function(response) {
-				if (response.error) console.log('ENTER DATAROOM ERROR : ', response.error);
-				else {
-					if ( self.datarooms.indexOf(response.dataroom) === -1  ) {
-	  					self.datarooms.push(response.dataroom);
-						console.log('enter dataroom ok ', response.dataroom);
-						console.log('ENTER DATAROOMS ',self.datarooms);
-					}
-				}
-			});
+
+            DataSocketManager.once('leave-dataroom', function(response) {
+                if (response.error) console.log('LEAVE DATAROOM ERROR : ', response.error);
+                else {
+                    self.datarooms.unset(response.dataroom);
+                    // console.log('leave dataroom ok ', response.dataroom);
+                    // console.log('LEAVE DATAROOMS ', self.datarooms);
+                }
+            });
+
+            DataSocketManager.once('enter-dataroom', function(response) {
+                if (response.error) console.log('ENTER DATAROOM ERROR : ', response.error);
+                else {
+                    if (self.datarooms.indexOf(response.dataroom) === -1) {
+                        self.datarooms.push(response.dataroom);
+                        // console.log('enter dataroom ok ', response.dataroom);
+                        // console.log('ENTER DATAROOMS ', self.datarooms);
+                    }
+                }
+            });
+
             $(document).foundation();
+
         },
 
         /*	README
@@ -99,7 +104,7 @@ define(function(require) {
         app: function(params) {
             this.params = params || this.params || {};
             ParametersManager.isInit ? this.refresh() : ParametersManager.init(this.refresh);
-            console.log('params : ', params);
+            // console.log('params : ', params);
         },
 
         refresh: function() {
@@ -138,38 +143,37 @@ define(function(require) {
             }
         },
 
-        clearDatarooms: function(dataRooms,params) {
-			var self = this;
-			var item = params.item,
+        clearDatarooms: function(dataRooms, params) {
+            var self = this;
+            var item = params.item,
                 currency = params.currency;
             _.each(this.datarooms, function(dataroom) {
-			   if ( dataRooms.indexOf(dataroom) === -1 || (dataroom.indexOf(item) != -1 && dataroom.indexOf(currency) != -1) ) {
-                 DataSocketManager.emit('leave-dataroom', dataroom);
-               }
+                if (dataRooms.indexOf(dataroom) === -1 || (dataroom.indexOf(item) != -1 && dataroom.indexOf(currency) != -1)) {
+                    DataSocketManager.emit('leave-dataroom', dataroom);
+                }
             });
-			
+
         },
 
         joinDataroom: function(params) {
             var self = this;
             var sep = ':';
             var dataroom = params.item + sep + params.currency;
-			var dataRooms = ParametersManager.getTickerRoom(params);
-            this.clearDatarooms(dataRooms,params);
+            var dataRooms = ParametersManager.getTickerRoom(params);
+            this.clearDatarooms(dataRooms, params);
             var item = params.item,
                 currency = params.currency;
-		    console.log("JOIN DATAROOMS",this.datarooms);
             DataSocketManager.once('roomlist', function(roomlist) {
                 console.log(roomlist);
             });
             _.each(dataRooms, function(pair) {
-            	dataroom = pair;
-				if ( self.datarooms.indexOf(dataroom) === -1 || (dataroom.indexOf(item) != -1 && dataroom.indexOf(currency) != -1)  ) {
-                	DataSocketManager.emit('enter-dataroom', dataroom);
-					console.log('enter dataroom ok', dataroom);
-				}
+                dataroom = pair;
+                if (self.datarooms.indexOf(dataroom) === -1 ||  (dataroom.indexOf(item) != -1 && dataroom.indexOf(currency) != -1)) {
+                    DataSocketManager.emit('enter-dataroom', dataroom);
+                    // console.log('enter dataroom ok', dataroom);
+                }
             });
-			
+
 
         }
 
