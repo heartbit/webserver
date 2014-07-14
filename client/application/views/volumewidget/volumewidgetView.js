@@ -51,8 +51,6 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 				return this;
 			},
 			update: function() {
-				//
-				//this.tickers.reset();
 				this.syncTicker();
 				this.render();
 				return this;

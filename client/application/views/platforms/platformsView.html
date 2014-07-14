@@ -3,8 +3,14 @@
         <%_.each(platforms, function(platform){%>
             <li class="columns small-6">
             	<a>
-	                <div class="js-platform" style="text-align:center;padding:0.2em;border-radius:6px;margin-bottom:0.5em;font-size:1.3em;" id="<%=platform.id%>">
-	                    <%=platform.id%>
+	                <div class="js-platform platform" style="background-image:url('../../images/LogosPlateforme/<%=platform.id.toLowerCase()%>.png');    text-align:center;
+    padding:0.2em;
+    border-radius:6px;
+    margin-bottom:0.5em;
+    font-size:1.3em;
+    height:80px;
+    background-size:contain;
+    background-repeat:no-repeat;width: 10em;" id="<%=platform.id%>">
 	                </div>
             	</a>
             </li>

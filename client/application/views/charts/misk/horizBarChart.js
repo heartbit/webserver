@@ -16,24 +16,25 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
 		});
 		data = data.reverse();
 		this.colors = {
-			"BITSTAMP":"#508F40",
-			"BTCE":"#99609C",
-			"BTCCHINA":"#D95050",
-			"BITFINEX":"#CACACA",
-			"KRAKEN":"#D0D61A"
+			"BITSTAMP":"#57C0CD",
+			"BTCE":"#32589A",
+			"BTCCHINA":"#D3A28E",
+			"BITFINEX":"#555B67",
+			"KRAKEN":"#9A4032"
 		};
-        var width = 700,
-            barHeight = 50;
+	    var width = $("#js-horizBarChart").width()-50;
+        var barHeight = 40;// $("#js-horizBarChart").height();
+
         var margin = {
-            left: 150,
-            top: 50
+            left: 50,
+            top: 10
         };
         var x = d3.scale.linear()
             .domain([0,d3.max(data, function(d) {return d.vol; })])
             .range([0,width-margin.left]);
         var chart = d3.select("#js-horizBarChart")
             .append("svg")
-            .attr("width", width + margin.left)
+            .attr("width", width-margin.left)
             .attr("height", data.length*barHeight+margin.top)
             .append("g").attr("transform", function() {
                 return "translate(" + margin.left + "," +margin.top + ")";
@@ -52,14 +53,14 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
             })
             .attr("height", (barHeight - 1) + "px")
 			.attr("transform", function(d, i) {
-				return "translate(30,0)";
+				return "translate(70,0)";
 			})
 			.attr("fill", function(d) {
 				return self.colors[d.platform]; 
 			});
         bar.append("text")
             .attr("x", function(d) {
-                return x(0);
+                return margin.left;
             })
             .attr("y", barHeight/4)
             .attr("dy", "1em")
@@ -69,10 +70,10 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
 		bar.append("text")
 			
             .attr("x", function(d) {
-                return width-margin.left;
+                return width-120;
             })
 			
-            .attr("y", barHeight/3)
+            .attr("y", barHeight/4)
             .attr("dy", "1em")
 			
             .text(function(d) {

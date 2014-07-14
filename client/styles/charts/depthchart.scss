@@ -3,22 +3,22 @@ $label_color: #666666;
  $tick_color: #cccccc;
 
  .depthAreaBids {
-    fill:red;
+    fill:#CD0C1D;
     stroke-width:0;
-    opacity: .8;
+    opacity: .7;
 }
 .depthBid {
-    stroke:#cacaca;
+    stroke:#CD0C1D;
     stroke-width:1px;
     fill:none;
 }
 .depthAreaAsks {
-    fill:green;
+    fill:#85bb65;
     stroke-width:0;
-    opacity:.8;
+    opacity:.7;
 }
 .depthAsk {
-    stroke:#cacaca;
+    stroke:#58B758;
     stroke-width:1px;
     fill:none;
 }
