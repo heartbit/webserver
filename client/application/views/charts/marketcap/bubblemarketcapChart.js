@@ -300,7 +300,7 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 	};
 
 	BubbleChart.prototype.hide_details = function(data, i, element) {
-		// this.tooltip.hideTooltip();
+		this.tooltip.hideTooltip();
 		return false;
 	};
 
