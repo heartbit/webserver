@@ -37,13 +37,13 @@ $primary_color:#ffffff;
 .myHr {
     box-sizing: content-box;
     height: 0px;
-    width: 94%;
+    width: 90%;
     text-align: center;
     align-content: center;
     opacity: 0.7;
     color: #1D5080;
     border: solid 1px;
-    margin-left: 2%;
+    margin-left: 5%;
     margin-top: 2%;
 }
 .myVr {
@@ -76,13 +76,18 @@ body {
 }
 #js-offcanvasmenu {
     padding-top: 45px;
-    -webkit-overflow-scrolling: touch;
+/*    -webkit-overflow-scrolling: touch;
     -ms-transform: translate(-100%, 0);
     -webkit-transform: translate3d(-185%, 0, 0) !important;
     -moz-transform: translate3d(-185%, 0, 0) !important;
     -ms-transform: translate3d(-185%, 0, 0) !important;
     -o-transform: translate3d(-185%, 0, 0) !important;
-    transform: translate3d(-185%, 0, 0);
+    transform: translate3d(-185%, 0, 0);*/
+}
+.row {
+    margin-left: 2%;
+margin-right: 2%;
+width: 95%;
 }
 .searchPanel ul li {
     list-style-type: none;
