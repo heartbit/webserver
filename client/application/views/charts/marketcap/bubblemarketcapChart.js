@@ -3,9 +3,9 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 	function BubbleChart(el) {
 		this.el = el;
 		this.tooltip = BubbleTooltip("bubbleMarketcapTooltip", 240);
-		this.fill_color = "#cacaca";
+		this.fill_color = d3.scale.ordinal().range(["#cacaca","#d3a28e","#57c0cd","#555b67","#32589a","#9a4032"]);
 		this.layout_gravity = -0.001;
-		this.damper = 0.1;
+		this.damper = 0.05;
 		this.vis = null;
 		this.nodes = [];
 		this.force = null;
@@ -14,7 +14,8 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 
 	BubbleChart.prototype.draw = function(marketcaps) {
 		var self = this;
-	
+		this.fill_color.domain(d3.range(0,marketcaps.length));
+		d3.range(0,7).forEach(function(d){ console.log(self.fill_color(d)); })
 		this.marketcaps = marketcaps;
 		self._width = $('#js-marketcapModal').width() + 100;
 		self._height = 400;
@@ -30,7 +31,7 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 		var min_max_marketcap = d3.extent(self.marketcaps, function(marketcap) {
 			return +marketcap.marketcap;
 		});
-		self.radius_scale = d3.scale.pow().exponent(0.5).domain([0, min_max_marketcap[1]]).range([7, 25]);
+		self.radius_scale = d3.scale.pow().exponent(0.5).domain([0, min_max_marketcap[1]]).range([7, 60]);
 
 		// Scale price
 		var min_max_price = d3.extent(self.marketcaps, function(marketcap) {
@@ -59,20 +60,20 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 		var _this = this;
 
 		this.marketcaps.forEach(function(marketcap, index) {
-
+			console.log(marketcap);
 			var node = {
 				id: marketcap.currencyId,
 				correlation: marketcap.correlation,
 				marketcap: +marketcap.marketcap || 0,
-				name: marketcap.name,
+				//name: marketcap.name,
 				price: +marketcap.price || 0,
 				priceChange: +marketcap.price || 0,
-				supply: +marketcap.supply || 0,
+				supply: +marketcap.totalCoin || 0,
 				volumeChange: +marketcap.volumeChange || 0,
 				volume: +marketcap.volume || 0,
 				radius: _this.radius_scale(parseInt(marketcap.marketcap)) || 0,
 				x: Math.random() * _this.width,
-				y: Math.random() * _this.height
+				y: Math.random() * _this.height/2.5
 			};
 
 			return _this.nodes.push(node);
@@ -96,10 +97,10 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 		this.xAxis = d3.svg.axis()
 			.scale(this.priceScale)
 			.orient("bottom")
-			.tickValues([100, 10, 1, .1, .01, .001])
-			.tickFormat(function(supply, i, j) {
-				return FormatUtils.formatPrice(supply, 'USD');
-			});
+			//.tickValues([100, 10, 1, .1, .01, .001])
+			// .tickFormat(function(supply, i, j) {
+			// 	return FormatUtils.formatPrice(supply, 'USD');
+			// });
 		// .tickSubdivide(3)
 		// .tickSize(12, 4, -10)
 		// .tickFormat(function(price) {
@@ -138,10 +139,12 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 			.enter()
 			.append("circle")
 			.attr("r", 0)
-			.attr("fill", this.fill_color)
+			.attr("fill", function(d,i) {
+				return _this.fill_color(i);
+			} )
 			.attr("stroke-width", 2)
-			.attr("stroke", function(d) {
-				return d3.rgb(this.fill_color).brighter(1);
+			.attr("stroke", function(d,i) {
+				return d3.rgb(_this.fill_color(i)).brighter(1);
 			})
 			.attr("id", function(d) {
 				return "bubble_" + d.id;
@@ -163,7 +166,10 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 	};
 
 	BubbleChart.prototype.charge = function(marketcap) {
-		return -Math.pow(marketcap.radius, 2.0) / 8;
+		console.log(marketcap.correlation);
+		return -Math.pow(marketcap.radius, 2.0) / 6;
+		// -Math.pow(marketcap.radius, 2.0) / 8
+		// -marketcap.radius-marketcap.radius*marketcap.correlation;
 	};
 
 	BubbleChart.prototype.start = function() {
@@ -179,11 +185,22 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 		this.force.gravity(this.layout_gravity)
 			.charge(this.charge)
 			.friction(0.9).on("tick", function(e) {
+				
 				return _this.circles.each(_this.move_towards_center(e.alpha))
 					.attr("cx", function(d) {
-						return d.x;
+						//console.log(d.id);
+						// if(d.id=="BTC") {
+							// console.log(d);
+							return d.x;
+						// }else {
+						// 	return d.x+d.x*0.5;
+						// }
 					}).attr("cy", function(d) {
-						return d.y;
+						// if(d.id=="BTC") {
+							return d.y;
+						// }else {
+						// 	return d.y+d.y*0.5;
+						// }
 					});
 			});
 
@@ -204,6 +221,7 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 	BubbleChart.prototype.move_towards_center = function(alpha) {
 		var _this = this;
 		return function(d) {
+			//console.log(alpha);
 			d.x = d.x + (_this.center.x - d.x) * (_this.damper + 0.02) * alpha;
 			return d.y = d.y + (_this.center.y - d.y) * (_this.damper + 0.02) * alpha;
 		};
@@ -253,9 +271,7 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 				return _this.circles.each(_this.move_towards_price(e.alpha))
 					.attr("cx", function(d) {
 						return d.x;
-					}).attr("cy", function(d) {
-						return d.y;
-					});
+					}).attr("cy", _this.height/2);
 			});
 
 		this.svg_xAxis
@@ -271,8 +287,9 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 	BubbleChart.prototype.move_towards_price = function(alpha) {
 		var _this = this;
 		return function(marketcap, i, j) {
+			console.log(marketcap);
 			var x = _this.priceScale(marketcap.price);
-			return marketcap.x = marketcap.x + (x - marketcap.x) * (_this.damper + 0.02) * alpha * 1.1;
+			return marketcap.x = marketcap.x + (x - marketcap.x) * (_this.damper + 0.02) * alpha*0.08 ;
 		};
 	};
 
@@ -290,7 +307,7 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 	};
 
 	BubbleChart.prototype.initTemplates = function() {
-		var simple = '<h3><%= name %></h3>'
+		var simple = '<h5><%= id %></h5>'
 		simple += '<span class="name">Marketcap: </span>';
 		simple += '<span class="value"><%= marketcap %></span>';
 		simple += '<br/><span class="name">Price: </span>';
