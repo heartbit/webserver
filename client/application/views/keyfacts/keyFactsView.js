@@ -33,7 +33,7 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
             render: function(params) {
                 var self = this;
                 this.bigNumberViews = [];
-
+                
                 var tickerAttributes = this.options.tickerAttributes || config.keyfactsview.defaultAttributes;
                 _.each(tickerAttributes, function(tickerAttribute) {
                     tickerAttribute.htmlSelector = 'js-' + tickerAttribute.id + 'BigNumber';
@@ -71,10 +71,9 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
                 this.ticker.socketSync(params);
                 this.trade.socketSync(params);
             },
-
+           
             redraw: function(reset) {
                 var self = this;
-
                 _.each(this.bigNumberViews, function(bigNumberView, index) {
                     var unit = null;
                     switch (bigNumberView.tickerAttribute.type) {
@@ -104,8 +103,9 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
                         trend: true,
                         reset: reset
                     };
-
                     bigNumberView.bigNumberChart.render(updateParams);
+ 
+
                 });
             }
 

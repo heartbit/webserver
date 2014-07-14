@@ -36,8 +36,8 @@ define(function(require) {
 
             this.views = {
                 offcanvasmenu: new OffcanvasmenuView(),
-                volumeWidget: new VolumeWidgetView(),
                 controller: new ControllerView(),
+                volumeWidget: new VolumeWidgetView(),
                 keyfacts: new KeyFactsView(),
                 header: new HeaderView(),
                 main: new MainView(),
@@ -138,11 +138,12 @@ define(function(require) {
             }
         },
 
-        clearDatarooms: function(dataRooms) {
+        clearDatarooms: function(dataRooms,params) {
 			var self = this;
-			
+			var item = params.item,
+                currency = params.currency;
             _.each(this.datarooms, function(dataroom) {
-			   if ( dataRooms.indexOf(dataroom) === -1 ) {
+			   if ( dataRooms.indexOf(dataroom) === -1 || (dataroom.indexOf(item) != -1 && dataroom.indexOf(currency) != -1) ) {
                  DataSocketManager.emit('leave-dataroom', dataroom);
                }
             });
@@ -154,15 +155,16 @@ define(function(require) {
             var sep = ':';
             var dataroom = params.item + sep + params.currency;
 			var dataRooms = ParametersManager.getTickerRoom(params);
-            this.clearDatarooms(dataRooms);
-
+            this.clearDatarooms(dataRooms,params);
+            var item = params.item,
+                currency = params.currency;
 		    console.log("JOIN DATAROOMS",this.datarooms);
             DataSocketManager.once('roomlist', function(roomlist) {
                 console.log(roomlist);
             });
             _.each(dataRooms, function(pair) {
             	dataroom = pair;
-				if ( self.datarooms.indexOf(dataroom) === -1 ) {
+				if ( self.datarooms.indexOf(dataroom) === -1 || (dataroom.indexOf(item) != -1 && dataroom.indexOf(currency) != -1)  ) {
                 	DataSocketManager.emit('enter-dataroom', dataroom);
 					console.log('enter dataroom ok', dataroom);
 				}
