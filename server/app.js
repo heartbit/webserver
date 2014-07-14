@@ -19,7 +19,7 @@ App.prototype.start = function(options) {
             self.initClientRoutes();
             self.initServicesRoutes();
             self.initStaticContentManager();
-            // self.initFourtyFourPage();
+            self.initFourtyFourPage();
         })
         .then(function() {
             self.run();
@@ -31,6 +31,10 @@ App.prototype.initManagers = function() {
     this.exceptionManager = require(this.options.serverPath + 'managers/ExceptionManager');
     this.apiManager = require(this.options.serverPath + 'managers/APIManager');
     this.apiManager.init(this.config.apiproxy);
+
+    this.cronJobManager = require(this.options.serverPath + 'managers/CronJobsManager');
+    this.cronJobManager.start();
+
     return Q.all([
         this.initEventManager(),
         this.initRedisAndCacheManager()
