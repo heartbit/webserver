@@ -1,10 +1,10 @@
 {
     "unprotectedRoutes": {
         "/": "file:templates/home.html",
-        "/widgets": "file:templates/widgets.html"
+        "/app": "file:templates/app.html"
     },
     "protectedRoutes": {
-        "/app": "file:templates/app.html",
+        "/widgets": "file:templates/widgets.html",
         "/embed/keyfacts": "file:templates/embed/keyfacts.html",
         "/embed/maingraph": "file:templates/embed/maingraph.html",
         "/embed/marketcap": "file:templates/embed/marketcap.html",

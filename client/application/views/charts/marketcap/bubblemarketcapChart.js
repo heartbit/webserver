@@ -2,8 +2,8 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 
 	function BubbleChart(el) {
 		this.el = el;
-		this.tooltip = BubbleTooltip("bubbleMarketcapTooltip", 240);
-		this.fill_color = d3.scale.ordinal().range(["#cacaca","#d3a28e","#57c0cd","#555b67","#32589a","#9a4032"]);
+		this.tooltip = new BubbleTooltip("bubbleMarketcapTooltip", 240);
+		this.fill_color = d3.scale.ordinal().range(["#cacaca", "#d3a28e", "#57c0cd", "#555b67", "#32589a", "#9a4032"]);
 		this.layout_gravity = -0.001;
 		this.damper = 0.05;
 		this.vis = null;
@@ -13,54 +13,59 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 	};
 
 	BubbleChart.prototype.draw = function(marketcaps) {
-		var self = this;
-		this.fill_color.domain(d3.range(0,marketcaps.length));
-		d3.range(0,7).forEach(function(d){ console.log(self.fill_color(d)); })
+		this.fill_color.domain(d3.range(0, marketcaps.length));
+		// d3.range(0, 7)
+		// .forEach(function(d) {
+		// 	console.log(this.fill_color(d));
+		// })
 		this.marketcaps = marketcaps;
-		self._width = $('#js-marketcapModal').width() + 100;
-		self._height = 400;
-		self.width = self._width;
-		self.height = self._height;
+		this._width = $('#js-marketcapModal').width() + 100;
+		this._height = 250;
+		this.width = this._width;
+		this.height = this._height;
 
-		self.center = {
-			x: self.width / 2,
-			y: self.height / 2
+		this.center = {
+			x: this.width / 2,
+			y: this.height / 2
 		};
 
 		// Scale radius
-		var min_max_marketcap = d3.extent(self.marketcaps, function(marketcap) {
+		var min_max_marketcap = d3.extent(this.marketcaps, function(marketcap) {
 			return +marketcap.marketcap;
 		});
-		self.radius_scale = d3.scale.pow().exponent(0.5).domain([0, min_max_marketcap[1]]).range([7, 60]);
+		this.radius_scale = d3.scale
+			.pow()
+			.exponent(0.15)
+			.domain([min_max_marketcap[0], min_max_marketcap[1]])
+			.range([10, 50]);
 
 		// Scale price
-		var min_max_price = d3.extent(self.marketcaps, function(marketcap) {
+		var min_max_price = d3.extent(this.marketcaps, function(marketcap) {
 			return +marketcap.price;
 		});
-		self.priceScale = d3.scale.log()
+		this.priceScale = d3.scale.log()
 			.domain(min_max_price)
-			.range([120, self.width - 200]);
+			.range([120, this.width - 200]);
 
 		// Scale supply
-		var min_max_supply = d3.extent(self.marketcaps, function(marketcap) {
+		var min_max_supply = d3.extent(this.marketcaps, function(marketcap) {
 			return +marketcap.supply;
 		});
-		self.supplyScale = d3.scale.log()
+		this.supplyScale = d3.scale.log()
 			.domain(min_max_supply)
-			.range([self.height - 100, 100]);
+			.range([this.height - 100, 100]);
 
-		self.initTemplates();
-		self.create_nodes();
-		self.create_vis();
-		self.start();
-		self.display_all();
+		this.initTemplates();
+		this.create_nodes();
+		this.create_vis();
+		this.start();
+		this.display_all();
 	};
 
 	BubbleChart.prototype.create_nodes = function() {
 		var _this = this;
 
 		this.marketcaps.forEach(function(marketcap, index) {
-			console.log(marketcap);
 			var node = {
 				id: marketcap.currencyId,
 				correlation: marketcap.correlation,
@@ -73,7 +78,7 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 				volume: +marketcap.volume || 0,
 				radius: _this.radius_scale(parseInt(marketcap.marketcap)) || 0,
 				x: Math.random() * _this.width,
-				y: Math.random() * _this.height/2.5
+				y: Math.random() * _this.height / 2.5
 			};
 
 			return _this.nodes.push(node);
@@ -92,15 +97,13 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 			.attr("height", this._height)
 			.attr("id", "bubbleMarketCapChart");
 
-
-
 		this.xAxis = d3.svg.axis()
 			.scale(this.priceScale)
 			.orient("bottom")
-			//.tickValues([100, 10, 1, .1, .01, .001])
-			// .tickFormat(function(supply, i, j) {
-			// 	return FormatUtils.formatPrice(supply, 'USD');
-			// });
+			.tickValues([100, 10, 1, .1, .01, .001])
+			.tickFormat(function(supply, i, j) {
+				return FormatUtils.formatPrice(supply, 'USD');
+			})
 		// .tickSubdivide(3)
 		// .tickSize(12, 4, -10)
 		// .tickFormat(function(price) {
@@ -130,28 +133,35 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 			.attr('opacity', 0)
 			.call(this.yAxis);
 
-		var svg_nodes = this.vis.append('g').attr('class', 'nodes');
-		this.circles = svg_nodes.selectAll("circle").data(this.nodes, function(d) {
-			return d.id;
-		});
+		var svg_nodes = this.vis
+			.append('g')
+			.attr('class', 'nodes');
+
+		this.circles = svg_nodes
+			.selectAll("circle")
+			.data(this.nodes, function(d) {
+				return d.id;
+			});
 
 		this.circles
 			.enter()
 			.append("circle")
 			.attr("r", 0)
-			.attr("fill", function(d,i) {
+			.attr("fill", function(d, i) {
 				return _this.fill_color(i);
-			} )
-			.attr("stroke-width", 2)
-			.attr("stroke", function(d,i) {
+			})
+			.attr("stroke-width", 0)
+			.attr("stroke", function(d, i) {
 				return d3.rgb(_this.fill_color(i)).brighter(1);
 			})
 			.attr("id", function(d) {
 				return "bubble_" + d.id;
 			})
 			.on("mouseover", function(marketcap, i) {
+				d3.select(this).attr("stroke-width", 2);
 				return _this.show_details(marketcap, i, this);
 			}).on("mouseout", function(marketcap, i) {
+				d3.select(this).attr("stroke-width", 0);
 				return _this.hide_details(marketcap, i, this);
 			});
 
@@ -166,10 +176,7 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 	};
 
 	BubbleChart.prototype.charge = function(marketcap) {
-		console.log(marketcap.correlation);
-		return -Math.pow(marketcap.radius, 2.0) / 6;
-		// -Math.pow(marketcap.radius, 2.0) / 8
-		// -marketcap.radius-marketcap.radius*marketcap.correlation;
+		return -Math.pow(marketcap.radius, 2.1) / 8;
 	};
 
 	BubbleChart.prototype.start = function() {
@@ -178,29 +185,20 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 			.size([this.width, this.height]);
 	};
 
-
 	// Init display
 	BubbleChart.prototype.display_all = function() {
 		var _this = this;
-		this.force.gravity(this.layout_gravity)
+		this.force
+			.gravity(this.layout_gravity)
 			.charge(this.charge)
-			.friction(0.9).on("tick", function(e) {
-				
-				return _this.circles.each(_this.move_towards_center(e.alpha))
+			.friction(0.9)
+			.on("tick", function(e) {
+				return _this.circles
+					.each(_this.move_towards_center(e.alpha))
 					.attr("cx", function(d) {
-						//console.log(d.id);
-						// if(d.id=="BTC") {
-							// console.log(d);
-							return d.x;
-						// }else {
-						// 	return d.x+d.x*0.5;
-						// }
+						return d.x;
 					}).attr("cy", function(d) {
-						// if(d.id=="BTC") {
-							return d.y;
-						// }else {
-						// 	return d.y+d.y*0.5;
-						// }
+						return d.y;
 					});
 			});
 
@@ -221,25 +219,26 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 	BubbleChart.prototype.move_towards_center = function(alpha) {
 		var _this = this;
 		return function(d) {
-			//console.log(alpha);
 			d.x = d.x + (_this.center.x - d.x) * (_this.damper + 0.02) * alpha;
 			return d.y = d.y + (_this.center.y - d.y) * (_this.damper + 0.02) * alpha;
 		};
 	};
 
-
 	// Y axis
 	BubbleChart.prototype.display_by_supply = function() {
 		var _this = this;
-
-		this.force.gravity(this.layout_gravity)
+		this.force
+			.gravity(this.layout_gravity)
 			.charge(this.charge)
-			.friction(0.9).on("tick", function(e) {
-				return _this.circles.each(_this.move_towards_supply(e.alpha)).attr("cx", function(d) {
-					return d.x;
-				}).attr("cy", function(d) {
-					return d.y;
-				});
+			.friction(0.9)
+			.on("tick", function(e) {
+				return _this.circles
+					.each(_this.move_towards_supply(e.alpha))
+					.attr("cx", function(d) {
+						return d.x;
+					}).attr("cy", function(d) {
+						return d.y;
+					});
 			});
 
 		this.svg_yAxis
@@ -248,7 +247,6 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 			.attr('opacity', 1);
 
 		this.force.start();
-
 		return false;
 	};
 
@@ -260,18 +258,19 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 		};
 	};
 
-
 	// X axis
 	BubbleChart.prototype.display_by_price = function() {
 		var _this = this;
-
-		this.force.gravity(this.layout_gravity)
+		this.force
+			.gravity(this.layout_gravity)
 			.charge(this.charge)
 			.friction(0.9).on("tick", function(e) {
-				return _this.circles.each(_this.move_towards_price(e.alpha))
+				return _this.circles
+					.each(_this.move_towards_price(e.alpha))
 					.attr("cx", function(d) {
 						return d.x;
-					}).attr("cy", _this.height/2);
+					})
+					.attr("cy", _this.height / 2);
 			});
 
 		this.svg_xAxis
@@ -287,15 +286,14 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 	BubbleChart.prototype.move_towards_price = function(alpha) {
 		var _this = this;
 		return function(marketcap, i, j) {
-			console.log(marketcap);
 			var x = _this.priceScale(marketcap.price);
-			return marketcap.x = marketcap.x + (x - marketcap.x) * (_this.damper + 0.02) * alpha*0.08 ;
+			return marketcap.x = marketcap.x + (x - marketcap.x) * (_this.damper + 0.02) * alpha * 0.08;
 		};
 	};
 
-
 	// Tooltip
 	BubbleChart.prototype.show_details = function(data, i, element) {
+		data.FormatUtils = FormatUtils;
 		var htmlTooltip = this.tooltipTemplate(data);
 		this.tooltip.showTooltip(htmlTooltip, d3.event);
 		return false;
@@ -307,19 +305,19 @@ define('bubbleMarketcapChart', ['d3', 'FormatUtils', 'bubbleTooltip', 'moment'],
 	};
 
 	BubbleChart.prototype.initTemplates = function() {
-		var simple = '<h5><%= id %></h5>'
+		var simple = '<h3 class="itemLabel"><%= id %></h3>'
 		simple += '<span class="name">Marketcap: </span>';
-		simple += '<span class="value"><%= marketcap %></span>';
+		simple += '<span class="value right"> <%= FormatUtils.formatValueShort(marketcap, 4) %></span>';
 		simple += '<br/><span class="name">Price: </span>';
-		simple += '<span class="value"><%= price %></span>';
+		simple += '<span class="value right"> <%= FormatUtils.formatValueShort(price, "USD") %></span>';
 		simple += '<br/><span class="name">Supply: </span>';
-		simple += '<span class="value"><%= supply %></span><br/>';
+		simple += '<span class="value right"> <%= FormatUtils.formatValueShort(supply, 4) %></span><br/>';
 		simple += '<span class="name">Volume: </span>';
-		simple += '<span class="value"><%= volume %></span>';
+		simple += '<span class="value right"> <%= FormatUtils.formatValueShort(volume, 4) %></span>';
 		simple += '<br/><span class="name">Volume change: </span>';
-		simple += '<span class="value"><%= volumeChange %></span>';
+		simple += '<span class="value right"> <%= FormatUtils.formatEvol(volumeChange) %></span>';
 		simple += '<br/><span class="name">Correlation: </span>';
-		simple += '<span class="value"><%= correlation %></span><br/>';
+		simple += '<span class="value right"> <%= FormatUtils.formatEvol(correlation) %></span><br/>';
 		this.tooltipTemplate = _.template(simple);
 	};
 

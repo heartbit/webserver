@@ -2,7 +2,8 @@ define('bubbleTooltip', [], function() {
 
 	function BubbleTooltip(tooltipId, width) {
 		var tooltipId = tooltipId;
-		$("body").append("<div class='tooltip' id='" + tooltipId + "'></div>");
+		$("body")
+			.append("<div class='bubbletooltip' id='" + tooltipId + "'></div>");
 
 		if (width) {
 			$("#" + tooltipId).css("width", width);

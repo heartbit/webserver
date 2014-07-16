@@ -17,9 +17,10 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
             initialize: function(params) {
                 //_.bindAll(this, 'render', 'update');
                 this.marketcaps = new Marketcaps();
-                this.marketcaps.on('reset',  this.update,this);
+                this.marketcaps.on('reset', this.update, this);
                 this.bubblechartOption = 'bubbleAll';
-              
+                this.marketcapChart = new MarketcapChart("#js-marketcapChart");
+                this.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
             },
 
             changeBubbleChartOption: function(event) {
@@ -49,53 +50,43 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
 
             render: function(params) {
                 this.marketcaps.fetch();
-                
-                
             },
 
             update: function() {
-
-                
                 var self = this;
-               
-                this.marketcap=[];
-                this.marketcapFormat=[];
-                _.each(this.marketcaps.models,function(marketcap,i) {
+
+                this.marketcap = [];
+                this.marketcapFormat = [];
+                _.each(this.marketcaps.models, function(marketcap, i) {
                     self.marketcap.push(marketcap.attributes);
-                    self.marketcap[i].marketcap=self.marketcap[i].price*self.marketcap[i].totalCoin;  
+                    self.marketcap[i].marketcap = self.marketcap[i].price * self.marketcap[i].totalCoin;
                     //fake correlation
-                    self.marketcap[i].correlation=Math.random();   
-                    self.marketcapFormat.push(_.clone(marketcap.attributes));                 
+                    self.marketcap[i].correlation = Math.random();
+                    self.marketcapFormat.push(_.clone(marketcap.attributes));
                 });
-               
 
-                _.each(this.marketcapFormat,function(d,i) {
-                    d.marketcap=FormatUtils.formatItem(d.marketcap,"$");
-
-                        // marketcap.marketcap,marketcap.currencyId);//                 +FormatUtils.formatCurrencyLabel(marketcap.currencyId);
-                    d.currencyId=d.currencyId;
-                    d.price=FormatUtils.formatPrice(d.price,"$");
-                    d.priceChange=FormatUtils.formatPercent(d.priceChange);
-                    d.volume=FormatUtils.formatItem(d.volume, d.currencyId);
-                    if(d.volumeChange>0) {
-                        d.volumeChange="+"+FormatUtils.formatPercent(d.volumeChange);
-                    }else {
-                        d.volumeChange=FormatUtils.formatPercent(d.volumeChange);
+                _.each(this.marketcapFormat, function(d, i) {
+                    d.marketcap = FormatUtils.formatItem(d.marketcap, "$");
+                    // marketcap.marketcap,marketcap.currencyId);//                 +FormatUtils.formatCurrencyLabel(marketcap.currencyId);
+                    d.currencyId = d.currencyId;
+                    d.price = FormatUtils.formatPrice(d.price, "$");
+                    d.priceChange = FormatUtils.formatPercent(d.priceChange);
+                    d.volume = FormatUtils.formatItem(d.volume, d.currencyId);
+                    if (d.volumeChange > 0) {
+                        d.volumeChange = "+" + FormatUtils.formatPercent(d.volumeChange);
+                    } else {
+                        d.volumeChange = FormatUtils.formatPercent(d.volumeChange);
                     }
-                    d.correlation=FormatUtils.truncToNdecimal(d.correlation,2);
-
-             
+                    d.correlation = FormatUtils.truncToNdecimal(d.correlation, 2);
                 });
-               
+
                 this.$el.html(this.templateMarketCap({
                     marketcaps: this.marketcapFormat
                 }));
- 
+
                 setTimeout(function() {
-                    self.marketcapChart = new MarketcapChart("#js-marketcapChart");
-                    self.marketcapChart.draw(self.marketcap);
-                    self.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
                     self.bubbleMarketcapChart.draw(self.marketcap);
+                    self.marketcapChart.draw(self.marketcap);
                 }, 500);
 
             },

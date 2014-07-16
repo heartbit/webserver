@@ -16,7 +16,7 @@ define('news', ['config', 'information', 'NewsSocketManager', 'backbone', 'momen
         },
 
         update: function(news) {
-            console.log('News update: ', news);
+            // console.log('News update: ', news);
             this.models = this.parse(news);
             this.trigger('update');
         },
