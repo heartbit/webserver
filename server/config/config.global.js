@@ -2,7 +2,7 @@ var config = {};
 
 config.apiproxy = {};
 config.apiproxy.host = "http://176.31.126.113";
-// config.apiproxy.host = "http://192.168.1.49";
+// config.apiproxy.host = "http://192.168.1.4";
 config.apiproxy.port = "8080";
 
 config.apiproxy.hostUrl = config.apiproxy.host + ":" + config.apiproxy.port;
