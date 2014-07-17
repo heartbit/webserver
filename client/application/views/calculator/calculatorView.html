@@ -99,8 +99,8 @@
                                     <%_.each(supplier, function(fabricant,fabricant_name) {%>
                                         <%_.each(fabricant.products, function(product,product_name){%>
                                             <tr>
-                                                <td><%=fabricant_name%></td>
-                                                <td><%=product_name%></td> 
+                                                <td><a href="<%=fabricant.link%>" target="_blank"><%=fabricant_name%></a></td>
+                                                <td><a href="<%=product.link%>" target="_blank"><%=product_name%></a></td> 
                                                 <td><%=product.power%> W </br> <%=product.hashrate%> <%=product.hashunit%></td>
                                                 <td>$<%=product.price%></td> 
                                             </tr>
