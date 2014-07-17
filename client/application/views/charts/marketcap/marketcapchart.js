@@ -1,17 +1,10 @@
-define('marketcapchart', ['config', 'dataHelper', 'd3', 'moment','tablesorter','tablesorter_widget'], function(config, DataHelper, d3) {
+define('marketcapchart', ['config', 'dataHelper', 'd3', 'moment','tablesorter'], function(config, DataHelper, d3) {
 
     var MarketcapChart = function(el) {
         var self = this;
         this.el = el;
         $(function(){
-          $("#marketcapTable").tablesorter({
-            selectSort:'a',
-            // widgets: ["stickyHeaders"],
-            // widgetOptions : {
-            
-            // stickyHeaders : "tablesorter-stickyHeader"
-            // }
-          });
+          $("#marketcapTable").tablesorter();
         });
      
     };

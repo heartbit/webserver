@@ -64,24 +64,53 @@
                     </tbody>
                 </table>
             </div>
-             <table id="calculatorTable" class="small-6 large-6 medium-6 columns">
-                        <thead>
-                            <tr>
-                                <th>CryptoCurrencies</th>
-                                <th>Difficulty</th>
-                                <th>Total Coin</th>
-                            </tr>
-                        </thead>
-                        <tbody>                          
+  
+                 <table id="calculatorTable" class="small-6 large-6 medium-6 columns tablesorter">
+                            <thead>
                                 <tr>
-                                    <td><%=networkdata.currencyName%></td>
-                                    <!-- <td><%=networkdata.marketcap.date%></td> -->
-                                    <td><%=networkdata.marketcap.difficulty%></td>
-                                    <td><%=networkdata.marketcap.totalCoin%></td>
+                                    <th>CryptoCurrencies</th>
+                                    <th>Difficulty</th>
+                                    <th>Total Coin</th>
                                 </tr>
-                   
-                        </tbody>
-            </table>
+                            </thead>
+                            <tbody>                          
+                                    <tr>
+                                        <td><%=networkdata.currencyName%></td>
+                                        <!-- <td><%=networkdata.marketcap.date%></td> -->
+                                        <td><%=networkdata.marketcap.difficulty%></td>
+                                        <td><%=networkdata.marketcap.totalCoin%></td>
+                                    </tr>
+                       
+                            </tbody>
+                </table>
+            
+            <div id="supplierContainer"  class="small-6 large-6 medium-6 columns">
+                <table id="fabricantsTable">
+                            <thead>
+                                <tr>
+                                    <th>Supplier</th>
+                                    <th>Product</th>
+                                    <th>Hashrate & </br>Consumption</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>    
+                                <%_.each(suppliers,function(supplier) {%>
+                                    <%_.each(supplier, function(fabricant,fabricant_name) {%>
+                                        <%_.each(fabricant.products, function(product,product_name){%>
+                                            <tr>
+                                                <td><%=fabricant_name%></td>
+                                                <td><%=product_name%></td> 
+                                                <td><%=product.power%> W </br> <%=product.hashrate%> <%=product.hashunit%></td>
+                                                <td>$<%=product.price%></td> 
+                                            </tr>
+                                        <%});%>
+                                    <%});%>
+                                <%});%>
+                       
+                            </tbody>
+                </table>
+            </div>
         </div>
 
 

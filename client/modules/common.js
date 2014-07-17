@@ -113,6 +113,7 @@ requirejs.config({
         pair: 'application/models/pair',
         item: 'application/models/item',
         networkdata: 'application/models/networkdata',
+        calculator:'application/models/calculator',
 
         //Models util
         screenshot: 'application/models/utils/screenshot',
@@ -128,6 +129,7 @@ requirejs.config({
         items: 'application/collections/items',
         news: 'application/collections/news',
         networkdatas: 'application/collections/networkdatas',
+        calculators:'application/collections/calculators',
 
         // Manager
         DataSocketManager: 'application/managers/sockets/dataSocketManager',

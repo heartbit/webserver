@@ -21,6 +21,10 @@ define('config', function() {
 	// config.marketcap.urlModel = "http://192.168.1.4:8080/api/marketcap/all/";
 	// config.marketcap.urlCollection = "http://192.168.1.4:8080/api/marketcap/all/";
 
+	config.calculator= {};
+	config.calculator.urlModel="data/calculator.json";
+	config.calculator.urlCollection="data/calculator.json";
+
 	config.networkdata={};
 	config.networkdata.urlModel=apiprefix + "networkdata";
 	config.networkdata.urlCollection=apiprefix + "networkdata";

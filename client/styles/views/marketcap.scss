@@ -1,13 +1,27 @@
-.marketcap {
-    margin: 10px;
-    height: 135px;
+
+#js-marketcapModal{
+    top:50px;
+    height: 52em;
 }
-#js-marketcapModal {
-    height: 1000px;
+#marketcapContainer {
+    height:26em;
+    overflow-y:scroll;
+    overflow-x:hidden;
 }
-#js-marketcapChart {
-    /* background:white;*/
+
+
+#marketcapTable td {
+    font-size:0.875em;
+        height:4em;
+    
 }
+
+.marketcap_correlation {
+    text-anchor:middle;
+    font-size:1em;
+    fill:white;
+}    
+
 .infos-marketcap {
     font-size: 0.8em;
 }
@@ -15,13 +29,15 @@
     margin-top: 0.8em;
 }
 .marketcap {
+    margin: 10px;
+    height: 135px;
     border-radius: 6px;
     /* border:solid 1px;*/
     padding: 12px;
     margin-left: 12px;
     margin-top: -7px;
     position: relative;
-    min-height: 500px;
+    min-height: 400px;
     /*box-shadow: 10px 10px 5px #888888;*/
 }
 .marketcapRow {
@@ -32,7 +48,7 @@
     margin-top: 10px;
 }
 #marketcapTable {
-    width: 100%
+    width: 100%;
 }
 .globalDiv h1 {
     margin-bottom: 0.3em;

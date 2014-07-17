@@ -21,6 +21,7 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
                 this.bubblechartOption = 'bubbleAll';
                 this.marketcapChart = new MarketcapChart("#js-marketcapChart");
                 this.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
+            
             },
 
             changeBubbleChartOption: function(event) {
@@ -79,6 +80,8 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
                     }
                     d.correlation = FormatUtils.truncToNdecimal(d.correlation, 2);
                 });
+
+
 
                 this.$el.html(this.templateMarketCap({
                     marketcaps: this.marketcapFormat

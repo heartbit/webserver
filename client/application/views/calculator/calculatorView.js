@@ -1,4 +1,4 @@
-define('calculatorView', ['config', 'networkdatas','marketcaps', 'text!calculatorView.html', 'FormatUtils'], function(config, Networkdatas,Marketcaps, templateCalculator, FormatUtils) {
+define('calculatorView', ['config', 'networkdatas','marketcaps','calculators', 'text!calculatorView.html', 'FormatUtils'], function(config, Networkdatas,Marketcaps,Calculators, templateCalculator, FormatUtils) {
 
     return Backbone.View.extend({
 
@@ -16,8 +16,11 @@ define('calculatorView', ['config', 'networkdatas','marketcaps', 'text!calculato
             var self = this;
             this.networkdatas = new Networkdatas();
             this.marketcaps= new Marketcaps();
-            this.networkdatas.on('reset',  this.update,this);
+            this.calculators=new Calculators();
+            this.networkdatas.on('reset',  this.render3,this);
             this.marketcaps.on('reset',  this.render2,this);
+            this.calculators.on('reset', this.update,this);
+           
             //console.log(this.networkdatas);
         },
 
@@ -75,15 +78,14 @@ define('calculatorView', ['config', 'networkdatas','marketcaps', 'text!calculato
         render2:function() {
              this.networkdatas.fetch();  
         },
+        render3:function() {
+            this.calculators.fetch();
+
+        },
         render:function() {
             self=this;
-            
               this.marketcaps.fetch(); 
-            this.render2=function() {
-                
-                             
-            }  
-            
+              
         },
         update: function(update) {
             var self = this;
@@ -102,14 +104,32 @@ define('calculatorView', ['config', 'networkdatas','marketcaps', 'text!calculato
             _.each(this.marketcaps.models ,function(marketcap) {
                 //console.log(marketcap.attributes.currencyId);
                     self.price[marketcap.attributes.currencyId]=FormatUtils.formatValue(_.clone(marketcap.attributes.price));
-            })
-            // console.log(this.marketcaps.models);
-            // console.log(this.price);
-            // console.log(this.networkdata["BTC"]);
+            });
+            
+            this.suppliers=[];
+            _.each(this.calculators.models, function(fabricant) {
+                console.log(fabricant.attributes.fabricants);
+               self.suppliers.push(fabricant.attributes.fabricants);
+                // console.log(fabricant.attributes);
+                
+            });
+           
+            this.suppliers.forEach(function(uh){
+                console.log(uh);
+                _.each(uh,function(fabricant,fabricant_name) {
+                    console.log(fabricant);
+                    _.each(fabricant.products,function(product,product_name) {
+                       // console.log(FormatUtils.formatItem(product.price));
+                       self.suppliers[0][fabricant_name].products[product_name].price=FormatUtils.formatItem(product.price);
+                       //console.log(self.suppliers[0][fabricant_name].products[product_name].price);
+                    })
+                })
+            });
 
             this.$el.html(this.templateCalculator({
                 networkdata: this.networkdata["BTC"],
-                price: this.price["BTC"]
+                price: this.price["BTC"],
+                suppliers: this.suppliers
             }));
           
         }
