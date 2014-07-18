@@ -5,7 +5,7 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
         this.el = el;
        
         this.margin_volume = {
-                top: 0,
+                top: 25,
                 right: 40,
                 bottom: 30,
                 left: 80
@@ -82,8 +82,19 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
 			}).attr("y",function(d,i) {
                 return i*(self.height_volume/data.length)+"px";
             });
-    console.log(this.height_volume);
+   
+        //Titre - label
+        bar.append("text")
+            .attr("x", function(d) {
+                return self.margin_volume.right+self.padding_volume.right*3;
+            })
+            .attr("y", function(d,i) {
+                return -self.margin_volume.top+"px";
+            })
+            .attr("dy", "1em")
+            .text("Last 24h - Volume in BTC");
 
+        //Platform - label  
         bar.append("text")
             .attr("x", function(d) {
                 return -self.padding_volume.right;
@@ -95,7 +106,19 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
             .text(function(d) {
                 return d.platform;
             });
-
+        //Pair - label
+        bar.append("text")
+            .attr("x", function(d) {
+                return self.width_volume/2;
+            })
+             .attr("y", function(d,i) {
+                return i*(self.height_volume/data.length)+(0.25*self.height_volume/data.length)+"px";
+            })
+            .attr("dy", "1em")
+            .text(function(d) {
+                return formatutils.formatItem(d.item+"/"+d.currency);
+            });
+        //Volume - label
 		bar.append("text")
             .attr("x", function(d) {
                 return self.width_volume-self.padding_volume.right;
@@ -105,8 +128,9 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
             })
             .attr("dy", "1em")
             .text(function(d) {
-                return formatutils.formatVolumeShort(d.vol);
+                return formatutils.formatVolumeShort(d.vol)+" BTC";
             });
+ 
     }
 
 
