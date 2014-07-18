@@ -1,11 +1,46 @@
 define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'], function(config, Datahelper, d3, formatutils) {
 
-    function HorizBarChart(params) {
-        this.el = params.el;
+    function HorizBarChart(el) {
+        var self=this;
+        this.el = el;
+       
+        this.margin_volume = {
+                top: 0,
+                right: 40,
+                bottom: 30,
+                left: 80
+            };
+        this.padding_volume = {
+                right:8
+        };
+
+        this.width_volume = $(el).width() - this.margin_volume.left - this.margin_volume.right,
+        this.height_volume = $(el).height() - this.margin_volume.top - this.margin_volume.bottom;
+        
+        this.chart_volume = d3.select("#js-horizBarChart")
+            .append("svg")
+            .attr("width", this.width_volume+this.margin_volume.left+this.margin_volume.right)
+            .attr("height", this.height_volume+this.margin_volume.top+this.margin_volume.bottom)
+            .append("g").attr("transform", function() {
+                return "translate(" +self.margin_volume.left+ "," +self.margin_volume.top + ")"});
+
+        this.colors_volume = {
+            "BITSTAMP":"#57C0CD",
+            "BTCE":"#32589A",
+            "BTCCHINA":"#D3A28E",
+            "BITFINEX":"#555B67",
+            "KRAKEN":"#9A4032"
+        };
+        this.xScale_volume = d3.scale.linear().range([0,this.width_volume]);
+           // .domain([0,d3.max(data, function(d) {return d.vol; })])
+           console.log()
+           
     };
 
 
     HorizBarChart.prototype.rogueDraw = function(params) {
+        console.log(params);
+
         var data = params.data;
 		var self =this;
         data = _.filter(data, function(ticker) {
@@ -15,67 +50,60 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
 			return item.vol
 		});
 		data = data.reverse();
-		this.colors = {
-			"BITSTAMP":"#57C0CD",
-			"BTCE":"#32589A",
-			"BTCCHINA":"#D3A28E",
-			"BITFINEX":"#555B67",
-			"KRAKEN":"#9A4032"
-		};
-	    var width = $("#js-horizBarChart").width()-50;
-        var barHeight = 40;// $("#js-horizBarChart").height();
+		
+        this.xScale_volume.domain([0,d3.max(data,function(d) {
+            return d.vol;
+        })]);
+        console.log(data);
 
-        var margin = {
-            left: 50,
-            top: 10
-        };
-        var x = d3.scale.linear()
-            .domain([0,d3.max(data, function(d) {return d.vol; })])
-            .range([0,width-margin.left]);
-        var chart = d3.select("#js-horizBarChart")
-            .append("svg")
-            .attr("width", width-margin.left)
-            .attr("height", data.length*barHeight+margin.top)
-            .append("g").attr("transform", function() {
-                return "translate(" + margin.left + "," +margin.top + ")";
-            });
-        var bar = chart.selectAll("g")
+     
+        var bar = this.chart_volume.selectAll(".barVolume")
 	        .data(data)
 			.enter()
 			.append("g")
-			.attr("transform", function(d, i) {
-				return "translate(0," +i*barHeight + ")";
-			})
+			// .attr("transform", function(d, i) {
+			// 	return "translate(0," +(i*self.height_volume) + ")";
+			// })
+            .attr("class","barVolume");
 
         bar.append("rect")
             .attr("width", function(d) {
-                return x(d.vol);
+                console.log(self.xScale_volume(d.vol));
+                return self.xScale_volume(d.vol);
             })
-            .attr("height", (barHeight - 1) + "px")
-			.attr("transform", function(d, i) {
-				return "translate(70,0)";
-			})
+            .attr("height", function(d) {
+                return (self.height_volume/data.length);
+            })
+			// .attr("transform", function(d, i) {
+			// 	return "translate(5,0)";
+			// })
 			.attr("fill", function(d) {
-				return self.colors[d.platform]; 
-			});
+				return self.colors_volume[d.platform]; 
+			}).attr("y",function(d,i) {
+                return i*(self.height_volume/data.length)+"px";
+            });
+    console.log(this.height_volume);
+
         bar.append("text")
             .attr("x", function(d) {
-                return margin.left;
+                return -self.padding_volume.right;
             })
-            .attr("y", barHeight/4)
+            .attr("y", function(d,i) {
+                return i*(self.height_volume/data.length)+(0.25*self.height_volume/data.length)+"px";
+            })
             .attr("dy", "1em")
             .text(function(d) {
                 return d.platform;
             });
+
 		bar.append("text")
-			
             .attr("x", function(d) {
-                return width-120;
+                return self.width_volume-self.padding_volume.right;
             })
-			
-            .attr("y", barHeight/4)
+			 .attr("y", function(d,i) {
+                return i*(self.height_volume/data.length)+(0.25*self.height_volume/data.length)+"px";
+            })
             .attr("dy", "1em")
-			
             .text(function(d) {
                 return formatutils.formatVolumeShort(d.vol);
             });

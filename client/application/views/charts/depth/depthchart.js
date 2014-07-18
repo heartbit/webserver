@@ -22,7 +22,7 @@ define('depthchart', ['config', 'd3', 'FormatUtils', 'moment'],
 
             this.width = $(el).width() - this.margin.left - this.margin.right,
             this.height = $(el).height() - this.margin.top - this.margin.bottom;
-
+           
             this.chart = d3.select(el).append("svg")
                 .attr("class", 'playground')
                 .attr("width", this.width + this.margin.left + this.margin.right)

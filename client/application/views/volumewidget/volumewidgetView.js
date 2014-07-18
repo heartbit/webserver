@@ -44,7 +44,7 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 				}
 				if( data.volumes && data.volumes.length > 0 ) {
 					this.$el.html(this.template());
-					this.pieChart = new HorizBarChart({el:"#js-horizBarChart"});
+					this.pieChart = new HorizBarChart("#js-horizBarChart");
 					this.pieChart.rogueDraw({data:data.volumesPieChart});
 				}
 				return this;
