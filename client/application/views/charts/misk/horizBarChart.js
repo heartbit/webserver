@@ -72,7 +72,7 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
                 return self.xScale_volume(d.vol);
             })
             .attr("height", function(d) {
-                return (self.height_volume/data.length);
+                return (self.height_volume/data.length)-3;
             })
 			// .attr("transform", function(d, i) {
 			// 	return "translate(5,0)";
@@ -100,7 +100,7 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
                 return -self.padding_volume.right;
             })
             .attr("y", function(d,i) {
-                return i*(self.height_volume/data.length)+(0.25*self.height_volume/data.length)+"px";
+                return i*((self.height_volume-3)/data.length)+(0.25*self.height_volume/data.length)+"px";
             })
             .attr("dy", "1em")
             .text(function(d) {
@@ -112,7 +112,7 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
                 return self.width_volume/2;
             })
              .attr("y", function(d,i) {
-                return i*(self.height_volume/data.length)+(0.25*self.height_volume/data.length)+"px";
+                return i*((self.height_volume-3)/data.length)+(0.25*self.height_volume/data.length)+"px";
             })
             .attr("dy", "1em")
             .text(function(d) {
@@ -124,7 +124,7 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
                 return self.width_volume-self.padding_volume.right;
             })
 			 .attr("y", function(d,i) {
-                return i*(self.height_volume/data.length)+(0.25*self.height_volume/data.length)+"px";
+                return i*((self.height_volume-3)/data.length)+(0.25*self.height_volume/data.length)+"px";
             })
             .attr("dy", "1em")
             .text(function(d) {
