@@ -11,9 +11,10 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
                 left: 80
             };
         this.padding_volume = {
-                right:8
+                right:8,
+                top:12
         };
-
+        
         this.width_volume = $(el).width() - this.margin_volume.left - this.margin_volume.right,
         this.height_volume = $(el).height() - this.margin_volume.top - this.margin_volume.bottom;
         
@@ -39,8 +40,8 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
 
 
     HorizBarChart.prototype.rogueDraw = function(params) {
-        console.log(params);
-
+        // console.log(params);
+         
         var data = params.data;
 		var self =this;
         data = _.filter(data, function(ticker) {
@@ -50,12 +51,31 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
 			return item.vol
 		});
 		data = data.reverse();
+
+
 		
         this.xScale_volume.domain([0,d3.max(data,function(d) {
             return d.vol;
         })]);
+            //Titre - label
+        this.chart_volume.append("text")
+            .style("text-anchor",'start')
+            .attr("y", function() {
+                return -self.padding_volume.top+"px";
+            })
+            .text(function() {
+               var text='';
+               _.each(data[0] , function(d,i) {
+                    if(i=="item") {
+                        text="Last 24h - Volume in "+d;
+                    }
+                });
+               return text;
+                
+            }).attr("id","volume_titre");
+        console.log(params);
         console.log(data);
-
+      
      
         var bar = this.chart_volume.selectAll(".barVolume")
 	        .data(data)
@@ -68,31 +88,17 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
 
         bar.append("rect")
             .attr("width", function(d) {
-                console.log(self.xScale_volume(d.vol));
+                
                 return self.xScale_volume(d.vol);
             })
             .attr("height", function(d) {
                 return (self.height_volume/data.length)-3;
             })
-			// .attr("transform", function(d, i) {
-			// 	return "translate(5,0)";
-			// })
 			.attr("fill", function(d) {
 				return self.colors_volume[d.platform]; 
 			}).attr("y",function(d,i) {
                 return i*(self.height_volume/data.length)+"px";
             });
-   
-        //Titre - label
-        bar.append("text")
-            .attr("x", function(d) {
-                return self.margin_volume.right+self.padding_volume.right*3;
-            })
-            .attr("y", function(d,i) {
-                return -self.margin_volume.top+"px";
-            })
-            .attr("dy", "1em")
-            .text("Last 24h - Volume in BTC");
 
         //Platform - label  
         bar.append("text")
@@ -128,7 +134,13 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
             })
             .attr("dy", "1em")
             .text(function(d) {
-                return formatutils.formatVolumeShort(d.vol)+" BTC";
+                 var text='';
+               _.each(data[0] , function(d,i) {
+                    if(i=="item") {
+                        text=d;
+                    }
+                });
+                return formatutils.formatVolumeShort(d.vol)+" "+text;
             });
  
     }
