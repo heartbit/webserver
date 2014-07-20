@@ -72,7 +72,6 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
                     }
                 }
             );
-
             return this;
         },
 

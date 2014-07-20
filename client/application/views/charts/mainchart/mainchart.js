@@ -17,7 +17,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         this.layers = {
             areaLayer: new AreaLayer(this),
             volumeLayer: new VolumeLayer(this),
-            // newsLayer: new NewsLayer(this)
+            newsLayer: new NewsLayer(this)
         };
     };
 
@@ -70,7 +70,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
 
         this.timeAxisInstance = this.mainLayer.append("g")
             .attr("class", "x_time_axis")
-            .attr("transform", "translate(0," + self.height + ")");
+            .attr("transform", "translate(0," + String(3 * self.height / 4) + ")");
     };
 
     /* Update methods */

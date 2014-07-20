@@ -5,6 +5,7 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
     function VolumeLayer(chart) {
         var self = this;
         this.chart = chart;
+        var height = 3 * this.chart.height / 4;
         this.volumeLayer = this.chart.mainLayer
             .append("g")
             .attr("class", "volume_layer");
@@ -22,7 +23,7 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
 
         this.volumeYScale = d3.scale
             .linear()
-            .range([this.chart.height, 3 * this.chart.height / 4]);
+            .range([height, 0]);
 
         this.volumeYAxis = d3.svg.axis()
             .scale(this.volumeYScale)
@@ -57,6 +58,7 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
         var self = this;
         var offsetFactor = 0.1;
 
+        var height_max = 3 * self.chart.height / 4;
         this.volumes = this.chart.models.volumes;
         this.volumeYScale.domain([d3.min(self.volumes.map(function(volume) {
             return volume.amount > 0 ? volume.amount : 1;
@@ -84,7 +86,7 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
             .transition()
             .duration(defaultDuration)
             .attr("height", 0)
-            .attr('y', self.chart.height)
+            .attr('y', height_max)
             .remove();
 
         //console.log(this.chart.models);
@@ -108,22 +110,23 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
                 // }
             })
             .attr("height", 0)
-            .attr('y', self.chart.height)
+            .attr('y', height_max)
             .attr('opacity', 0.5)
             .transition()
             .delay(defaultDuration)
             .duration(defaultDuration)
             .attr("height", function(d) {
-                var height = self.chart.height - self.volumeYScale(d.amount);
+                var height = height_max - self.volumeYScale(d.amount);
                 return height >= 0 ? height : 0;
             })
             .attr('y', function(d) {
-                return d.amount == 0 ? self.chart.height : self.volumeYScale(d.amount);
+                return d.amount == 0 ? height_max : self.volumeYScale(d.amount);
             });
     };
 
     VolumeLayer.prototype.resize = function() {
-        this.volumeYScale.range([this.chart.height, 3 * this.chart.height / 4]);
+        var height_max = 3 * this.chart.height / 4;
+        this.volumeYScale.range([height_max, 0]);
         this.volumeYAxisInstance
             .transition()
             .duration(defaultDuration)

@@ -85,7 +85,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 // return self.candleYScale(meanValue);
                 return self.candleYScale(candle.close);
             })
-            //.interpolate("monotone");
+        //.interpolate("monotone");
 
         this.candleLineChart = this.candleLayer
             .append("path")
