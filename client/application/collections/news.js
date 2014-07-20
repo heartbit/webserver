@@ -4,6 +4,8 @@ define('news', ['config', 'information', 'NewsSocketManager', 'backbone', 'momen
 
         model: Information,
 
+        url: config.news.urlCollection,
+
         initialize: function() {},
 
         socketSync: function(params) {
@@ -16,7 +18,6 @@ define('news', ['config', 'information', 'NewsSocketManager', 'backbone', 'momen
         },
 
         update: function(news) {
-            // console.log('News update: ', news);
             this.models = this.parse(news);
             this.trigger('update');
         },

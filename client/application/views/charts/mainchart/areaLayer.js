@@ -168,7 +168,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
 
         this.gBrushLabel = this.gBrush
             .append("text")
-            .attr('y', this.chart.height - 30)
+            .attr('y', 3 * this.chart.height / 4 - 30)
             .attr('opacity', 0)
             .style('font-size', '40px')
             .style("text-anchor", "middle")
@@ -179,7 +179,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
         this.gBrush
             .selectAll("rect")
             .attr("y", 0)
-            .attr("height", this.chart.height);
+            .attr("height", 3 * this.chart.height / 4);
 
         this.gExtent = d3.select("rect.extent");
 

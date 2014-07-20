@@ -36,14 +36,14 @@ define(function(require) {
             this.isRender = false;
 
             this.views = {
-                // offcanvasmenu: new OffcanvasmenuView(),
-                // controller: new ControllerView(),
-                // volumeWidget: new VolumeWidgetView(),
-                // keyfacts: new KeyFactsView(),
-                // header: new HeaderView(),
+                offcanvasmenu: new OffcanvasmenuView(),
+                controller: new ControllerView(),
+                volumeWidget: new VolumeWidgetView(),
+                keyfacts: new KeyFactsView(),
+                header: new HeaderView(),
                 main: new MainView(),
-                // depth: new DepthView(),
-                // news: new NewsView()
+                depth: new DepthView(),
+                news: new NewsView()
             };
 
             Backbone.history.start({

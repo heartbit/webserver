@@ -1,6 +1,6 @@
 define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
 
-    var defaultDuration = 200;
+    var defaultDuration = 300;
 
     function VolumeLayer(chart) {
         var self = this;
@@ -45,7 +45,6 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
             .append('text')
             .attr('opacity', 0)
             .attr('class', 'volume_label');
-
     };
 
     VolumeLayer.prototype.draw = function(params) {
@@ -83,10 +82,6 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
         // Exit
         this.volumeBarChart
             .exit()
-            .transition()
-            .duration(defaultDuration)
-            .attr("height", 0)
-            .attr('y', height_max)
             .remove();
 
         //console.log(this.chart.models);
@@ -109,12 +104,7 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
                 //     }
                 // }
             })
-            .attr("height", 0)
-            .attr('y', height_max)
             .attr('opacity', 0.5)
-            .transition()
-            .delay(defaultDuration)
-            .duration(defaultDuration)
             .attr("height", function(d) {
                 var height = height_max - self.volumeYScale(d.amount);
                 return height >= 0 ? height : 0;
@@ -136,11 +126,12 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
 
     VolumeLayer.prototype.hide = function() {
         this.isVisible = false;
-        this.volumeBarChart
-            .transition()
-            .duration(defaultDuration)
-            .attr("height", 0)
-            .attr('y', this.chart.height)
+
+        // this.volumeBarChart
+        //     .transition()
+        //     .duration(defaultDuration)
+        //     .attr("height", 0)
+        //     .attr('y', this.chart.height)
 
         this.volumeLayer
             .transition()
@@ -151,17 +142,18 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
     VolumeLayer.prototype.show = function() {
         var self = this;
         this.isVisible = true;
+        var height_max = 3 * self.chart.height / 4;
 
-        this.volumeBarChart
-            .transition()
-            .duration(defaultDuration)
-            .attr("height", function(d) {
-                var height = self.chart.height - self.volumeYScale(d.amount);
-                return height >= 0 ? height : 0;
-            })
-            .attr('y', function(d) {
-                return d.amount == 0 ? self.chart.height : self.volumeYScale(d.amount);
-            });
+        // this.volumeBarChart
+        //     .transition()
+        //     .duration(defaultDuration)
+        //     .attr("height", function(d) {
+        //         var height = height_max - self.volumeYScale(d.amount);
+        //         return height >= 0 ? height : 0;
+        //     })
+        //     .attr('y', function(d) {
+        //         return d.amount == 0 ? height_max : self.volumeYScale(d.amount);
+        //     });
 
         this.volumeLayer
             .transition()

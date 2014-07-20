@@ -29,9 +29,9 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         var self = this;
 
         this.margin = {
-            top: 20,
-            right: 60,
-            bottom: 20,
+            top: 15,
+            right: 30,
+            bottom: 0,
             left: 40
         };
 
@@ -192,12 +192,22 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
 
     MainChart.prototype.toggleVolumeLayer = function() {
         if (this.layers.volumeLayer.isVisible) {
-            this.layers.areaLayer.updateRange([this.height, 0]);
+            // this.layers.areaLayer.updateRange([3 * this.height / 4, 0]);
             this.layers.volumeLayer.hide();
         } else {
-            this.layers.areaLayer.updateRange([3 * this.height / 4, 0]);
+            // this.layers.areaLayer.updateRange([3 * this.height / 4, 0]);
             this.layers.volumeLayer.show();
         }
+        return false;
+    };
+
+    MainChart.prototype.toggleNewsLayer = function() {
+        if (this.layers.newsLayer.isVisible) {
+            this.layers.newsLayer.hide();
+        } else {
+            this.layers.newsLayer.show();
+        }
+        return false;
     };
 
     return MainChart;
