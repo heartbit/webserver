@@ -28,11 +28,7 @@ define('offcanvasmenuView', ['config', 'text!offcanvasmenuView.html', 'backbone'
         render: function(params) {
             this.$el.html(this.template());
 
-            $('.js-offcanvasToggle').click(function() {
-                $('body').animate({
-                    scrollTop: 0
-                });
-            });
+
 
             this.lastupdateView
                 .setElement('#js-lastUpdate')

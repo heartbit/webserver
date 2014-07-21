@@ -12,10 +12,10 @@ config.apiproxy.criteria = config.apiproxy.apiUrl + 'documentation/criteria';
 config.apiproxy.methods = config.apiproxy.apiUrl + 'documentation/methods';
 
 config.newsproxy = {};
-config.newsproxy.host = "http://localhost";
-config.newsproxy.port = "9091";
-// config.newsproxy.host = "http://cryptonews.herokuapp.com";
-// config.newsproxy.port = "80";
+// config.newsproxy.host = "http://localhost";
+// config.newsproxy.port = "9091";
+config.newsproxy.host = "http://cryptonews.herokuapp.com";
+config.newsproxy.port = "80";
 config.newsproxy.hostUrl = config.newsproxy.host + ":" + config.newsproxy.port;
 config.newsproxy.apiUrl = config.newsproxy.hostUrl + '/news/';
 

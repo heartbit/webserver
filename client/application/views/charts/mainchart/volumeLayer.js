@@ -5,7 +5,8 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
     function VolumeLayer(chart) {
         var self = this;
         this.chart = chart;
-        var height = 3 * this.chart.height / 4;
+        var height_max = 3 * this.chart.height / 4;
+        var height_min = this.chart.height / 4;
         this.volumeLayer = this.chart.mainLayer
             .append("g")
             .attr("class", "volume_layer");
@@ -23,7 +24,7 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
 
         this.volumeYScale = d3.scale
             .linear()
-            .range([height, 0]);
+            .range([height_max, height_min]);
 
         this.volumeYAxis = d3.svg.axis()
             .scale(this.volumeYScale)
@@ -116,7 +117,8 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
 
     VolumeLayer.prototype.resize = function() {
         var height_max = 3 * this.chart.height / 4;
-        this.volumeYScale.range([height_max, 0]);
+        var height_min = this.chart.height / 4;
+        this.volumeYScale.range([height_max, height_min]);
         this.volumeYAxisInstance
             .transition()
             .duration(defaultDuration)
@@ -142,7 +144,6 @@ define('volumeLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils)
     VolumeLayer.prototype.show = function() {
         var self = this;
         this.isVisible = true;
-        var height_max = 3 * self.chart.height / 4;
 
         // this.volumeBarChart
         //     .transition()
