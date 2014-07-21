@@ -82,7 +82,11 @@ define(function(require) {
             });
 
             $(document).foundation();
-
+            $('.js-offcanvasToggle').click(function() {
+                $('body').animate({
+                    scrollTop: 0
+                });
+            });
         },
 
         /*	README

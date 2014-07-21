@@ -14,7 +14,7 @@ App.prototype.start = function(options) {
             self.initExpressServer();
         })
         .then(function() {
-            self.initApiProxy();
+            self.initProxies();
             self.initSockets();
             self.initClientRoutes();
             self.initServicesRoutes();
@@ -90,7 +90,13 @@ App.prototype.initExpressServer = function() {
     var bodyParser = require('body-parser');
     var methodOverride = require('method-override');
     var compress = require('compression');
-    this.app.use(bodyParser());
+    this.app.use(bodyParser.urlencoded({
+        extended: true,
+        limit: '15mb'
+    }));
+    this.app.use(bodyParser.json({
+        limit: '15mb'
+    }));
     this.app.use(methodOverride());
     this.app.use(compress());
     if (this.options.mode != 'prod') {
@@ -153,35 +159,34 @@ App.prototype.initStaticContentManager = function() {
     this.staticContentManager.init(initStaticContentManagerCallback);
 };
 
-App.prototype.initApiProxy = function() {
+App.prototype.initProxies = function() {
     var proxiesPath = this.options.serverPath + 'middlewares/proxy/';
 
-    switch (this.options.mode) {
-        case "online":
-            var ApiProxy = require(proxiesPath + 'apiProxy');
-            var proxyParams = {
-                apiProxyHost: this.config.apiproxy.hostUrl,
-                app: this.app
-            };
-            this.apiproxy = new ApiProxy(proxyParams);
-            break;
+    var ApiProxy = require(proxiesPath + 'apiProxy');
+    var apiProxyParams = {
+        apiProxyHost: this.config.apiproxy.hostUrl,
+        app: this.app
+    };
+    this.apiproxy = new ApiProxy(apiProxyParams);
 
-        case "offline":
-        default:
-            var proxyParams = {
-                app: this.app,
-                dataPath: this.options.clientPath + 'data/'
-            };
-            var OfflineApiProxy = require(proxiesPath + 'offlineApiProxy.js');
-            this.apiproxy = new OfflineApiProxy(proxyParams);
-            break;
-    }
+    var NewsProxy = require(proxiesPath + 'newsProxy');
+    var newsProxyParams = {
+        newsProxyHost: this.config.newsproxy.hostUrl,
+        app: this.app
+    };
+    this.newsproxy = new NewsProxy(newsProxyParams);
 
     var initProxyCallback = function() {
         console.log('Api proxy...OK');
     };
 
     this.apiproxy.init(initProxyCallback);
+
+    var initNewsProxyCallback = function() {
+        console.log('Api proxy...OK');
+    };
+
+    this.newsproxy.init(initNewsProxyCallback);
 };
 
 App.prototype.initServicesRoutes = function() {

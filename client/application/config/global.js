@@ -18,16 +18,14 @@ define('config', function() {
 	config.marketcap = {};
 	config.marketcap.urlModel = apiprefix + "marketcap/all";
 	config.marketcap.urlCollection = apiprefix + "marketcap/all";
-	// config.marketcap.urlModel = "http://192.168.1.4:8080/api/marketcap/all/";
-	// config.marketcap.urlCollection = "http://192.168.1.4:8080/api/marketcap/all/";
 
-	config.calculator= {};
-	config.calculator.urlModel="data/calculator.json";
-	config.calculator.urlCollection="data/calculator.json";
+	config.calculator = {};
+	config.calculator.urlModel = "data/calculator.json";
+	config.calculator.urlCollection = "data/calculator.json";
 
-	config.networkdata={};
-	config.networkdata.urlModel=apiprefix + "networkdata";
-	config.networkdata.urlCollection=apiprefix + "networkdata";
+	config.networkdata = {};
+	config.networkdata.urlModel = apiprefix + "networkdata";
+	config.networkdata.urlCollection = apiprefix + "networkdata";
 
 	config.maingraph = {};
 	config.maingraph.urlCollection = apiprefix + "maingraph";
@@ -116,6 +114,17 @@ define('config', function() {
 		// type: 'volume'
 		type: 'volume-short'
 	}];
+
+	var newsprefix = "/news/";
+
+	config.tweet = {};
+	config.tweet.urlCollection = newsprefix + "tweets";
+
+	config.news = {};
+	config.news.urlCollection = newsprefix + "news";
+
+	config.fbpost = {};
+	config.fbpost.urlCollection = newsprefix + "fbposts";
 
 	return config;
 

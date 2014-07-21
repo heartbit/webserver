@@ -4,7 +4,8 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
 
         events: {
             'click .js-timeperiod': 'changeTimePeriod',
-            'click #js-volumeLayer': 'toggleVolumeLayer'
+            'click #js-volumeLayer': 'toggleVolumeLayer',
+            'click #js-newsLayer': 'toggleNewsLayer'
         },
 
         el: '#js-mainview',
@@ -16,6 +17,7 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
             _.bindAll(
                 this,
                 'toggleVolumeLayer',
+                'toggleNewsLayer',
                 'update'
             );
             this.maingraphes = new Maingraphes();
@@ -72,7 +74,6 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
                     }
                 }
             );
-
             return this;
         },
 
@@ -126,6 +127,12 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
 
         toggleVolumeLayer: function() {
             this.mainChart.toggleVolumeLayer();
+            return false;
+        },
+
+        toggleNewsLayer: function() {
+            this.mainChart.toggleNewsLayer();
+            return false;
         }
 
     });

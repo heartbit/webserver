@@ -103,33 +103,37 @@ requirejs.config({
 
         // Models
         information: 'application/models/information',
+        networkdata: 'application/models/networkdata',
         maingraphe: 'application/models/maingraphe',
+        calculator: 'application/models/calculator',
         marketcap: 'application/models/marketcap',
         currency: 'application/models/currency',
         platform: 'application/models/platform',
         ticker: 'application/models/ticker',
+        fbpost: 'application/models/fbpost',
+        tweet: 'application/models/tweet',
         trade: 'application/models/trade',
         depth: 'application/models/depth',
         pair: 'application/models/pair',
         item: 'application/models/item',
-        networkdata: 'application/models/networkdata',
-        calculator:'application/models/calculator',
 
         //Models util
         screenshot: 'application/models/utils/screenshot',
 
         // Collections
+        networkdatas: 'application/collections/networkdatas',
         maingraphes: 'application/collections/maingraphes',
+        calculators: 'application/collections/calculators',
         currencies: 'application/collections/currencies',
         marketcaps: 'application/collections/marketcaps',
         platforms: 'application/collections/platforms',
         tickers: 'application/collections/tickers',
+        fbposts: 'application/collections/fbposts',
+        tweets: 'application/collections/tweets',
         trades: 'application/collections/trades',
         pairs: 'application/collections/pairs',
         items: 'application/collections/items',
         news: 'application/collections/news',
-        networkdatas: 'application/collections/networkdatas',
-        calculators:'application/collections/calculators',
 
         // Manager
         DataSocketManager: 'application/managers/sockets/dataSocketManager',
@@ -185,10 +189,10 @@ requirejs.config({
         'numeral': {
             exports: 'numeral'
         },
-        // 'd3tip': {
-        //     deps: ['d3'],
-        //     exports: 'd3tip'
-        // },
+        'd3tip': {
+            deps: ['d3'],
+            exports: 'd3tip'
+        },
         'foundation': {
             deps: ['jquery'],
             exports: 'foundation'

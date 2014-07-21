@@ -2,12 +2,16 @@
     margin-left: 0.1rem;
 }
 .mainView {
-    padding-top: 2%;
-    padding-bottom: 2%;
+    padding-top: 1%;
+    // padding-bottom: 2%;
 }
 .mainView .button-group li button {
     color: white;
     background-color: #1D5080;
+}
+.mainView .button-group li.current button {
+    color: white;
+    background-color: #007095;
 }
 .mainView .button-group li button:hover {
     color: white;

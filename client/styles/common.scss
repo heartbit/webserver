@@ -3,12 +3,7 @@ $primary_color:#ffffff;
     font-color: 003366;
     text-decoration: none;
 }
-.row {
-    max-width: none;
-    margin-left: 2%;
-    margin-right: 2%;
-    width: 95%;
-}
+
 .ul.inline-list > .li {
     display: inline;
 }
@@ -69,8 +64,8 @@ body {
     padding-top: 45px;
 }
 .datawidget {
-    padding-left: 2%;
-    padding-right: 2%;
+    padding-left: 0%;
+    padding-right: 0%;
     margin-top: 15px;
     background-color: $primary_color;
 }
@@ -85,9 +80,10 @@ body {
     transform: translate3d(-185%, 0, 0);*/
 }
 .row {
-    margin-left: 2%;
-margin-right: 2%;
-width: 95%;
+    max-width: none;
+    margin-left: 0%;
+    margin-right: 0%;
+    width: 99%;
 }
 .searchPanel ul li {
     list-style-type: none;
