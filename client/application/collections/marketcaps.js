@@ -13,6 +13,7 @@ define('marketcaps', ['config', 'marketcap'], function(config, Marketcap) {
 				
 				//console.log(response);
 				if(response!=null) {
+				
 					//FIX TEMPORAIRE pour corriger data ber non parsée (BTC) ou buguée pour l'instant (DRK)
 					if(response.currencyId=="BTC") {
 						response.totalCoin=response.totalCoin*Math.pow(10,-8);

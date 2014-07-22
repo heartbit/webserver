@@ -1,7 +1,8 @@
 {
     "unprotectedRoutes": {
         "/": "file:templates/home.html",
-        "/app": "file:templates/app.html"
+        "/app": "file:templates/app.html",
+        "/app/marketcap": "file:application/views/marketcap/marketcapView.html"
     },
     "protectedRoutes": {
         "/widgets": "file:templates/widgets.html",
