@@ -9,7 +9,11 @@ requirejs.config({
         config: 'application/config/global',
 
         // General imports
+        tablesorter_widget: 'libs/jquery/jquery.tablesorter.widgets.min',
+        gridster: 'libs/jquery/jquery.gridster.with-extras.min',
         'backbone-params': 'libs/backbone/backbone.queryparams',
+        tablesorter: 'libs/jquery/jquery.tablesorter.min',
+        metadata: 'libs/jquery/jquery.metadata',
         backbone: 'libs/backbone/backbone.min',
         jquerySpin: 'libs/jquery/jquery.spin',
         foundation: 'libs/foundation.min',
@@ -25,10 +29,6 @@ requirejs.config({
         fuse: 'libs/fuse.min',
         d3tip: 'libs/d3tip',
         d3: 'libs/d3.min',
-        tablesorter: 'libs/jquery/jquery.tablesorter.min',
-        tablesorter_widget: 'libs/jquery/jquery.tablesorter.widgets.min',
-        metadata: 'libs/jquery/jquery.metadata',
-
 
         // Screenshot
         stackBlur: 'libs/export/canvg/StackBlur',
@@ -71,8 +71,8 @@ requirejs.config({
         boxView: 'application/views/price/boxView',
 
         // Menu
-        graphmenuView: 'application/views/menus/graphmenuView',
         offcanvasmenuView: 'application/views/menus/offcanvasmenuView',
+        graphmenuView: 'application/views/menus/graphmenuView',
 
         // Charts
         /// Mainchart
@@ -83,8 +83,8 @@ requirejs.config({
         mainchart: 'application/views/charts/mainchart/mainchart',
 
         //marketcap
-        marketcapchart: 'application/views/charts/marketcap/marketcapchart',
         bubbleMarketcapChart: 'application/views/charts/marketcap/bubblemarketcapChart',
+        marketcapchart: 'application/views/charts/marketcap/marketcapchart',
         bubbleTooltip: 'application/views/charts/marketcap/bubbleTooltip',
 
         horizBarChart: 'application/views/charts/misk/horizBarChart',
@@ -98,8 +98,8 @@ requirejs.config({
         timelinejs: 'libs/timelinejs/timeline',
 
         // DataHelpers
-        dataHelper: 'application/helpers/dataHelper',
         depthDataHelper: 'application/helpers/depthDataHelper',
+        dataHelper: 'application/helpers/dataHelper',
 
         // Models
         information: 'application/models/information',
@@ -167,6 +167,10 @@ requirejs.config({
             exports: '$'
         },
         'tablesorter_widget': {
+            deps: ['jquery'],
+            exports: '$'
+        },
+        'gridster': {
             deps: ['jquery'],
             exports: '$'
         },

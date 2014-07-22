@@ -19,7 +19,48 @@
         <div class="inner-wrap">
             <aside class="left-off-canvas-menu" id="js-offcanvasmenu">
             </aside>
-            <section class="row" id="firstRow" data-equalizer>
+
+            <div class="gridster">
+                <ul>
+
+                    <li data-row="1" data-col="1" data-sizex="5" data-sizey="1">
+                        <div id="js-keyfacts" class="datawidget">
+                        </div>
+                    </li>
+                    <li data-row="1" data-col="4" data-sizex="3" data-sizey="1">
+                        <div id="js-controller">
+                        </div>
+                    </li>
+
+
+                    <li data-row="2" data-col="1" data-sizex="7" data-sizey="3">
+                        <div id="js-mainview" class="datawidget">
+                        </div>
+                    </li>
+
+                 
+                    <li data-row="6" data-col="1" data-sizex="3" data-sizey="1">
+                        <div id="js-depthView" class="depthView datawidget">
+                        </div>
+                    </li>
+                    <li data-row="6" data-col="4" data-sizex="5" data-sizey="3">
+                        <div class="datawidget" id="js-news">
+                        </div>
+                    </li>
+
+                    <li data-row="8" data-col="1" data-sizex="3" data-sizey="2">
+                        <div id="js-volumewidget" class="datawidget">
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+
+
+
+
+            <!--       <section class="row" id="firstRow" data-equalizer>
                 <div class="large-10 small-12 medium-12 columns large-centered">
                     <div class="right small-12 medium-12 large-5 columns" data-equalizer-watch>
                         <div id="js-controller">
@@ -47,18 +88,6 @@
                 </div>
             </section>
 
-            <!-- LARGE DEPTH TEST -->
-  <!--           <section>
-               <div class="large-10 medium-12 small-12 columns large-centered" data-equalizer-watch>
-                        <div class="row" data-equalizer>
-                            <div class="large-11 medium-12 small-12 columns" data-equalizer-watch>
-                                <h1>Order Book</h1>
-                                <div id="js-depthView" class="depthView datawidget">
-                                </div>
-                            </div>
-                        </div>
-                </div>
-            </section> -->
             <section class="row " data-equalizer>
                 <div class="large-10 small-12 medium-12 columns large-centered">
                     <div class="large-6 medium-12 small-12 columns" data-equalizer-watch>
@@ -85,11 +114,11 @@
                 </div>
             </section>
 
-            <!-- <section class="row datawidget">
+            <section class="row datawidget">
                 <div class="large-6 medium-6 small-6 columns panel" id="js-marketcapDiv"></div>
-            </section> -->
+            </section>
 
-            <!-- <div class="large-6 medium-6 small-12 columns panel" id="js-misk"></div> -->
+            <div class="large-6 medium-6 small-12 columns panel" id="js-misk"></div>
 
             <section class="row">
                 <div class="large-12 medium-12 small-12 columns datawidget" id="">
@@ -150,10 +179,12 @@
                         <p>Stay tuned, awesome features are coming!</p>
                     </li>
                 </ol>
-            </section>
+            </section> -->
+
+
+
 
             <a class="exit-off-canvas"></a>
-
         </div>
     </div>
 
@@ -164,7 +195,7 @@
             (i[r].q = i[r].q || []).push(arguments)
         }, i[r].l = 1 * new Date();
         a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
+        m = s.getElementsByTagName(o)[0];
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m)

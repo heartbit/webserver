@@ -3,14 +3,12 @@ $primary_color:#ffffff;
     font-color: 003366;
     text-decoration: none;
 }
-
 .ul.inline-list > .li {
     display: inline;
 }
 .right-small.tab-bar-section {
     width: 15em;
 }
-
 .hide {
     display: none;
 }
@@ -50,8 +48,17 @@ $primary_color:#ffffff;
     margin-left: 5em;
 }
 body {
-    background: white;
+    background: #004756;
     font-family: 'Lato', sans-serif;
+}
+.gs-w {
+    background-color: white;
+}
+.gridster {
+    padding-top: 50px;
+}
+.gridster ul {
+    list-style: none;
 }
 .domain {
     fill: none;
@@ -71,7 +78,7 @@ body {
 }
 #js-offcanvasmenu {
     padding-top: 45px;
-/*    -webkit-overflow-scrolling: touch;
+    /*    -webkit-overflow-scrolling: touch;
     -ms-transform: translate(-100%, 0);
     -webkit-transform: translate3d(-185%, 0, 0) !important;
     -moz-transform: translate3d(-185%, 0, 0) !important;

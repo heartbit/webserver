@@ -21,7 +21,7 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
                 this.bubblechartOption = 'bubbleAll';
                 this.marketcapChart = new MarketcapChart("#js-marketcapChart");
                 this.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
-            
+
             },
 
             changeBubbleChartOption: function(event) {
@@ -67,10 +67,10 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
                 });
 
                 _.each(this.marketcapFormat, function(d, i) {
-                    d.marketcap = FormatUtils.formatItem(d.marketcap, "$");
+                    d.marketcap = FormatUtils.formatItem(d.marketcap, 'USD');
                     // marketcap.marketcap,marketcap.currencyId);//                 +FormatUtils.formatCurrencyLabel(marketcap.currencyId);
                     d.currencyId = d.currencyId;
-                    d.price = FormatUtils.formatPrice(d.price, "$");
+                    d.price = FormatUtils.formatPrice(d.price, 'USD');
                     d.priceChange = FormatUtils.formatPercent(d.priceChange);
                     d.volume = FormatUtils.formatItem(d.volume, d.currencyId);
                     if (d.volumeChange > 0) {
@@ -80,8 +80,6 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
                     }
                     d.correlation = FormatUtils.truncToNdecimal(d.correlation, 2);
                 });
-
-
 
                 this.$el.html(this.templateMarketCap({
                     marketcaps: this.marketcapFormat

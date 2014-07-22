@@ -2,7 +2,7 @@ define(function(require) {
 
     var ParametersManager = require('ParametersManager'),
         EventManager = require('EventManager');
-
+    require('gridster');
     AnalyticsManager = require('AnalyticsManager'),
     NewsSocketManager = require('NewsSocketManager'),
     DataSocketManager = require('DataSocketManager'),
@@ -18,8 +18,8 @@ define(function(require) {
         DepthView = require('depthView'),
         MiskView = require('miskView'),
         NewsView = require('newsView'),
-        OffcanvasmenuView = require('offcanvasmenuView');
-    VolumeWidgetView = require('volumewidgetView');
+        OffcanvasmenuView = require('offcanvasmenuView'),
+        VolumeWidgetView = require('volumewidgetView');
 
     var Router = Backbone.Router.extend({
 
@@ -50,7 +50,7 @@ define(function(require) {
                 pushState: true
             });
 
-            ShortcutsManager.init();
+            // ShortcutsManager.init();
             // ShortcutsManager.addShortcut('t', function() {
             // 	console.log('t')
             // });
@@ -86,6 +86,11 @@ define(function(require) {
                 $('body').animate({
                     scrollTop: 0
                 });
+            });
+
+            $(".gridster ul").gridster({
+                widget_margins: [10, 10],
+                widget_base_dimensions: [140, 140]
             });
         },
 
