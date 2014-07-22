@@ -10,10 +10,12 @@ define('depth', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
             bids: []
         },
 
+        maxNbPoints: 150,
+
         socketSync: function(params) {
             var self = this;
             var updateCallback = function(payload) {
-                console.log('Depth update: ', payload);
+                // console.log('Depth update: ', payload);
                 var objDepth = payload.data;
                 self.update(objDepth);
             };
@@ -21,7 +23,7 @@ define('depth', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
             var eventId;
             if (this.isListening) {
                 eventId = this.eventIdUpdate();
-                DataSocketManager.off(eventId, updateCallback);
+                DataSocketManager.removeAllListeners(eventId) //, updateCallback);
             }
 
             this.set('platform', params.platform);
@@ -35,6 +37,7 @@ define('depth', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
         initialize: function() {},
 
         update: function(depth) {
+            
             if (depth && depth.order_book) {
                 var asks = _.filter(depth.order_book, function(order) {
                     return order.tradeType === 'ASK';

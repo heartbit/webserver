@@ -12,10 +12,10 @@ define('ChatSocketManager', ['socketio'], function(io) {
         if (instance === null) {
             instance = io('/chat');
             instance.on('connect', function() {
-                console.log('chat socket connected!')
+                // console.log('chat socket connected!')
             });
             instance.on('disconnect', function() {
-                console.log('chat socket disconnected!')
+                // console.log('chat socket disconnected!')
             });
         }
         return instance;

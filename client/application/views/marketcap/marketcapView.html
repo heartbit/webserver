@@ -1,24 +1,71 @@
-<div class="marketcap">
-    <div class="globalDiv">
-    	<h1>Marketcap <img width="40" height="27" style="float:none" src="http://1.bp.blogspot.com/-cMd4p4D3yLo/Uu7-FL-5MHI/AAAAAAAAAiw/msWsPjJccjM/s1600/bitcoinLogo1000.png" />
-    	</h1>
-        <div style="margin-top: 10px;">
-            <% _.each(marketcapTemplate.marketcaps,function(marketcap,index){%>
-            <div class="<%if (index != 0){%>hide<%}%>">
-                <em>
-                    <%=marketcap.marketcap%>
-                </em>
-                <br/>
-                <i class="infos-marketcap"><%=marketcap.price%> X <%=marketcap.totalcoin%></i>
+<div class="marketcap offcanvasmenu">
+
+    <div class="globalDiv row">
+
+        <h1>Marketcap</h1>
+
+        <!-- <div class="small-8 large-8 medium-8 columns button-bar">
+            <ul class="button-group inline-list left">
+                <li class="">
+                    <button id="js-bubbleAll" class="js-bubbleOption activebutton tiny button gray secondary">
+                        All
+                    </button>
+                </li>
+                <li class="">
+                    <button id="js-bubbleSplitPrice" class="js-bubbleOption tiny button gray secondary">
+                        Split by price
+                    </button>
+                </li>
+                <li class="">
+                    <button id="js-bubbleSplitSupply" class="js-bubbleOption tiny button gray secondary">
+                        Split by supply
+                    </button>
+                </li>
+            </ul>
+        </div> -->
+
+        <div class="small-12 large-12 medium-12 columns">
+            <div class="marketcapChart" id="js-bubbleMarketcapChart"></div>
+        </div>
+
+        <div class="small-12 large-12 medium-12 columns">
+            <div id="marketcapContainer">
+                <table id="marketcapTable" class"tablesorter">
+                    <thead>
+                        <tr >
+                
+                            <th>Rank</th>
+                            <th>CryptoCurrencies</th>
+                            <th>Marketcap</th>
+                            <th>Price & Volume (24h)</th>
+                            <th>%Change (24h)</th>
+                            <th>Correlation index(BTC=1)></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% _.each(marketcaps, function(marketcap,i){ %>
+                        <tr>
+                            <td>#<%=i+1%></td>                
+                            <td><%=marketcap.currencyId%></td>
+                            <td><%=marketcap.marketcap%></td>
+                            <td>
+                                <%=marketcap.price%> </br>
+                                <%=marketcap.priceChange%>
+                            </td>
+                            <td>
+                                <%=marketcap.volume%> </br>
+                                <%=marketcap.volumeChange%>
+                            </td>
+                            <td><%=marketcap.correlation%> <progress value=<%=marketcap.correlation*100%> max="100"><div id="progress" class="graph"><div id="bar" style="width:34%"><p>34% complete</p></div></div></progress>
+                            </td>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                </table>
+
             </div>
 
-            <%})%>
-        </div>
-        <div class="makertcap-italic">
-            <i>
-				Live data from Bitstamp,Btce,BitFinex<br/>
-			</i>
         </div>
     </div>
-
 </div>
+

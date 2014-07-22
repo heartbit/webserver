@@ -8,6 +8,7 @@ define('weeknewsView', ['backbone','text!weeknewsView.html', 'FormatUtils'], fun
 
         initialize: function() {
             var self = this;
+            
             this.currencylabel = FormatUtils.formatCurrencyLabel;
         },
 

@@ -4,7 +4,8 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
 
         events: {
             'click .js-timeperiod': 'changeTimePeriod',
-            'click #js-volumeLayer': 'toggleVolumeLayer'
+            'click #js-volumeLayer': 'toggleVolumeLayer',
+            'click #js-newsLayer': 'toggleNewsLayer'
         },
 
         el: '#js-mainview',
@@ -16,11 +17,12 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
             _.bindAll(
                 this,
                 'toggleVolumeLayer',
+                'toggleNewsLayer',
                 'update'
             );
             this.maingraphes = new Maingraphes();
-            this.maingraphmenu = new GraphmenuView();
-            this.maingraphmenu.initParent(this.$el);
+            // this.maingraphmenu = new GraphmenuView();
+            // this.maingraphmenu.initParent(this.$el);
             this.timeperiods = config.maingraph.timeperiods;
             this.currentTimeperiodId = config.maingraph.defaultTimeperiodId;
         },
@@ -46,7 +48,7 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
             };
 
             this.$el.html(this.template(tplVariables));
-            this.maingraphmenu.setElement($('#maingraphmenu')).render();
+            // this.maingraphmenu.setElement($('#maingraphmenu')).render();
             this.mainChart = new MainChart(this, '#js-mainchart', params);
 
             this.maingraphes.fetch({
@@ -72,7 +74,6 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
                     }
                 }
             );
-
             return this;
         },
 
@@ -126,6 +127,12 @@ define('mainView', ['config', 'EventManager', 'text!mainView.html', 'mainchart',
 
         toggleVolumeLayer: function() {
             this.mainChart.toggleVolumeLayer();
+            return false;
+        },
+
+        toggleNewsLayer: function() {
+            this.mainChart.toggleNewsLayer();
+            return false;
         }
 
     });

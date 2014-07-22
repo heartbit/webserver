@@ -3,8 +3,8 @@
 
         <div class="row collapse">
 
-            <div class="right small-12 medium-12 large-12 columns" style="float:right">
-                <div class="button-bar" >
+            <div class="right small-12 medium-12 large-12 columns button-bar" style="float:right">
+               <!--  <div class="button-bar" > -->
                     <ul class="button-group">
                         <li>
                             <button id="js-showItemsView" class="gray">
@@ -19,7 +19,7 @@
                             <div id="js-pairsViewModal" class="reveal-modal" data-reveal></div>
                         </li>
                        
-                        <li>
+                        <li style="width:34%">
                             <button id="js-showPlatformsView" class="gray">
                                 <%=selectedPlatform%>
                             </button>
@@ -28,14 +28,19 @@
                       
                     </ul>
                 </div>
+                <div class="small-12 medium-12 large-12 columns searchdiv" style="float:right">
+                    <input type="text" class="searchbar" id="js-searchbar" placeholder="Search by platform, coin or currency...">
+                    <div class="searchBox left columns small-12 medium-6 large-4" id="js-searchResults">
+                </div>
+            </div>
             </div>
 
 
-            <div class="small-12 medium-12 large-12 columns" style="float:right">
+          <!--   <div class="small-12 medium-12 large-12 columns" style="float:right">
                 <input type="text" class="searchbar" id="js-searchbar" placeholder="Search by platform, coin or currency...">
                 <div class="searchBox left columns small-12 medium-6 large-4" id="js-searchResults">
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </div>

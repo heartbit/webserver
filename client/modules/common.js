@@ -20,11 +20,15 @@ requirejs.config({
         keymaster: 'libs/keymaster',
         text: 'libs/require/text',
         moment: 'libs/moment.min',
-        cldr: 'libs/twitter_cldr',
+        numeral: 'libs/numeral',
         spin: 'libs/spin.min',
         fuse: 'libs/fuse.min',
         d3tip: 'libs/d3tip',
         d3: 'libs/d3.min',
+        tablesorter: 'libs/jquery/jquery.tablesorter.min',
+        tablesorter_widget: 'libs/jquery/jquery.tablesorter.widgets.min',
+        metadata: 'libs/jquery/jquery.metadata',
+
 
         // Screenshot
         stackBlur: 'libs/export/canvg/StackBlur',
@@ -78,7 +82,12 @@ requirejs.config({
         newsLayer: 'application/views/charts/mainchart/newsLayer',
         mainchart: 'application/views/charts/mainchart/mainchart',
 
-        miskhorizbarchart: 'application/views/charts/misk/miskhorizbarchart',
+        //marketcap
+        marketcapchart: 'application/views/charts/marketcap/marketcapchart',
+        bubbleMarketcapChart: 'application/views/charts/marketcap/bubblemarketcapChart',
+        bubbleTooltip: 'application/views/charts/marketcap/bubbleTooltip',
+
+        horizBarChart: 'application/views/charts/misk/horizBarChart',
         bignumber: 'application/views/charts/utils/bignumber',
         miskpiechart: 'application/views/charts/misk/miskpiechart',
         tooltip: 'application/views/charts/layers/tooltip/tooltip',
@@ -94,11 +103,15 @@ requirejs.config({
 
         // Models
         information: 'application/models/information',
+        networkdata: 'application/models/networkdata',
         maingraphe: 'application/models/maingraphe',
+        calculator: 'application/models/calculator',
         marketcap: 'application/models/marketcap',
         currency: 'application/models/currency',
         platform: 'application/models/platform',
         ticker: 'application/models/ticker',
+        fbpost: 'application/models/fbpost',
+        tweet: 'application/models/tweet',
         trade: 'application/models/trade',
         depth: 'application/models/depth',
         pair: 'application/models/pair',
@@ -108,11 +121,15 @@ requirejs.config({
         screenshot: 'application/models/utils/screenshot',
 
         // Collections
+        networkdatas: 'application/collections/networkdatas',
         maingraphes: 'application/collections/maingraphes',
+        calculators: 'application/collections/calculators',
         currencies: 'application/collections/currencies',
         marketcaps: 'application/collections/marketcaps',
         platforms: 'application/collections/platforms',
         tickers: 'application/collections/tickers',
+        fbposts: 'application/collections/fbposts',
+        tweets: 'application/collections/tweets',
         trades: 'application/collections/trades',
         pairs: 'application/collections/pairs',
         items: 'application/collections/items',
@@ -124,6 +141,7 @@ requirejs.config({
         NewsSocketManager: 'application/managers/sockets/newsSocketManager',
         ParametersManager: 'application/managers/ParametersManager',
         ShortcutsManager: 'application/managers/ShortcutsManager',
+        AnalyticsManager: 'application/managers/AnalyticsManager',
         CacheManager: 'application/managers/CacheManager',
         EventManager: 'application/managers/EventManager',
 
@@ -144,6 +162,14 @@ requirejs.config({
             deps: ['jquery'],
             exports: '$'
         },
+        'tablesorter': {
+            deps: ['jquery'],
+            exports: '$'
+        },
+        'tablesorter_widget': {
+            deps: ['jquery'],
+            exports: '$'
+        },
         'backbone': {
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
@@ -160,10 +186,13 @@ requirejs.config({
             deps: ['jquery'],
             exports: 'd3'
         },
-        // 'd3tip': {
-        //     deps: ['d3'],
-        //     exports: 'd3tip'
-        // },
+        'numeral': {
+            exports: 'numeral'
+        },
+        'd3tip': {
+            deps: ['d3'],
+            exports: 'd3tip'
+        },
         'foundation': {
             deps: ['jquery'],
             exports: 'foundation'

@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>heartbit</title>
-    <link rel="icon" href="/images/favicon.ico" />
     <link href="/styles/all.css" rel="stylesheet" />
-    <script src="/libs/modernizr.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/images/favicon.ico" />
+    <script src="/libs/modernizr.js"></script>
 </head>
 
 <body id="js-app">
@@ -20,50 +20,68 @@
             <aside class="left-off-canvas-menu" id="js-offcanvasmenu">
             </aside>
             <section class="row" id="firstRow" data-equalizer>
-                <div class="right small-12 medium-12 large-4 columns" data-equalizer-watch>
-                    <div id="js-controller">
+                <div class="large-10 small-12 medium-12 columns large-centered">
+                    <div class="right small-12 medium-12 large-5 columns" data-equalizer-watch>
+                        <div id="js-controller">
+                        </div>
                     </div>
-                </div>
 
-                <div class="small-12 medium-12 large-8 columns" style=" margin-top: 1.3em;" data-equalizer-watch>
-                    <hr/>
-                    <div id="js-keyfacts" class="datawidget">
+                    <div class="small-12 medium-12 large-7 columns" style=" margin-top: 1.3em;" data-equalizer-watch>
+                        <hr class="myHr" />
+                        <div id="js-keyfacts" class="datawidget">
+                        </div>
+                        <hr class="myHr" />
                     </div>
-                    <hr/>
                 </div>
             </section>
 
-            <section class="row">
-                <div class="large-12 medium-12 small-12 columns">
+            <section class="row ">
+                <div class="large-10 large-centered medium-12 small-12 columns">
                     <div id="js-mainview" class="datawidget">
                     </div>
                 </div>
             </section>
-            <hr class="myHr"/>
-            <section class="row" data-equalizer>
-                <div class="large-6 medium-12 small-12 columns" data-equalizer-watch>
-                    <div class="row" data-equalizer>
+            <section class="row ">
+                <div class="large-10 large-centered medium-12 small-12 columns">
+                    <hr class="myHr" />
+                </div>
+            </section>
 
-                        <div class="large-11 medium-12 small-12 columns" data-equalizer-watch>
-                            <div id="js-depthView" class="depthView datawidget">
+            <!-- LARGE DEPTH TEST -->
+  <!--           <section>
+               <div class="large-10 medium-12 small-12 columns large-centered" data-equalizer-watch>
+                        <div class="row" data-equalizer>
+                            <div class="large-11 medium-12 small-12 columns" data-equalizer-watch>
+                                <h1>Order Book</h1>
+                                <div id="js-depthView" class="depthView datawidget">
+                                </div>
                             </div>
                         </div>
-
-                        <div class="large-12 medium-12 small-12 columns" data-equalizer-watch>
-                            <div class="datawidget">
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
+                </div>
+            </section> -->
+            <section class="row " data-equalizer>
+                <div class="large-10 small-12 medium-12 columns large-centered">
+                    <div class="large-6 medium-12 small-12 columns" data-equalizer-watch>
+                        <div class="row" data-equalizer>
+                            <div class="large-11 medium-12 small-12 columns" data-equalizer-watch>
+                                <h1>Order Book</h1>
+                                <div id="js-depthView" class="depthView datawidget">
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="myHr" style="margin-left: 0%;margin-top: 8%;" />
+                        <div class="row">
+                            <div class="large-12 medium-12 small-12 columns" data-equalizer-watch>
+                                <h1>Volumes</h1>
+                                <div id="js-volumewidget" class="datawidget">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="large-6 medium-12 small-12 columns" data-equalizer-watch>
-                    <div class="datawidget" id="js-news"></div>
+                    <div class="large-6 medium-12 small-12 columns" data-equalizer-watch>
+                        <h1>News</h1>
+                        <div class="datawidget" id="js-news"></div>
+                    </div>
                 </div>
             </section>
 
@@ -81,29 +99,51 @@
 
             <section id="js-getStarted">
                 <ol class="joyride-list" data-joyride>
-                    <li data-id="js-getStarted" data-text="Next" data-class="custom so-awesome" data-options="tip_location: left;tip_animation:fade">
+                    <li data-id="js-getStarted" data-text="Next" data-class="custom so-awesome" data-options="tip_location:left;tip_animation:fade">
                         <p>Hello and welcome to the Heartbit tutorial. You'll see it's quite simple.</p>
                     </li>
-
-                    <li data-id="tutoPlatform" data-class="custom so-awesome" data-text="Next" data-options="tip_location: bottom;tip_animation:fade">
-                        <h4>Market place</h4>
-                        <p>You can switch market place here...</p>
+                    <li data-id="js-keyfacts" data-text="Next" data-options="tip_location:top;tip_animation:fade" data-class="custom so-awesome">
+                        <h4>Real Time Data</h4>
+                        <p>This gives you the last metrics of your favorite coin on your favorite.</p>
+                    </li>
+                    <li data-id="js-showItemsView" data-text="Next" data-options="tip_location: bottom;tip_animation:fade" data-class="custom so-awesome">
+                        <h4></h4>
+                        <p>Choose the item, pair or platform you want to monitor.</p>
                     </li>
 
-                    <li data-id="tutoItemCurrency" data-text="Next" data-options="tip_location: bottom;tip_animation:fade" data-class="custom so-awesome">
-                        <h4>Item/Currency</h4>
-                        <p>...and item/currency here.</p>
+                    <li data-id="js-searchbar" data-text="Next" data-options="tip_location: bottom;tip_animation:fade" data-class="custom so-awesome">
+                        <h4>Search Bar</h4>
+                        <p>The quickest way to switch to your favorite platform or pair.</p>
                     </li>
 
-                    <li data-id="js-keyfacts" data-text="Next" data-options="tip_location: bottom;tip_animation:fade" data-class="custom so-awesome">
-                        <h4>Keyfacts</h4>
-                        <p>Find insight in second thanks to the autoupdated keyfacts.</p>
+                    <li data-id="last7days" data-text="Next" data-options="tip_location: bottom;tip_animation:fade" data-class="custom so-awesome">
+                        <h4>Intraday or Long Term ?</h4>
+                        <p>Easily change the timeframe.</p>
                     </li>
 
                     <li data-id="js-mainview" data-text="Next" data-options="tip_location: bottom;tip_animation:fade" data-class="custom so-awesome">
                         <h4>Trades and volumes</h4>
-                        <p>Visualize clear and powerful timeseries based on trades and volumes for the selected platform.</p>
+                        <p>Click and drag to get data analysis</p>
                     </li>
+                    <li data-id="js-depthView" data-text="Next" data-options="tip_location: bottom;tip_animation:fade" data-class="custom so-awesome">
+                        <h4>Depth</h4>
+                        <p>Have an overview of the orderbook in real time.</p>
+                    </li>
+
+                    <li data-id="js-maxBid" data-text="Next" data-options="tip_location: bottom;tip_animation:fade" data-class="custom so-awesome">
+                        <h4>Spread</h4>
+                        <p>Check the spread and immediatly know what are the best bid and ask for your market.</p>
+                    </li>
+
+                    <li data-id="js-news" data-text="Next" data-options="tip_location: left;tip_animation:fade" data-class="custom so-awesome">
+                        <h4>News Feed</h4>
+                        <p>Get the news that impact the market.</p>
+                    </li>
+                    <li data-id="js-volumewidget" data-text="Next" data-options="tip_location: left;tip_animation:fade" data-class="custom so-awesome">
+                        <h4>Volume Widget</h4>
+                        <p>Compare volumes, see where the heat come from</p>
+                    </li>
+
 
                     <li data-button="End">
                         <h4>Enjoy!</h4>
@@ -124,7 +164,7 @@
             (i[r].q = i[r].q || []).push(arguments)
         }, i[r].l = 1 * new Date();
         a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0];
+            m = s.getElementsByTagName(o)[0];
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m)

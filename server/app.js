@@ -1,5 +1,3 @@
-var express = require('express');
-var http = require('http');
 var moment = require('moment');
 var _ = require('underscore');
 var Q = require('q');
@@ -16,7 +14,7 @@ App.prototype.start = function(options) {
             self.initExpressServer();
         })
         .then(function() {
-            self.initApiProxy();
+            self.initProxies();
             self.initSockets();
             self.initClientRoutes();
             self.initServicesRoutes();
@@ -33,6 +31,10 @@ App.prototype.initManagers = function() {
     this.exceptionManager = require(this.options.serverPath + 'managers/ExceptionManager');
     this.apiManager = require(this.options.serverPath + 'managers/APIManager');
     this.apiManager.init(this.config.apiproxy);
+
+    this.cronJobManager = require(this.options.serverPath + 'managers/CronJobsManager');
+    this.cronJobManager.start();
+
     return Q.all([
         this.initEventManager(),
         this.initRedisAndCacheManager()
@@ -78,15 +80,29 @@ App.prototype.initRedisAndCacheManager = function() {
 
 App.prototype.initExpressServer = function() {
     var deferred = Q.defer();
+    var express = require('express');
+    var http = require('http');
+
     this.app = express();
-    this.server = http.Server(this.app);
-    // if (this.options.isDebug) {
-    // this.app.use(express.logger());
-    // }
-    this.app.use(express.compress());
-    this.app.use(express.json());
-    this.app.use(express.urlencoded());
-    this.app.use(express.methodOverride());
+    this.server = http.createServer(this.app);
+
+    var morgan = require('morgan');
+    var bodyParser = require('body-parser');
+    var methodOverride = require('method-override');
+    var compress = require('compression');
+    this.app.use(bodyParser.urlencoded({
+        extended: true,
+        limit: '15mb'
+    }));
+    this.app.use(bodyParser.json({
+        limit: '15mb'
+    }));
+    this.app.use(methodOverride());
+    this.app.use(compress());
+    if (this.options.mode != 'prod') {
+        this.app.use(morgan('dev'));
+    }
+
     this.app.set('options', this.options);
     this.app.enable('trust proxy');
     console.log('Express server...OK');
@@ -143,35 +159,34 @@ App.prototype.initStaticContentManager = function() {
     this.staticContentManager.init(initStaticContentManagerCallback);
 };
 
-App.prototype.initApiProxy = function() {
+App.prototype.initProxies = function() {
     var proxiesPath = this.options.serverPath + 'middlewares/proxy/';
 
-    switch (this.options.mode) {
-        case "online":
-            var ApiProxy = require(proxiesPath + 'apiProxy');
-            var proxyParams = {
-                apiProxyHost: this.config.apiproxy.hostUrl,
-                app: this.app
-            };
-            this.apiproxy = new ApiProxy(proxyParams);
-            break;
+    var ApiProxy = require(proxiesPath + 'apiProxy');
+    var apiProxyParams = {
+        apiProxyHost: this.config.apiproxy.hostUrl,
+        app: this.app
+    };
+    this.apiproxy = new ApiProxy(apiProxyParams);
 
-        case "offline":
-        default:
-            var proxyParams = {
-                app: this.app,
-                dataPath: this.options.clientPath + 'data/'
-            };
-            var OfflineApiProxy = require(proxiesPath + 'offlineApiProxy.js');
-            this.apiproxy = new OfflineApiProxy(proxyParams);
-            break;
-    }
+    var NewsProxy = require(proxiesPath + 'newsProxy');
+    var newsProxyParams = {
+        newsProxyHost: this.config.newsproxy.hostUrl,
+        app: this.app
+    };
+    this.newsproxy = new NewsProxy(newsProxyParams);
 
     var initProxyCallback = function() {
         console.log('Api proxy...OK');
     };
 
     this.apiproxy.init(initProxyCallback);
+
+    var initNewsProxyCallback = function() {
+        console.log('Api proxy...OK');
+    };
+
+    this.newsproxy.init(initNewsProxyCallback);
 };
 
 App.prototype.initServicesRoutes = function() {
@@ -197,8 +212,12 @@ App.prototype.initClientRoutes = function() {
 
 App.prototype.initFourtyFourPage = function() {
     var self = this;
-    this.app.use(function(req, res, next) {
-        res.sendfile(self.options.clientPath + "templates/404.html");
+    this.app.use(function(err, req, res, next) {
+        if (err.status == 404 || typeof err === typeof PageNotFoundError) {
+            res.status(404).sendfile(self.options.clientPath + "templates/404.html");
+        } else {
+            res.send(500, 'unexpected error');
+        }
     });
 };
 

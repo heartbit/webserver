@@ -40,10 +40,10 @@ define('NewsSocketManager', ['socketio'], function(io) {
             };
 
             instance.on('connect', function() {
-                console.log('news socket connected!')
+                // console.log('news socket connected!')
             });
             instance.on('disconnect', function() {
-                console.log('news socket disconnected!')
+                // console.log('news socket disconnected!')
             });
         }
         return instance;

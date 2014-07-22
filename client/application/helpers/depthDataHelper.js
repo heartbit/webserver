@@ -4,8 +4,38 @@ define('depthDataHelper', ['FormatUtils'], function(FormatUtils) {
 
    DepthDataHelper.prototype.computeDepth = function(depth) {
       var data = depth.attributes;
-      var bids = data.bids.slice(0, (data.bids.length) / 2); // on ne prend que 1/2 des résultats sinon échelle trop large & mur non représentatif
-      var asks = data.asks.slice(0, (data.asks.length) / 2);
+
+      var bids = data.bids;
+      var asks = data.asks;
+      bids.sort(function(a,b) {
+         return b.price-a.price;
+      });
+       
+      asks.sort(function(a,b) {
+         return a.price-b.price;
+      });
+   
+      var maxBid = _.max(bids, function(bid) {
+         return bid.price;
+      });
+
+      var minAsk = _.min(asks, function(ask) {
+         return ask.price;
+      });
+
+      // Get +/- 20 %
+      var minIntervalleBid = maxBid.price - (maxBid.price * 20 / 100);
+      // var maxIntervalleBid = maxBid.price + (maxBid.price * 20 / 100);
+      var bids = _.filter(bids, function(bid) {
+         return minIntervalleBid <= bid.price;
+      });
+
+      // var minIntervalleAsk = minAsk.price - (minAsk.price * 20 / 100);
+      var maxIntervalleAsk = minAsk.price + (minAsk.price * 20 / 100);
+      var asks = _.filter(asks, function(ask) {
+         return ask.price <= maxIntervalleAsk;
+      });
+
       if (bids.length == 0 || asks.length == 0) return;
 
       var MurBids = []; //Tableau Prix-Somme des amounts achats [Prix,AmountCumulé];
@@ -14,6 +44,16 @@ define('depthDataHelper', ['FormatUtils'], function(FormatUtils) {
       var MurAsks = []; //Tableau Prix-Somme des amounts vente [Prix,AmountCumulé];
       var AmountAsks = [0];
       var PriceAsks = [];
+      var maxNbPoints = 150;
+
+      // if (bids.asks > maxNbPoints) {
+      //    bids = _.filter(bids, function(bid, index) {
+      //       return index % 2 == 0;
+      //    });
+      //    asks = _.filter(asks, function(ask, index) {
+      //       return index % 2 == 0;
+      //    });
+      // }
 
       _.each(bids, function(bid, index) {
          if (index == 0) index = 1
@@ -35,10 +75,7 @@ define('depthDataHelper', ['FormatUtils'], function(FormatUtils) {
          });
       });
 
-      LastBidsAmount = _.last(MurBids).amount;
-      LastAsksAmount = _.last(MurAsks).amount;
-
-      if (LastBidsAmount > LastAsksAmount) {
+      if (_.last(MurBids).amount > _.last(MurAsks).amount) {
          DepthMin = MurAsks;
          DepthMax = MurBids;
       } else {
@@ -55,15 +92,7 @@ define('depthDataHelper', ['FormatUtils'], function(FormatUtils) {
             return index % 10 == 0;
          })
          .value();
-
-      var maxBid = _.max(MurBids, function(bid) {
-         return bid.price;
-      });
-
-      var minAsk = _.min(MurAsks, function(ask) {
-         return ask.price;
-      });
-
+   
       return {
          DepthMax: DepthMax,
          DepthMin: DepthMin,
@@ -73,7 +102,7 @@ define('depthDataHelper', ['FormatUtils'], function(FormatUtils) {
          maxBid: maxBid,
          minAsk: minAsk
       };
-      
+
    }
 
    return DepthDataHelper;

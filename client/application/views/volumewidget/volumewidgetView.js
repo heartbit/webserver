@@ -1,5 +1,5 @@
-define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersManager', 'miskpiechart','tickers','FormatUtils','dataHelper'],
-	function(config, VolumewidgetTemplate, ParametersManager, Miskpiechart,Tickers,FormatUtils,DataHelper) {
+define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersManager', 'horizBarChart','tickers','FormatUtils','dataHelper'],
+	function(config, VolumewidgetTemplate, ParametersManager, HorizBarChart,Tickers,FormatUtils,DataHelper) {
 
 		return Backbone.View.extend({
 
@@ -11,14 +11,24 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 				'click #js-volumes':'hideDetails'
 			},
 			el: '#js-volumewidget',
-			initialize: function() {
+			initialize: function(params) {
 				var self = this;
 				this.dataHelper = new DataHelper();
-				_.bindAll(this, 'render', 'update');
 				this.tickers = new Tickers();
-				this.tickers.fetchAllTickersForVolumeWidget();
-				this.tickers.on('update',this.update,this);
-				this.render();
+				params = ParametersManager.getCurrentParams();
+				this.tickers.reset();
+				this.initialized = false;
+				if( params.length > 0 ) {
+					syncTicker();
+				}
+			},
+			syncTicker: function(){
+				var params = ParametersManager.getCurrentParams();
+				var tickerRoom = ParametersManager.getTickerRoom(params);
+				var defaultPairs = ParametersManager.getDefaultPairs(params.item);
+				this.tickers.fetch({item:params.item,platformPairs:defaultPairs});
+				this.tickers.on('update',this.updateValues,this);
+				this.initialized = true;
 			},
 			showDetails:function(){
 				$("#js-volumes").toggle('slow');
@@ -29,17 +39,22 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 			render: function(params) {
 				var self = this;
 				var data = this.dataHelper.buildVolumesForPieChart(this.tickers);
+				if ( !this.initialized ){
+					this.syncTicker();
+				}
 				if( data.volumes && data.volumes.length > 0 ) {
-					this.$el.html(this.template(
-						{data: {tickers:data.volumes,total:data.volumeTotal}}
-					));
-					this.pieChart = new Miskpiechart({el:"#js-pieChart",tickers:data.volumesPieChart});
-					this.pieChart.rogueDraw({tickers:data.volumesPieChart});
+					this.$el.html(this.template());
+					this.pieChart = new HorizBarChart("#js-horizBarChart");
+					this.pieChart.rogueDraw({data:data.volumesPieChart});
 				}
 				return this;
 			},
 			update: function() {
-			
+				this.syncTicker();
+				this.render();
+				return this;
+			},
+			updateValues: function() {
 				this.render();
 				return this;
 			},

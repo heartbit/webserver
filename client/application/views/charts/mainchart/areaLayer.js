@@ -8,6 +8,8 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
         _.bindAll(this, 'brushed');
         this.chart = chart;
 
+        this.radiusHighlightCircle = 3;
+
         this.colors = {
             highlight: "red",
             normal: "#b7b7b7"
@@ -62,10 +64,10 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 return self.chart.timeScale(candle.middleDate);
             })
             .y0(function(candle) {
-                return self.candleYScale(candle.high);
+                return self.candleYScale(candle.low);
             })
             .y1(function(candle) {
-                return self.candleYScale(candle.low);
+                return self.candleYScale(candle.high);
             })
             .interpolate("monotone");
 
@@ -79,10 +81,11 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 return self.chart.timeScale(candle.middleDate);
             })
             .y(function(candle) {
-                var meanValue = (candle.high + candle.low) / 2;
-                return self.candleYScale(meanValue);
+                // var meanValue = (candle.high + candle.low) / 2;
+                // return self.candleYScale(meanValue);
+                return self.candleYScale(candle.close);
             })
-            .interpolate("monotone");
+        //.interpolate("monotone");
 
         this.candleLineChart = this.candleLayer
             .append("path")
@@ -115,7 +118,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
 
         this.currentPositionLabelPrice = this.tooltipLayer
             .append('text')
-            .attr("y", 20)
+            .attr("y", 40)
             .attr('class', 'currentPositionLabelPrice');
 
         this.colorGradient = this.candleLayer
@@ -154,7 +157,6 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .attr("stop-color", this.colors.normal)
             .attr("stop-opacity", 1);
 
-
         this.brush = d3.svg.brush()
             .x(this.chart.timeScale)
             .on("brush", this.brushed);
@@ -164,21 +166,50 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .attr("class", "brush")
             .call(this.brush);
 
-        this.gBrush.selectAll("rect")
-            .attr("y", 0)
-            .attr("height", this.chart.height);
-
-        this.gExtent = d3.select("rect.extent");
-
-        this.gBrushLabel = this.gBrush.append("text")
-            .attr('y', (this.chart.height / 2) + 25)
+        this.gBrushLabel = this.gBrush
+            .append("text")
+            .attr('y', 3 * this.chart.height / 4 - 30)
             .attr('opacity', 0)
-            .style('font-size', '50px')
+            .style('font-size', '40px')
             .style("text-anchor", "middle")
             .style("fill", '#808080')
             .style("stroke", "none")
-            .text('')
+            .text('');
 
+        this.gBrush
+            .selectAll("rect")
+            .attr("y", 0)
+            .attr("height", 3 * this.chart.height / 4);
+
+        this.gExtent = d3.select("rect.extent");
+
+        this.startBrushLabelTime = this.gBrush
+            .append('text')
+            .attr("y", 0)
+            .style("fill", '#666')
+            .style("stroke", "none")
+            .attr('class', 'startBrushLabelTime');
+
+        this.endBrushLabelTime = this.gBrush
+            .append('text')
+            .attr("y", 0)
+            .style("fill", '#666')
+            .style("stroke", "none")
+            .attr('class', 'endBrushLabelTime');
+
+        this.lowCandleBrushLabel = this.gBrush
+            .append('text')
+            .attr("y", 0)
+            .style("fill", '#666')
+            .style("stroke", "none")
+            .attr('class', 'lowCandleBrushLabel');
+
+        this.highCandleBrashLabel = this.gBrush
+            .append('text')
+            .attr("y", 0)
+            .style("fill", '#666')
+            .style("stroke", "none")
+            .attr('class', 'highCandleBrashLabel');
     };
 
     AreaLayer.prototype.draw = function(params) {
@@ -189,6 +220,7 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
 
     AreaLayer.prototype.update = function() {
         var self = this;
+        this.hideBrush();
         this.candles = this.chart.models.candles;
 
         var candleYOffset = 0;
@@ -229,8 +261,9 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 return self.chart.timeScale(candle.middleDate);
             })
             .attr('cy', function(candle) {
-                var meanValue = (candle.high + candle.low) / 2;
-                return self.candleYScale(meanValue);
+                // var meanValue = (candle.high + candle.low) / 2;
+                // return self.candleYScale(meanValue);
+                return self.candleYScale(candle.close);
             })
             .attr('r', 0)
             .attr('class', 'circle')
@@ -257,34 +290,34 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
 
     AreaLayer.prototype.hide = function() {};
 
+    AreaLayer.prototype.finclosestCandle = function(date) {
+        var pointIndex = (this.closestPoint && this.closestPoint.index) || 0;
+        var closestPoint = this.candleCircles[pointIndex];
+        var circlesCount = this.candleCircles.size()
+        this.candleCircles.each(function(candleCircle, index) {
+            if (index == 0 && date <= candleCircle.startDate) {
+                pointIndex = index;
+                closestPoint = candleCircle;
+            }
+            if (index == circlesCount - 1 && date >= candleCircle.endDate) {
+                pointIndex = index;
+                closestPoint = candleCircle;
+            }
+            if (candleCircle.startDate <= date && candleCircle.endDate >= date) {
+                pointIndex = index;
+                closestPoint = candleCircle;
+            }
+        });
+        return {
+            index: pointIndex,
+            candle: closestPoint
+        };
+    };
+
     AreaLayer.prototype.updateTooltip = function(date) {
         var self = this;
 
-        var finclosestCandle = function(date) {
-            var pointIndex = (self.closestPoint && self.closestPoint.index) || 0;
-            var closestPoint = self.candleCircles[pointIndex];
-            var circlesCount = self.candleCircles.size()
-            self.candleCircles.each(function(candleCircle, index) {
-                if (index == 0 && date <= candleCircle.startDate) {
-                    pointIndex = index;
-                    closestPoint = candleCircle;
-                }
-                if (index == circlesCount - 1 && date >= candleCircle.endDate) {
-                    pointIndex = index;
-                    closestPoint = candleCircle;
-                }
-                if (candleCircle.startDate <= date && candleCircle.endDate >= date) {
-                    pointIndex = index;
-                    closestPoint = candleCircle;
-                }
-            });
-            return {
-                index: pointIndex,
-                candle: closestPoint
-            };
-        };
-
-        this.closestPoint = finclosestCandle(date);
+        this.closestPoint = this.finclosestCandle(date);
 
         if (this.closestPoint && this.closestPoint.candle && this.closestPoint.candle.startDate) {
             var currentX = 0;
@@ -295,7 +328,9 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                     if (i == self.closestPoint.index) {
                         currentX = d3.select(this).attr('cx');
                         currentY = d3.select(this).attr('cy');
-                        return 3;
+                        return self.radiusHighlightCircle;
+                    } else if (d.highlight) {
+                        return self.radiusHighlightCircle;
                     } else {
                         return 0;
                     }
@@ -310,25 +345,29 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                     return currentX > self.chart.width / 2 ? "end" : "start";
                 })
                 .attr("x", currentX)
-                .text(" " + FormatUtils.formatDate(this.closestPoint.candle.startDate, 'lll'));
+                .text(' ' + FormatUtils.formatDate(this.closestPoint.candle.startDate, 'lll'));
 
-            self.currentPositionLabelPrice
+            this.currentPositionLabelPrice
                 .style("text-anchor", function() {
                     return currentX > self.chart.width / 2 ? "end" : "start";
                 })
                 .attr("x", function() {
-                    return currentX > self.chart.width / 2 ? currentX - 10 : currentX + 30;
+                    return currentX;
                 })
-                .attr("y", currentY + 50)
-                .text("  " + FormatUtils.formatPrice(this.closestPoint.candle.close));
+                .text(' Price: ' + FormatUtils.formatPrice(this.closestPoint.candle.close));
         }
     };
 
     AreaLayer.prototype.mouseout = function() {
+        var self = this;
+
         this.candleCircles
             .transition()
             .duration(100)
-            .attr('r', 0);
+            .attr('r', function(d, i, j) {
+                return d.highlight ? self.radiusHighlightCircle : 0;
+            });
+
         this.tooltipLayer
             .transition()
             .duration(100)
@@ -350,6 +389,9 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
     AreaLayer.prototype.brushed = function() {
         var extent = this.brush.extent();
 
+        var startDateBrush = extent[0];
+        var endDateBrush = extent[1];
+
         // Get candles between these 2 dates
         var currentCandles = _.chain(this.candles)
             .filter(function(candle) {
@@ -366,21 +408,14 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             var first = _.first(currentCandles);
             var last = _.last(currentCandles);
 
-            // console.log('\n\n\nCandles in brush : ' + currentCandles.length);
-            // console.log('Start : ' + FormatUtils.formatDate(first.startDate, 'lll'));
-            // console.log('End : ' + FormatUtils.formatDate(last.endDate, 'lll'));
-            // console.log('Min : ' + _.min(currentCandles, function(candle) {
-            //     return candle.low;
-            // }).low);
-            // console.log('Max : ' + _.max(currentCandles, function(candle) {
-            //     return candle.high;
-            // }).high);
+            var nbCandles = currentCandles.length;
 
-            // console.log('Evolution : ' + FormatUtils.formatValue(evol, 2) + "%");
-
-            // if (d3.event.mode === "move") {
-            //     this.gBrushLabel
-            // } else {
+            var lowestCandle = _.min(currentCandles, function(candle) {
+                return candle.close;
+            });
+            var highestCandle = _.max(currentCandles, function(candle) {
+                return candle.close;
+            });
 
             var evol = 100 * (last.close - first.close) / first.close;
             var evolColor = evol >= 0 ? 'green' : 'red';
@@ -391,9 +426,88 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 .attr('x', newx)
                 .attr('opacity', 1)
                 .attr('font-size', '50px')
-                .style('class', 'icon-uo-dir')
                 .text(FormatUtils.formatEvol(evol))
                 .style("fill", evolColor);
+
+            this.startBrushLabelTime
+                .transition()
+                .duration(50)
+                .attr('y', 0)
+                .attr('x', this.chart.timeScale(startDateBrush))
+                .attr('opacity', 1)
+                .attr('font-size', '16px')
+                .attr('text-anchor', function() {
+                    return nbCandles < 10 ? 'end' : 'middle';
+                })
+                .text(FormatUtils.formatDate(startDateBrush, 'lll'));
+
+            this.endBrushLabelTime
+                .transition()
+                .duration(50)
+                .attr('y', 0)
+                .attr('x', this.chart.timeScale(endDateBrush))
+                .attr('opacity', 1)
+                .attr('text-anchor', function() {
+                    return nbCandles < 10 ? 'start' : 'middle';
+                })
+                .attr('font-size', '16px')
+                .text(FormatUtils.formatDate(endDateBrush, 'lll'));
+
+            this.lowCandleBrushLabel
+                .transition()
+                .duration(50)
+                .attr('y', this.candleYScale(lowestCandle.close) + 18)
+                .attr('x', this.chart.timeScale(lowestCandle.middleDate))
+                .attr('opacity', 1)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '16px')
+                .text(FormatUtils.formatPrice(lowestCandle.close));
+
+            var lowCircle = this.finclosestCandle(lowestCandle.middleDate);
+
+            this.highCandleBrashLabel
+                .transition()
+                .duration(50)
+                .attr('y', this.candleYScale(highestCandle.close) - 5)
+                .attr('x', this.chart.timeScale(highestCandle.middleDate))
+                .attr('opacity', 1)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '16px')
+                .text(FormatUtils.formatPrice(highestCandle.close));
+
+            var highCircle = this.finclosestCandle(highestCandle.middleDate);
+
+            this.candleCircles
+                .transition()
+                .duration(100)
+                .style('fill', function(d, i) {
+                    if (i == highCircle.index) {
+                        return 'green';
+                    } else if (i == lowCircle.index) {
+                        return 'red';
+                    } else if (d.highlight == 'lowCircle') {
+                        return 'white';
+                    } else if (d.highlight == 'highCircle') {
+                        return 'white';
+                    }
+                    return 'white';
+                })
+                .attr('r', function(d, i) {
+                    if (i == highCircle.index) {
+                        d.highlight = 'highCircle';
+                        return self.radiusHighlightCircle;
+                    } else if (i == lowCircle.index) {
+                        d.highlight = 'lowCircle';
+                        return self.radiusHighlightCircle;
+                    } else if (d.highlight == 'lowCircle') {
+                        delete d.highlight;
+                        return 0;
+                    } else if (d.highlight == 'highCircle') {
+                        delete d.highlight;
+                        return 0;
+                    }
+                    return 0;
+                })
 
             var startPercent = String((+this.gExtent.attr('x') / this.chart.width) * 100) + '%';
             var endPercent = String(((+this.gExtent.attr('x') + +this.gExtent.attr('width')) / this.chart.width) * 100) + '%';
@@ -408,20 +522,63 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             this.start3SegGrad.attr('offset', endPercent);
 
         } else {
-            this.gBrushLabel
-                .transition()
-                .duration(50)
-                .attr('x', newx)
-                .text('')
-                .attr('opacity', 0);
-
-            this.end1SegGrad.attr('offset', '0');
-            this.start2SegGrad.attr('offset', '0');
-            this.end2SegGrad.attr('offset', '0');
-            this.start3SegGrad.attr('offset', '0');
+            this.hideBrush();
         }
 
     };
+
+    AreaLayer.prototype.hideBrush = function() {
+
+        this.gBrushLabel
+        // .transition()
+        // .duration(50)
+        .attr('x', 0)
+            .text('')
+            .attr('opacity', 0);
+
+        this.startBrushLabelTime
+        // .transition()
+        // .duration(50)
+        .attr('x', 0)
+            .text('')
+            .attr('opacity', 0);
+
+        this.endBrushLabelTime
+        // .transition()
+        // .duration(50)
+        .attr('x', 0)
+            .text('')
+            .attr('opacity', 0);
+
+        this.highCandleBrashLabel
+        // .transition()
+        // .duration(50)
+        .attr('x', 0)
+            .text('')
+            .attr('opacity', 0);
+
+        this.lowCandleBrushLabel
+        // .transition()
+        // .duration(50)
+        .attr('x', 0)
+            .text('')
+            .attr('opacity', 0);
+
+        if (this.candleCircles) {
+            this.candleCircles
+                .attr('r', function(d, i) {
+                    if (d.highlight) {
+                        delete d.highlight;
+                    }
+                    return 0;
+                });
+        }
+
+        this.end1SegGrad.attr('offset', '0');
+        this.start2SegGrad.attr('offset', '0');
+        this.end2SegGrad.attr('offset', '0');
+        this.start3SegGrad.attr('offset', '0');
+    }
 
     return AreaLayer;
 

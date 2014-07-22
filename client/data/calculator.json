@@ -1,0 +1,229 @@
+{
+	"update":1405555200,
+	"fabricants":{
+		"Spondoolies-Tech": {
+			"link":"http://www.spondoolies-tech.com/",
+			"trust":true,
+			"products": {
+				"SP30-YUKON" : {
+					"available":"September Batch 1",
+					"price":5395,
+					"hashrate":6,
+					"hashunit":"Th/s",
+					"power":2500,
+					"algo":"SHA256",
+					"link":"http://www.spondoolies-tech.com/products/sp30-yukon-september-batch-1"
+				},
+				"SP10-DAWSON" : {
+					"available":"Out of stock",
+					"price":2695,
+					"hashrate":1.4,
+					"hashunit":"Th/s",
+					"power":1200,
+					"algo":"SHA256",
+					"link":"http://www.spondoolies-tech.com/products/sp10-dawson-mid-june-batch"
+				}
+			}
+		},
+		"Cointerra": {
+			"link":"https://cointerra.com",
+			"trust":true,
+			"products": {
+				"TerraMiner IV" : {
+					"available":"In stock",
+					"price":3499,
+					"hashrate":1.6,
+					"hashunit":"Th/s",
+					"power":2200,
+					"algo":"SHA256",
+					"link":"https://cointerra.com/product/terraminer-iv-1-6-ths-bitcoin-miner/"
+				},
+				"GoldStrike™ I ASICs [batch of 525*504Gh/s]" : {
+					"available":"In stock",
+					"price":105840,
+					"hashrate":1.4,
+					"hashunit":"Th/s",
+					"power":950,
+					"algo":"SHA256",
+					"link":"https://cointerra.com/product/goldstrike/"
+				}
+			}
+		},
+		"KnCMiner": {
+			"link":"https://www.kncminer.com/",
+			"trust":true,
+			"products": {
+				"Neptune Third Batch" : {
+					"available":"Expected delivery in Q3, 2014.",
+					"price":5995,
+					"hashrate":3,
+					"hashunit":"Th/s",
+					"power":1950,
+					"algo":"SHA256",
+					"link":"https://www.kncminer.com/products/neptune-third-batch"
+				},
+				"Mini Neptune Third Batch" : {
+					"available":"Expected delivery in Q3, 2014.",
+					"price":3495,
+					"hashrate":1.5,
+					"hashunit":"Th/s",
+					"power":855,
+					"algo":"SHA256",
+					"link":"https://www.kncminer.com/products/mini-neptune-third-batch"
+				},
+				"Titan Second Batch" : {
+					"available":"Expected delivery in Q3 + 1 month, 2014.",
+					"price":6995,
+					"hashrate":400,
+					"hashunit":"Mh/s",
+					"power":"",
+					"algo":"scrypt",
+					"link":"https://www.kncminer.com/products/titan-second-batch"
+				},
+				"Mini Titan Second Batch" : {
+					"available":"Expected delivery in Q3 + 1 month, 2014.",
+					"price":3795,
+					"hashrate":200,
+					"hashunit":"Mh/s",
+					"power":"",
+					"algo":"scrypt",
+					"link":"https://www.kncminer.com/products/mini-titan-second-batch"
+				}
+			}
+		},
+		"Bitfury": {
+			"link":"http://www.bitfury.org/",
+			"trust":true,
+			"products": {
+				"BF3500" : {
+					"available":"In stock",
+					"price":"",
+					"hashrate":3.5,
+					"hashunit":"Th/s",
+					"power":2800,
+					"algo":"SHA256",
+					"link":"http://www.bitfurystrikesback.com/"
+				},
+				"BF864C55" : {
+					"available":"Available",
+					"price":"",
+					"hashrate":3.8,
+					"hashunit":"Gh/s",
+					"power":950,
+					"algo":"SHA256",
+					"link":"http://www.bitfurystrikesback.com/"
+				}
+			}
+		},
+		"Butterfly Labs": {
+			"link":"",
+			"trust":false,
+			"warning": [
+				{ "link":"https://coinreport.net/butterfly-labs-buys-buttcoin-domain-reputation-management/" },
+				{ "link":"http://www.coindesk.com/buterfly-labs-accused-buying-blog-hide-negative-search-results/"}
+			]
+
+		},
+		"BlackArrow": {
+			"link":"http://www.bitfury.org/",
+			"trust":true,
+			"products": {
+				"Prospero X-1" : {
+					"available":"In stock",
+					"price":373,
+					"hashrate":100,
+					"hashunit":"Gh/s",
+					"power":75,
+					"algo":"SHA256",
+					"link":"http://www.blackarrowsoftware.com/store/prospero-x-1.html"
+				},
+				"Prospero X-3" : {
+					"available":"Available",
+					"price":5949,
+					"hashrate":2,
+					"hashunit":"Th/s",
+					"power":1500,
+					"algo":"SHA256",
+					"link":"http://www.blackarrowsoftware.com/store/prospero-x-3.html"
+				}
+			}
+		},
+		"BitMain": {
+			"link":"https://bitmaintech.com",
+			"trust":true,
+			"products": {
+				"AntMiner S2 1TH/s Miner Batch 4" : {
+					"available":"In stock",
+					"price":1595,
+					"hashrate":1,
+					"hashunit":"Th/s",
+					"power":1000,
+					"algo":"SHA256",
+					"link":"https://bitmaintech.com/productDetail.htm?pid=00020140429083756017VwGm90Xx06B5"
+				},
+				"ANTMINER S3 -B3" : {
+					"available":"Available",
+					"price":450,
+					"hashrate":478,
+					"hashunit":"Gh/s",
+					"power":366,
+					"algo":"SHA256",
+					"link":"https://bitmaintech.com/productDetail.htm?pid=00020140704023505485N5SxDMkW0693"
+				}
+			}
+		},
+		"BitMine": {
+			"link":"http://bitmine.ch/",
+			"trust":true,
+			"products": {
+				"CoinCraft Desk Generation 2" : {
+					"available":"In stock",
+					"price":1599,
+					"hashrate":1,
+					"hashunit":"Th/s",
+					"power":1350,
+					"algo":"SHA256",
+					"link":"http://bitmine.ch/product/coincraft-desk-gen2/"
+				}
+			}
+		},
+		"Visionman": {
+			"link":"http://visionman-btc.com/",
+			"trust":true,
+			"products": {
+				"BTC Prospector 1300" : {
+					"available":"In stock",
+					"price":3200,
+					"hashrate":1.3,
+					"hashunit":"Th/s",
+					"power":1400,
+					"algo":"SHA256",
+					"link":"http://visionman-btc.com/collections/all/products/visionman-prospector-1300-1-3-th-s-bitcoin-sha256-mining-system"
+				},
+				"Prospector 200 Bitcoin Miner " : {
+					"available":"Available",
+					"price":400,
+					"hashrate":200,
+					"hashunit":"Gh/s",
+					"power":1000,
+					"algo":"SHA256",
+					"link":"http://visionman-btc.com/collections/all/products/prospector-200-bitcoin-miner"
+				},
+				"Excavator 2400 Litecoin Mining" : {
+					"available":"Available",
+					"price":400,
+					"hashrate":2,
+					"hashunit":"Mh/s",
+					"power":1000,
+					"algo":"Scrypt",
+					"link":"http://visionman-btc.com/collections/all/products/lite-widow-litecoin-mining-machine"
+				}
+			}
+		}
+	}
+
+	
+
+
+
+}

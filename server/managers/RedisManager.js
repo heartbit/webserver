@@ -48,13 +48,12 @@ RedisManager.prototype.init = function(params) {
 RedisManager.prototype.subscribeToChannels = function(callback) {
     var self = this;
     var sep = ":";
+
     apiManager.getPlatforms(function(platforms) {
-        // console.log('platforms', platforms);
         _.each(platforms, function(platform) {
             _.each(platform.pairs, function(pair) {
                 _.each(config.measures, function(measure) {
                     var channel = platform.name + sep + pair.item + sep + pair.currency + sep + measure.key;
-                    // console.log(channel);
                     self.redisClient.psubscribe(channel);
                 });
             });
@@ -63,10 +62,12 @@ RedisManager.prototype.subscribeToChannels = function(callback) {
         self.redisClient.on("pmessage", function(pattern, channel, message) {
             message = self.parseMessage(channel, message);
             // console.log(channel);
-            // if (channel.indexOf('DOGE') != -1) {
+
+            // if (channel.indexOf('TCK') != -1) {
             //     console.log(channel); // + "    " + message.order_book.length);
             //     console.log(message);
             // }
+
             CacheManager.set(channel, message);
             EventManager.emit(channel, message);
         });

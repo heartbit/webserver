@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">70.45</p>
+      <p class="stat">70.34</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">208</p>
+      <p class="stat">209</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">41.19</p>
+      <p class="stat">41.04</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">2.32</p>
+      <p class="stat">2.34</p>
     </div>
   </div>
 </div>
@@ -90,7 +90,7 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define(&#039;mainchart&#039;, [&#039;config&#039;, &#039;dataHelper&#039;, &#039;d3&#039;, &#039;maingraphes&#039;, &#039;maingraphe&#039;, &#039;areaLayer&#039;, &#039;candleLayer&#039;, &#039;volumeLayer&#039;, &#039;moment&#039;], function(config, DataHelper, d3, Maingraphes, Maingraphe, AreaLayer, CandleLayer, VolumeLayer) {
+    <textarea id="file-source" class="col-md-12">define(&#039;mainchart&#039;, [&#039;config&#039;, &#039;dataHelper&#039;, &#039;d3&#039;, &#039;maingraphes&#039;, &#039;maingraphe&#039;, &#039;areaLayer&#039;, &#039;candleLayer&#039;, &#039;volumeLayer&#039;, &#039;newsLayer&#039;, &#039;moment&#039;], function(config, DataHelper, d3, Maingraphes, Maingraphe, AreaLayer, CandleLayer, VolumeLayer, NewsLayer) {
 
     function MainChart(view, el, params) {
         this.el = el;
@@ -108,7 +108,8 @@
         this.initXAxis();
         this.layers = {
             areaLayer: new AreaLayer(this),
-            volumeLayer: new VolumeLayer(this)
+            volumeLayer: new VolumeLayer(this),
+            newsLayer: new NewsLayer(this)
         };
     };
 
@@ -120,8 +121,8 @@
         var self = this;
 
         this.margin = {
-            top: 5,
-            right: 50,
+            top: 20,
+            right: 60,
             bottom: 20,
             left: 40
         };
@@ -279,8 +280,8 @@
                     self.layers.areaLayer.updateTooltip(closestDate);
                     self.layers.volumeLayer.updateTooltip(closestDate);
                 }
-                
-                    
+
+
                 return false;
             });
     };

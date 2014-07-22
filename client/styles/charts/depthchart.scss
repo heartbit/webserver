@@ -1,37 +1,40 @@
-.depthAreaBids {
-	fill:#b7b7b7;
-	stroke-width:0;
-	opacity: .8;
-}
+$label_color: #666666;
 
+ $tick_color: #cccccc;
+
+ .depthAreaBids {
+    fill:#CD0C1D;
+    stroke-width:0;
+    opacity: .7;
+}
 .depthBid {
-	stroke:#cacaca;
-	stroke-width:1px;
-	fill:none;
+    stroke:#CD0C1D;
+    stroke-width:1px;
+    fill:none;
 }
-
 .depthAreaAsks {
-	fill:#b7b7b7;
-	stroke-width:0;
-	opacity:.8;
+    fill:#85bb65;
+    stroke-width:0;
+    opacity:.7;
 }
-
 .depthAsk {
-	stroke:#cacaca;
-	stroke-width:1px;
-	fill:none;
+    stroke:#58B758;
+    stroke-width:1px;
+    fill:none;
+}
+.depthChart .y_axis text {
+	fill: $label_color;
 }
 
-.y_axis text {
-	
+.depthChart .x_axis text {
+	fill: $label_color;
 }
 
 .minAsk {
-	position: relative;
-	font-size: 1.3em;
+    position: relative;
+    font-size: 1.3em;
 }
-
 .maxBid {
-	position: relative;
-	font-size: 1.3em;
+    position: relative;
+    font-size: 1.3em;
 }

@@ -1,15 +1,35 @@
+#js-calculatorModal {
+	height:35em;
+}
+
 #result {
 	margin-right:15px;
-	border: 1px solid black;
+	
 	float:left;
 }
 
-#result_estimated {
-	margin-left:15px;
-	border: 1px solid black;
+
+
+#js-calculatorButton {
+	background-color:#1D5080;
+}
+#js-calculatorButton:hover {
+	background-color:#008cba;
 }
 
 .titrecalc {
 	float:left;
 	clear:both;
+}
+
+#fabricantsTable {
+	padding-right:3em;
+}
+
+#supplierContainer {
+	padding-left:0em;
+	height:17em;
+	overflow-y:scroll;
+    
+    overflow-x:hidden;
 }

@@ -2,6 +2,7 @@
 @import "./external/codrops-menu.scss";
 @import "./external/fontello/css/fontello-embedded.css";
 @import "./external/normalize.scss";
+@import "./external/d3-tip.css";
 
 @import "./charts/depthchart.scss";
 @import "./charts/mainchart.scss";
@@ -27,8 +28,10 @@
 @import "./views/widgets.scss";
 @import "./views/pairs.scss";
 @import "./views/home.scss";
+@import "./views/volumeWidget.scss";
 
 // Embeds
 @import "./embeds/common.scss";
+
 
 @import "./common.scss";

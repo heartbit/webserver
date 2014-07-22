@@ -29,9 +29,9 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         var self = this;
 
         this.margin = {
-            top: 5,
-            right: 50,
-            bottom: 20,
+            top: 15,
+            right: 30,
+            bottom: 0,
             left: 40
         };
 
@@ -47,8 +47,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
             .attr("width", visWidth)
             .attr("height", visHeigth)
             .attr('viewBox', "0 0 " + visWidth + " " + visHeigth)
-        // .attr('perserveAspectRatio', "xMidYMid")
-        .call(this.initOnMouseOverEvents)
+            .call(this.initOnMouseOverEvents)
 
         this.mainLayer = this.chart
             .append("g")
@@ -71,7 +70,7 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
 
         this.timeAxisInstance = this.mainLayer.append("g")
             .attr("class", "x_time_axis")
-            .attr("transform", "translate(0," + self.height + ")");
+            .attr("transform", "translate(0," + String(3 * self.height / 4) + ")");
     };
 
     /* Update methods */
@@ -134,7 +133,6 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
         _.each(_.values(self.layers), function(layer) {
             layer.resize();
         });
-
     };
 
     MainChart.prototype.clear = function() {};
@@ -188,20 +186,28 @@ define('mainchart', ['config', 'dataHelper', 'd3', 'maingraphes', 'maingraphe', 
                     self.layers.areaLayer.updateTooltip(closestDate);
                     self.layers.volumeLayer.updateTooltip(closestDate);
                 }
-
-
                 return false;
             });
     };
 
     MainChart.prototype.toggleVolumeLayer = function() {
         if (this.layers.volumeLayer.isVisible) {
-            this.layers.areaLayer.updateRange([this.height, 0]);
+            // this.layers.areaLayer.updateRange([3 * this.height / 4, 0]);
             this.layers.volumeLayer.hide();
         } else {
-            this.layers.areaLayer.updateRange([3 * this.height / 4, 0]);
+            // this.layers.areaLayer.updateRange([3 * this.height / 4, 0]);
             this.layers.volumeLayer.show();
         }
+        return false;
+    };
+
+    MainChart.prototype.toggleNewsLayer = function() {
+        if (this.layers.newsLayer.isVisible) {
+            this.layers.newsLayer.hide();
+        } else {
+            this.layers.newsLayer.show();
+        }
+        return false;
     };
 
     return MainChart;

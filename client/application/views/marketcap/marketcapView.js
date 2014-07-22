@@ -1,57 +1,99 @@
-define('marketcapView', ['config','marketcap', 'text!marketcapView.html', 'FormatUtils','trades'], 
-    function(config,Marketcap, MarketcapViewTemplate, FormatUtils,Trades) {
+define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'marketcapchart', 'bubbleMarketcapChart', 'FormatUtils', 'trades'],
+    function(config, Marketcaps, MarketcapViewTemplate, MarketcapChart, BubbleMarketcapChart, FormatUtils, Trades) {
 
-    return Backbone.View.extend({
+        return Backbone.View.extend({
 
-        
-        el:'#js-marketcapDiv',
+            el: '#js-marketcapModal',
 
-        templateMarketCap: _.template(MarketcapViewTemplate),
+            templateMarketCap: _.template(MarketcapViewTemplate),
 
-        item:"BTC",
-        currency:"USD",
+            item: "BTC",
+            currency: "USD",
 
-        initialize: function(params) {
-            var self = this;
-            this.marketcap = new Marketcap({url:config.marketcap.urlModel+"item="+this.item+"&currency="+this.currency});
-            this.trades = new Trades();
-            this.trades.init();
-            this.trades.fetchAllLastTrades();
-            this.marketcap.fetch();
-            _.bindAll(this, 'render', 'update');
-            this.trades.on('update',this.update,this);
-            this.render();
-            //this.listenTo(this.marketcap,'change', this.render({viewName:'marketcap'}));
-          
-        },
-       
-        render: function(params) {
-            var self = this;
-            this.marketCapJson = this.marketcap.toJSON();
-            this.marketCapJson.marketcaps = new Array() ;
-            _.each(this.trades.averages,function(average){
-                self.marketCapJson.marketcaps.push(
-                    {
-                      price:FormatUtils.formatPrice(average.average,average.currency),
-                      marketcap:FormatUtils.formatPrice(average.average*self.marketCapJson.totalcoin,average.currency),
-                      totalcoin:FormatUtils.formatPrice(self.marketCapJson.totalcoin,'BTC')
-                  });
-            });
-            // _.each(this.trades.averages,function(average){
-            //      self.marketCapJson.averages.push({average: FormatUtils.formatPrice( average.average,average.currency),items:average.items});
-            // });
+            events: {
+                'click .js-bubbleOption': 'changeBubbleChartOption',
+            },
+
+            initialize: function(params) {
+                //_.bindAll(this, 'render', 'update');
+                this.marketcaps = new Marketcaps();
+                this.marketcaps.on('reset', this.update, this);
+                this.bubblechartOption = 'bubbleAll';
+                this.marketcapChart = new MarketcapChart("#js-marketcapChart");
+                this.bubbleMarketcapChart = new BubbleMarketcapChart("#js-bubbleMarketcapChart");
             
-            //this.marketCapJson.marketcap = FormatUtils.formatPrice( this.marketCapJson.totalcoin*this.trades.average,'USD');
-            this.marketCapJson.totalcoin = FormatUtils.formatPrice( this.marketCapJson.totalcoin,'BTC');
+            },
 
-            this.$el.html(this.templateMarketCap({marketcapTemplate:this.marketCapJson}));
-            return this;
-        },
-        update: function(){
-            this.render();
-            return this;
-        }
+            changeBubbleChartOption: function(event) {
+                console.log(event);
+                var option = $(event.target).attr('id').split('-')[1];
+
+                if (option == this.bubblechartOption) {
+                    return false;
+                } else {
+                    switch (option) {
+                        case 'bubbleSplitPrice':
+                            this.bubblechartOption = 'bubbleSplitPrice';
+                            this.bubbleMarketcapChart.display_by_price();
+                            break;
+                        case 'bubbleSplitSupply':
+                            this.bubblechartOption = 'bubbleSplitSupply';
+                            this.bubbleMarketcapChart.display_by_supply();
+                            break;
+                        case 'bubbleAll':
+                            this.bubblechartOption = 'bubbleAll';
+                            defaut: this.bubbleMarketcapChart.display_all();
+                            break;
+                    }
+                    return false;
+                }
+            },
+
+            render: function(params) {
+                this.marketcaps.fetch();
+            },
+
+            update: function() {
+                var self = this;
+
+                this.marketcap = [];
+                this.marketcapFormat = [];
+                _.each(this.marketcaps.models, function(marketcap, i) {
+                    self.marketcap.push(marketcap.attributes);
+                    self.marketcap[i].marketcap = self.marketcap[i].price * self.marketcap[i].totalCoin;
+                    //fake correlation
+                    self.marketcap[i].correlation = Math.random();
+                    self.marketcapFormat.push(_.clone(marketcap.attributes));
+                });
+
+                _.each(this.marketcapFormat, function(d, i) {
+                    d.marketcap = FormatUtils.formatItem(d.marketcap, "$");
+                    // marketcap.marketcap,marketcap.currencyId);//                 +FormatUtils.formatCurrencyLabel(marketcap.currencyId);
+                    d.currencyId = d.currencyId;
+                    d.price = FormatUtils.formatPrice(d.price, "$");
+                    d.priceChange = FormatUtils.formatPercent(d.priceChange);
+                    d.volume = FormatUtils.formatItem(d.volume, d.currencyId);
+                    if (d.volumeChange > 0) {
+                        d.volumeChange = "+" + FormatUtils.formatPercent(d.volumeChange);
+                    } else {
+                        d.volumeChange = FormatUtils.formatPercent(d.volumeChange);
+                    }
+                    d.correlation = FormatUtils.truncToNdecimal(d.correlation, 2);
+                });
+
+
+
+                this.$el.html(this.templateMarketCap({
+                    marketcaps: this.marketcapFormat
+                }));
+
+                setTimeout(function() {
+                    self.bubbleMarketcapChart.draw(self.marketcap);
+                    self.marketcapChart.draw(self.marketcap);
+                }, 500);
+
+            },
+
+        });
 
     });
-
-});

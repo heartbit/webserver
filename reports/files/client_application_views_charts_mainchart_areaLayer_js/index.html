@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">69.10</p>
+      <p class="stat">67.89</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">422</p>
+      <p class="stat">480</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">53.71</p>
+      <p class="stat">58.38</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">5.06</p>
+      <p class="stat">5.69</p>
     </div>
   </div>
 </div>
@@ -171,8 +171,9 @@
                 return self.chart.timeScale(candle.middleDate);
             })
             .y(function(candle) {
-                var meanValue = (candle.high + candle.low) / 2;
-                return self.candleYScale(meanValue);
+                // var meanValue = (candle.high + candle.low) / 2;
+                // return self.candleYScale(meanValue);
+                return self.candleYScale(candle.close);
             })
             .interpolate(&quot;monotone&quot;);
 
@@ -246,7 +247,6 @@
             .attr(&quot;stop-color&quot;, this.colors.normal)
             .attr(&quot;stop-opacity&quot;, 1);
 
-
         this.brush = d3.svg.brush()
             .x(this.chart.timeScale)
             .on(&quot;brush&quot;, this.brushed);
@@ -261,6 +261,16 @@
             .attr(&quot;height&quot;, this.chart.height);
 
         this.gExtent = d3.select(&quot;rect.extent&quot;);
+
+        this.startBrushLabelTime = this.gBrush
+            .append(&#039;text&#039;)
+            .attr(&quot;y&quot;, 20)
+            .attr(&#039;class&#039;, &#039;startBrushLabelTime&#039;);
+
+        this.endBrushLabelTime = this.gBrush
+            .append(&#039;text&#039;)
+            .attr(&quot;y&quot;, 20)
+            .attr(&#039;class&#039;, &#039;endBrushLabelTime&#039;);
 
         this.gBrushLabel = this.gBrush.append(&quot;text&quot;)
             .attr(&#039;y&#039;, (this.chart.height / 2) + 25)
@@ -321,8 +331,9 @@
                 return self.chart.timeScale(candle.middleDate);
             })
             .attr(&#039;cy&#039;, function(candle) {
-                var meanValue = (candle.high + candle.low) / 2;
-                return self.candleYScale(meanValue);
+                // var meanValue = (candle.high + candle.low) / 2;
+                // return self.candleYScale(meanValue);
+                return self.candleYScale(candle.close);
             })
             .attr(&#039;r&#039;, 0)
             .attr(&#039;class&#039;, &#039;circle&#039;)
@@ -442,6 +453,9 @@
     AreaLayer.prototype.brushed = function() {
         var extent = this.brush.extent();
 
+        var startDateBrush = extent[0];
+        var endDateBrush = extent[1];
+
         // Get candles between these 2 dates
         var currentCandles = _.chain(this.candles)
             .filter(function(candle) {
@@ -475,6 +489,7 @@
             // } else {
 
             var evol = 100 * (last.close - first.close) / first.close;
+            var evolColor = evol &gt;= 0 ? &#039;green&#039; : &#039;red&#039;;
 
             this.gBrushLabel
                 .transition()
@@ -483,18 +498,61 @@
                 .attr(&#039;opacity&#039;, 1)
                 .attr(&#039;font-size&#039;, &#039;50px&#039;)
                 .style(&#039;class&#039;, &#039;icon-uo-dir&#039;)
-                .text(FormatUtils.formatEvol(evol));
+                .text(FormatUtils.formatEvol(evol))
+                .style(&quot;fill&quot;, evolColor);
+
+            this.startBrushLabelTime
+                .transition()
+                .duration(50)
+                .attr(&#039;y&#039;, 0)
+                .attr(&#039;x&#039;, this.chart.timeScale(startDateBrush))
+                .attr(&#039;opacity&#039;, 1)
+                .attr(&#039;font-size&#039;, &#039;16px&#039;)
+                .attr(&#039;text-anchor&#039;, &#039;middle&#039;)
+                .style(&#039;class&#039;, &#039;icon-uo-dir&#039;)
+                .text(FormatUtils.formatDate(startDateBrush, &#039;lll&#039;))
+                .style(&quot;fill&quot;, evolColor);
+
+            this.endBrushLabelTime
+                .transition()
+                .duration(50)
+                .attr(&#039;y&#039;, 0)
+                .attr(&#039;x&#039;, this.chart.timeScale(endDateBrush))
+                .attr(&#039;opacity&#039;, 1)
+                .attr(&#039;text-anchor&#039;, &#039;middle&#039;)
+                .attr(&#039;font-size&#039;, &#039;16px&#039;)
+                .style(&#039;class&#039;, &#039;icon-uo-dir&#039;)
+                .text(FormatUtils.formatDate(endDateBrush, &#039;lll&#039;))
+                .style(&quot;fill&quot;, evolColor);
 
             var startPercent = String((+this.gExtent.attr(&#039;x&#039;) / this.chart.width) * 100) + &#039;%&#039;;
             var endPercent = String(((+this.gExtent.attr(&#039;x&#039;) + +this.gExtent.attr(&#039;width&#039;)) / this.chart.width) * 100) + &#039;%&#039;;
 
             this.end1SegGrad.attr(&#039;offset&#039;, startPercent);
-            this.start2SegGrad.attr(&#039;offset&#039;, startPercent);
-            this.end2SegGrad.attr(&#039;offset&#039;, endPercent);
+            this.start2SegGrad
+                .attr(&#039;offset&#039;, startPercent)
+                .attr(&#039;stop-color&#039;, evolColor);
+            this.end2SegGrad
+                .attr(&#039;offset&#039;, endPercent)
+                .attr(&#039;stop-color&#039;, evolColor);
             this.start3SegGrad.attr(&#039;offset&#039;, endPercent);
 
         } else {
             this.gBrushLabel
+                .transition()
+                .duration(50)
+                .attr(&#039;x&#039;, newx)
+                .text(&#039;&#039;)
+                .attr(&#039;opacity&#039;, 0);
+
+            this.startBrushLabelTime
+                .transition()
+                .duration(50)
+                .attr(&#039;x&#039;, newx)
+                .text(&#039;&#039;)
+                .attr(&#039;opacity&#039;, 0);
+
+            this.endBrushLabelTime
                 .transition()
                 .duration(50)
                 .attr(&#039;x&#039;, newx)

@@ -1,27 +1,18 @@
-$primary_color: #ffffff;
+$primary_color:#ffffff;
  a {
-    font-color:003366;
+    font-color: 003366;
     text-decoration: none;
 }
-.panel {
-    background:$primary_color;
-    border:none !important;
-    margin-bottom: 0;
-}
-.row {
-    max-width:none;
-    margin-left:2%;
-    margin-right:2%;
-    width:95%;
-}
+
 .ul.inline-list > .li {
     display: inline;
 }
 .right-small.tab-bar-section {
     width: 15em;
 }
+
 .hide {
-    display:none;
+    display: none;
 }
 .buttonList {
     display: block;
@@ -36,61 +27,68 @@ $primary_color: #ffffff;
     text-align: cente;
     vertical-align: bottom;
     padding-top: 2em !important;
-    border-radius:6px;
+    border-radius: 6px;
 }
 .myHr {
     box-sizing: content-box;
-height: 0;
-width: 80%;
-text-align: center;
-align-content: center;
-margin-left: 10%;
+    height: 0px;
+    width: 90%;
+    text-align: center;
+    align-content: center;
+    opacity: 0.7;
+    color: #1D5080;
+    border: solid 1px;
+    margin-left: 5%;
+    margin-top: 2%;
 }
-.myVr{
- width: 80%;   
- top: 10%;
-
+.myVr {
+    width: 80%;
+    top: 10%;
 }
 .title-area.webappTitle {
     text-align: center;
     margin-left: 5em;
 }
-
-/*
-.loading {
-    background: url("/images/loaders/spiffygif_30x30.gif");
-    background-repeat: no-repeat;
-    background-position: center;
-}
-*/
-
 body {
     background: white;
     font-family: 'Lato', sans-serif;
 }
-
+.domain {
+    fill: none;
+    stroke-width: 1;
+}
 .hidden {
-    visibility:hidden;
+    visibility: hidden;
 }
-
-.top-bar-section ul li.item {
-}
-
-#firstRow {
+.top-bar-section ul li.item {} #firstRow {
     padding-top: 45px;
 }
-
 .datawidget {
-    padding-left: 2%;
-    padding-right: 2%;
+    padding-left: 0%;
+    padding-right: 0%;
     margin-top: 15px;
     background-color: $primary_color;
 }
-
 #js-offcanvasmenu {
-    padding-top:45px;
+    padding-top: 45px;
+/*    -webkit-overflow-scrolling: touch;
+    -ms-transform: translate(-100%, 0);
+    -webkit-transform: translate3d(-185%, 0, 0) !important;
+    -moz-transform: translate3d(-185%, 0, 0) !important;
+    -ms-transform: translate3d(-185%, 0, 0) !important;
+    -o-transform: translate3d(-185%, 0, 0) !important;
+    transform: translate3d(-185%, 0, 0);*/
 }
-.searchPanel ul li{
-    list-style-type:none;
-    text-align:left;
+.row {
+    max-width: none;
+    margin-left: 0%;
+    margin-right: 0%;
+    width: 99%;
+}
+.searchPanel ul li {
+    list-style-type: none;
+    text-align: left;
+}
+#storyjs-timeline {
+    z-index: 0 !important;
 }

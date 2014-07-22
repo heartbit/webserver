@@ -3,6 +3,7 @@
 	z-index: 99;
 	opacity: 0.94;
 	margin-right: 0;
+
 }
 
 .controllerView .controllerBox{
@@ -12,12 +13,12 @@
 
 .controllerView .searchbar{
 	max-height: 35px;	
-	padding-bottom: 0px;
+	padding: 0px;
 	margin:0px;
-	max-width: 35em;
-	margin-top: 1.0em;
-
+	margin-top: 0.15em;
+padding-left: 1em;
 }
+
 
 .controllerView .searchbutton{
 	max-height: 35px;	
@@ -33,12 +34,29 @@
 .controllerView .row .row.collapse {
 	margin: 0 0 0 0;
 }
+.controllerView .searchdiv{
+	padding-bottom:5px;
+}
+.controllerView .button-bar {
+	padding-top:5px;
+	padding-bottom:0px;
+	margin:0px;
+	width:100%;
+}
+.controllerView .button-bar .button-group{
+	width:100%;
+}
+.controllerBox .button-bar ul li {
+	width:33%
+}
 
 .controllerView .button-bar a {
 	max-height: 45px;	
 	margin:0px;
 } 
-
+.controllerView .button-bar button {
+	width:100%
+} 
 /*
 .controllerView #js-controller{
 	float:right;
@@ -48,15 +66,27 @@
 
 
 button.gray, a.gray, input[type=submit].gray {
-	
-	background-color:#dddddd;
+	color:white;
+	background-color:#1D5080;
 	
 }
 
 .gray:hover { 
-	background-color:#0096d8;
+	color:white;
+	background-color:#007095;
+	font-weight:bold;
 }
-		
+#js-getStarted {
+	color:black;
+	background-color:gold ;
+}
+#js-getStarted:hover{
+		background-color:silver;
+}
+.joyride-next-tip{
+color:black;
+	background-color:gold;
+}
 .gray:active { 
 
 }

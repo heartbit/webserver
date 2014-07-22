@@ -49,7 +49,7 @@
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">73</p>
+      <p class="stat">76</p>
     </div>
   </div>
   <div class="row historical">
@@ -108,19 +108,22 @@
             this.$el.html(this.template());
             this.depth.socketSync(params);
             this.depth.on(&#039;update&#039;, this.update, this);
-            this.depthChart = new DepthChart(&#039;#js-depthChart&#039;);
+
             var optionMaxBid = {
                 trend: {
                     after: true
                 }
             };
             this.maxBidNumber = new BigNumber(&#039;#js-maxBid&#039;, optionMaxBid);
+
             var optionsMinAsk = {
                 trend: {
                     before: true
                 }
             };
             this.minAskNumber = new BigNumber(&#039;#js-minAsk&#039;, optionsMinAsk);
+
+            this.depthChart = new DepthChart(&#039;#js-depthChart&#039;);
             return this;
         },
 
