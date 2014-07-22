@@ -18,7 +18,7 @@ define(function(require) {
         DepthView = require('depthView'),
         MiskView = require('miskView'),
         NewsView = require('newsView'),
-        MarketcapView= require("marketcapView"),
+        MarketcapView = require("marketcapView"),
         OffcanvasmenuView = require('offcanvasmenuView');
     VolumeWidgetView = require('volumewidgetView');
 
@@ -26,7 +26,6 @@ define(function(require) {
 
         routes: {
             "app*": "app",
-            "app/marketcap":"marketcap"
         },
 
         initialize: function() {
@@ -48,7 +47,7 @@ define(function(require) {
                 news: new NewsView(),
 
                 // connerie, appel sur l'offcanvasmenu ?
-                //marketcap: new OffcanvasmenuView.marketcapView()
+                // marketcap: new OffcanvasmenuView.marketcapView()
             };
 
             Backbone.history.start({
@@ -116,7 +115,7 @@ define(function(require) {
             // console.log('params : ', params);
         },
 
-        marketcap:function() {
+        marketcap: function() {
             console.log("coucou");
         },
 
@@ -136,6 +135,9 @@ define(function(require) {
                 _.each(_.keys(this.views), function(viewKey) {
                     self.views[viewKey].update(ParametersManager.getCurrentParams());
                 });
+            }
+            if (_.has(this.params, 'marketcap')) {
+                this.views.offcanvasmenu.showMarketcapModal();
             }
             if (callback) {
                 callback();

@@ -27,9 +27,6 @@ define('offcanvasmenuView', ['config', 'text!offcanvasmenuView.html', 'backbone'
 
         render: function(params) {
             this.$el.html(this.template());
-
-
-
             this.lastupdateView
                 .setElement('#js-lastUpdate')
                 .render();
