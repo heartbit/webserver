@@ -14,8 +14,8 @@ config.apiproxy.criteria = config.apiproxy.apiUrl + 'documentation/criteria';
 config.apiproxy.methods = config.apiproxy.apiUrl + 'documentation/methods';
 
 config.db = {};
-// config.db.redis = "redis://ber:fraisefrqise95@insightfulcointrader.com:6379";
-config.db.redis = "redis://ber:fraisefrqise95@insightfulcointrader.com:6379";
+// config.db.redis = "redis://ber:fraisefrqise95@insightfult.iocointrader.com:6379";
+config.db.redis = "redis://ber:fraisefrqise95@heartbit.io:6379";
 
 config.measures = [{
 	key: 'TCK',
