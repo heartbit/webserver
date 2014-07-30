@@ -166,14 +166,44 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             .attr("class", "brush")
             .call(this.brush);
 
-        this.gBrushLabel = this.gBrush
+        this.gBrushLabel_weightedPrice= this.gBrush
             .append("text")
-            .attr('y', this.chart.height - 30)
+            .attr('y', this.chart.height-75)
+            .attr('opacity',0)
+            .style('font-size','16px')
+            .style("text-anchor","middle")
+            .style("fill", "black")
+            .style("stroke","none")
+            .text('');
+
+        this.gBrushLabel_variation = this.gBrush
+            .append("text")
+            .attr('y', this.chart.height - 15)
             .attr('opacity', 0)
-            .style('font-size', '40px')
+            .style('font-size', '16px')
             .style("text-anchor", "middle")
             .style("fill", '#808080')
             .style("stroke", "none")
+            .text('');
+
+        this.gBrushLabel_nbTrades= this.gBrush
+            .append("text")
+            .attr('y', this.chart.height-35)
+            .attr('opacity',0)
+            .style('font-size','16px')
+            .style("text-anchor","middle")
+            .style("fill", "black")
+            .style("stroke","none")
+            .text('');
+
+        this.gBrushLabel_volumeTotal= this.gBrush
+            .append("text")
+            .attr('y', this.chart.height-55)
+            .attr('opacity',0)
+            .style('font-size','16px')
+            .style("text-anchor","middle")
+            .style("fill", "black")
+            .style("stroke","none")
             .text('');
 
         this.gBrush
@@ -222,6 +252,8 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
         var self = this;
         this.hideBrush();
         this.candles = this.chart.models.candles;
+        this.volumes= this.chart.models.volumes;
+       
 
         var candleYOffset = 0;
         var ratio = 0.005;
@@ -401,6 +433,15 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                 return candle.startDate;
             })
             .value();
+         //Get volumes between these 2 dates
+        var currentVolumes = _.chain(this.volumes)
+            .filter(function(volume) {
+                return volume.startDate >= extent[0] && volume.endDate <= extent[1];
+            })
+            .sortBy(function(volume) {
+                return volume.startDate;
+            })
+            .value();
 
         var newx = Math.round(+this.gExtent.attr('x') + +this.gExtent.attr('width') / 2);
 
@@ -416,18 +457,59 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
             var highestCandle = _.max(currentCandles, function(candle) {
                 return candle.close;
             });
-
+            //Calcul pourcnetage variation prix
             var evol = 100 * (last.close - first.close) / first.close;
             var evolColor = evol >= 0 ? 'green' : 'red';
 
-            this.gBrushLabel
+            //Calcul nombre de trade 
+            var nbTrade=_.reduce(currentVolumes,function(memo,currentVolume) {
+               return memo+currentVolume.nbTrades;
+            },0);
+            var volumeTotal=_.reduce(currentVolumes,function(memo,currentVolume) {
+                return memo+currentVolume.amount;
+            },0);
+            //Calcul prix pondéré/volume
+            var weightedPrice =0;      
+            _.each(currentCandles,function(currentCandle,i) {
+                    weightedPrice+=(currentCandle.close*currentVolumes[i].amount)/volumeTotal;
+            }); 
+            
+            console.log('nbtrade',nbTrade);
+            console.log('volumetotal',volumeTotal);
+            console.log('prix moyen',weightedPrice);
+
+            this.gBrushLabel_weightedPrice
                 .transition()
                 .duration(50)
                 .attr('x', newx)
                 .attr('opacity', 1)
-                .attr('font-size', '50px')
-                .text(FormatUtils.formatEvol(evol))
+                .text("Weighted Price: "+FormatUtils.truncToNdecimal(weightedPrice,2));
+
+            this.gBrushLabel_variation
+                .transition()
+                .duration(50)
+                .attr('x', newx)
+                .attr('opacity', 1)
+                .text("Price Variation"+FormatUtils.formatEvol(evol))
                 .style("fill", evolColor);
+
+           this.gBrushLabel_nbTrades
+                .transition()
+                .duration(50)
+                .attr('x', newx)
+                .attr('opacity', 1)
+                .text(function() {
+                    return "Trades: "+nbTrade;
+                })
+                .style("fill", "#1D5080");
+
+            this.gBrushLabel_volumeTotal
+                .transition()
+                .duration(50)
+                .attr('x', newx)
+                .attr('opacity', 1)
+                .text("Total Volume: "+FormatUtils.truncToNdecimal(volumeTotal,2))
+                .style("fill", "#1D5080");
 
             this.startBrushLabelTime
                 .transition()
@@ -529,12 +611,35 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
 
     AreaLayer.prototype.hideBrush = function() {
 
-        this.gBrushLabel
+        this.gBrushLabel_variation
         // .transition()
         // .duration(50)
         .attr('x', 0)
             .text('')
             .attr('opacity', 0);
+
+        this.gBrushLabel_weightedPrice
+        // .transition()
+        // .duration(50)
+        .attr('x', 0)
+            .text('')
+            .attr('opacity', 0);
+
+        this.gBrushLabel_volumeTotal
+        // .transition()
+        // .duration(50)
+        .attr('x', 0)
+            .text('')
+            .attr('opacity', 0);
+
+        this.gBrushLabel_nbTrades
+        // .transition()
+        // .duration(50)
+        .attr('x', 0)
+            .text('')
+            .attr('opacity', 0);
+
+
 
         this.startBrushLabelTime
         // .transition()

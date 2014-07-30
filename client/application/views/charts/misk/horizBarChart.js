@@ -73,8 +73,7 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
                return text;
                 
             }).attr("id","volume_titre");
-        console.log(params);
-        console.log(data);
+     
       
      
         var bar = this.chart_volume.selectAll(".barVolume")
