@@ -77,7 +77,7 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
                     } else {
                         d.volumeChange = FormatUtils.formatPercent(d.volumeChange);
                     }
-                    d.correlation = FormatUtils.truncToNdecimal(d.correlation, 2);
+                    d.correlation = FormatUtils.truncToNdecimal(d.correlation, 5);
                 });
 
 
