@@ -61,8 +61,7 @@ define('marketcapView', ['config', 'marketcaps', 'text!marketcapView.html', 'mar
                 _.each(this.marketcaps.models, function(marketcap, i) {
                     self.marketcap.push(marketcap.attributes);
                     self.marketcap[i].marketcap = self.marketcap[i].price * self.marketcap[i].totalCoin;
-                    //fake correlation
-                    self.marketcap[i].correlation = Math.random();
+               
                     self.marketcapFormat.push(_.clone(marketcap.attributes));
                 });
 
