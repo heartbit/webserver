@@ -474,9 +474,9 @@ define('areaLayer', ['d3', 'FormatUtils', 'moment'], function(d3, FormatUtils) {
                     weightedPrice+=(currentCandle.close*currentVolumes[i].amount)/volumeTotal;
             }); 
             
-            console.log('nbtrade',nbTrade);
-            console.log('volumetotal',volumeTotal);
-            console.log('prix moyen',weightedPrice);
+            // console.log('nbtrade',nbTrade);
+            // console.log('volumetotal',volumeTotal);
+            // console.log('prix moyen',weightedPrice);
 
             this.gBrushLabel_weightedPrice
                 .transition()

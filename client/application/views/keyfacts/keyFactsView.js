@@ -63,13 +63,15 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
 
                 this.ticker.socketSync(params);
                 this.trade.socketSync(params);
-
+                console.log("premieretransaxction",this.trade);
                 return this;
             },
 
             update: function(params) {
                 this.ticker.socketSync(params);
-                this.trade.socketSync(params);
+                this.trade.socketSync(params); 
+                console.log(params);
+                console.log("update",this.trade);
             },
            
             redraw: function(reset) {
@@ -93,7 +95,8 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
                     }
 
                     var value = self.ticker.get(bigNumberView.tickerAttribute.id) || self.trade.get(bigNumberView.tickerAttribute.id) || 0;
-
+                  
+                   
                     var updateParams = {
                         unit: unit,
                         value: value,

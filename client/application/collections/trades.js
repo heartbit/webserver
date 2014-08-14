@@ -1,6 +1,6 @@
 define('trades', ['config', 'trade', 'items','ParametersManager'], function(config, Trade, Items,ParameterManager) {
 
-    var Tickers = Backbone.Collection.extend({
+    var Trades = Backbone.Collection.extend({
 
         model: Trade,
 
@@ -50,17 +50,18 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
             var self = this;
             this.platforms = ParameterManager.getPlatforms();
             _.each(this.platforms.models, function(platform) {
+              
                 switch (platform.id) {
-                    case 'BTCCHINA':
-                        platform.pairs = [{
-                            item: 'BTC',
-                            currency: 'CNY'
-                        }];
-                        break;
                     case 'KRAKEN':
                         platform.pairs = [{
                             item: 'BTC',
                             currency: 'EUR'
+                        }];
+                        break;
+                    case 'BTCCHINA':
+                        platform.pairs = [{
+                            item: 'BTC',
+                            currency: 'CNY'
                         }];
                         break;
                     default:
@@ -159,6 +160,6 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
 
     });
 
-    return Tickers;
+    return Trades;
 
 });

@@ -38,14 +38,16 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 			},
 			render: function(params) {
 				var self = this;
-				var data = this.dataHelper.buildVolumesForPieChart(this.tickers);
+				var data = this.dataHelper.getVolumes(this.tickers);
 				if ( !this.initialized ){
 					this.syncTicker();
 				}
-				if( data.volumes && data.volumes.length > 0 ) {
+				if( data.volumesRaw && data.volumesRaw.length > 0 ) {
 					this.$el.html(this.template());
+					// console.log("raw",data.volumesRaw);
+					// console.log("formatted",data.volumesFormatted);
 					this.pieChart = new HorizBarChart("#js-horizBarChart");
-					this.pieChart.rogueDraw({data:data.volumesPieChart});
+					this.pieChart.rogueDraw({data:data.volumesRaw});
 				}
 				return this;
 			},

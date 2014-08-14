@@ -19,7 +19,8 @@ define(function(require) {
         MiskView = require('miskView'),
         NewsView = require('newsView'),
         OffcanvasmenuView = require('offcanvasmenuView');
-    VolumeWidgetView = require('volumewidgetView');
+        VolumeWidgetView = require('volumewidgetView');
+        PriceWidgetView = require ('pricewidgetView');
 
     var Router = Backbone.Router.extend({
 
@@ -39,6 +40,7 @@ define(function(require) {
                 offcanvasmenu: new OffcanvasmenuView(),
                 controller: new ControllerView(),
                 volumeWidget: new VolumeWidgetView(),
+                priceWidget: new PriceWidgetView(),
                 keyfacts: new KeyFactsView(),
                 header: new HeaderView(),
                 main: new MainView(),
@@ -136,6 +138,7 @@ define(function(require) {
         update: function(callback) {
             var self = this;
             _.each(_.keys(this.views), function(viewKey) {
+                 console.log(self.views[viewKey]);
                 self.views[viewKey].update(ParametersManager.getCurrentParams());
             });
             if (callback) {

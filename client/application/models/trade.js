@@ -38,6 +38,7 @@ define('trade', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
         },
 
         update: function(trade) {
+            
             if (trade) {
                 this.set('amount', +trade.amount);
                 this.set('dateTrade', new Date(+trade.dateTrade * 1000));

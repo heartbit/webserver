@@ -233,12 +233,18 @@ define('depthchart', ['config', 'd3', 'FormatUtils', 'moment'],
             this.maxBidNumber
                 .transition()
                 .duration(100)
-                .style('left', leftOffsetMaxBid + 'px');
+                .style({
+                    'left':leftOffsetMaxBid + 'px',
+                    'top':'70px'
+                });
 
             this.minAskNumber
                 .transition()
                 .duration(100)
-                .style('left', leftOffsetMinAsk + 'px');
+                .style({
+                    'left':leftOffsetMinAsk + 'px',
+                    'top':'70px'
+                });
         };
 
         DepthChart.prototype.initOnMouseOverEvents = function(element) {
