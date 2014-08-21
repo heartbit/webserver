@@ -27,6 +27,7 @@ define('platformsView', ['config', 'text!platformsView.html', 'ParametersManager
 			var platformId = $(event.target).attr('id');
 			var currentPlatform =ParametersManager.getPlatforms().findByName(platformId);
             var pairId = ParametersManager.getCurrentParams().item+"/"+ParametersManager.getCurrentParams().currency;
+    
             if ( !_.contains(currentPlatform.pairs,pairId) ){
                 pairId = null;
             }

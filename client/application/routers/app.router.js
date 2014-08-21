@@ -3,11 +3,11 @@ define(function(require) {
     var ParametersManager = require('ParametersManager'),
         EventManager = require('EventManager');
 
-    AnalyticsManager = require('AnalyticsManager'),
-    NewsSocketManager = require('NewsSocketManager'),
-    DataSocketManager = require('DataSocketManager'),
-    ChatSocketManager = require('ChatSocketManager'),
-    ShortcutsManager = require('ShortcutsManager');
+        AnalyticsManager = require('AnalyticsManager'),
+        NewsSocketManager = require('NewsSocketManager'),
+        DataSocketManager = require('DataSocketManager'),
+        ChatSocketManager = require('ChatSocketManager'),
+        ShortcutsManager = require('ShortcutsManager');
 
     var config = require('config');
 
@@ -21,6 +21,7 @@ define(function(require) {
         OffcanvasmenuView = require('offcanvasmenuView');
         VolumeWidgetView = require('volumewidgetView');
         PriceWidgetView = require ('pricewidgetView');
+        TradeWidgetView = require ('tradewidgetView');
 
     var Router = Backbone.Router.extend({
 
@@ -39,13 +40,14 @@ define(function(require) {
             this.views = {
                 offcanvasmenu: new OffcanvasmenuView(),
                 controller: new ControllerView(),
-                volumeWidget: new VolumeWidgetView(),
-                priceWidget: new PriceWidgetView(),
                 keyfacts: new KeyFactsView(),
                 header: new HeaderView(),
                 main: new MainView(),
                 depth: new DepthView(),
-                news: new NewsView()
+                news: new NewsView(),
+                volumeWidget: new VolumeWidgetView(),
+                priceWidget: new PriceWidgetView(),
+                tradeWidget: new TradeWidgetView()
             };
 
             Backbone.history.start({

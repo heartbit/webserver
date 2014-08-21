@@ -12,7 +12,7 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
             }
             this.platforms = options.platforms || config.defaultplatforms;
             _.each(this.platforms, function(platform) {
-                _.each(platform.pairs, function(pair) {
+                _.each(platform.pairsTrades, function(pair) {
                     var initParams = {
                         platform: platform.id,
                         item: pair.item,
@@ -53,23 +53,24 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
               
                 switch (platform.id) {
                     case 'KRAKEN':
-                        platform.pairs = [{
+                        platform.pairsTrades = [{
                             item: 'BTC',
                             currency: 'EUR'
                         }];
                         break;
                     case 'BTCCHINA':
-                        platform.pairs = [{
+                        platform.pairsTrades = [{
                             item: 'BTC',
                             currency: 'CNY'
                         }];
                         break;
                     default:
-                        platform.pairs = [{
+                        platform.pairsTrades = [{
                             item: 'BTC',
                             currency: 'USD'
                         }];
                 }
+          
             });
             this.init({
                 platforms: this.platforms.models

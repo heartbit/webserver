@@ -44,6 +44,7 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
                 platformdIds = _.union(platformdIds, item.currencies[currency]);
             });
         });
+
         this.platforms = new Platforms();
         this.platforms.initFromIds(platformdIds);
         this.platforms.comparator = 'id';
@@ -51,6 +52,7 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
         _.each(this.platforms.models, function(platform) {
             var pairPlatformsIds = [];
             _.each(self.items.models, function(item) {
+              
                 pairPlatformsIds = _.union(pairPlatformsIds, _.chain(item.currencies)
                     .keys()
                     .map(function(currency) {
@@ -59,7 +61,9 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
                         }
                     }).value());
             });
+       
             platform.pairs = pairPlatformsIds;
+
         });
 
         var currencyIds = [];
@@ -98,7 +102,7 @@ define('ParametersManager', ['parametersManagerConfig', 'items', 'platforms', 'c
             });
         });
         this.currentParams = config.defaultparams;
-
+    
         return this;
     };
 

@@ -87,6 +87,9 @@ define('FormatUtils', ['numeral', 'moment'], function(numeral) {
 	};
 
 	FormatUtils.formatTime = function(time, format) {
+		if(format=="trade") {
+			return moment(time).format('HH:mm:ss');
+		}
 		if (moment(time, 'X').isValid()) {
 			return moment(time, 'X').format('HH:mm:ss');
 		} else {

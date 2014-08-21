@@ -6,7 +6,7 @@ define('pricewidgetView', ['config', 'text!pricewidgetView.html', 'ParametersMan
 			template: _.template(PricewidgetTemplate),
 			el:"#js-pricewidget",
 			initialize:function(params) {
-				// this.trade= new Trade();
+			
 				this.trades= new Trades();
 				this.dataHelper= new DataHelper();
 				
@@ -15,16 +15,16 @@ define('pricewidgetView', ['config', 'text!pricewidgetView.html', 'ParametersMan
 				this.initialized=false;
 			
 				
-				// this.trade.on('update',this.update,this);
+			
 
 				if( params.length > 0 ) {
-					syncTicker();
+					syncTrade();
 				}
 			
 			},
-			syncTicker: function(){
+			syncTrade: function(){
 				var params = ParametersManager.getCurrentParams();
-				// this.trade.socketSync(params);
+			
 				this.trades.fetchAllLastTrades(params);
 				this.trades.on('update',this.update,this);
 				this.initialized = true;
@@ -32,11 +32,11 @@ define('pricewidgetView', ['config', 'text!pricewidgetView.html', 'ParametersMan
 			},
 			render: function(params) {
 				if ( !this.initialized ){
-					this.syncTicker();
+					this.syncTrade();
 				}
 
 				this.price=this.dataHelper.getPrices(this.trades);
-				// console.log(this.pricesRaw);
+			
 				this.price.pricesRaw.colors_price = {
 		            "BITSTAMP":"rgb(50,180,80)",
 		            "BTCE":"rgb(140,70,110)",

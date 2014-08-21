@@ -13,6 +13,8 @@ define('trade', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
 
         socketSync: function(params) {
             var self = this;
+            // console.log(params);
+            // console.log(this.params);
             this.params = params ||  this.params ||  {};
             var updateCallback = function(payload) {
                 // console.log('Trade update: ', JSON.stringify(payload));

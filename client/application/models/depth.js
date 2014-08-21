@@ -48,6 +48,7 @@ define('depth', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
                 this.set('asks', asks);
                 this.set('bids', bids);
             }
+    
             this.trigger('update');
         },
 
