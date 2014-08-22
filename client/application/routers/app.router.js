@@ -21,7 +21,7 @@ define(function(require) {
         OffcanvasmenuView = require('offcanvasmenuView');
         VolumeWidgetView = require('volumewidgetView');
         PriceWidgetView = require ('pricewidgetView');
-        TradeWidgetView = require ('tradewidgetView');
+      //  TradeWidgetView = require ('tradewidgetView');
 
     var Router = Backbone.Router.extend({
 
@@ -47,7 +47,7 @@ define(function(require) {
                 news: new NewsView(),
                 volumeWidget: new VolumeWidgetView(),
                 priceWidget: new PriceWidgetView(),
-                tradeWidget: new TradeWidgetView()
+              //  tradeWidget: new TradeWidgetView()
             };
 
             Backbone.history.start({

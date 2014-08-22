@@ -25,24 +25,25 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
                 this.trade = new Trade();
                 this.ticker.on('update', this.redraw, this);
                 this.trade.on('update', this.redraw, this);
+
                 this.exportTools = new GraphmenuView();
                 this.exportTools.initParent(this.$el);
                 _.bindAll(this, 'render', 'update','redraw');
-                console.log("initKEYFACT",this.trade.get("price"),this.trade.get("amount"),this.trade.get("dateTrade"));
+                // console.log("initKEYFACT",this.trade.get("price"),this.trade.get("amount"),this.trade.get("dateTrade"));
             },
 
             render: function(params) {
                 var self = this;
                 this.bigNumberViews = [];
-                console.log("keyfactparams",params);
-                console.log("renderKEYFACT",this.trade.get("price"),this.trade.get("amount"),this.trade.get("dateTrade"));
-                
+                // console.log("keyfactparams",params);
+                // console.log("renderKEYFACT",this.trade.get("price"),this.trade.get("amount"),this.trade.get("dateTrade"));
+             
                 var tickerAttributes = this.options.tickerAttributes || config.keyfactsview.defaultAttributes;
                 _.each(tickerAttributes, function(tickerAttribute) {
                     tickerAttribute.htmlSelector = 'js-' + tickerAttribute.id + 'BigNumber';
                 });
                 this.tickerAttributes = tickerAttributes;
-
+            
                 this.$el.html(this.template({
                     tickerAttributes: this.tickerAttributes
                 }));
@@ -78,7 +79,7 @@ define('keyFactsView', ['ticker', 'trade', 'config', 'text!keyFactsView.html', '
            
             redraw: function(reset) {
                 var self = this;
-                console.log("redrawKEYFACT",this.trade.get("price"),this.trade.get("amount"),this.trade.get("dateTrade"));
+                // console.log("redrawKEYFACT",this.trade.get("price"),this.trade.get("amount"),this.trade.get("dateTrade"));
                 // console.log("redrawKEYFACT",this.trade);
                 _.each(this.bigNumberViews, function(bigNumberView, index) {
                     var unit = null;
