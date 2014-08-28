@@ -14,12 +14,12 @@ define('parametersManagerConfig', function() {
 	parametersManagerConfig.defaultPairs = {
 		BTC : {
 		  USD:['BITSTAMP','BITFINEX','BTCE'],
-		  CNY:['BTCCHINA'],
+		  CNY:['BTCCHINA','OKCOIN'],
 		  EUR:['KRAKEN']
 		},
 		LTC : {
 		  USD:['BITFINEX','BTCE'],
-		  CNY:['BTCCHINA'],
+		  CNY:['BTCCHINA','OKCOIN'],
 		  EUR:['KRAKEN'],
 		  BTC:['CRYPTSY']
 		}
@@ -38,6 +38,10 @@ define('parametersManagerConfig', function() {
 			currency: 'USD'
 		},
 		BTCCHINA: {
+			item: 'BTC',
+			currency: 'CNY'
+		},
+		OKCOIN: {
 			item: 'BTC',
 			currency: 'CNY'
 		},

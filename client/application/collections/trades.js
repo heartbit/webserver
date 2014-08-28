@@ -1,4 +1,4 @@
-define('trades', ['config', 'trade', 'items','ParametersManager'], function(config, Trade, Items,ParameterManager) {
+define('trades', ['config', 'trade', 'items','ParametersManager'], function(config, Trade, Items,ParametersManager) {
 
     var Trades = Backbone.Collection.extend({
 
@@ -10,7 +10,9 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
             if (!options) {
                 options = {};
             }
+            console.log(options);
             this.platforms = options.platforms || config.defaultplatforms;
+            console.log(this.platforms);
             _.each(this.platforms, function(platform) {
                 _.each(platform.pairsTrades, function(pair) {
                     var initParams = {
@@ -28,7 +30,7 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
 
         fetch: function(params, callback) {
             var self = this;
-
+            console.log(this.models);
             _.each(this.models, function(trade) {
                 trade.socketSync();
             });
@@ -45,36 +47,49 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
             return selectedTrade;
         },
       
-        fetchAllLastTrades: function(params) {
-          
+        fetchAllLastTrades: function(params,current) {
+            // console.log(params);
             var self = this;
-            this.platforms = ParameterManager.getPlatforms();
-            _.each(this.platforms.models, function(platform) {
+            this.platforms = ParametersManager.getPlatforms();
+           var defaultPair=function(list) {
+                _.each(list, function(platform) {
+                  
+                    switch (platform.id) {
+                        case 'KRAKEN':
+                            platform.pairsTrades = [{
+                                item: 'BTC',
+                                currency: 'EUR'
+                            }];
+                            break;
+                        case 'BTCCHINA':
+                            platform.pairsTrades = [{
+                                item: 'BTC',
+                                currency: 'CNY'
+                            }];
+                            break;
+                        case 'OKCOIN':
+                            platform.pairsTrades = [{
+                                item: 'BTC',
+                                currency: 'CNY'
+                            }];
+                            break;
+                        default:
+                            platform.pairsTrades = [{
+                                item: 'BTC',
+                                currency: 'USD'
+                            }];
+                    }
               
-                switch (platform.id) {
-                    case 'KRAKEN':
-                        platform.pairsTrades = [{
-                            item: 'BTC',
-                            currency: 'EUR'
-                        }];
-                        break;
-                    case 'BTCCHINA':
-                        platform.pairsTrades = [{
-                            item: 'BTC',
-                            currency: 'CNY'
-                        }];
-                        break;
-                    default:
-                        platform.pairsTrades = [{
-                            item: 'BTC',
-                            currency: 'USD'
-                        }];
-                }
+                });
+            };
+            
           
-            });
+            defaultPair(this.platforms.models);
             this.init({
                 platforms: this.platforms.models
-            });
+            }); 
+           
+
             this.fetch();
             return this.models
 

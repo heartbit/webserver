@@ -23,10 +23,12 @@ define('trade', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
             };
             var eventId
             if (this.isListening) {
+                // console.log(this);
                 eventId = this.eventIdUpdate();
                 DataSocketManager.removeAllListeners(eventId) //, updateCallback);
             }
 
+            // console.log(eventId,this.isListening,this);
             this.set('platform', this.params.platform);
             this.set('currency', this.params.currency);
             this.set('item', this.params.item);

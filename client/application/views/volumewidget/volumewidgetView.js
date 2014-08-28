@@ -16,7 +16,7 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 				var self = this;
 				this.dataHelper = new DataHelper();
 				this.tickers = new Tickers();
-				params = ParametersManager.getCurrentParams();
+				var params = ParametersManager.getCurrentParams();
 				this.tickers.reset(); //pourquoi ? mesure de précaution ?
 				this.initialized = false;
 				if( params.length > 0 ) {
@@ -25,6 +25,7 @@ define('volumewidgetView', ['config', 'text!volumewidgetView.html', 'ParametersM
 			},
 			syncTicker: function(){
 				var params = ParametersManager.getCurrentParams();
+				
 				// var tickerRoom = ParametersManager.getTickerRoom(params); 
 				var defaultPairs = ParametersManager.getDefaultPairs(params.item);
 				this.tickers.fetch({item:params.item,platformPairs:defaultPairs});

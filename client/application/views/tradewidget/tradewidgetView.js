@@ -7,55 +7,81 @@ function(config, TradewidgetTemplate, ParametersManager, Trade,Trades,FormatUtil
 		el:"#js-tradewidget",
 
 		initialize:function(params) {
-				// var params = ParametersManager.getCurrentParams();
-			this.trade= new Trade();
-			this.lastTrades= new Trades();
-			this.lastTrades.reset();
-			this.lastTrades.fetchAllLastTrades(params);
+				 this.tradesTable=[];
+				this.lastTrades= new Trades();
+				this.dataHelper= new DataHelper();
+				var params = ParametersManager.getCurrentParams();
+				this.lastTrades.reset();
+				this.initialized=false;
 
-			this.FormatUtils=FormatUtils;
-			this.trade.on('update',this.redraw,this);
-			var params = ParametersManager.getCurrentParams();
-			_.bindAll(this,'render','update','redraw');
-			console.log("tradeview-this.trade",this.trade);
-		
-		},
+				if( params.length > 0 ) {
+					syncTrade();
+			
+				}
+			
+			},
+			syncTrade: function(params){
+				var params = ParametersManager.getCurrentParams();
+				this.lastTrades.fetchAllLastTrades(params);
 
-		render:function(params) {
-				console.log("tradeView-this.lasttrade",this.lastTrades);
-			// console.log("tradeparams",params);
-			// console.log("TRADE",this.trade.get("price"),this.trade.get("amount"),this.trade.get("dateTrade"));
-			// console.log("TRADE",this.trade);
-			this.dateTrade=this.FormatUtils.formatTime(this.trade.get("dateTrade"),"trade");
+				this.lastTrades.on('update',this.update,this);
+				this.initialized = true;
+			},
+			render: function(params) {
+				self=this;
+				if ( !this.initialized ){
+					this.syncTrade();
+					
+				}
+				var params= ParametersManager.getCurrentParams();
+				this.allPlatform=this.dataHelper.getPrices(this.lastTrades);
+				this.currentPlatform;
+				
+				_.each(this.allPlatform.pricesRaw,function(platform) {
+					if(platform.platform == params.platform){
+						self.currentPlatform=platform;
+					}
+				});
+				this.currentPlatform.dateTrade=FormatUtils.formatTime(this.currentPlatform.dateTrade,"trade");
+				this.currentPlatform.colors_price = {
+		            "BITSTAMP":"rgb(50,180,80)",
+		            "BTCE":"rgb(140,70,110)",
+		            "BTCCHINA":"rgb(220,130,70)",
+		            "BITFINEX":"#555B67",
+		            "KRAKEN":"rgb(200,40,50)"
+		        };
+		       
 
-			this.$el.html(this.template({
-				lastPrice:this.trade.get("price"),
-				lastAmount:this.trade.get("amount"),
-				item:this.trade.get("item"),
-				currency:this.trade.get("currency"),
-				platform:this.trade.get("platform"),
-				date:this.dateTrade
-			}));
+		       	// INIT
+		        if(this.tradesTable.length==0 && this.currentPlatform.amount!=0){
+		        	this.tradesTable.unshift(this.currentPlatform);
+		        //REMPLISSAGE
+		        }else if(this.currentPlatform.amount!=0  && this.currentPlatform.tid!=this.tradesTable[0].tid ){ 
+		        	 //VIDER tableau lors changement platform
+		        	if(this.tradesTable[0].platform!= this.currentPlatform.platform) { 
+		        		this.tradesTable=[];
+		       		}
+		      
+		        	this.tradesTable.unshift(this.currentPlatform);
+		        
+		        	if(this.tradesTable.length==6) { //LIMITATION LONGUEUR
+		        		this.tradesTable.pop();
+		        	}
+		        }
+		    
+				this.$el.html(this.template({
+					prices:this.tradesTable,
+					platform:this.currentPlatform.platform
+				}));
 
-         
+				return this;
+			},
+			
+			update: function(params) {
+				this.render();
 
-            // this.trade.socketSync(params);
-
-            return this;
-		},
-
-		update:function(params) {
-			// console.log("tradeUpdate",params);
-			// this.trade.socketSync(params);
-			console.log("tradeview-UPDATE-this.trade",this.trade);
-			this.render();
-			return this;
-		},
-
-		redraw:function(params) {
-						console.log("tradeview-UPDATE-this.trade",this.trade);
-			this.render();
-		}
+				return this;
+			}
 
 
 	});

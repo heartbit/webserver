@@ -6,25 +6,23 @@ define('pricewidgetView', ['config', 'text!pricewidgetView.html', 'ParametersMan
 			template: _.template(PricewidgetTemplate),
 			el:"#js-pricewidget",
 			initialize:function(params) {
-			
+		
 				this.trades= new Trades();
 				this.dataHelper= new DataHelper();
 				
 				var params = ParametersManager.getCurrentParams();
 				this.trades.reset();
 				this.initialized=false;
-			
-				
-			
 
 				if( params.length > 0 ) {
 					syncTrade();
+			
 				}
 			
 			},
 			syncTrade: function(){
 				var params = ParametersManager.getCurrentParams();
-			
+				// console.log(params);
 				this.trades.fetchAllLastTrades(params);
 				this.trades.on('update',this.update,this);
 				this.initialized = true;
@@ -33,6 +31,7 @@ define('pricewidgetView', ['config', 'text!pricewidgetView.html', 'ParametersMan
 			render: function(params) {
 				if ( !this.initialized ){
 					this.syncTrade();
+					
 				}
 
 				this.price=this.dataHelper.getPrices(this.trades);
@@ -45,11 +44,13 @@ define('pricewidgetView', ['config', 'text!pricewidgetView.html', 'ParametersMan
 		            "KRAKEN":"rgb(200,40,50)"
 		        };
 				this.$el.html(this.template({prices:this.price.pricesRaw}));
+
 				return this;
 			},
 			
-			update: function() {
+			update: function(params) {
 				this.render();
+
 				return this;
 			}
 

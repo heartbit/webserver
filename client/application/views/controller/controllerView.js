@@ -38,6 +38,7 @@ define('controllerView', ['text!controllerView.html', 'text!./application/views/
 
         render: function(params) {
             var currentParams = ParametersManager.getCurrentParams();
+           
             var tplVars = {
                 selectedPlatform: currentParams.platform,
                 selectedItem: currentParams.item,
