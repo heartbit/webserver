@@ -20,7 +20,7 @@ define('tickers', ['config', 'ticker', 'items'], function(config, Ticker, Items)
         },
         fetch: function(params, callback) {
             var self = this;
-            this.killAllListener();
+            // this.killAllListener();
             this.reset();
             _.each(params.platformPairs,function(value,key){
               _.each(value,function(platform){

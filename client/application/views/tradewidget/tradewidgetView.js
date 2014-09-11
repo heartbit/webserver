@@ -51,7 +51,7 @@ function(config, TradewidgetTemplate, ParametersManager, Trade,Trades,FormatUtil
 		            "KRAKEN":"rgb(200,40,50)"
 		        };
 		       
-
+		  
 		       	// INIT
 		        if(this.tradesTable.length==0 && this.currentPlatform.amount!=0){
 		        	this.tradesTable.unshift(this.currentPlatform);
@@ -68,7 +68,7 @@ function(config, TradewidgetTemplate, ParametersManager, Trade,Trades,FormatUtil
 		        		this.tradesTable.pop();
 		        	}
 		        }
-		    
+	
 				this.$el.html(this.template({
 					prices:this.tradesTable,
 					platform:this.currentPlatform.platform

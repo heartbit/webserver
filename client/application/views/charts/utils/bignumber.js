@@ -44,7 +44,7 @@ define('bignumber', ['config', 'FormatUtils', 'd3', 'spin', 'moment'],
         BigNumber.prototype.render = function(params) {
             var self = this;
 
-           
+            // console.log(params);
 
             this.initValue = this.value || 0;
             this.trend = params.trend || false;

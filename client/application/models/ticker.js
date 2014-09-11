@@ -1,17 +1,22 @@
 define('ticker', ['config', 'moment', 'DataSocketManager', 'EventManager', 'FormatUtils'], function(config, moment, DataSocketManager, EventManager, FormatUtils) {
 
     var Ticker = Backbone.Model.extend({
-        socketSync: function(params) {
+        socketSync: function(params,uh) {
             var self = this;
             this.params = params || this.params;
-
+            if(uh) {
+                console.log(params,uh);
+            }
+            
             var updateCallback = function(payload) {
                 // console.log('Ticker update: ', JSON.stringify(payload));
+                // console.log(payload);
                 var objTicker = payload.data;
                 if (objTicker) {
                     self.update(objTicker);
                 }
-            };
+            };  
+
             var eventId;
             if (this.isListening) {
                 eventId = this.eventIdUpdate();
@@ -34,6 +39,7 @@ define('ticker', ['config', 'moment', 'DataSocketManager', 'EventManager', 'Form
         },
 
         update: function(ticker) {
+            // console.log(ticker.candle);
             if (ticker.candle) {
                 this.set('high', +ticker.candle.high);
                 this.set('low', +ticker.candle.low);

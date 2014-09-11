@@ -10,9 +10,9 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
             if (!options) {
                 options = {};
             }
-            console.log(options);
+           
             this.platforms = options.platforms || config.defaultplatforms;
-            console.log(this.platforms);
+          
             _.each(this.platforms, function(platform) {
                 _.each(platform.pairsTrades, function(pair) {
                     var initParams = {
@@ -30,7 +30,7 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
 
         fetch: function(params, callback) {
             var self = this;
-            console.log(this.models);
+       
             _.each(this.models, function(trade) {
                 trade.socketSync();
             });
@@ -48,7 +48,7 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
         },
       
         fetchAllLastTrades: function(params,current) {
-            // console.log(params);
+        
             var self = this;
             this.platforms = ParametersManager.getPlatforms();
            var defaultPair=function(list) {
