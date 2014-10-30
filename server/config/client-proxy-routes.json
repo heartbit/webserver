@@ -1,9 +1,9 @@
 {
     "unprotectedRoutes": {
-        "/": "file:templates/home.html",
-        "/app": "file:templates/app.html"
+        "/": "file:templates/home.html"
     },
     "protectedRoutes": {
+        "/app": "file:templates/app.html",
         "/widgets": "file:templates/widgets.html",
         "/embed/keyfacts": "file:templates/embed/keyfacts.html",
         "/embed/maingraph": "file:templates/embed/maingraph.html",
