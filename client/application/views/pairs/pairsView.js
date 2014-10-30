@@ -65,9 +65,12 @@ define('pairsView', ['config', 'text!pairsView.html', 'ParametersManager'], func
             var currentPlatform =  ParametersManager.getCurrentPlatformPairs();
             var pairId = $(event.target).attr('data-pair-id');
             var platformId = currentPlatform.id;
+     
             if ( !_.contains(currentPlatform.pairs,pairId) ){
+        
                 platformId = ParametersManager.getPlatformByPairId(pairId);
             }
+            
             ParametersManager.changeGlobalPair(pairId,platformId);
             this.$el.foundation('reveal', 'close');
             return false;

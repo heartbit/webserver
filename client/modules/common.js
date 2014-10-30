@@ -57,6 +57,8 @@ requirejs.config({
         pairsView: 'application/views/pairs/pairsView',
 
         // Embeddable views
+        tradewidgetView: 'application/views/tradewidget/tradewidgetView',
+        pricewidgetView: 'application/views/pricewidget/pricewidgetView',
         volumewidgetView: 'application/views/volumewidget/volumewidgetView',
         calculatorView: 'application/views/calculator/calculatorView',
         lastupdateView: 'application/views/lastupdate/lastupdateView',

@@ -1,6 +1,6 @@
-define('trades', ['config', 'trade', 'items','ParametersManager'], function(config, Trade, Items,ParameterManager) {
+define('trades', ['config', 'trade', 'items','ParametersManager'], function(config, Trade, Items,ParametersManager) {
 
-    var Tickers = Backbone.Collection.extend({
+    var Trades = Backbone.Collection.extend({
 
         model: Trade,
 
@@ -10,9 +10,11 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
             if (!options) {
                 options = {};
             }
+           
             this.platforms = options.platforms || config.defaultplatforms;
+          
             _.each(this.platforms, function(platform) {
-                _.each(platform.pairs, function(pair) {
+                _.each(platform.pairsTrades, function(pair) {
                     var initParams = {
                         platform: platform.id,
                         item: pair.item,
@@ -28,7 +30,7 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
 
         fetch: function(params, callback) {
             var self = this;
-
+       
             _.each(this.models, function(trade) {
                 trade.socketSync();
             });
@@ -45,34 +47,49 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
             return selectedTrade;
         },
       
-        fetchAllLastTrades: function(params) {
-          
+        fetchAllLastTrades: function(params,current) {
+        
             var self = this;
-            this.platforms = ParameterManager.getPlatforms();
-            _.each(this.platforms.models, function(platform) {
-                switch (platform.id) {
-                    case 'BTCCHINA':
-                        platform.pairs = [{
-                            item: 'BTC',
-                            currency: 'CNY'
-                        }];
-                        break;
-                    case 'KRAKEN':
-                        platform.pairs = [{
-                            item: 'BTC',
-                            currency: 'EUR'
-                        }];
-                        break;
-                    default:
-                        platform.pairs = [{
-                            item: 'BTC',
-                            currency: 'USD'
-                        }];
-                }
-            });
+            this.platforms = ParametersManager.getPlatforms();
+           var defaultPair=function(list) {
+                _.each(list, function(platform) {
+                  
+                    switch (platform.id) {
+                        case 'KRAKEN':
+                            platform.pairsTrades = [{
+                                item: 'BTC',
+                                currency: 'EUR'
+                            }];
+                            break;
+                        case 'BTCCHINA':
+                            platform.pairsTrades = [{
+                                item: 'BTC',
+                                currency: 'CNY'
+                            }];
+                            break;
+                        case 'OKCOIN':
+                            platform.pairsTrades = [{
+                                item: 'BTC',
+                                currency: 'CNY'
+                            }];
+                            break;
+                        default:
+                            platform.pairsTrades = [{
+                                item: 'BTC',
+                                currency: 'USD'
+                            }];
+                    }
+              
+                });
+            };
+            
+          
+            defaultPair(this.platforms.models);
             this.init({
                 platforms: this.platforms.models
-            });
+            }); 
+           
+
             this.fetch();
             return this.models
 
@@ -159,6 +176,6 @@ define('trades', ['config', 'trade', 'items','ParametersManager'], function(conf
 
     });
 
-    return Tickers;
+    return Trades;
 
 });

@@ -29,11 +29,19 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
             });
 
         this.colors_volume = {
+<<<<<<< HEAD
             "BITSTAMP": "#57C0CD",
             "BTCE": "#32589A",
             "BTCCHINA": "#D3A28E",
             "BITFINEX": "#555B67",
             "KRAKEN": "#9A4032"
+=======
+            "BITSTAMP":"rgb(50,180,80)",
+            "BTCE":"rgb(140,70,110)",
+            "BTCCHINA":"rgb(220,130,70)",
+            "BITFINEX":"#555B67",
+            "KRAKEN":"rgb(200,40,50)"
+>>>>>>> 532e52dea05f10d88a90ec3c342b864e38d61cd6
         };
         this.xScale_volume = d3.scale.linear().range([0, this.width_volume]);
         // .domain([0,d3.max(data, function(d) {return d.vol; })])
@@ -43,8 +51,12 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
 
 
     HorizBarChart.prototype.rogueDraw = function(params) {
+<<<<<<< HEAD
         // console.log(params);
 
+=======
+       
+>>>>>>> 532e52dea05f10d88a90ec3c342b864e38d61cd6
         var data = params.data;
         var self = this;
         data = _.filter(data, function(ticker) {
@@ -71,13 +83,17 @@ define('horizBarChart', ['config', 'dataHelper', 'd3', 'FormatUtils', 'moment'],
                var text='';
                _.each(data[0] , function(d,i) {
                     if(i=="item") {
-                        text="Last 24h - Volume in "+d;
+                        text="Last 24h - Live Volumes in "+d;
                     }
                 });
                return text;
                 
             }).attr("id","volume_titre");
+<<<<<<< HEAD
 
+=======
+     
+>>>>>>> 532e52dea05f10d88a90ec3c342b864e38d61cd6
       
         var bar = this.chart_volume.selectAll(".barVolume")
             .data(data)

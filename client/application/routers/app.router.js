@@ -3,11 +3,11 @@ define(function(require) {
     var ParametersManager = require('ParametersManager'),
         EventManager = require('EventManager');
 
-    AnalyticsManager = require('AnalyticsManager'),
-    NewsSocketManager = require('NewsSocketManager'),
-    DataSocketManager = require('DataSocketManager'),
-    ChatSocketManager = require('ChatSocketManager'),
-    ShortcutsManager = require('ShortcutsManager');
+        AnalyticsManager = require('AnalyticsManager'),
+        NewsSocketManager = require('NewsSocketManager'),
+        DataSocketManager = require('DataSocketManager'),
+        ChatSocketManager = require('ChatSocketManager'),
+        ShortcutsManager = require('ShortcutsManager');
 
     var config = require('config');
 
@@ -20,7 +20,9 @@ define(function(require) {
         NewsView = require('newsView'),
         MarketcapView = require("marketcapView"),
         OffcanvasmenuView = require('offcanvasmenuView');
-    VolumeWidgetView = require('volumewidgetView');
+        VolumeWidgetView = require('volumewidgetView');
+        PriceWidgetView = require ('pricewidgetView');
+        TradeWidgetView = require ('tradewidgetView');
 
     var Router = Backbone.Router.extend({
 
@@ -39,15 +41,20 @@ define(function(require) {
             this.views = {
                 offcanvasmenu: new OffcanvasmenuView(),
                 controller: new ControllerView(),
-                volumeWidget: new VolumeWidgetView(),
                 keyfacts: new KeyFactsView(),
                 header: new HeaderView(),
                 main: new MainView(),
                 depth: new DepthView(),
                 news: new NewsView(),
+<<<<<<< HEAD
 
                 // connerie, appel sur l'offcanvasmenu ?
                 // marketcap: new OffcanvasmenuView.marketcapView()
+=======
+                volumeWidget: new VolumeWidgetView(),
+                priceWidget: new PriceWidgetView(),
+                tradeWidget: new TradeWidgetView()
+>>>>>>> 532e52dea05f10d88a90ec3c342b864e38d61cd6
             };
 
             Backbone.history.start({
@@ -151,6 +158,7 @@ define(function(require) {
         update: function(callback) {
             var self = this;
             _.each(_.keys(this.views), function(viewKey) {
+                 console.log(self.views[viewKey]);
                 self.views[viewKey].update(ParametersManager.getCurrentParams());
             });
             if (callback) {

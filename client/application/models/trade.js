@@ -13,6 +13,8 @@ define('trade', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
 
         socketSync: function(params) {
             var self = this;
+            // console.log(params);
+            // console.log(this.params);
             this.params = params ||  this.params ||  {};
             var updateCallback = function(payload) {
                 // console.log('Trade update: ', JSON.stringify(payload));
@@ -21,10 +23,13 @@ define('trade', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
             };
             var eventId
             if (this.isListening) {
+                // console.log(this);
                 eventId = this.eventIdUpdate();
-                DataSocketManager.removeAllListeners(eventId) //, updateCallback);
+                console.log(eventId);
+                DataSocketManager.removeAllListeners(eventId);
             }
 
+            // console.log(eventId,this.isListening,this);
             this.set('platform', this.params.platform);
             this.set('currency', this.params.currency);
             this.set('item', this.params.item);
@@ -38,6 +43,7 @@ define('trade', ['config', 'moment', 'DataSocketManager', 'backbone'], function(
         },
 
         update: function(trade) {
+            
             if (trade) {
                 this.set('amount', +trade.amount);
                 this.set('dateTrade', new Date(+trade.dateTrade * 1000));

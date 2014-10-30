@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>heartbit</title>
+    <link href="/styles/all.css" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/images/favicon.ico" />
+    <script src="/libs/modernizr.js"></script>
+</head>
+
+<body id="js-app">
+    <div class="off-canvas-wrap" data-offcanvas>
+
+        <div id="js-header" class="fixed"></div>
+
+        <div class="inner-wrap">
+            <aside class="left-off-canvas-menu" id="js-offcanvasmenu">
+            </aside>
+
+            <section id="js-dashboard" class="dashboard">
+            </section>
+
+            <a class="exit-off-canvas"></a>
+        </div>
+    </div>
+
+    <script data-main="/modules/dashboard" src="/libs/require/require.js"></script>
+
+</body>
+
+</html>

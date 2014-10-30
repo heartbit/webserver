@@ -20,7 +20,8 @@ config.newsproxy.hostUrl = config.newsproxy.host + ":" + config.newsproxy.port;
 config.newsproxy.apiUrl = config.newsproxy.hostUrl + '/news/';
 
 config.db = {};
-config.db.redis = "redis://ber:fraisefrqise95@insightfulcointrader.com:6379";
+// config.db.redis = "redis://ber:fraisefrqise95@insightfult.iocointrader.com:6379";
+config.db.redis = "redis://ber:fraisefrqise95@heartbit.io:6379";
 
 config.measures = [{
 	key: 'TCK',

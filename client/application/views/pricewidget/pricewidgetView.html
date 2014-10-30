@@ -1,0 +1,16 @@
+<div class="small-12 medium-12 large-12 columns datawidget">
+	<table id="priceWidget">
+		<thead> <tr> <th colspan="2">Live Prices  </th> </tr></thead>
+		<tbody>
+			<%_.each(prices,function(price) {%>
+				<% if(price.price!=0) { %>
+					<tr>
+						<td><%=price.platform%></td>
+						<td><%=price.price%></td>
+					</tr>
+				<% } %>
+			<%});%>
+			
+		</tbody>
+	</table> 
+</div>
