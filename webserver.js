@@ -28,7 +28,9 @@ console.log('Deployed ?', isDeployed);
 
 var webapp = process.cwd() + '/';
 var webapp_server_path = webapp + 'server/';
-var webapp_client_path = isDeployed ? webapp + 'build/client/' : webapp + 'client/';
+// var webapp_client_path = isDeployed ? webapp + 'build/client/' : webapp + 'client/';
+
+var webapp_client_path = webapp + 'newclient/';
 
 console.log('');
 console.log('Client path : ', webapp_client_path, '\nServer path : ', webapp_server_path);

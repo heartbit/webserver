@@ -25,9 +25,30 @@ module.exports = {
 			test: /\.scss$/,
 			loaders: ['style', 'css', 'sass']
 		}, {
+			test: /\.css$/,
+			loaders: ['style', 'css']
+		}, {
 			test: /\.svg$/,
 			loader: 'raw'
-		}]
+		}, {
+			test: /\.jsx$/,
+			loader: 'jsx?harmony'
+		}, {
+			test: /\.png$/,
+			loader: "url-loader?limit=100000&mimetype=image/png"
+		}, {
+			test: /\.jpg$/,
+			loader: "file-loader"
+		}, {
+			test: /\.woff$/,
+			loader: "url-loader?limit=10000&minetype=application/font-woff"
+		}, {
+			test: /\.ttf$/,
+			loader: "file-loader"
+		}, {
+			test: /\.eot$/,
+			loader: "file-loader"
+		}, ]
 	},
 
 	resolve: {
@@ -35,23 +56,37 @@ module.exports = {
 		alias: {
 
 			// Bundles
-			app: path.join(__dirname, './src/bundle/app'),
+			app: path.join(__dirname, './src/bundle/app.jsx'),
 			home: path.join(__dirname, './src/bundle/home'),
+
+			// Components
+			Topbar: path.join(__dirname, './src/components/topbar.jsx'),
+			Bottombar: path.join(__dirname, './src/components/bottombar.jsx'),
+			Dashboard: path.join(__dirname, './src/components/dashboard.jsx'),
+			Sidemenu: path.join(__dirname, './src/components/sidemenu.jsx'),
+
+			// Internal libs
+			gridster: path.join(__dirname, './lib/internal-libs/jquery.gridster/gridster'),
+			gridsterResponsive: path.join(__dirname, './lib/internal-libs/gridster-responsive/gridster.responsive'),
+			ChartEngine: path.join(__dirname, './lib/internal-libs/chartEngine/ChartEngine'),
+			
+			// External libs
+			backbone: path.join(__dirname, './lib/bower_components/backbone/backbone'),
+			bootstrap: path.join(__dirname, './lib/bower_components/bootstrap/dist/js/bootstrap'),
+			jquery: path.join(__dirname, './lib/bower_components/jquery/dist/jquery'),
+			lodash: path.join(__dirname, './lib/bower_components/lodash/dist/lodash.underscore'),
+			modernizr: path.join(__dirname, './lib/bower_components/modernizr/modernizr'),
+			jsSchema: path.join(__dirname, './lib/bower_components/js-schema/js-schema.debug'),
+			chance: path.join(__dirname, './lib/bower_components/chance/chance'),
+			numeral: path.join(__dirname, './lib/bower_components/numeral/numeral'),
+			moment: path.join(__dirname, './lib/bower_components/momentjs/moment'),
 
 			// Style
 			allStyle: path.join(__dirname, './style/all-source.scss'),
-			app: path.join(__dirname, './style/bundle/app.scss'),
+			appStyle: path.join(__dirname, './style/bundle/app.scss'),
 			home: path.join(__dirname, './style/bundle/home.scss'),
-
-			// External libs
-			jquery: path.join(__dirname, './lib/bower_components/jquery/dist/jquery'),
-			lodash: path.join(__dirname, './lib/bower_components/lodash/dist/lodash.underscore'),
-			d3: path.join(__dirname, './lib/bower_components/d3/d3'),
-			modernizr: path.join(__dirname, './lib/bower_components/modernizr/modernizr'),
-			jsSchema: path.join(__dirname, './lib/bower_components/js-schema/js-schema.debug'),
-			faker: path.join(__dirname, './lib/bower_components/faker/dist/faker'),
-			chance: path.join(__dirname, './lib/bower_components/chance/chance'),
-			numeral: path.join(__dirname, './lib/bower_components/numeral/numeral')
+			booststrapStyle: path.join(__dirname, './lib/bower_components/bootstrap/dist/css/bootstrap.css'),
+			booststrapStyleTheme: path.join(__dirname, './lib/bower_components/bootstrap/dist/css/bootstrap-theme.css'),
 		}
 	},
 

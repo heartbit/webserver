@@ -1,16 +1,16 @@
 {
     "unprotectedRoutes": {
-        "/": "file:templates/home.html"
+        "/app*": "file:template/app.jade",
+        "/": "file:template/home.jade"
     },
     "protectedRoutes": {
-        "/app*": "file:templates/app.html",
-        "/widgets": "file:templates/widgets.html",
-        "/embed/keyfacts": "file:templates/embed/keyfacts.html",
-        "/embed/maingraph": "file:templates/embed/maingraph.html",
-        "/embed/marketcap": "file:templates/embed/marketcap.html",
-        "/embed/volume": "file:templates/embed/volume.html",
-        "/embed/price": "file:templates/embed/price.html",
-        "/embed/news": "file:templates/embed/news.html",
-        "/embed/depth": "file:templates/embed/depth.html"
+        "/widgets": "file:template/widgets.html",
+        "/embed/keyfacts": "file:template/embed/keyfacts.html",
+        "/embed/maingraph": "file:template/embed/maingraph.html",
+        "/embed/marketcap": "file:template/embed/marketcap.html",
+        "/embed/volume": "file:template/embed/volume.html",
+        "/embed/price": "file:template/embed/price.html",
+        "/embed/news": "file:template/embed/news.html",
+        "/embed/depth": "file:template/embed/depth.html"
     }
 }

@@ -1,15 +1,18 @@
 {
-	"name": "insightfultrader-webserver",
-	"version": "0.1.0",
-	"author": "dschonfe",
-	"dependencies": {
-		"jquery": "*",
-		"d3": "*",
-		"d3-tip": "*",
-		"requirejs-text": "*",
-		"underscore": "*",
-		"backbone": "*",
-		"bower-foundation": "*",
-		"moment": "*"
-	}
+  "name": "heartbit-front",
+  "version": "0.1.0",
+  "author": "dschonfe",
+  "dependencies": {
+    "jquery": "*",
+    "lodash": "*",
+    "bootstrap": "*",
+    "backbone": "*",
+    "momentjs": "*",
+    "modernizr": "*",
+    "js-schema": "*",
+    "numeral": "*"
+  },
+  "devDependencies": {
+    "chance": "*"
+  }
 }

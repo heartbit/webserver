@@ -34,7 +34,8 @@ ClientRoutes.prototype.init = function(params, callback) {
 				var filename = file.replace('file:', '');
 				console.log('\t' + route + ' -> ' + filename);
 				self.app.all(route, function(req, res) {
-					res.sendfile(self.clientPath + filename);
+					res.render(self.clientPath + filename)
+					// res.sendfile(self.clientPath + filename);
 				});
 			}
 		});
@@ -47,7 +48,9 @@ ClientRoutes.prototype.init = function(params, callback) {
 				var filename = file.replace('file:', '');
 				console.log('\t' + route + ' -> ' + filename);
 				self.app.all(route, authMiddleware, function(req, res) {
-					res.sendfile(self.clientPath + filename);
+
+					res.render(self.clientPath + filename)
+					// res.sendfile(self.clientPath + filename);
 				});
 			}
 		});

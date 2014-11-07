@@ -9,22 +9,32 @@ App.prototype.start = function(options) {
     this.options = options;
     this.config = require(this.options.serverPath + 'config/');
 
-    this.initManagers()
+    this.initExpressServer()
         .then(function() {
-            self.initExpressServer();
+            self.initStaticContentManager()
         })
         .then(function() {
-            self.initProxies();
-            self.initSockets();
             self.initClientRoutes();
-            self.initServicesRoutes();
-            self.initStaticContentManager();
-            self.initFourtyFourPage();
-        })
-        .then(function() {
             self.run();
         })
         .done();
+
+    // this.initManagers()
+    //     .then(function() {
+    //         self.initExpressServer();
+    //     })
+    //     .then(function() {
+    //         self.initProxies();
+    //         self.initSockets();
+    //         self.initClientRoutes();
+    //         self.initServicesRoutes();
+    //         self.initStaticContentManager();
+    //         self.initFourtyFourPage();
+    //     })
+    //     .then(function() {
+    //         self.run();
+    //     })
+    //     .done();
 };
 
 App.prototype.initManagers = function() {
@@ -157,6 +167,24 @@ App.prototype.initStaticContentManager = function() {
         console.log('Static content...OK');
     };
     this.staticContentManager.init(initStaticContentManagerCallback);
+
+    var proxy = require('proxy-middleware');
+    var url = require('url');
+    this.app.use('/assets', proxy(url.parse('http://localhost:8081/assets')));
+    var webpack = require('webpack');
+    var WebpackDevServer = require('webpack-dev-server');
+    var config = require('../newclient/webpack.config');
+    var server = new WebpackDevServer(webpack(config), {
+        contentBase: __dirname + '/newclient/',
+        hot: true,
+        quiet: false,
+        noInfo: false,
+        publicPath: "/assets/",
+        stats: {
+            colors: true
+        }
+    });
+    server.listen(8081, "localhost", function() {});
 };
 
 App.prototype.initProxies = function() {

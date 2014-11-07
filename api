@@ -1,0 +1,13 @@
+platforms (all)
+pairs (all)
+items (all)
+
+trades (options):
+ticker (options):
+marketcaps (options):
+
+volumes (options):
+depth (options):
+
+orderbook (options):
+
