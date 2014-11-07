@@ -168,23 +168,25 @@ App.prototype.initStaticContentManager = function() {
     };
     this.staticContentManager.init(initStaticContentManagerCallback);
 
-    var proxy = require('proxy-middleware');
-    var url = require('url');
-    this.app.use('/assets', proxy(url.parse('http://localhost:8081/assets')));
-    var webpack = require('webpack');
-    var WebpackDevServer = require('webpack-dev-server');
-    var config = require('../newclient/webpack.config');
-    var server = new WebpackDevServer(webpack(config), {
-        contentBase: __dirname + '/newclient/',
-        hot: true,
-        quiet: false,
-        noInfo: false,
-        publicPath: "/assets/",
-        stats: {
-            colors: true
-        }
-    });
-    server.listen(8081, "localhost", function() {});
+    if (this.options.isDev) {
+        var proxy = require('proxy-middleware');
+        var url = require('url');
+        this.app.use('/assets', proxy(url.parse('http://localhost:8081/assets')));
+        var webpack = require('webpack');
+        var WebpackDevServer = require('webpack-dev-server');
+        var config = require('../newclient/webpack.config');
+        var server = new WebpackDevServer(webpack(config), {
+            contentBase: __dirname + '/newclient/',
+            hot: true,
+            quiet: false,
+            noInfo: true,
+            publicPath: "/dist/js/",
+            stats: {
+                colors: true
+            }
+        });
+        server.listen(8081, "localhost", function() {});
+    }
 };
 
 App.prototype.initProxies = function() {

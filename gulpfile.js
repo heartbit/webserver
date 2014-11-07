@@ -15,15 +15,19 @@ var webpackConfig = require("./newclient/webpack.config.js");
 
 gulp.task("install", ["bower", "build"]);
 gulp.task("test-client", ["mocha", "casper"]);
-gulp.task("dev", ["watch-sass", 'demon']);
+gulp.task("dev", ["watch-sass", 'dev-demon']);
 gulp.task("build-dev", ["clean", "test-client", "sass", "webpack:build-dev"]);
 gulp.task("build", ["clean", "test-client", "plato", "sass", "build:prod"]);
 gulp.task("doc", ["jsdoc"]);
 
-gulp.task('demon', function(cb) {
+gulp.task('dev-demon', function(cb) {
     nodemon({
         script: 'webserver.js',
         ignore: ['newclient/*', 'node_modules/*', 'client/*'],
+        args: ['dev'],
+        env: {
+            'NODE_ENV': 'local'
+        }
     });
 });
 
