@@ -61,16 +61,18 @@ module.exports = {
 			login: path.join(__dirname, './src/bundle/login'),
 
 			// Components
-			Topbar: path.join(__dirname, './src/components/topbar.jsx'),
+			// Topbar: path.join(__dirname, './src/components/topbar.jsx'),
 			Bottombar: path.join(__dirname, './src/components/bottombar.jsx'),
-			Dashboard: path.join(__dirname, './src/components/dashboard.jsx'),
+			// SearchComponent: path.join(__dirname, './src/components/search/searchComponent.jsx'),
+			Dashboard: path.join(__dirname, './src/components/dashboard/dashboard.jsx'),
 			Sidemenu: path.join(__dirname, './src/components/sidemenu.jsx'),
+			AuthComponent: path.join(__dirname, './src/components/auth/authComponent.jsx'),
 
 			// Internal libs
 			gridster: path.join(__dirname, './lib/internal-libs/jquery.gridster/gridster'),
 			gridsterResponsive: path.join(__dirname, './lib/internal-libs/gridster-responsive/gridster.responsive'),
 			ChartEngine: path.join(__dirname, './lib/internal-libs/chartEngine/ChartEngine'),
-			
+
 			// External libs
 			backbone: path.join(__dirname, './lib/bower_components/backbone/backbone'),
 			bootstrap: path.join(__dirname, './lib/bower_components/bootstrap/dist/js/bootstrap'),
@@ -83,7 +85,7 @@ module.exports = {
 			moment: path.join(__dirname, './lib/bower_components/momentjs/moment'),
 
 			// Home page
-			classie:path.join(__dirname, './lib/internal-libs/home/classie'),
+			classie: path.join(__dirname, './lib/internal-libs/home/classie'),
 			cbpAnimatedHeader: path.join(__dirname, './lib/internal-libs/home/cbpAnimatedHeader'),
 			jqueryEasing: path.join(__dirname, './lib/internal-libs/home/jquery.easing'),
 

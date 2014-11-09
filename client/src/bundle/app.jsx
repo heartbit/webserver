@@ -3,11 +3,11 @@ require('bootstrap');
 var Backbone = require('backbone');
 var React = require("react");
 
-var Topbar = require('Topbar');
-var Sidemenu = require('Sidemenu');
-var Bottombar = require('Bottombar');
-var Dashboard = require('Dashboard');
-
+var AuthComponent = require('AuthComponent');
+// var Topbar = require('Topbar');
+// var Sidemenu = require('Sidemenu');
+// var Bottombar = require('Bottombar');
+// var Dashboard = require('Dashboard');
 
 function MessagesMenuWidth() {
 	var W = window.innerWidth;
@@ -17,20 +17,20 @@ function MessagesMenuWidth() {
 };
 
 var launch = function() {
-	React.render(Topbar, document.querySelector('#topbar'));
+	React.render(<AuthComponent />, document.querySelector('#authAnchor'));
 	// React.render(Sidemenu, document.querySelector('#sidebar-left'));
 	// React.render(<Dashboard /> , document.querySelector('#content'));
 	// React.render(Bottombar, document.querySelector('#bottombar'));
 
-	$('.show-sidebar').on('click', function(e) {
-		e.preventDefault();
-		$('div#main').toggleClass('sidebar-show');
-		setTimeout(MessagesMenuWidth, 250);
-	});
+	// $('.show-sidebar').on('click', function(e) {
+	// 	e.preventDefault();
+	// 	$('div#main').toggleClass('sidebar-show');
+	// 	setTimeout(MessagesMenuWidth, 250);
+	// });
 
-	return Backbone.history.start({
-		pushState: false
-	});
+	// return Backbone.history.start({
+	// 	pushState: false
+	// });
 };
 
 launch();

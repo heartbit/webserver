@@ -11,7 +11,7 @@ $("#cta-signup").on('click', function() {
 });
 
 $("#signin").on('click', function() {
-    window.location.href = "/signin";
+    window.location.href = "/login";
 });
 
 // jQuery for page scrolling feature - requires jQuery Easing plugin

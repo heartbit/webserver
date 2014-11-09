@@ -26,7 +26,7 @@ var Topbar = (
           </div>
           <div className="col-xs-4 col-sm-8 top-panel-right">
             <ul className="nav navbar-nav pull-right panel-menu">
-            <li className="hidden-xs">
+              <li className="hidden-xs">
                 <a href="#" className="modal-link">
                   <i className="fa fa-plus"></i>
                 </a>
