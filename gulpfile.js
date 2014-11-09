@@ -10,8 +10,9 @@ var spawn = require('child_process').spawn;
 var nodemon = require('gulp-nodemon');
 var webpack = require("webpack");
 
+// herouku cmd log: heroku logs --app  heartbit-dev  --ps web --tail
 var WebpackDevServer = require("webpack-dev-server");
-var webpackConfig = require("./newclient/webpack.config.js");
+var webpackConfig = require("./client/webpack.config.js");
 
 gulp.task("install", ["bower", "build"]);
 gulp.task("test-client", ["mocha", "casper"]);
@@ -23,7 +24,7 @@ gulp.task("doc", ["jsdoc"]);
 gulp.task('dev-demon', function(cb) {
     nodemon({
         script: 'webserver.js',
-        ignore: ['newclient/*', 'node_modules/*', 'client/*'],
+        ignore: ['client/*', 'node_modules/*', 'client/*'],
         args: ['dev'],
         env: {
             'NODE_ENV': 'local'
@@ -32,29 +33,29 @@ gulp.task('dev-demon', function(cb) {
 });
 
 gulp.task('clean', function(cb) {
-    del(['./newclient/dist/css/*', './newclient/dist/js/*'], cb);
+    del(['./client/dist/css/*', './client/dist/js/*'], cb);
 });
 
 gulp.task('watch-sass', function() {
-    gulp.watch('./newclient/style/**', ['sass']);
+    gulp.watch('./client/style/**', ['sass']);
     gulp.start('sass');
 });
 
 /* Css */
 gulp.task('sass', function() {
-    gulp.src('./newclient/style/bundle/*.scss')
+    gulp.src('./client/style/bundle/*.scss')
         .pipe(sass())
-        .pipe(gulp.dest('./newclient/dist/css/'));
+        .pipe(gulp.dest('./client/dist/css/'));
 });
 /* Bower */
 gulp.task('bower', function() { 
-    return bower() .pipe(gulp.dest('./newclient/lib/bower_components')) ;
+    return bower() .pipe(gulp.dest('./client/lib/bower_components')) ;
 });
 /* Analytics */
 gulp.task('plato', function() {
-    return gulp.src('./newclient/src/**/*.js')
+    return gulp.src('./client/src/**/*.js')
         .pipe(plato('report', {
-            destDir: './newclient/report',
+            destDir: './client/report',
             complexity: {
                 trycatch: true
             }
@@ -62,7 +63,7 @@ gulp.task('plato', function() {
 });
 /* Tests client */
 gulp.task('mocha', function() {
-    return gulp.src('./newclient/test/mocha/*.js', {
+    return gulp.src('./client/test/mocha/*.js', {
             read: false
         })
         .pipe(mocha({
@@ -70,7 +71,7 @@ gulp.task('mocha', function() {
         }));
 });
 gulp.task('casper', function() {
-    var tests = ['./newclient/test/casper/test.js'];
+    var tests = ['./client/test/casper/test.js'];
     var casperChild = spawn('casperjs', ['test'].concat(tests));
     casperChild.stdout.on('data', function(data) {
         gutil.log('CasperJS:', data.toString().slice(0, -1)); // Remove \n

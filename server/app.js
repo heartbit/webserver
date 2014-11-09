@@ -9,32 +9,27 @@ App.prototype.start = function(options) {
     this.options = options;
     this.config = require(this.options.serverPath + 'config/');
 
-    this.initExpressServer()
+    this.initManagers()
         .then(function() {
-            self.initStaticContentManager()
+            self.initExpressServer();
         })
         .then(function() {
+            self.initProxies();
+            self.initSockets();
+            self.initUserAPI();
             self.initClientRoutes();
+            self.initServicesRoutes();
+            self.initStaticContentManager();
+            self.initFourtyFourPage();
+        })
+        .then(function() {
             self.run();
         })
         .done();
+};
 
-    // this.initManagers()
-    //     .then(function() {
-    //         self.initExpressServer();
-    //     })
-    //     .then(function() {
-    //         self.initProxies();
-    //         self.initSockets();
-    //         self.initClientRoutes();
-    //         self.initServicesRoutes();
-    //         self.initStaticContentManager();
-    //         self.initFourtyFourPage();
-    //     })
-    //     .then(function() {
-    //         self.run();
-    //     })
-    //     .done();
+App.prototype.initUserAPI = function() {
+    this.app.use('/user', require('./routers/userRouter'));
 };
 
 App.prototype.initManagers = function() {
@@ -47,7 +42,8 @@ App.prototype.initManagers = function() {
 
     return Q.all([
         this.initEventManager(),
-        this.initRedisAndCacheManager()
+        this.initRedisAndCacheManager(),
+        this.initMongoManager()
     ]);
 };
 
@@ -62,6 +58,11 @@ App.prototype.initEventManager = function() {
     EventManager.emit('test');
 
     return deferred.promise;
+};
+
+App.prototype.initMongoManager = function() {
+    this.mongoManager = require(this.options.serverPath + '/managers/MongoManager');
+    return this.mongoManager.init();
 };
 
 App.prototype.initRedisAndCacheManager = function() {
@@ -169,17 +170,18 @@ App.prototype.initStaticContentManager = function() {
     this.staticContentManager.init(initStaticContentManagerCallback);
 
     if (this.options.isDev) {
+        console.log('WEBPACK middlewares');
         var proxy = require('proxy-middleware');
         var url = require('url');
-        this.app.use('/assets', proxy(url.parse('http://localhost:8081/assets')));
+        this.app.use('/dist', proxy(url.parse('http://localhost:8081/dist')));
         var webpack = require('webpack');
         var WebpackDevServer = require('webpack-dev-server');
-        var config = require('../newclient/webpack.config');
+        var config = require('../client/webpack.config');
         var server = new WebpackDevServer(webpack(config), {
             contentBase: __dirname + '/newclient/',
             hot: true,
             quiet: false,
-            noInfo: true,
+            // noInfo: true,
             publicPath: "/dist/js/",
             stats: {
                 colors: true

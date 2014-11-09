@@ -10,7 +10,9 @@
     "momentjs": "*",
     "modernizr": "*",
     "js-schema": "*",
-    "numeral": "*"
+    "numeral": "*",
+    "cryptojslib": "*",
+    "localforage-backbone": "*"
   },
   "devDependencies": {
     "chance": "*"
