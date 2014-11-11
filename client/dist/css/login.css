@@ -6957,6 +6957,9 @@ footer .footer-below {
 .scroll-top .btn:focus {
   outline: 0; }
 
+hr.star-primary:after {
+  background-color: #BFD0D4; }
+
 body {
   background-color: #004756; }
 

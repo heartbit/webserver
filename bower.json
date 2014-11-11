@@ -12,7 +12,7 @@
     "js-schema": "*",
     "numeral": "*",
     "cryptojslib": "*",
-    "localforage-backbone": "*"
+    "store.js": "*"
   },
   "devDependencies": {
     "chance": "*"

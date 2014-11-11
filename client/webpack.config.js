@@ -7,8 +7,10 @@ module.exports = {
 	context: __dirname,
 
 	entry: {
-		app: ['app'],
-		home: ['home'],
+		app: ['appBundle'],
+		home: ['homeBundle'],
+		login: ['loginBundle'],
+		register: ['registerBundle']
 	},
 
 	output: {
@@ -31,8 +33,11 @@ module.exports = {
 			test: /\.svg$/,
 			loader: 'raw'
 		}, {
+			test: /\.js$/,
+			loader: "jsx-loader?insertPragma=React.DOM&harmony"
+		}, {
 			test: /\.jsx$/,
-			loader: 'jsx?harmony'
+			loader: "jsx-loader?insertPragma=React.DOM&harmony"
 		}, {
 			test: /\.png$/,
 			loader: "url-loader?limit=100000&mimetype=image/png"
@@ -56,17 +61,35 @@ module.exports = {
 		alias: {
 
 			// Bundles
-			app: path.join(__dirname, './src/bundle/app.jsx'),
-			home: path.join(__dirname, './src/bundle/home'),
-			login: path.join(__dirname, './src/bundle/login'),
+			appBundle: path.join(__dirname, './src/bundle/app'),
+			homeBundle: path.join(__dirname, './src/bundle/home'),
+			loginBundle: path.join(__dirname, './src/bundle/login'),
+			registerBundle: path.join(__dirname, './src/bundle/register'),
 
 			// Components
-			// Topbar: path.join(__dirname, './src/components/topbar.jsx'),
-			Bottombar: path.join(__dirname, './src/components/bottombar.jsx'),
-			// SearchComponent: path.join(__dirname, './src/components/search/searchComponent.jsx'),
-			Dashboard: path.join(__dirname, './src/components/dashboard/dashboard.jsx'),
-			Sidemenu: path.join(__dirname, './src/components/sidemenu.jsx'),
-			AuthComponent: path.join(__dirname, './src/components/auth/authComponent.jsx'),
+			App: path.join(__dirname, './src/components/app/app'),
+			Topbar: path.join(__dirname, './src/components/topbar/topbar'),
+			Footer: path.join(__dirname, './src/components/footer/footer'),
+			SideMenu: path.join(__dirname, './src/components/sidemenu/sidemenu'),
+			// SearchComponent: path.join(__dirname, './src/components/search/searchComponent'),
+			Dashboard: path.join(__dirname, './src/components/dashboard/dashboard'),
+			AuthComponent: path.join(__dirname, './src/components/auth/authComponent'),
+			RegisterComponent: path.join(__dirname, './src/components/auth/registerComponent'),
+			Settings: path.join(__dirname, './src/components/settings/settingsComponent'),
+
+			// Stores
+			AbstractStore: path.join(__dirname, './src/stores/AbstractStore'),
+			RouterStore: path.join(__dirname, './src/stores/router/routerStore'),
+
+			// Mixin
+			StoreMixin: path.join(__dirname, './src/stores/mixin/storeMixin'),
+
+			// Routers
+			AppRouter: path.join(__dirname, './src/components/router/appRouter'),
+
+			// Dispatcher
+			Dispatcher: path.join(__dirname, './src/dispatcher/dispatcher'),
+
 
 			// Internal libs
 			gridster: path.join(__dirname, './lib/internal-libs/jquery.gridster/gridster'),
@@ -83,19 +106,12 @@ module.exports = {
 			chance: path.join(__dirname, './lib/bower_components/chance/chance'),
 			numeral: path.join(__dirname, './lib/bower_components/numeral/numeral'),
 			moment: path.join(__dirname, './lib/bower_components/momentjs/moment'),
+			localstorage: path.join(__dirname, './lib/bower_components/store.js/store+json2.min'),
 
-			// Home page
+			// Home page libs
 			classie: path.join(__dirname, './lib/internal-libs/home/classie'),
 			cbpAnimatedHeader: path.join(__dirname, './lib/internal-libs/home/cbpAnimatedHeader'),
 			jqueryEasing: path.join(__dirname, './lib/internal-libs/home/jquery.easing'),
-
-
-			// Style
-			// allStyle: path.join(__dirname, './style/all-source.scss'),
-			// appStyle: path.join(__dirname, './style/bundle/app.scss'),
-			// home: path.join(__dirname, './style/bundle/home.scss'),
-			// booststrapStyle: path.join(__dirname, './lib/bower_components/bootstrap/dist/css/bootstrap.css'),
-			// booststrapStyleTheme: path.join(__dirname, './lib/bower_components/bootstrap/dist/css/bootstrap-theme.css'),
 		}
 	},
 
