@@ -22,7 +22,7 @@ var removeWidget = {
   
     for (i = items.end; i>items.start; i--) {
       // var unmount = React.unmountComponentAtNode($('#keyfact'+i)); //marche pas ?
-      console.log("UNMOUNT!!",unmount);
+      // console.log("UNMOUNT!!",unmount);
   		gridster.remove_widget($('.gridster #'+"keyfact"+i));
     };
 
