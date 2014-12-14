@@ -32,7 +32,8 @@ var GridStore = assign({}, EventEmitter.prototype, {
 
 	getKeyfactsNumber: function() {
 		// console.log(_Grids["current"].childNodes[0].childNodes.length);
-		var res = $(_Grids["current"]).find("ul > li").length;
+		// var res = $(_Grids["current"]).find("ul > li").length;
+		var res = _Grids["current"].childNodes[0].childNodes.length;
 		return res;
 	},
 
