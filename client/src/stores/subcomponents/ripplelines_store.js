@@ -13,7 +13,7 @@ function registerAccount(result) {
 	_.each(accounts, function(account) {
 		_RippleLines[account.id] = account;
 	});
-	console.log(_RippleLines);
+	// console.log(_RippleLines);
 };
 
 var RipplelinesStore = assign({}, EventEmitter.prototype, {

@@ -14,7 +14,7 @@ function registerId(result) {
 	_.each(addresses, function(addr) {
 		_RippleIddatas[addr.id] = addr;
 	});
-	console.log("_RippleIddatas",_RippleIddatas);
+	// console.log("_RippleIddatas",_RippleIddatas);
 };
 
 var RippleidStore = assign({}, EventEmitter.prototype, {
