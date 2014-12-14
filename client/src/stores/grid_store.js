@@ -10,12 +10,12 @@ var _Grids = {};
 function registercurrentref(nodesref) {
 
 	_Grids['current'] = nodesref;
-	console.log(_Grids);
+	// console.log(_Grids);
 };
 function registercurrent(id) {
 	// console.log(_Grids['current'].outerHTML);
 	_Grids[id]=_Grids['current'].outerHTML;
-	console.log(_Grids);
+	// console.log(_Grids);
 };
 
 var GridStore = assign({}, EventEmitter.prototype, {

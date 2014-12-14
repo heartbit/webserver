@@ -30,7 +30,7 @@ var Dashboard = React.createClass({
 
     //Store current dashboard => other dashboard register will be made through addwidget/removewidget
     var gridNodes =this.refs.dashboardstate.getDOMNode();
-    console.log("GRIDSNODES(dashboard",gridNodes);
+    // console.log("GRIDSNODES(dashboard",gridNodes);
     DashboardActions.registerCurrentRef(gridNodes);
     
   },
@@ -64,7 +64,7 @@ var Dashboard = React.createClass({
 
   _onChangeGrid: function() {
     // this.setState(getDashboardState());
-    console.log("GRIDSTOREGETALLLLLLLLLL",GridStore.getAll());
+    // console.log("GRIDSTOREGETALLLLLLLLLL",GridStore.getAll());
   }
   
 });

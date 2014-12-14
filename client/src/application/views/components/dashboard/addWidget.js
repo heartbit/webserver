@@ -26,10 +26,10 @@ var addWidget = {
     _.each(items,function(item,i) {  
       // i++;
       var loadeditemsnumber = GridStore.getKeyfactsNumber();
-      console.log("GRIDSTOREKEYFACTNUMBER",GridStore.getKeyfactsNumber());
+      // console.log("GRIDSTOREKEYFACTNUMBER",GridStore.getKeyfactsNumber());
       var keyfactnumber = parseInt(loadeditemsnumber) + parseInt(i) +1;
-      console.log("LOAAAADEDITEMNUMBER",loadeditemsnumber);
-      console.log("KEYFACCCCTNUMBEEEER",keyfactnumber);
+      // console.log("LOAAAADEDITEMNUMBER",loadeditemsnumber);
+      // console.log("KEYFACCCCTNUMBEEEER",keyfactnumber);
       item.key = "keyfact" + keyfactnumber;    
     });
 

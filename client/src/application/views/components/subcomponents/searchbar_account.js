@@ -16,10 +16,10 @@ var SearchBar = React.createClass({
 
 	handleClick: function() {
 		var loadGrid = function() {
-			console.log("LOAAADDGRIIIID");
+	
 			var gridsterChildren= $('.gridster >ul').children();
 			var gridsterKeys = [];
-			console.log("LOADGRID",gridsterChildren);
+			// console.log("LOADGRID",gridsterChildren);
 			_.each(gridsterChildren, function(children) {
 				var isdatatype = $('#'+children.id).attr('datatype');
 				if(isdatatype!="undefined") {
@@ -28,7 +28,7 @@ var SearchBar = React.createClass({
 			});
 
 			
-			console.log("gridsterkeysSearchbar",gridsterKeys);
+			// console.log("gridsterkeysSearchbar",gridsterKeys);
 			AccountActions.rippleid(toresolve,gridsterKeys);
 		}
 		var input = $('#search input').val();
@@ -38,9 +38,9 @@ var SearchBar = React.createClass({
 		var neededblock = Config.dashboards.account.items.length*toresolve.length;
 		var todelete = {start:(neededblock),end:existingblock};
 		var toadd = (neededblock/3)-(existingblock/3);
-		console.log("neededblock",neededblock);
-		console.log("existingblock",existingblock);
-		console.log("todelete",todelete);
+		// console.log("neededblock",neededblock);
+		// console.log("existingblock",existingblock);
+		// console.log("todelete",todelete);
 
 		if( neededblock > existingblock ) {
 			for(i=0; i<toadd; i++) {
