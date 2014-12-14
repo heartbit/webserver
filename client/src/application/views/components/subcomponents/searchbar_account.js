@@ -15,6 +15,22 @@ var SearchBar = React.createClass({
 	},
 
 	handleClick: function() {
+		var loadGrid = function() {
+			console.log("LOAAADDGRIIIID");
+			var gridsterChildren= $('.gridster >ul').children();
+			var gridsterKeys = [];
+			console.log("LOADGRID",gridsterChildren);
+			_.each(gridsterChildren, function(children) {
+				var isdatatype = $('#'+children.id).attr('datatype');
+				if(isdatatype!="undefined") {
+					gridsterKeys.push(children.id);
+				}
+			});
+
+			
+			console.log("gridsterkeysSearchbar",gridsterKeys);
+			AccountActions.rippleid(toresolve,gridsterKeys);
+		}
 		var input = $('#search input').val();
 		toresolve = input.split(",");
 
@@ -33,24 +49,15 @@ var SearchBar = React.createClass({
 					newBlock.push(_.clone(itemtoclone));
 				});
 				DashboardActions.addwidget(newBlock);
+				
 			}
+			loadGrid();
 		} else if( existingblock > neededblock) {
 			DashboardActions.removewidget(todelete);
+			loadGrid();
 		};
 
-		var gridsterChildren= $('.gridster >ul').children();
-		var gridsterKeys = [];
-
-		_.each(gridsterChildren, function(children) {
-			var isdatatype = $('#'+children.id).attr('datatype');
-			if(isdatatype!="undefined") {
-				gridsterKeys.push(children.id);
-			}
-		});
-
 		
-		console.log("gridsterkeysSearchbar",gridsterKeys);
-		AccountActions.rippleid(toresolve,gridsterKeys);
 	
 	},
 

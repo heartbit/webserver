@@ -24,9 +24,10 @@ var addWidget = {
 
     // Set new key depending on existing keyfacts
     _.each(items,function(item,i) {  
-      i++;
+      // i++;
       var loadeditemsnumber = GridStore.getKeyfactsNumber();
-      var keyfactnumber = loadeditemsnumber + i;
+      console.log("GRIDSTOREKEYFACTNUMBER",GridStore.getKeyfactsNumber());
+      var keyfactnumber = loadeditemsnumber + i +1;
       item.key = "keyfact" + keyfactnumber;    
     });
 
