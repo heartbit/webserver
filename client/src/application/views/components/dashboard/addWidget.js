@@ -10,7 +10,7 @@ var addWidget = {
   several: function(items) {
     var self=this;
   	var subcomponents = subcomponentselector.selector(items);
-   
+    console.log("ADDWIDGET",items);
     var gridster = $('.gridster >ul').gridster({
         widget_margins: [10, 10],
         widget_base_dimensions: [300, 100],

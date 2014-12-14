@@ -13,8 +13,8 @@ function registerInfo(result) {
 	_.each(infos, function(info) {
 		_RippleInfos[info.id] = info;
 	});
-	console.log("RippleInfos",_RippleInfos);
-	console.log("REGISTERINFO_result",result);
+	// console.log("RippleInfos",_RippleInfos);
+	// console.log("REGISTERINFO_result",result);
 };
 
 var RippleinfosStore = assign({}, EventEmitter.prototype, {

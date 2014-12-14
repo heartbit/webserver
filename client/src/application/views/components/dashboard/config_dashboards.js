@@ -103,8 +103,7 @@ var Config = {
 	          height: 3,
 	          datatype:"rippleaccount",
 	          col: 1,
-	          row: 1,
-	          mescouilles:"bien grosses"
+	          row: 1
 	        },
 	        {
 	          key: 'keyfact2',

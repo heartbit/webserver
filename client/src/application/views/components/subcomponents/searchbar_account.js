@@ -55,6 +55,8 @@ var SearchBar = React.createClass({
 		} else if( existingblock > neededblock) {
 			DashboardActions.removewidget(todelete);
 			loadGrid();
+		}else {
+			loadGrid();
 		};
 
 		

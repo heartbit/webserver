@@ -44,7 +44,7 @@ var AccountActions = {
 
 	rippleinfos: function(toresolve) {
 		var rippleinfoscollection = new rippleinfos();
-		console.log("TORESOLVE_actionINFOS",toresolve);
+		// console.log("TORESOLVE_actionINFOS",toresolve);
 		rippleinfoscollection.createInfosList(toresolve.toJSON()).then(function() {	
 
 			Dispatcher.handleViewAction({

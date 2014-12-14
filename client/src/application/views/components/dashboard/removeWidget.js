@@ -7,19 +7,8 @@ var removeWidget = {
   
   several: function(items) {
 
-    var gridster = $('.gridster >ul').gridster({
-        widget_margins: [10, 10],
-        widget_base_dimensions: [300, 100],
-        resize: {
-            enabled: false
-          },
-        draggable: {
-            handle: '.panel-heading, .panel-handel'
-          }
-      }).data('gridster');
+    var gridster = $('.gridster >ul').gridster().data('gridster');
 
-
-  
     for (i = items.end; i>items.start; i--) {
       // var unmount = React.unmountComponentAtNode($('#keyfact'+i)); //marche pas ?
       // console.log("UNMOUNT!!",unmount);
