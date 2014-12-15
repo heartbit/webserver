@@ -2,7 +2,7 @@ var React = require('react');
 var Config = require('config');
 var AccountActions = require('AccountActions');
 var DashboardActions = require('DashboardActions');
-
+var GridStore = require('GridStore');
 var addWidget = require('AddWidget'); //need to be loaded once to register itself to the dispatcher
 var removeWidget = require('RemoveWidget');
 /** @jsx React.DOM */
@@ -16,14 +16,16 @@ var SearchBar = React.createClass({
 
 	handleClick: function() {
 		var loadGrid = function() {
-	
-			var gridsterChildren= $('.gridster >ul').children();
+			var gridsterChildren = GridStore.getSpecific('current');
+			// var gridsterChildren= $('.gridster >ul').children();
 			var gridsterKeys = [];
-			// console.log("LOADGRID",gridsterChildren);
-			_.each(gridsterChildren, function(children) {
-				var isdatatype = $('#'+children.id).attr('datatype');
-				if(isdatatype!="undefined") {
-					gridsterKeys.push(children.id);
+			console.log("LOADGRID",gridsterChildren);
+			_.each(gridsterChildren.current.items, function(children) {
+				console.log("children",children);
+				var isdatatype = children.datatype;
+				console.log("isdatatype",isdatatype);
+				if(isdatatype!=undefined) {
+					gridsterKeys.push(children.key);
 				}
 			});
 
@@ -51,12 +53,12 @@ var SearchBar = React.createClass({
 				DashboardActions.addwidget(newBlock);
 				
 			}
-			loadGrid();
-		} else if( existingblock > neededblock) {
-			DashboardActions.removewidget(todelete);
-			loadGrid();
+			loadGrid($('.gridster >ul').children());
+		} else if( existingblock > neededblock) {	
+			var removewidget = DashboardActions.removewidget(todelete);	
+			console.log("RETOURREMOVE",DashboardActions.removewidget(todelete));
 		}else {
-			loadGrid();
+			loadGrid($('.gridster >ul').children());
 		};
 
 		

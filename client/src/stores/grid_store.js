@@ -7,15 +7,12 @@ var CHANGE_EVENT = 'change';
 var _Grids = {};
 
 
-function registercurrentref(nodesref) {
-
-	_Grids['current'] = nodesref;
-	// console.log(_Grids);
+function registercurrentref(gridster) {
+	_Grids['current'] = gridster;
+	console.log("_Grids_STORE",_Grids['current']);
 };
 function registercurrent(id) {
-	// console.log(_Grids['current'].outerHTML);
 	_Grids[id]=_Grids['current'].outerHTML;
-	// console.log(_Grids);
 };
 
 var GridStore = assign({}, EventEmitter.prototype, {
@@ -33,7 +30,7 @@ var GridStore = assign({}, EventEmitter.prototype, {
 	getKeyfactsNumber: function() {
 		// console.log(_Grids["current"].childNodes[0].childNodes.length);
 		// var res = $(_Grids["current"]).find("ul > li").length;
-		var res = _Grids["current"].childNodes[0].childNodes.length;
+		var res = _Grids["current"].items.length;
 		return res;
 	},
 
@@ -43,6 +40,7 @@ var GridStore = assign({}, EventEmitter.prototype, {
 
 	addChangeListener: function(callback) {
 		this.on(CHANGE_EVENT, callback);
+
 	},
 
 	removeChangeListener: function(callback) {
@@ -59,12 +57,14 @@ Dispatcher.register(function(payload) {
   	var result;
 
   	switch(action.actionType) {
-  		 case Constants.ActionTypes.REGISTER_CURRENTREFGRID:	 
-  		 	registercurrentref(action.result);	 		
+  		 case Constants.ActionTypes.ADD_WIDGET:	 
+  		 	registercurrentref(action.result);
+  		 	console.log("gridstoreevent_add",action.result);	 		
   		 	break;
 
-  		 case Constants.ActionTypes.REGISTER_CURRENTGRID:
-  		 	registercurrent(action.result.id);
+  		 case Constants.ActionTypes.REMOVE_WIDGET:
+  		 	registercurrentref(action.result);
+  		 	console.log("gridstoreevent_remove",action.result);
   		 	break;
   	}
 

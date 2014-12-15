@@ -3,6 +3,7 @@ var Dispatcher = require("Dispatcher");
 var Constants = require('Constants');
 var subcomponentselector = require('SubcomponentSelector');
 var GridStore = require('GridStore');
+var DashboardActions = require('DashboardActions');
 // var DashboardActions = require('DashboardActions');
 
 var addWidget = {
@@ -64,7 +65,9 @@ var addWidget = {
   			attributes.col,
   			attributes.row]
   		);
+
 		  React.render(item, document.getElementById(key));
+      
 
     });
 

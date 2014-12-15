@@ -2,6 +2,7 @@ var React = require('react');
 var subcomponentselector = require('SubcomponentSelector');
 var Dispatcher = require('Dispatcher');
 var Constants = require('Constants');
+var DashboardActions = require('DashboardActions');
 
 var removeWidget = {
   
@@ -13,8 +14,11 @@ var removeWidget = {
       // var unmount = React.unmountComponentAtNode($('#keyfact'+i)); //marche pas ?
       // console.log("UNMOUNT!!",unmount);
   		gridster.remove_widget($('.gridster #'+"keyfact"+i));
+      // DashboardActions.registerCurrentRef(gridster);
+      console.log(gridster);
     };
 
+    // return gridster;
   }
 
 };

@@ -1,4 +1,6 @@
 var React = require('react');
+var GridStore = require('GridStore');
+var DashboardActions = require('DashboardActions');
 
 var Grid = React.createClass({
 
@@ -40,7 +42,7 @@ var Grid = React.createClass({
 
       });
 
-      // this.setState({gridster: gridster});
+      DashboardActions.registerCurrentRef(gridster);
 
     }
 });

@@ -28,10 +28,10 @@ var Dashboard = React.createClass({
     //Listener
     GridStore.addChangeListener(this._onChangeGrid);
 
-    //Store current dashboard => other dashboard register will be made through addwidget/removewidget
-    var gridNodes =this.refs.dashboardstate.getDOMNode();
-    // console.log("GRIDSNODES(dashboard",gridNodes);
-    DashboardActions.registerCurrentRef(gridNodes);
+    // //Store current dashboard => other dashboard register will be made through addwidget/removewidget
+    // var gridNodes =this.refs.dashboardstate.getDOMNode();
+    // // console.log("GRIDSNODES(dashboard",gridNodes);
+    // DashboardActions.registerCurrentRef(gridNodes);
     
   },
   
@@ -63,8 +63,7 @@ var Dashboard = React.createClass({
   },
 
   _onChangeGrid: function() {
-    // this.setState(getDashboardState());
-    // console.log("GRIDSTOREGETALLLLLLLLLL",GridStore.getAll());
+    console.log("from_dashboard:GRIDSTORE has changed");
   }
   
 });
