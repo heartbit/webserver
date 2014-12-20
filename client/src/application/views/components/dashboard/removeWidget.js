@@ -11,14 +11,11 @@ var removeWidget = {
     var gridster = $('.gridster >ul').gridster().data('gridster');
 
     for (i = items.end; i>items.start; i--) {
-      // var unmount = React.unmountComponentAtNode($('#keyfact'+i)); //marche pas ?
-      // console.log("UNMOUNT!!",unmount);
+
   		gridster.remove_widget($('.gridster #'+"keyfact"+i));
-      // DashboardActions.registerCurrentRef(gridster);
-      console.log(gridster);
+
     };
 
-    // return gridster;
   }
 
 };

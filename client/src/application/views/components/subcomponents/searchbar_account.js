@@ -15,24 +15,21 @@ var SearchBar = React.createClass({
 	},
 
 	handleClick: function() {
+
 		var loadGrid = function() {
 			var gridsterChildren = GridStore.getSpecific('current');
-			// var gridsterChildren= $('.gridster >ul').children();
 			var gridsterKeys = [];
-			console.log("LOADGRID",gridsterChildren);
-			_.each(gridsterChildren.current.items, function(children) {
-				console.log("children",children);
-				var isdatatype = children.datatype;
-				console.log("isdatatype",isdatatype);
-				if(isdatatype!=undefined) {
-					gridsterKeys.push(children.key);
+
+			_.each(gridsterChildren.current.$widgets, function(children) {
+				var isdatatype = $(children).attr("datatype");
+				if(isdatatype!="undefined") {
+					gridsterKeys.push($(children).attr("id"));
 				}
 			});
 
-			
-			// console.log("gridsterkeysSearchbar",gridsterKeys);
 			AccountActions.rippleid(toresolve,gridsterKeys);
 		}
+
 		var input = $('#search input').val();
 		toresolve = input.split(",");
 
@@ -40,9 +37,6 @@ var SearchBar = React.createClass({
 		var neededblock = Config.dashboards.account.items.length*toresolve.length;
 		var todelete = {start:(neededblock),end:existingblock};
 		var toadd = (neededblock/3)-(existingblock/3);
-		// console.log("neededblock",neededblock);
-		// console.log("existingblock",existingblock);
-		// console.log("todelete",todelete);
 
 		if( neededblock > existingblock ) {
 			for(i=0; i<toadd; i++) {
@@ -56,12 +50,9 @@ var SearchBar = React.createClass({
 			loadGrid($('.gridster >ul').children());
 		} else if( existingblock > neededblock) {	
 			var removewidget = DashboardActions.removewidget(todelete);	
-			console.log("RETOURREMOVE",DashboardActions.removewidget(todelete));
 		}else {
 			loadGrid($('.gridster >ul').children());
 		};
-
-		
 	
 	},
 

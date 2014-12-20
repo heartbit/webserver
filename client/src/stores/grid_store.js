@@ -9,7 +9,6 @@ var _Grids = {};
 
 function registercurrentref(gridster) {
 	_Grids['current'] = gridster;
-	console.log("_Grids_STORE",_Grids['current']);
 };
 function registercurrent(id) {
 	_Grids[id]=_Grids['current'].outerHTML;
@@ -28,9 +27,7 @@ var GridStore = assign({}, EventEmitter.prototype, {
 	},
 
 	getKeyfactsNumber: function() {
-		// console.log(_Grids["current"].childNodes[0].childNodes.length);
-		// var res = $(_Grids["current"]).find("ul > li").length;
-		var res = _Grids["current"].items.length;
+		var res = _Grids["current"].$widgets.length;
 		return res;
 	},
 
@@ -57,14 +54,9 @@ Dispatcher.register(function(payload) {
   	var result;
 
   	switch(action.actionType) {
-  		 case Constants.ActionTypes.ADD_WIDGET:	 
-  		 	registercurrentref(action.result);
-  		 	console.log("gridstoreevent_add",action.result);	 		
-  		 	break;
 
-  		 case Constants.ActionTypes.REMOVE_WIDGET:
+  		 case Constants.ActionTypes.REGISTER_CURRENTREFGRID:
   		 	registercurrentref(action.result);
-  		 	console.log("gridstoreevent_remove",action.result);
   		 	break;
   	}
 

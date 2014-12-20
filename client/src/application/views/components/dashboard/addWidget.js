@@ -11,7 +11,7 @@ var addWidget = {
   several: function(items) {
     var self=this;
   	var subcomponents = subcomponentselector.selector(items);
-    console.log("ADDWIDGET",items);
+
     var gridster = $('.gridster >ul').gridster({
         widget_margins: [10, 10],
         widget_base_dimensions: [300, 100],
@@ -25,12 +25,8 @@ var addWidget = {
 
     // Set new key depending on existing keyfacts
     _.each(items,function(item,i) {  
-      // i++;
       var loadeditemsnumber = GridStore.getKeyfactsNumber();
-      // console.log("GRIDSTOREKEYFACTNUMBER",GridStore.getKeyfactsNumber());
       var keyfactnumber = parseInt(loadeditemsnumber) + parseInt(i) +1;
-      // console.log("LOAAAADEDITEMNUMBER",loadeditemsnumber);
-      // console.log("KEYFACCCCTNUMBEEEER",keyfactnumber);
       item.key = "keyfact" + keyfactnumber;    
     });
 

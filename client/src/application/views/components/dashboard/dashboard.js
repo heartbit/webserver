@@ -19,19 +19,13 @@ function getDashboardState() {
 var Dashboard = React.createClass({
 
   getInitialState: function() {
-    // DashboarStore.
-    // return {dashboard_config:this.props.dashboard_config.items};
+    // DashboarStore initial config_set (ie: classic, perso, mabite ...)
     return null
   },
 
   componentDidMount: function() {
     //Listener
     GridStore.addChangeListener(this._onChangeGrid);
-
-    // //Store current dashboard => other dashboard register will be made through addwidget/removewidget
-    // var gridNodes =this.refs.dashboardstate.getDOMNode();
-    // // console.log("GRIDSNODES(dashboard",gridNodes);
-    // DashboardActions.registerCurrentRef(gridNodes);
     
   },
   
@@ -63,7 +57,7 @@ var Dashboard = React.createClass({
   },
 
   _onChangeGrid: function() {
-    console.log("from_dashboard:GRIDSTORE has changed");
+    // console.log("from_dashboard:GRIDSTORE has changed");
   }
   
 });

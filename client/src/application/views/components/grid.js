@@ -2,13 +2,14 @@ var React = require('react');
 var GridStore = require('GridStore');
 var DashboardActions = require('DashboardActions');
 
-var Grid = React.createClass({
+var GridElements = React.createClass({
 
     render: function() {
       return (<ul />);
     },
 
     componentDidMount: function() {
+      var self=this;
       var gridster = $(this.getDOMNode()).gridster({
         widget_margins: [10, 10],
         widget_base_dimensions: [300, 100],
@@ -20,31 +21,37 @@ var Grid = React.createClass({
           }
       }).data('gridster');
 
-      // gridster.disable();
 
-      this.props.items.map(function(item, i) {
-   
-        var attributes = item.props.attributes;
-        // var key = "item" + attributes.key;  
-        var key = attributes.key;
-        var datatype = attributes.datatype;
+      var renderWidget = function() {
+        var mapping = 
+          self.props.items.map(function(item, i) {
+       
+            var attributes = item.props.attributes; 
+            var key = attributes.key;
+            var datatype = attributes.datatype;
 
-        gridster.add_widget(
-            ('<li class="item" id={key} datatype={datatype}>  </li>'.replace('{key}', key)).replace('{datatype}',datatype), 
-            attributes.width,
-            attributes.height,
-            attributes.col,
-            attributes.row
-          );
+            gridster.add_widget(
+                ('<li class="item" id={key} datatype={datatype}>  </li>'.replace('{key}', key)).replace('{datatype}',datatype), 
+                attributes.width,
+                attributes.height,
+                attributes.col,
+                attributes.row
+              );
 
-        // console.log("GRIDSTERRRRRR",$('.gridster >ul'));
-        React.render(item, document.getElementById(key));
+            React.render(item, document.getElementById(key));
 
+          });
+
+          var res = $.when.apply(null,mapping);
+
+          return res;
+      }
+
+      renderWidget().then(function() {
+        DashboardActions.registerCurrentRef(gridster);
       });
-
-      DashboardActions.registerCurrentRef(gridster);
 
     }
 });
 
-module.exports = Grid;
+module.exports = GridElements;
