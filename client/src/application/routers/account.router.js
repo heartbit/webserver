@@ -1,4 +1,3 @@
-var toresolve = $('#menu input');
 var React = require("react");
 var Account = require('Account');
 var config = require('config');

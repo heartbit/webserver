@@ -83,6 +83,9 @@ module.exports = {
 			RegisterComponent: path.join(__dirname, './src/application/views/auth/registerComponent'),
 			Settings: path.join(__dirname, './src/application/views/settings/settingsComponent'),
 
+			//charts
+			pie_accountoverview: path.join(__dirname, './src/application/views/charts/pie_accountoverview'),
+
 			// components (sub-views)
 			Topbar: path.join(__dirname, './src/application/views/components/topbar/topbar'),
 			Footer: path.join(__dirname, './src/application/views/components/footer/footer'),
@@ -96,6 +99,7 @@ module.exports = {
 			RippleAccount: path.join(__dirname, './src/application/views/components/subcomponents/rippleaccount'),
 			TestItem2: path.join(__dirname, './src/application/views/components/subcomponents/testitem2'),
 			Searchbar_account: path.join(__dirname, './src/application/views/components/subcomponents/searchbar_account'),
+			Searchbar_app: path.join(__dirname, './src/application/views/components/subcomponents/searchbar_app'),
 			AbstractSubcomponent: path.join(__dirname, './src/application/views/subcomponents/abstractsubcomponent'),
 
 			//subcomponent helpers

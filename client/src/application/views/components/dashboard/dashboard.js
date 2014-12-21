@@ -26,7 +26,17 @@ var Dashboard = React.createClass({
   componentDidMount: function() {
     //Listener
     GridStore.addChangeListener(this._onChangeGrid);
-    
+    // if(this.props.attributes.chart){
+    //   var chartParams = {
+    //     anchorId: "#" + this.props.attributes.chart,
+    //     chartType: this.props.attributes.chart,
+    //     size: 'auto',
+    //     modeDebug: false
+    //   };
+
+    //   var chart = ChartEngine.create(chartParams);
+    //   chart.draw(this.state.dataset);
+    // }
   },
   
   componentWillUnmount: function() {

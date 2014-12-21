@@ -43,7 +43,7 @@ var addWidget = {
 
 
     _.each(newReactWidgets,function(item, i) {
-
+      // console.log(item);
       var loadeditemsnumber = GridStore.getKeyfactsNumber();
       var keyfactnumber = loadeditemsnumber + 1;
 
@@ -53,7 +53,7 @@ var addWidget = {
    
   		var datatype = attributes.datatype;
   		attributes.row = 6 +i;
- 
+      // console.log("attributes.row", attributes.row);
   		gridster.add_widget.apply(gridster,
   			[('<li class="item" id={key} datatype={datatype}>  </li>'.replace('{key}', key)).replace('{datatype}',datatype), 
   			attributes.width,

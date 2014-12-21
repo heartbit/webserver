@@ -15,11 +15,15 @@ var SearchBar = React.createClass({
 	},
 
 	handleClick: function() {
+		var orderGrid = function() {
+			var $ungrid = $('.gridster >ul').children();
+
+		};
 
 		var loadGrid = function() {
 			var gridsterChildren = GridStore.getSpecific('current');
 			var gridsterKeys = [];
-
+			console.log(gridsterChildren);
 			_.each(gridsterChildren.current.$widgets, function(children) {
 				var isdatatype = $(children).attr("datatype");
 				if(isdatatype!="undefined") {
@@ -45,13 +49,14 @@ var SearchBar = React.createClass({
 					newBlock.push(_.clone(itemtoclone));
 				});
 				DashboardActions.addwidget(newBlock);
-				
 			}
 			loadGrid($('.gridster >ul').children());
+			console.log($('.gridster >ul').children());
 		} else if( existingblock > neededblock) {	
 			var removewidget = DashboardActions.removewidget(todelete);	
 		}else {
 			loadGrid($('.gridster >ul').children());
+
 		};
 	
 	},

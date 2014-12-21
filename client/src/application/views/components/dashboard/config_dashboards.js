@@ -38,7 +38,7 @@ var Config = {
 	          width: 2,
 	          height: 2,
 	          chart: 'MarimekkoChart',
-	          datatype: 'testitem',
+	          datatype: 'testitem2',
 	          col: 1,
 	          row: 2
 	        },
@@ -49,7 +49,7 @@ var Config = {
 	          width: 1,
 	          height: 3,
 	          chart: 'MarimekkoChart',
-	          datatype: 'testitem',
+	          datatype: 'testitem2',
 	          col: 3,
 	          row: 2
 	        },
@@ -111,6 +111,8 @@ var Config = {
 	          icon:'fa fa-bar-chart',
 	          width: 1,
 	          height: 3,
+	          datatype:"accountoverview",
+	          chart:"pie_accountoverview",
 	          col: 3,
 	          row: 1
 	        },

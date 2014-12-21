@@ -64,8 +64,8 @@ var RippleAccount = React.createClass({
       // console.log("STATE!",this.props.attributes.key,this.state);
       // console.log("POOOOOOOOOORRRPRPS",this.props.attributes.key);
       // console.log(this.props);
-     
-      this.prout= "Enter an adress or a name in the searchbar";
+      self=this;
+      this.key= this.props.attributes.key;
       this.chartId= this.props.attributes.key +"_"+ this.props.attributes.chart;
       return (
         <div className="panel panel-default">
@@ -102,22 +102,17 @@ var RippleAccount = React.createClass({
                           
                             return  <div>  ------------------------------------------------------------ 
                                       <ul>
-                                        <li></li>
-                                        <li>Account:&nbsp;&nbsp; {line['account']} </li>  
-                                        <li>Balance:&nbsp;&nbsp; {line['balance']} </li> 
-                                        <li>Currency:&nbsp;&nbsp; {line['currency']} </li>  
-                                        <li>Limit:&nbsp;&nbsp; {line['limit']} </li> 
-                                        <li>Limit_peer:&nbsp;&nbsp; {line['limit_peer']} </li> 
-                                        <li>No_ripple:&nbsp;&nbsp; {line['no_ripple']?"true":"false"} </li> 
-                                        <li>Quality_in:&nbsp;&nbsp; {line['quality_in']} </li> 
-                                        <li>Quality_out:&nbsp;&nbsp; {line['quality_out']} </li> 
+                                        <li key={"account"+self.key}>Account:&nbsp;&nbsp; {line['account']} </li>  
+                                        <li key={"balance"+self.key}>Balance:&nbsp;&nbsp; {line['balance']} </li> 
+                                        <li key={"currency"+self.key}>Currency:&nbsp;&nbsp; {line['currency']} </li>  
+                                        <li key={"limite"+self.key}>Limit:&nbsp;&nbsp; {line['limit']} </li> 
+                                        <li key={"limit_peer"+self.key}>Limit_peer:&nbsp;&nbsp; {line['limit_peer']} </li> 
+                                        <li key={"no_ripple"+self.key}>No_ripple:&nbsp;&nbsp; {line['no_ripple']?"true":"false"} </li> 
+                                        <li key={"qual_in"+self.key}>Quality_in:&nbsp;&nbsp; {line['quality_in']} </li> 
+                                        <li key={"qual_out"+self.key}>Quality_out:&nbsp;&nbsp; {line['quality_out']} </li> 
                                       </ul>
                                     </div>;
                                   
-                          // _.map(line, function(element) {
-                          //   console.log(element);
-                          //   return element;
-                          // })
                         })
              
                   : ""}

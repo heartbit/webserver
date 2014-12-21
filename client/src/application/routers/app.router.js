@@ -18,6 +18,7 @@ var Router = Backbone.Router.extend({
     app: function(params) {
 
         var dashboard_config = config.dashboards.main;
+        console.log(dashboard_config);
 
     	React.render(<App dashboard_config={ dashboard_config } />, document.getElementById('app'));
     },
