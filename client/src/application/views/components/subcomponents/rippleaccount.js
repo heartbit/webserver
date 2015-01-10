@@ -126,7 +126,7 @@ var RippleAccount = React.createClass({
                         this.state.ripplelines[this.address].lines.map(function(line,i) {
                           
                             return   <PanelGroup style={linestyle} accordion> 
-                                        <Panel header= {line['balance'] + " " + line['currency'] + line['name']} eventKey="1">
+                                        <Panel header= {line['balance'] + " " + line['currency'] + "  "+ line['name']} eventKey="1">
                                           <div> Account:&nbsp;&nbsp; {line['account']} </div> 
                                           <div> Limit:&nbsp;&nbsp; {line['limit']} </div>
                                           <div> Limit_peer:&nbsp;&nbsp; {line['limit_peer']} </div>
@@ -176,7 +176,9 @@ var RippleAccount = React.createClass({
           if(line.currency == "XRP") {
             obj['name']=undefined;
           } else {
-            obj['name']=name[0].name;
+            if(name[0]) {
+              obj['name']=name[0].name;
+            } else { obj['name']=line['account'];}
           }
           return obj;
         });
