@@ -2,6 +2,7 @@ var RippleId = require('rippleid');
 var config = require('config');
 
 
+
 var RippleIds = Backbone.Collection.extend({
 	model: RippleId,
 
@@ -9,23 +10,24 @@ var RippleIds = Backbone.Collection.extend({
 
 	},
 
-	createIdList: function(toresolves,gridsterKeys) {
+	createIdList: function(toresolves) {
+		var AccountActions = require('AccountActions');
 		var self = this;
 		this.reset();
 
-		xhrs = _.map(toresolves, function(toresolve,i) {
+		AccountActions.loadinggif(toresolves);
 
-		
-			var model = new RippleId({id:gridsterKeys[i]},toresolve);
-			var xhr = model.fetch({
-				success: function(model,response) {
-					// var modelid = gridsterKeys[i];
-					// model.set("id",modelid);
-					self.add(model);
-				}
-			}); 
-			return xhr;       
-        });
+		var xhrs = _.map(toresolves, function(toresolve,i) {
+				var model = new RippleId({id:"address"+i},toresolve);
+				var xhr = model.fetch({
+					success: function(model,response) {
+						self.add(model);
+					}
+				});       
+	        return xhr;		
+	    });
+
+
 
         var sync = $.when.apply(null, xhrs);
 	    // sync.then(function() {

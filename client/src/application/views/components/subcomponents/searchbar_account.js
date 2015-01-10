@@ -2,6 +2,7 @@ var React = require('react');
 var Config = require('config');
 var AccountActions = require('AccountActions');
 var DashboardActions = require('DashboardActions');
+var RippledataActions = require('RippledataActions');
 var GridStore = require('GridStore');
 var addWidget = require('AddWidget'); //need to be loaded once to register itself to the dispatcher
 var removeWidget = require('RemoveWidget');
@@ -23,15 +24,16 @@ var SearchBar = React.createClass({
 		var loadGrid = function() {
 			var gridsterChildren = GridStore.getSpecific('current');
 			var gridsterKeys = [];
-			console.log(gridsterChildren);
+			// console.log(gridsterChildren);
 			_.each(gridsterChildren.current.$widgets, function(children) {
 				var isdatatype = $(children).attr("datatype");
 				if(isdatatype!="undefined") {
 					gridsterKeys.push($(children).attr("id"));
 				}
 			});
-
+			// console.log("gridsterkeys",gridsterKeys);
 			AccountActions.rippleid(toresolve,gridsterKeys);
+			// RippledataActions.exchangerates();
 		}
 
 		var input = $('#search input').val();
@@ -43,15 +45,18 @@ var SearchBar = React.createClass({
 		var toadd = (neededblock/3)-(existingblock/3);
 
 		if( neededblock > existingblock ) {
+
+			var blocknum = existingblock/3;
 			for(i=0; i<toadd; i++) {
-				newBlock = [];
+				var newBlock = [];
 				_.each(Config.dashboards.account.items, function(itemtoclone) {
 					newBlock.push(_.clone(itemtoclone));
 				});
-				DashboardActions.addwidget(newBlock);
+				DashboardActions.addwidget(newBlock,blocknum);
+				blocknum = blocknum+1;
 			}
 			loadGrid($('.gridster >ul').children());
-			console.log($('.gridster >ul').children());
+			// console.log($('.gridster >ul').children());
 		} else if( existingblock > neededblock) {	
 			var removewidget = DashboardActions.removewidget(todelete);	
 		}else {

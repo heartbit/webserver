@@ -12,7 +12,6 @@ module.exports = {
 		login: ['loginBundle'],
 		register: ['registerBundle'],
 		account: ['accountBundle']
-	
 	},
 
 	output: {
@@ -65,6 +64,7 @@ module.exports = {
 			//config
 			config: path.join(__dirname, './src/application/config/global'),
 			config_rippleaccount: path.join(__dirname,'./src/application/config/config_rippleaccount'),
+			config_rippledataapi: path.join(__dirname, './src/application/config/config_rippledataapi'),
 
 			// views config
 			config_dashboards: path.join(__dirname, './src/application/views/components/dashboard/config_dashboards'),
@@ -75,6 +75,13 @@ module.exports = {
 			loginBundle: path.join(__dirname, './src/bundle/login'),
 			registerBundle: path.join(__dirname, './src/bundle/register'),
 			accountBundle: path.join(__dirname, './src/bundle/account'),
+
+			// Helpers
+			DataHelper: path.join(__dirname, './src/application/helpers/dataHelper'),
+
+			// Utils
+			FormatUtils: path.join(__dirname, './src/application/utils/FormatUtils'),
+			gatewayNames: path.join(__dirname, './src/application/utils/gatewayNames'),
 
 			// Views
 			App: path.join(__dirname, './src/application/views/app/app'),
@@ -100,11 +107,14 @@ module.exports = {
 			TestItem2: path.join(__dirname, './src/application/views/components/subcomponents/testitem2'),
 			Searchbar_account: path.join(__dirname, './src/application/views/components/subcomponents/searchbar_account'),
 			Searchbar_app: path.join(__dirname, './src/application/views/components/subcomponents/searchbar_app'),
-			AbstractSubcomponent: path.join(__dirname, './src/application/views/subcomponents/abstractsubcomponent'),
+			AbstractSubcomponent: path.join(__dirname, './src/application/views/components/subcomponents/abstractsubcomponent'),
+			DropDown: path.join(__dirname, './src/application/views/components/subcomponents/dropdown'),
+
 
 			//subcomponent helpers
 			SubcomponentSelector: path.join(__dirname, './src/application/views/components/subcomponentselector'),
 			GridElements: path.join(__dirname, './src/application/views/components/grid'),
+			Loading: path.join(__dirname, './src/application/views/components/loading_animation'),
 
 			// Mixin
 			StoreMixin: path.join(__dirname, './src/stores/mixin/storeMixin'),
@@ -119,6 +129,7 @@ module.exports = {
 			RippleidStore: path.join(__dirname, './src/stores/subcomponents/rippleid_store'),
 			RipplelinesStore: path.join(__dirname, './src/stores/subcomponents/ripplelines_store'),
 			RippleinfosStore: path.join(__dirname,'./src/stores/subcomponents/rippleinfos_store'),
+			RippleexchangeratesStore: path.join(__dirname, './src/stores/subcomponents/rippleexchangerates_store'),
 
 			// Constants
 			Constants: path.join(__dirname, './src/constants/constants'),
@@ -128,18 +139,21 @@ module.exports = {
 
 			// Actions
 			AccountActions: path.join(__dirname, './src/actions/account_actions'),
+			RippledataActions: path.join(__dirname,'./src/actions/rippledata_actions'),
 			DashboardActions: path.join(__dirname, './src/actions/dashboard_actions'),
 
 			//collections
 			ripplelines: path.join(__dirname, './src/application/collections/ripplelines'),
 			rippleids: path.join(__dirname, './src/application/collections/rippleids'),
 			rippleinfos: path.join(__dirname, './src/application/collections/rippleinfos'),
+			rippleexchangerates: path.join(__dirname, './src/application/collections/rippleexchangerates'),
 			grids: path.join(__dirname, './src/application/collections/grids'),
 
 			//models
 			rippleline: path.join(__dirname, './src/application/models/rippleline'),
 			rippleid: path.join(__dirname, './src/application/models/rippleid'),
 			rippleinfo: path.join(__dirname, './src/application/models/rippleinfo'),
+			rippleexchangerate: path.join(__dirname, './src/application/models/rippleexchangerate'),
 			grid: path.join(__dirname, './src/application/models/grid'),
 
 			//routers
@@ -161,6 +175,7 @@ module.exports = {
 			numeral: path.join(__dirname, './lib/bower_components/numeral/numeral'),
 			moment: path.join(__dirname, './lib/bower_components/momentjs/moment'),
 			localstorage: path.join(__dirname, './lib/bower_components/store.js/store+json2.min'),
+			d3: path.join(__dirname, './lib/bower_components/d3/d3.min'),
 
 			// Home page libs
 			classie: path.join(__dirname, './lib/internal-libs/home/classie'),

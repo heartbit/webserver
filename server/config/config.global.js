@@ -20,13 +20,17 @@ config.newsproxy.hostUrl = config.newsproxy.host + ":" + config.newsproxy.port;
 config.newsproxy.apiUrl = config.newsproxy.hostUrl + '/news/';
 
 
-config.rippleidproxy = {};
-config.rippleidproxy.host = "https://id.ripple.com/v1/user/";
-config.rippleidproxy.port = "";
-config.rippleidproxy.hostUrl = config.rippleidproxy.host ;
-config.rippleidproxy.remoteserver = "wss://s1.ripple.com:443";
+config.rippleaccountproxy = {};
+config.rippleaccountproxy.host = "https://id.ripple.com/v1/user/";
+config.rippleaccountproxy.port = "";
+config.rippleaccountproxy.hostUrl = config.rippleaccountproxy.host ;
+config.rippleaccountproxy.remoteserver = "wss://s1.ripple.com:443";
 
 
+config.rippledataapiproxy = {};
+config.rippledataapiproxy.host = "http://api.ripplecharts.com/api/exchange_rates";
+config.rippledataapiproxy.port = "";
+config.rippledataapiproxy.hostUrl = config.rippledataapiproxy.host;
 
 config.db = {};
 // config.db.redis = "redis://ber:fraisefrqise95@insightfult.iocointrader.com:6379";

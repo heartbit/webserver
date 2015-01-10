@@ -29,9 +29,11 @@ var GridElements = React.createClass({
             var attributes = item.props.attributes; 
             var key = attributes.key;
             var datatype = attributes.datatype;
+            var blocknum = attributes.blocknum;
 
             gridster.add_widget(
-                ('<li class="item" id={key} datatype={datatype}>  </li>'.replace('{key}', key)).replace('{datatype}',datatype), 
+                (('<li class="item" id={key} datatype={datatype} blocknum={blocknum}>  </li>'.replace('{key}', key)).replace('{datatype}',datatype))
+                  .replace('{blocknum}',blocknum), 
                 attributes.width,
                 attributes.height,
                 attributes.col,
@@ -41,7 +43,7 @@ var GridElements = React.createClass({
             React.render(item, document.getElementById(key));
 
           });
-
+        
           var res = $.when.apply(null,mapping);
 
           return res;

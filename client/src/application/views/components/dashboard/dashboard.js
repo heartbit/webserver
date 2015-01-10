@@ -44,7 +44,6 @@ var Dashboard = React.createClass({
   },
 
   render: function() {
-
     var dashboard_config = this.props.dashboard_config.items;  
     var Items = subcomponentselector.selector(dashboard_config);
 

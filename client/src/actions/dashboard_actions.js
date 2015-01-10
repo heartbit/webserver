@@ -23,10 +23,10 @@ var DashboardActions = {
 		});		
 	},
 
-	addwidget: function(items) {
+	addwidget: function(items,blocknum) {
 		Dispatcher.handleViewAction({
 			actionType: Constants.ActionTypes.ADD_WIDGET,
-			result: {items:items}
+			result: {items:items,blocknum:blocknum}
 		});
 	},
 

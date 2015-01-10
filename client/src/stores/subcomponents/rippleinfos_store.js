@@ -13,7 +13,7 @@ function registerInfo(result) {
 	_.each(infos, function(info) {
 		_RippleInfos[info.id] = info;
 	});
-	// console.log("RippleInfos",_RippleInfos);
+	// console.log("_RippleInfosStore",_RippleInfos);
 	// console.log("REGISTERINFO_result",result);
 };
 
@@ -29,12 +29,17 @@ var RippleinfosStore = assign({}, EventEmitter.prototype, {
 		return res;
 	},
 
-	emitChange: function() {
-		this.emit(CHANGE_EVENT);
+	emitChange: function(result) {
+		var self=this;
+		var addresses = result.toJSON();
+		// console.log("emitchangei",++i);
+		_.each(addresses, function(address) {
+			self.emit(address.id);
+		});
 	},
 
-	addChangeListener: function(callback) {
-		this.on(CHANGE_EVENT, callback);
+	addChangeListener: function(address,callback) {
+		this.on(address, callback);
 	},
 
 	removeChangeListener: function(callback) {
@@ -53,11 +58,12 @@ Dispatcher.register(function(payload) {
   	switch(action.actionType) {
  
   		 case Constants.ActionTypes.ASK_RIPPLEINFOS:	
-  		 	registerInfo(action.result); 	 		
+  		 	registerInfo(action.result); 	
+  		 	RippleinfosStore.emitChange(action.result); 		
   		 	break;
   	}
 
-  	RippleinfosStore.emitChange();
+
   	
   	return true;
 

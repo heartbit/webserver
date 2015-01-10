@@ -8,7 +8,7 @@ var DashboardActions = require('DashboardActions');
 
 var addWidget = {
   
-  several: function(items) {
+  several: function(items,blocknum) {
     var self=this;
   	var subcomponents = subcomponentselector.selector(items);
 
@@ -27,7 +27,9 @@ var addWidget = {
     _.each(items,function(item,i) {  
       var loadeditemsnumber = GridStore.getKeyfactsNumber();
       var keyfactnumber = parseInt(loadeditemsnumber) + parseInt(i) +1;
-      item.key = "keyfact" + keyfactnumber;    
+      item.key = "keyfact" + keyfactnumber; 
+      item.blocknum = blocknum;   
+      console.log(blocknum);
     });
 
     var newReactWidgets = items.map(function(item) {
@@ -36,7 +38,6 @@ var addWidget = {
         } else {
           var Element = subcomponents["abstractsubcomponent"];
         }
-
         return (<Element attributes={item}></Element>);
     });
 
@@ -55,7 +56,7 @@ var addWidget = {
   		attributes.row = 6 +i;
       // console.log("attributes.row", attributes.row);
   		gridster.add_widget.apply(gridster,
-  			[('<li class="item" id={key} datatype={datatype}>  </li>'.replace('{key}', key)).replace('{datatype}',datatype), 
+  			[(('<li class="item" id={key} datatype={datatype} blocknum={blocknum}>  </li>'.replace('{key}', key)).replace('{datatype}',datatype)).replace('{blocknum}',blocknum), 
   			attributes.width,
   			attributes.height,
   			attributes.col,
@@ -76,7 +77,7 @@ Dispatcher.register(function(payload) {
   var result;
   switch(action.actionType) {
     case Constants.ActionTypes.ADD_WIDGET:   
-    addWidget.several(action.result.items);   
+    addWidget.several(action.result.items,action.result.blocknum);   
     break;
   }
 });

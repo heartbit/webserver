@@ -101,9 +101,10 @@ var Config = {
 	          icon:'fa fa-bar-chart',
 	          width: 2,
 	          height: 3,
-	          datatype:"rippleaccount",
 	          col: 1,
-	          row: 1
+	          row: 1,
+	          datatype:"rippleaccount",
+	          blocknum:0
 	        },
 	        {
 	          key: 'keyfact2',
@@ -111,10 +112,11 @@ var Config = {
 	          icon:'fa fa-bar-chart',
 	          width: 1,
 	          height: 3,
+	          col: 3,
+	          row: 1,
 	          datatype:"accountoverview",
 	          chart:"pie_accountoverview",
-	          col: 3,
-	          row: 1
+	          blocknum:0
 	        },
 	        {
 	          key: 'keyfact3',
@@ -123,7 +125,8 @@ var Config = {
 	          width: 3,
 	          height: 1,
 	          col: 1,
-	          row: 4
+	          row: 4,
+	          blocknum:0
 	        }]
 	}
      

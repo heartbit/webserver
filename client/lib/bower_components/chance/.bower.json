@@ -1,6 +1,6 @@
 {
   "name": "chance",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "main": "chance.js",
   "ignore": [
     "node_modules"
@@ -20,13 +20,14 @@
     "mocha": "1.18.0",
     "chai": "~1.9.0",
     "requirejs": "~2.1.11",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "phone_number_js": "~1.0.0"
   },
-  "_release": "0.6.1",
+  "_release": "0.6.2",
   "_resolution": {
     "type": "version",
-    "tag": "0.6.1",
-    "commit": "483ba9ce269c69a563dd83b489a72dde7582eb39"
+    "tag": "0.6.2",
+    "commit": "8bba10fc2b582de5a3338288872a7ba414335c80"
   },
   "_source": "git://github.com/victorquinn/chancejs.git",
   "_target": "*",

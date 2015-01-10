@@ -9106,13 +9106,11 @@ ul.DTTT_dropdown.dropdown-menu > li:hover > a {
   overflow: hidden; }
 
 .gridster .panel-body {
-  height: inherit;
   overflow-y: auto;
   overflow-x: hidden; }
 
 .gridster .panel {
-  height: 100%;
-  padding-bottom: 60px; }
+  height: 100%; }
 
 .gridster .panel-heading {
   cursor: pointer;

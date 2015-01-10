@@ -6,10 +6,12 @@ module.exports = {
     ASK_RIPPLEID: null,
     ASK_RIPPLELINES: null,
     ASK_RIPPLEINFOS: null,
+    ASK_RIPPLEEXCHANGERATES:null,
     REGISTER_CURRENTREFGRID: null,
     REGISTER_CURRENTGRID: null,
     ADD_WIDGET: null,
-    REMOVE_WIDGET: null
+    REMOVE_WIDGET: null,
+    LOADING_GIF: null
   }),
 
   PayloadSources: keyMirror({

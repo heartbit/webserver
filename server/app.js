@@ -210,13 +210,20 @@ App.prototype.initProxies = function() {
     };
     this.newsproxy = new NewsProxy(newsProxyParams);
 
-    var RippleidProxy = require(proxiesPath + 'rippleidProxy');
-    var rippleidProxyParams = {
-        rippleidProxyHost: this.config.rippleidproxy.hostUrl,
-        rippleidRemoteServer: this.config.rippleidproxy.remoteserver,
+    var RippleaccountProxy = require(proxiesPath + 'rippleaccountProxy');
+    var rippleaccountProxyParams = {
+        rippleaccountProxyHost: this.config.rippleaccountproxy.hostUrl,
+        rippleaccountRemoteServer: this.config.rippleaccountproxy.remoteserver,
         app: this.app
     };
-    this.rippleidProxy = new RippleidProxy(rippleidProxyParams);
+    this.rippleaccountProxy = new RippleaccountProxy(rippleaccountProxyParams);
+
+    var RippledataapiProxy = require(proxiesPath + 'rippledataapiProxy');
+    var rippledataapiProxyParams = {
+        rippledataapiProxyHost: this.config.rippledataapiproxy.hostUrl,
+        app: this.app
+    };
+    this.rippledataapiProxy = new RippledataapiProxy(rippledataapiProxyParams);
 
     var initProxyCallback = function() {
         console.log('Api proxy...OK');
@@ -230,11 +237,17 @@ App.prototype.initProxies = function() {
 
     this.newsproxy.init(initNewsProxyCallback);
 
-    var initRippleidProxyCallback = function() {
-        console.log('RippleId proxy...OK');  
+    var initRippleaccountProxyCallback = function() {
+        console.log('RippleAccount proxy...OK');  
     };
 
-    this.rippleidProxy.init(initRippleidProxyCallback);
+    this.rippleaccountProxy.init(initRippleaccountProxyCallback);
+
+    var initRippledataapiProxyCallback = function() {
+        console.log('RippleDataApi proxy ... OK');
+    }
+
+    this.rippledataapiProxy.init(initRippledataapiProxyCallback);
 };
 
 App.prototype.initServicesRoutes = function() {

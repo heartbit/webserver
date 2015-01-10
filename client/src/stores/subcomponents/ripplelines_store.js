@@ -5,7 +5,7 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 var _RippleLines = {};
-
+var i =0;
 
 function registerAccount(result) {
 	var accounts = result.toJSON();
@@ -13,7 +13,7 @@ function registerAccount(result) {
 	_.each(accounts, function(account) {
 		_RippleLines[account.id] = account;
 	});
-	// console.log(_RippleLines);
+	// console.log("_Ripplelines",_RippleLines);
 };
 
 var RipplelinesStore = assign({}, EventEmitter.prototype, {
@@ -28,12 +28,16 @@ var RipplelinesStore = assign({}, EventEmitter.prototype, {
 		return res;
 	},
 
-	emitChange: function() {
-		this.emit(CHANGE_EVENT);
+	emitChange: function(result) {
+		var self=this;
+		var accounts = result.toJSON();
+		_.each(accounts,function(account) {
+			self.emit(account.id);
+		});
 	},
 
-	addChangeListener: function(callback) {
-		this.on(CHANGE_EVENT, callback);
+	addChangeListener: function(address,callback) {
+		this.on(address, callback);
 	},
 
 	removeChangeListener: function(callback) {
@@ -52,11 +56,12 @@ Dispatcher.register(function(payload) {
   	switch(action.actionType) {
  
   		 case Constants.ActionTypes.ASK_RIPPLELINES:	
-  		 	registerAccount(action.result); 	 		
+  		 	registerAccount(action.result); 
+  		 	RipplelinesStore.emitChange(action.result);	 		
   		 	break;
   	}
 
-  	RipplelinesStore.emitChange();
+  
   	
   	return true;
 

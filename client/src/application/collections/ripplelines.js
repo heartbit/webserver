@@ -10,17 +10,20 @@ var RippleLines = Backbone.Collection.extend({
 	},
 
 	createLinesList: function(toresolves) {
+		// var RippledataActions = require("RippledataActions");
 		var self = this;
 		this.reset();
 		
 		xhrs = _.map(toresolves, function(toresolve,i) {
 			var model = new RippleLine({id:toresolve.id},toresolve.address);
 			var xhr = model.fetch({
-				success: function(model,response) {
-					// var modelid = gridsterKeys[i];
-					// model.set("id",modelid);
-					self.add(model);
-				}
+					success: function(model,response) {
+						self.add(model);
+						// RippledataActions.exchangerates(model,i);
+					}, 
+					error: function(error) {
+						console.log("FETCHERROR_ripplelines",error);
+					}			
 			}); 
 			return xhr;       
         });

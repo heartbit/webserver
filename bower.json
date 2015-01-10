@@ -12,7 +12,8 @@
     "js-schema": "*",
     "numeral": "*",
     "cryptojslib": "*",
-    "store.js": "*"
+    "store.js": "*",
+    "d3":"*"
   },
   "devDependencies": {
     "chance": "*"
