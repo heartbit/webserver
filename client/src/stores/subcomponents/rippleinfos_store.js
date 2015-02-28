@@ -2,13 +2,18 @@ var Dispatcher = require("Dispatcher");
 var EventEmitter = require('events').EventEmitter;
 var Constants = require('Constants');
 var assign = require('object-assign');
+var RipplelinesStore = require('RipplelinesStore');
+var RippleinfosStore = require('RippleinfosStore');
+var RippleexchangeratesStore = require('RippleexchangeratesStore');
 
 var CHANGE_EVENT = 'change';
 var _RippleInfos = {};
 
 
 function registerInfo(result) {
+	console.log('infos_result',result);
 	var infos = result.toJSON();
+	// console.log(infos);
 
 	_.each(infos, function(info) {
 		_RippleInfos[info.id] = info;
@@ -32,7 +37,6 @@ var RippleinfosStore = assign({}, EventEmitter.prototype, {
 	emitChange: function(result) {
 		var self=this;
 		var addresses = result.toJSON();
-		// console.log("emitchangei",++i);
 		_.each(addresses, function(address) {
 			self.emit(address.id);
 		});
@@ -44,19 +48,16 @@ var RippleinfosStore = assign({}, EventEmitter.prototype, {
 
 	removeChangeListener: function(callback) {
 		this.removeListener(CHANGE_EVENT, callback);
-	},
-
-	
+	}
 
 });
 
 
-Dispatcher.register(function(payload) {
+RippleinfosStore.dispatcherIndex = Dispatcher.register(function(payload) {
 	var action = payload.action;
   	var result;
  
   	switch(action.actionType) {
- 
   		 case Constants.ActionTypes.ASK_RIPPLEINFOS:	
   		 	registerInfo(action.result); 	
   		 	RippleinfosStore.emitChange(action.result); 		

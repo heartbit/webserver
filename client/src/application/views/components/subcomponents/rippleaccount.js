@@ -34,7 +34,7 @@ function getRippleidState(key) {
 function getRipplelinesState(key) {
 
     var ripplelines=RipplelinesStore.getSpecific(key);
-    console.log(ripplelines);
+    // console.log(ripplelines);
     return {
       id:new Date().getTime(),
       ripplelines:ripplelines
@@ -94,10 +94,8 @@ var RippleAccount = React.createClass({
       }
       var panelstyle = { height:250+'px'};
       var linestyle = { 'margin-bottom': 5 +'px'};
-      //format results to display
-     
 
-
+      // console.log(this.state);
 
       return (
         <div className="panel panel-default">
@@ -184,7 +182,6 @@ var RippleAccount = React.createClass({
         });
       }
       getlines.ripplelines["address"+key].lines = toformat;
-      console.log(getlines);
       this.setState(getlines);
     },
     _onChangeRippleinfos: function() {

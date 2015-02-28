@@ -11,7 +11,8 @@ module.exports = {
 		home: ['homeBundle'],
 		login: ['loginBundle'],
 		register: ['registerBundle'],
-		account: ['accountBundle']
+		account: ['accountBundle'],
+		components: ['componentsBundle'] 
 	},
 
 	output: {
@@ -75,6 +76,7 @@ module.exports = {
 			loginBundle: path.join(__dirname, './src/bundle/login'),
 			registerBundle: path.join(__dirname, './src/bundle/register'),
 			accountBundle: path.join(__dirname, './src/bundle/account'),
+			componentsBundle: path.join(__dirname, './src/bundle/components'),
 
 			// Helpers
 			DataHelper: path.join(__dirname, './src/application/helpers/dataHelper'),
@@ -109,7 +111,7 @@ module.exports = {
 			Searchbar_app: path.join(__dirname, './src/application/views/components/subcomponents/searchbar_app'),
 			AbstractSubcomponent: path.join(__dirname, './src/application/views/components/subcomponents/abstractsubcomponent'),
 			DropDown: path.join(__dirname, './src/application/views/components/subcomponents/dropdown'),
-
+			AccountOverview: path.join(__dirname, './src/application/views/components/subcomponents/accountoverview'),
 
 			//subcomponent helpers
 			SubcomponentSelector: path.join(__dirname, './src/application/views/components/subcomponentselector'),
@@ -130,6 +132,7 @@ module.exports = {
 			RipplelinesStore: path.join(__dirname, './src/stores/subcomponents/ripplelines_store'),
 			RippleinfosStore: path.join(__dirname,'./src/stores/subcomponents/rippleinfos_store'),
 			RippleexchangeratesStore: path.join(__dirname, './src/stores/subcomponents/rippleexchangerates_store'),
+			RippleaccountoverviewsStore: path.join(__dirname, './src/stores/subcomponents/rippleaccountoverview_store'),
 
 			// Constants
 			Constants: path.join(__dirname, './src/constants/constants'),

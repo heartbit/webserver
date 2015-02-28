@@ -29,7 +29,7 @@ var addWidget = {
       var keyfactnumber = parseInt(loadeditemsnumber) + parseInt(i) +1;
       item.key = "keyfact" + keyfactnumber; 
       item.blocknum = blocknum;   
-      console.log(blocknum);
+      // console.log(blocknum);
     });
 
     var newReactWidgets = items.map(function(item) {

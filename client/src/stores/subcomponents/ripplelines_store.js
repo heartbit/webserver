@@ -49,20 +49,18 @@ var RipplelinesStore = assign({}, EventEmitter.prototype, {
 });
 
 
-Dispatcher.register(function(payload) {
+RipplelinesStore.dispatcherIndex= Dispatcher.register(function(payload) {
 	var action = payload.action;
   	var result;
  
   	switch(action.actionType) {
  
-  		 case Constants.ActionTypes.ASK_RIPPLELINES:	
+  		 case Constants.ActionTypes.ASK_RIPPLELINES:
   		 	registerAccount(action.result); 
   		 	RipplelinesStore.emitChange(action.result);	 		
   		 	break;
   	}
 
-  
-  	
   	return true;
 
 });

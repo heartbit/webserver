@@ -77,7 +77,7 @@ var RippleidStore = assign({}, EventEmitter.prototype, {
 });
 
 
-Dispatcher.register(function(payload) {
+RippleidStore.dispatcherIndex = Dispatcher.register(function(payload) {
 	var action = payload.action;
   	var result;
 

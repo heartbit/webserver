@@ -5,7 +5,8 @@ var SideMenu = require('SideMenu');
 var Footer = require('Footer');
 var Dashboard = require('Dashboard');
 var Searchbar = require('Searchbar_account');
-
+var Components = require('componentsBundle');
+console.log(Components);
 
 var Account = React.createClass({
 	componentDidMount: function() {
