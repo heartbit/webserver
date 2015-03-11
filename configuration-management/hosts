@@ -1,4 +1,15 @@
-webserver1 ansible_ssh_host=heartbit.io
+ovhpetite ansible_ssh_host=heartbit.io
 
-[webserver]
-webserver1
+[all:children]
+webservers
+redis
+loadbalancers
+
+[webservers]
+ovhpetite
+
+[redis]
+ovhpetite
+
+[loadbalancers]
+ovhpetite

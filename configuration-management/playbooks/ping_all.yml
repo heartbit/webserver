@@ -1,6 +1,6 @@
 ---
 - name: Ping 
-  hosts: webserver
+  hosts: all
   sudo: True
   tasks:
     - name: Ping

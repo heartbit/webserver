@@ -1,0 +1,7 @@
+--- 
+- name: Deploy production webserver  
+  hosts: webservers
+  remote_user: "{{ deploy_user }}"
+  tasks:
+    - name: Cheeckout git repo 
+      git: repo=git@github.com:heartbit/webserver.git dest=/home/{{ deploy_user}}/webserver1 accept_hostkey=yes

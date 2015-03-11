@@ -1,0 +1,15 @@
+---
+- name: Install common  
+  hosts: webservers
+  sudo: True
+  roles:
+    - create_users
+#     # - check_packages
+#     - install_nodejs
+#     # - install_redis
+
+# - name: Install loadbalancers
+#   hosts: loadbalancers
+#   sudo: True
+#   roles: 
+#     - role: install_haproxy

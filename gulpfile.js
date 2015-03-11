@@ -17,7 +17,6 @@ var webpackConfig = require("./client/webpack.config.js");
 gulp.task("install", ["bower", "build"]);
 gulp.task("test-client", ["mocha", "casper"]);
 gulp.task("dev", ["watch-sass", 'dev-demon']);
-gulp.task("build-dev", ["clean", "test-client", "sass", "webpack:build-dev"]);
 gulp.task("build", ["clean", "test-client", "plato", "sass", "build:prod"]);
 gulp.task("doc", ["jsdoc"]);
 
@@ -100,7 +99,10 @@ gulp.task("build:prod", function(callback) {
     );
     // run webpack
     webpack(myConfig, function(err, stats) {
-        if (err) throw new gutil.PluginError("webpack:build", err);
+        if (err) {
+            throw new gutil.PluginError("webpack:build", err);
+            console.log(err);
+        }
         gutil.log("[webpack:build]", stats.toString({
             colors: true
         }));
