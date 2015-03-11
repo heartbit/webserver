@@ -1,0 +1,10 @@
+node_modules
+build
+reports
+logs
+.tmp
+.nodemonignore
+.sass-cache/
+client/components
+client/styles/all.css
+client/styles/all-sass.css
