@@ -47,10 +47,12 @@ gulp.task('sass', function() {
         .pipe(sass())
         .pipe(gulp.dest('./client/dist/css/'));
 });
+
 /* Bower */
 gulp.task('bower', function() { 
     return bower() .pipe(gulp.dest('./client/lib/bower_components')) ;
 });
+
 /* Analytics */
 gulp.task('plato', function() {
     return gulp.src('./client/src/**/*.js')
@@ -61,6 +63,7 @@ gulp.task('plato', function() {
             }
         }));
 });
+
 /* Tests client */
 gulp.task('mocha', function() {
     return gulp.src('./client/test/mocha/*.js', {

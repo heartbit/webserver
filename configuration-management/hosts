@@ -1,0 +1,4 @@
+webserver1 ansible_ssh_host=heartbit.io
+
+[webserver]
+webserver1

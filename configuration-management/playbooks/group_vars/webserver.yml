@@ -1,0 +1,5 @@
+---
+# Define global variables
+ansible_ssh_user: ber
+ansible_ssh_pass: fraisefrqise95
+ansible_sudo_pass: fraisefrqise95

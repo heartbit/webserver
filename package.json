@@ -37,7 +37,8 @@
     "ripple-lib": "^0.9.3",
     "socket.io": "*",
     "socket.io-client": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "slang": "*"
   },
   "devDependencies": {
     "flux": "*",
