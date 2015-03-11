@@ -10,7 +10,7 @@ var spawn = require('child_process').spawn;
 var nodemon = require('gulp-nodemon');
 var webpack = require("webpack");
 
-// herouku cmd log: heroku logs --app  heartbit-dev  --ps web --tail
+// heroku cmd log: heroku logs --app  heartbit-dev  --ps web --tail
 var WebpackDevServer = require("webpack-dev-server");
 var webpackConfig = require("./client/webpack.config.js");
 
