@@ -87,7 +87,9 @@ gulp.task('casper', function() {
 gulp.task("build:prod", function(callback) {
     // modify some webpack config options
     var myConfig = Object.create(webpackConfig);
-    myConfig.plugins = myConfig.plugins.concat(
+    myConfig.debug = true;
+
+    myConfig.plugins = myConfig.plugins.concat([
         new webpack.DefinePlugin({
             "process.env": {
                 // This has effect on the react lib size
@@ -95,10 +97,17 @@ gulp.task("build:prod", function(callback) {
             }
         }),
         new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.UglifyJsPlugin()
-    );
+        new webpack.optimize.UglifyJsPlugin({
+            minimize: false,
+            compress: false,
+            cache: false,
+            sourceMap: false
+        })
+    ]);
+
     // run webpack
-    webpack(myConfig, function(err, stats) {
+    var prodCompiler = webpack(myConfig);
+    prodCompiler.run(function(err, stats) {
         if (err) {
             throw new gutil.PluginError("webpack:build", err);
             console.log(err);
