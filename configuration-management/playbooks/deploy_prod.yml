@@ -13,8 +13,16 @@
       npm: path="/home/{{ deploy_user}}/{{ item.name }}" state=present
       with_items: front_servers
 
+    - name: npm install global modules
+      npm: 
+        global: yes
+        name: "{{ item }}"
+      with_items: nodejs_global_packages
+
     - name: gulp install
-      shell: "gulp install" chdir="/home/{{ deploy_user}}/{{ item.name }}"
+      shell: gulp install
+      args:
+        chdir: "/home/{{ deploy_user}}/{{ item.name }}"
       with_items: front_servers
 
-      
+
