@@ -42,6 +42,8 @@
   },
   "devDependencies": {
     "flux": "*",
+    "keymirror": "*",
+    "object-assign":"*",
     "react": "*",
     "react-bootstrap": "*",
     "react-addons": "*",
