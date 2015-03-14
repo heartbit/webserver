@@ -10,8 +10,8 @@
     #     name: "{{ item }}"
     #   with_items: nodejs_global_packages
 
-    # - name: Stop all servers
-    #   shell: "forever stopall"
+    - name: Stop all servers
+      shell: "forever stopall"
 
     # - name: Checkout git repo 
     #   remote_user: "{{ deploy_user }}"
@@ -29,7 +29,9 @@
     #   with_items: front_servers
 
     - name: launch servers
-      shell: forever start /home/{{ deploy_user}}/{{ item.name }}/webserver.js -b -p {{ item.port }}
+      shell: forever start webserver.js -b -p {{ item.port }}
+      args:
+        chdir: /home/{{ deploy_user}}/{{ item.name }}
       with_items: front_servers
 
 
