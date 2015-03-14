@@ -1,6 +1,6 @@
 {
   "name": "chance",
-  "version": "0.6.2",
+  "version": "0.7.3",
   "main": "chance.js",
   "ignore": [
     "node_modules"
@@ -17,19 +17,17 @@
     "web": "http://victorquinn.com"
   },
   "devDependencies": {
-    "mocha": "1.18.0",
-    "chai": "~1.9.0",
-    "requirejs": "~2.1.11",
-    "lodash": "~2.4.1",
-    "phone_number_js": "~1.0.0"
+    "chai": "~1.10.0",
+    "mocha": "~2.1.0",
+    "phone_number_js": "~1.0.0",
+    "requirejs": "~2.1.15"
   },
-  "_release": "0.6.2",
+  "_release": "0.7.3",
   "_resolution": {
     "type": "version",
-    "tag": "0.6.2",
-    "commit": "8bba10fc2b582de5a3338288872a7ba414335c80"
+    "tag": "0.7.3",
+    "commit": "bf0306cfb86bdc8785df201454292ee9f6d49763"
   },
   "_source": "git://github.com/victorquinn/chancejs.git",
-  "_target": "*",
-  "_originalSource": "chance"
+  "_target": "*"
 }

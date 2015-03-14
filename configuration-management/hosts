@@ -1,4 +1,4 @@
-ovhpetite ansible_ssh_host=heartbit.io
+ovhpetite ansible_ssh_host=176.31.114.161
 
 [all:children]
 webservers
