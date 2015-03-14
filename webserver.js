@@ -1,15 +1,11 @@
 var os = require('os');
 var cluster = require('cluster');
 
-var port = process.env.PORT || 9090;
-var isDev = false;
-var isDeployed = false;
-process.argv.forEach(function(val, index, array) {
-    if (val == "dev")
-        isDev = true;
-    if (val == "dep")
-        isDeployed = true;
-});
+var argv = require('minimist')(process.argv.slice(2));
+console.dir(argv);
+var port = argv.p || process.env.PORT || 9090;
+var isDev = argv.d || false;
+var isDeployed = argv.b || false;
 
 console.log('');
 console.log('Webserver - Heartbit');
@@ -30,11 +26,11 @@ var App = require(webapp_server_path + 'app');
 var app = new App();
 
 var options = {
-    port: port,
-    isDev: isDev,
-    isDeployed: isDeployed,
-    serverPath: webapp_server_path,
-    clientPath: webapp_client_path
+	port: port,
+	isDev: isDev,
+	isDeployed: isDeployed,
+	serverPath: webapp_server_path,
+	clientPath: webapp_client_path
 };
 
 app.start(options);
