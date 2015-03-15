@@ -1,20 +1,26 @@
 ---
-- name: Install webservers  
-  hosts: webservers
-  sudo: True
-  roles:
-    - create_users
-    - check_packages
-    - install_nodejs
+# - name: Install webservers  
+#   hosts: webservers
+#   sudo: True
+#   roles:
+#     - create_users
+#     - check_packages
+#     - install_nodejs
 
-- name: Install redis  
-  hosts: redis
-  sudo: True
-  roles:
-    - install_redis
+# - name: Install redis  
+#   hosts: redis
+#   sudo: True
+#   roles:
+#     - install_redis
 
-- name: Install loadbalancers
-  hosts: loadbalancers
+# - name: Install loadbalancers
+#   hosts: loadbalancers
+#   sudo: True
+#   roles: 
+#     - role: install_haproxy
+
+- name: Install mongo
+  hosts: mongoservers
   sudo: True
   roles: 
-    - role: install_haproxy
+    - role: install_mongo

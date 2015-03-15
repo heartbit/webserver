@@ -23,7 +23,7 @@ config.newsproxy.apiUrl = config.newsproxy.hostUrl + '/news/';
 config.rippleaccountproxy = {};
 config.rippleaccountproxy.host = "https://id.ripple.com/v1/user/";
 config.rippleaccountproxy.port = "";
-config.rippleaccountproxy.hostUrl = config.rippleaccountproxy.host ;
+config.rippleaccountproxy.hostUrl = config.rippleaccountproxy.host;
 config.rippleaccountproxy.remoteserver = "wss://s1.ripple.com:443";
 
 
@@ -33,8 +33,13 @@ config.rippledataapiproxy.port = "";
 config.rippledataapiproxy.hostUrl = config.rippledataapiproxy.host;
 
 config.db = {};
-// config.db.redis = "redis://ber:fraisefrqise95@insightfult.iocointrader.com:6379";
-config.db.redis = "redis://ber:fraisefrqise95@heartbit.io:6379";
+config.db.redis = {};
+config.db.redis.url = "redis://176.31.114.161:6379";
+config.db.redis.password = "secret";
+
+config.db.mongo = {};
+config.db.mongo.url = "mongodb://176.31.114.161:27017/heartbit";
+config.db.mongo.password = "";
 
 config.measures = [{
 	key: 'TCK',

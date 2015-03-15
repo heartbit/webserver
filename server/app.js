@@ -4,7 +4,6 @@ var Q = require('q');
 
 var App = function() {};
 
-
 App.prototype.start = function(options) {
 
     var self = this;
@@ -45,7 +44,7 @@ App.prototype.initManagers = function() {
     return Q.all([
         this.initEventManager(),
         // this.initRedisAndCacheManager(),
-        // this.initMongoManager()
+        this.initMongoManager()
     ]);
 };
 
@@ -73,7 +72,8 @@ App.prototype.initRedisAndCacheManager = function() {
 
     var redisParams = {
         isDeployed: this.options.isDeployed,
-        url: this.config.db.redis,
+        url: this.config.db.redis.url,
+        password: this.config.db.redis.password
     };
     this.redisManager = require(this.options.serverPath + '/managers/RedisManager');
     this.cacheManager = require(this.options.serverPath + '/managers/CacheManager');
@@ -83,9 +83,9 @@ App.prototype.initRedisAndCacheManager = function() {
             self.cacheManager.init(redisParams);
         })
         .done(function() {
-            self.redisManager.subscribeToChannels(function() {
+            // self.redisManager.subscribeToChannels(function() {
                 deferred.resolve();
-            });
+            // });
         });
 
     return deferred.promise;
@@ -238,7 +238,7 @@ App.prototype.initProxies = function() {
     this.newsproxy.init(initNewsProxyCallback);
 
     var initRippleaccountProxyCallback = function() {
-        console.log('RippleAccount proxy...OK');  
+        console.log('RippleAccount proxy...OK');
     };
 
     this.rippleaccountProxy.init(initRippleaccountProxyCallback);

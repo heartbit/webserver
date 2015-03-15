@@ -1,5 +1,5 @@
 var Q = require('q');
-var url = require('../config/').mongo.url;
+var url = require('../config/').db.mongo.url;
 
 function MongoManager() {
     if (MongoManager.caller != MongoManager.getInstance) {
@@ -17,7 +17,7 @@ MongoManager.prototype.init = function(params) {
             auto_reconnect: true
         }
     };
-
+    console.log(url)
     this.mongoose.connect(url, opts);
 
     var reconnTimer = null;

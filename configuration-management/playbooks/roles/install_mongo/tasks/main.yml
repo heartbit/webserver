@@ -1,0 +1,29 @@
+---
+# File: tasks.yml
+# Part: Mongodb
+#
+# Description:
+# - Install MongoDB from 10gen packages
+#
+# Parameters:
+#
+# Dependencies ([part:]type:filename):
+#
+# OS familly: Ubuntu >= 12.04
+
+- name: install packages
+  action: apt update_cache=yes pkg={{item}} state=installed
+  with_items:
+    - mongodb
+
+- name: MongoDB | Push default configuration template
+  template:
+    src=../templates/mongodb.conf.j2
+    dest=/etc/mongodb.conf
+    owner=root group=root mode=0644
+  notify:
+  - mongodb-restart
+
+# Insure service is running.
+- name: MongoDB | Insure deamon is running correctly
+  service: name=mongodb state=started

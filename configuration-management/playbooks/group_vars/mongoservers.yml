@@ -1,0 +1,4 @@
+# File: main.yml
+# Part: MongoDB
+mongodb_nohttpinterface: "false"
+mongodb_bind_ip: "0.0.0.0"

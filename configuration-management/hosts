@@ -4,6 +4,7 @@ ovhpetite ansible_ssh_host=176.31.114.161
 webservers
 redis
 loadbalancers
+mongoservers
 
 [webservers]
 ovhpetite
@@ -12,4 +13,7 @@ ovhpetite
 ovhpetite
 
 [loadbalancers]
+ovhpetite
+
+[mongoservers]
 ovhpetite

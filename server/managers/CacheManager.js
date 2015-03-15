@@ -18,14 +18,14 @@ CacheManager.prototype.init = function(params) {
     };
 
     if (params.isDeployed) {
-        // this.redisClient = redis.createClient(null, null, redisOptions);
+        // this.redisClient = redis.createClient();
         var redisCloudUrl = url.parse(params.url);
         this.redisClient = redis.createClient(redisCloudUrl.port, redisCloudUrl.hostname, redisOptions);
-        this.redisClient.auth(redisCloudUrl.auth.split(":")[1]);
+        this.redisClient.auth(params.password);
     } else {
         var redisCloudUrl = url.parse(params.url);
         this.redisClient = redis.createClient(redisCloudUrl.port, redisCloudUrl.hostname, redisOptions);
-        this.redisClient.auth(redisCloudUrl.auth.split(":")[1]);
+        this.redisClient.auth(params.password);
     }
 
     this.redisClient.on("error", function(err) {
