@@ -12,7 +12,7 @@ module.exports = {
 		login: ['loginBundle'],
 		register: ['registerBundle'],
 		account: ['accountBundle'],
-		components: ['componentsBundle'] 
+		components: ['componentsBundle']
 	},
 
 	output: {
@@ -64,7 +64,7 @@ module.exports = {
 
 			//config
 			config: path.join(__dirname, './src/application/config/global'),
-			config_rippleaccount: path.join(__dirname,'./src/application/config/config_rippleaccount'),
+			config_rippleaccount: path.join(__dirname, './src/application/config/config_rippleaccount'),
 			config_rippledataapi: path.join(__dirname, './src/application/config/config_rippledataapi'),
 
 			// views config
@@ -101,8 +101,8 @@ module.exports = {
 			SideMenu: path.join(__dirname, './src/application/views/components/sidemenu/sidemenu'),
 			// SearchComponent: path.join(__dirname, './src/components/search/searchComponent'),
 			Dashboard: path.join(__dirname, './src/application/views/components/dashboard/dashboard'),
-			AddWidget: path.join(__dirname,'./src/application/views/components/dashboard/addWidget'),
-			RemoveWidget: path.join(__dirname,'./src/application/views/components/dashboard/removeWidget'),
+			AddWidget: path.join(__dirname, './src/application/views/components/dashboard/addWidget'),
+			RemoveWidget: path.join(__dirname, './src/application/views/components/dashboard/removeWidget'),
 
 			//subcomponents (finest granularity)
 			RippleAccount: path.join(__dirname, './src/application/views/components/subcomponents/rippleaccount'),
@@ -130,7 +130,7 @@ module.exports = {
 			// Stores-subcomponents
 			RippleidStore: path.join(__dirname, './src/stores/subcomponents/rippleid_store'),
 			RipplelinesStore: path.join(__dirname, './src/stores/subcomponents/ripplelines_store'),
-			RippleinfosStore: path.join(__dirname,'./src/stores/subcomponents/rippleinfos_store'),
+			RippleinfosStore: path.join(__dirname, './src/stores/subcomponents/rippleinfos_store'),
 			RippleexchangeratesStore: path.join(__dirname, './src/stores/subcomponents/rippleexchangerates_store'),
 			RippleaccountoverviewsStore: path.join(__dirname, './src/stores/subcomponents/rippleaccountoverview_store'),
 
@@ -142,7 +142,7 @@ module.exports = {
 
 			// Actions
 			AccountActions: path.join(__dirname, './src/actions/account_actions'),
-			RippledataActions: path.join(__dirname,'./src/actions/rippledata_actions'),
+			RippledataActions: path.join(__dirname, './src/actions/rippledata_actions'),
 			DashboardActions: path.join(__dirname, './src/actions/dashboard_actions'),
 
 			//collections
@@ -160,7 +160,7 @@ module.exports = {
 			grid: path.join(__dirname, './src/application/models/grid'),
 
 			//routers
-			AccountRouter: path.join(__dirname,'./src/application/routers/account.router'),
+			AccountRouter: path.join(__dirname, './src/application/routers/account.router'),
 			AppRouter: path.join(__dirname, './src/application/routers/app.router'),
 			// Internal libs
 			gridster: path.join(__dirname, './lib/internal-libs/jquery.gridster/gridster'),

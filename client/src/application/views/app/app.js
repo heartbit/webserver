@@ -5,15 +5,15 @@ var SideMenu = require('SideMenu');
 var Footer = require('Footer');
 var Dashboard = require('Dashboard');
 var Searchbar = require('Searchbar_app');
-// <Dashboard dashboard_config= { this.props.dashboard_config } />
+// <SideMenu />
 // <Footer />
 
 var App = React.createClass({
     render: function() {
         return (
         <div>
-            <Topbar searchbar={Searchbar} />
-            <SideMenu />
+            <Topbar searchbar = {Searchbar} />
+   			<Dashboard dashboard_config = {this.props.dashboard_config} />
         </div>);
     }
 });
