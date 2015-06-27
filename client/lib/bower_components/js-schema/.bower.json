@@ -12,19 +12,20 @@
     "validation",
     "validator"
   ],
-  "version": "0.7.2",
+  "version": "0.7.0",
   "homepage": "https://github.com/molnarg/js-schema",
   "repository": {
     "type": "git",
     "url": "git@github.com:molnarg/js-schema.git"
   },
   "dependencies": {},
-  "_release": "0.7.2",
+  "_release": "0.7.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.7.2",
-    "commit": "bd9dc1c6cde62b9401eeabdcb12cda070fd6ddbe"
+    "tag": "0.7.0",
+    "commit": "06ff06b42bffa87a94a7cc50bf0dff1bbf1edf65"
   },
   "_source": "git://github.com/molnarg/js-schema.git",
-  "_target": "*"
+  "_target": "*",
+  "_originalSource": "js-schema"
 }

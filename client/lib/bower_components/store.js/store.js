@@ -6,21 +6,17 @@
 		storage
 
 	store.disabled = false
-	store.version = '1.3.17'
 	store.set = function(key, value) {}
-	store.get = function(key, defaultVal) {}
-	store.has = function(key) { return store.get(key) !== undefined }
+	store.get = function(key) {}
 	store.remove = function(key) {}
 	store.clear = function() {}
 	store.transact = function(key, defaultVal, transactionFn) {
+		var val = store.get(key)
 		if (transactionFn == null) {
 			transactionFn = defaultVal
 			defaultVal = null
 		}
-		if (defaultVal == null) {
-			defaultVal = {}
-		}
-		var val = store.get(key, defaultVal)
+		if (typeof val == 'undefined') { val = defaultVal || {} }
 		transactionFn(val)
 		store.set(key, val)
 	}
@@ -51,10 +47,7 @@
 			storage.setItem(key, store.serialize(val))
 			return val
 		}
-		store.get = function(key, defaultVal) {
-			var val = store.deserialize(storage.getItem(key))
-			return (val === undefined ? defaultVal : val)
-		}
+		store.get = function(key) { return store.deserialize(storage.getItem(key)) }
 		store.remove = function(key) { storage.removeItem(key) }
 		store.clear = function() { storage.clear() }
 		store.getAll = function() {
@@ -96,7 +89,7 @@
 			storage = doc.createElement('div')
 			storageOwner = doc.body
 		}
-		var withIEStorage = function(storeFunction) {
+		function withIEStorage(storeFunction) {
 			return function() {
 				var args = Array.prototype.slice.call(arguments, 0)
 				args.unshift(storage)
@@ -125,10 +118,9 @@
 			storage.save(localStorageName)
 			return val
 		})
-		store.get = withIEStorage(function(storage, key, defaultVal) {
+		store.get = withIEStorage(function(storage, key) {
 			key = ieKeyFix(key)
-			var val = store.deserialize(storage.getAttribute(key))
-			return (val === undefined ? defaultVal : val)
+			return store.deserialize(storage.getAttribute(key))
 		})
 		store.remove = withIEStorage(function(storage, key) {
 			key = ieKeyFix(key)

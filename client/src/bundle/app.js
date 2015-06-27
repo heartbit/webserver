@@ -1,3 +1,7 @@
-var AppRouter = require('AppRouter');
+require('jquery');
+require('bootstrap');
+var React = require("react");
 
-new AppRouter();
+var App = require('App');
+
+React.render(<App />, document.getElementById('app'));

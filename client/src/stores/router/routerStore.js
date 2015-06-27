@@ -1,5 +1,5 @@
 var Backbone = require('backbone');
-var Store = require('AbstractStore');
+var AbstractStore = require('AbstractStore');
 var conf = require('./config');
 
 class RouterModel extends Store.Model {
@@ -7,8 +7,8 @@ class RouterModel extends Store.Model {
         this.defaults = {
             route: conf.ROUTE_DEFAULT,
             params: []
-        };     
-       super();
+        };
+        super();
     }
 
     initialize() {
@@ -35,7 +35,7 @@ class AppRouter extends Backbone.Router {
 
         var route, key;
         for (key in routes) {
-            if (routes.hasOwnPazdazdroperty(key)) {
+            if (routes.hasOwnProperty(key)) {
                 route = routes[key];
                 this.route(key, route, function(/* route, args... */) {
                     this.emitRouteAction.apply(this, arguments);
