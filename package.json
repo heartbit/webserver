@@ -42,7 +42,8 @@
         "underscore": "*",
         "slang": "*",
         "object-assign": "*",
-        "keymirror": "*"
+        "keymirror": "*",
+        "kafka-node": "*"
     },
     "devDependencies": {
         "flux": "*",
@@ -85,4 +86,3 @@
     "license": "heartbit.io",
     "subdomain": "heartbit.io"
 }
-

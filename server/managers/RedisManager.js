@@ -61,13 +61,6 @@ RedisManager.prototype.subscribeToChannels = function(callback) {
 
         self.redisClient.on("pmessage", function(pattern, channel, message) {
             message = self.parseMessage(channel, message);
-            // console.log(channel);
-
-            // if (channel.indexOf('TCK') != -1) {
-            //     console.log(channel); // + "    " + message.order_book.length);
-            //     console.log(message);
-            // }
-
             CacheManager.set(channel, message);
             EventManager.emit(channel, message);
         });

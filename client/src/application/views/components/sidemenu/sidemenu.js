@@ -1,7 +1,6 @@
 var React = require('react');
 
 /** @jsx React.DOM */
-
 var Sidemenu = React.createClass({
 	render: function(){
 		return ( 
@@ -10,6 +9,24 @@ var Sidemenu = React.createClass({
 		      <a href="#" className="active">
 		        <i className="fa fa-dashboard"></i>
 		        <span className="hidden-xs">Dashboard</span>
+		      </a>
+		    </li>
+		    <li> 
+		      <a href="#">
+		        <i className="fa fa-dashboard"></i>
+		        <span className="hidden-xs">Item</span>
+		      </a>
+		    </li>
+		    <li> 
+		      <a href="#">
+		        <i className="fa fa-Item"></i>
+		        <span className="hidden-xs">Item</span>
+		      </a>
+		    </li>
+		    <li> 
+		      <a href="#">
+		        <i className="fa fa-Item"></i>
+		        <span className="hidden-xs">Item</span>
 		      </a>
 		    </li>
 		  </ul>

@@ -2,14 +2,15 @@ var request = require('request');
 
 function ApiProxy(params) {
 	this.app = params.app;
+	console.log(params.apiProxyHost);
 	this.apiProxyHost = params.apiProxyHost;
 };
 
 ApiProxy.prototype.init = function(callback) {
 	var self = this;
 	this.app.all('/api/*', function(req, res) {
-		// console.log('api proxy : ' + self.apiProxyHost + req.url);
-		// console.log('body : ' + JSON.stringify(req.body));
+		console.log('api proxy : ' + self.apiProxyHost + req.url);
+		console.log('body : ' + JSON.stringify(req.body));
 		var options = {
 			method: req.method,
 			url: self.apiProxyHost + req.url,

@@ -38,13 +38,13 @@ var Dashboard = React.createClass({
     var Items = subcomponentselector.selector(dashboard_config);
 
     var items = dashboard_config.map(function(item) {
-      if(item.datatype) {
-        var Element = Items[item.datatype];
-        return (<Element attributes={item}></Element>);
-      } else {
+      // if(item.datatype) {
+      //   var Element = Items[item.datatype];
+      //   return (<Element attributes={item}></Element>);
+      // } else {
         var Element = Items['abstractsubcomponent'];
         return (<Element attributes={item}></Element>); 
-      }
+      // }
     });
 
     return (
@@ -60,7 +60,5 @@ var Dashboard = React.createClass({
   }
   
 });
-
-
 
 module.exports = Dashboard;

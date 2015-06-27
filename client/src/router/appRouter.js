@@ -1,3 +1,4 @@
+var bootstrap = require('bootstrap');
 var React = require('react');
 var storeMixin = require('storeMixin');
 var RouterStore = require('RouterStore');

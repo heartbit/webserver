@@ -43,8 +43,9 @@ App.prototype.initManagers = function() {
 
     return Q.all([
         this.initEventManager(),
+        this.initKafkaManager()
         // this.initRedisAndCacheManager(),
-        this.initMongoManager()
+        // this.initMongoManager()
     ]);
 };
 
@@ -66,6 +67,11 @@ App.prototype.initMongoManager = function() {
     return this.mongoManager.init();
 };
 
+App.prototype.initKafkaManager = function() {
+    this.kafkaManager = require(this.options.serverPath + '/managers/KafkaManager');
+    return this.kafkaManager.init();
+};
+
 App.prototype.initRedisAndCacheManager = function() {
     var self = this;
     var deferred = Q.defer();
@@ -84,7 +90,7 @@ App.prototype.initRedisAndCacheManager = function() {
         })
         .done(function() {
             // self.redisManager.subscribeToChannels(function() {
-                deferred.resolve();
+            deferred.resolve();
             // });
         });
 
@@ -129,28 +135,14 @@ App.prototype.initSockets = function() {
     var self = this;
     var socketsPath = this.options.serverPath + 'sockets/';
 
-    switch (this.options.mode) {
-        case "online":
-            var ClientSocket = require(socketsPath + 'clientSocket');
-            var socketParams = {
-                isDebug: this.options.isDebug,
-                server: this.server,
-                dataPath: this.options.clientPath + 'data/',
-                apiUrl: this.config.apiproxy.apiUrl
-            };
-            this.clientSocket = new ClientSocket(socketParams);
-            break;
-
-        case "offline":
-        default:
-            var OfflineClientSocket = require(socketsPath + 'offlineClientSocket');
-            var socketParams = {
-                server: this.server,
-                dataPath: this.options.clientPath + 'data/'
-            };
-            this.clientSocket = new OfflineClientSocket(socketParams);
-            break;
-    }
+    var ClientSocket = require(socketsPath + 'clientSocket');
+    var socketParams = {
+        isDebug: this.options.isDebug,
+        server: this.server,
+        dataPath: this.options.clientPath + 'data/',
+        apiUrl: this.config.apiproxy.apiUrl
+    };
+    this.clientSocket = new ClientSocket(socketParams);
 
     var initSocketCallback = function() {
         console.log('Client sockets...OK');
