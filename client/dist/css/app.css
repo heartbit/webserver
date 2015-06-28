@@ -10197,6 +10197,62 @@ td.beauty-hover {
   border: 1px dashed #000;
   opacity: 0.3; }
 
+#CandlesVolumes {
+  height: 380px;
+  width: 920px; }
+
+li.current a {
+  text-decoration: underline;
+  text-decoration: overline; }
+
+#mainChartTimeController {
+  margin-left: 50px; }
+
+.x_time_axis .domain {
+  stroke: #cccccc;
+  stroke-width: 1.5px;
+  fill: none; }
+
+.x_time_axis text {
+  fill: #666666; }
+
+.candle_area {
+  fill: #85bb65; }
+
+.candle_line {
+  stroke: url(#line-gradient);
+  stroke-width: 1.5px;
+  fill: none; }
+
+.y_candle_axis .tick line {
+  stroke: #cccccc;
+  /*stroke-dasharray: 4,6;*/
+  opacity: .5; }
+
+.y_candle_axis .tick text {
+  fill: #666666; }
+
+.circle {
+  stroke-width: 2px;
+  stroke: #666666;
+  fill: white; }
+
+.y_volume_axis .tick text {
+  fill: #666666; }
+
+.y_volume_axis .tick line {
+  stroke: #cccccc;
+  /*stroke-dasharray: 4,4;*/
+  opacity: .5; }
+
+.y_volume_axis .domain {
+  opacity: 0; }
+
+.brush .extent {
+  fill-opacity: .1;
+  stroke: #fff;
+  shape-rendering: crispEdges; }
+
 .item {
   display: block;
   position: absolute; }

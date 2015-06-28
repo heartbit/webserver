@@ -90,14 +90,17 @@ module.exports = {
 			// Dispatcher
 			Dispatcher: path.join(__dirname, './src/dispatcher/dispatcher'),
 
-
+			FormatUtils: path.join(__dirname, './lib/internal-libs/FormatUtils/FormatUtils'),
 			// Internal libs
 			gridster: path.join(__dirname, './lib/internal-libs/jquery.gridster/gridster'),
 			gridsterResponsive: path.join(__dirname, './lib/internal-libs/gridster-responsive/gridster.responsive'),
 			ChartEngine: path.join(__dirname, './lib/internal-libs/chartEngine/ChartEngine'),
 
+			MainChart: path.join(__dirname, './src/components/charts/mainChart/mainChart'),
+
 			// External libs
 			backbone: path.join(__dirname, './lib/bower_components/backbone/backbone'),
+			d3: path.join(__dirname, './lib/bower_components/d3/d3.min'),
 			bootstrap: path.join(__dirname, './lib/bower_components/bootstrap/dist/js/bootstrap'),
 			jquery: path.join(__dirname, './lib/bower_components/jquery/dist/jquery'),
 			lodash: path.join(__dirname, './lib/bower_components/lodash/dist/lodash.underscore'),
@@ -112,6 +115,10 @@ module.exports = {
 			classie: path.join(__dirname, './lib/internal-libs/home/classie'),
 			cbpAnimatedHeader: path.join(__dirname, './lib/internal-libs/home/cbpAnimatedHeader'),
 			jqueryEasing: path.join(__dirname, './lib/internal-libs/home/jquery.easing'),
+
+			// Data
+			fakevolumes:path.join(__dirname, './data/fakevolumes'),
+			fakecandles:path.join(__dirname, './data/fakecandles')
 		}
 	},
 
