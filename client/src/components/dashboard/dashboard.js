@@ -2,158 +2,162 @@ var React = require('react/addons');
 var gridster = require('gridster');
 var ChartEngine = require('ChartEngine');
 var MainChart = require('MainChart');
-
+var DataSocketManager = require('DataSocketManager');
 var fakecandles = require('fakecandles');
 var fakevolumes = require('fakevolumes');
 
- var TestItem = React.createClass({
-    getInitialState: function() {
-      return {
-        maingraphes:{
-          candles: fakecandles,
-          volumes: fakevolumes
-        }
+DataSocketManager.on("BITSTAMP:BTC:USD:TRD", function(data){
+  console.log("DATA socket: ", data);
+});
+
+var TestItem = React.createClass({
+  getInitialState: function() {
+    return {
+      maingraphes:{
+        candles: fakecandles,
+        volumes: fakevolumes
       }
-    },
-
-    componentDidMount: function() {
-      if(this.props.attributes.chart){
-        console.log('Before init');
-        var mainChart = new MainChart("#" + this.props.attributes.chart);
-        var mainGraphParams = {
-            area: true,
-            candle: false,
-            volume: false,
-            sma: false
-        };
-
-        console.log('Before draw: ', this.state.maingraphes.candles.length, '  ', this.state.maingraphes.volumes.length);
-        mainChart.draw(this.state.maingraphes, mainGraphParams);
-       }
-    },
-    
-    componentWillUnmount: function() {
-    },
-
-    render: function() {
-      return (
-        <div className="panel panel-default">
-          <div className="panel-heading clearfix">
-            <div className="panel-title  pull-left" onMouseOver="" onMouseOut="">
-              <i className={this.props.attributes.icon}></i>
-              <span className="panel-title-text">{this.props.attributes.title}</span>
-            </div>
-            <div className="panel-title pull-right">
-            <a href="#">
-              <i className="fa fa-minus"></i>
-              </a>
-              <a href="#">
-              <i className="fa fa-plus"></i>
-              </a>
-              <a href="#">
-              <i className="fa fa-times"></i>
-              </a>
-            </div>
-          </div>
-          <div className="panel-body">
-          <div id={this.props.attributes.chart ? this.props.attributes.chart: ''}></div>
-          </div>
-        </div>
-        );
     }
-  });
+  },
 
-  var Grid = React.createClass({
-
-    render: function() {
-      return (<ul />);
-    },  
-
-    componentDidMount: function() {
-      var gridster = $(this.getDOMNode()).gridster({
-        widget_margins: [10, 10],
-        widget_base_dimensions: [350, 150],
-        resize: {
-            enabled: false
-          },
-        draggable: {
-            handle: '.panel-heading, .panel-handel'
-          }
-      }).data('gridster');
-
-      gridster.disable();
-
-      this.props.items.map(function(item, i) {
-        var attributes = item.props.attributes;
-        var key = "item" + attributes.key;
-        gridster.add_widget(
-          '<li class="item" id={key}></li>'.replace('{key}', key), 
-          attributes.width,
-          attributes.height,
-          attributes.col,
-          attributes.row
-        );
-        React.render(item, document.getElementById(key));
-      });
-      this.setState({gridster: gridster});
-    }
-  });
-
-  var Dashboard = React.createClass({
-    getInitialState: function() {
-      return {
-        items: [{
-          key: 'keyfact1',
-          title:'Keyfact 1',
-          icon:'fa fa-bar-chart',
-          // chart: 'PieChart',
-          width: 1,
-          height: 1,
-          col: 1,
-          row: 1
-        },
-        {
-          key: 'keyfact2',
-          title:'Keyfact 2',
-          icon:'fa fa-bar-chart',
-          // chart: 'PieChart',
-          width: 1,
-          height: 1,
-          col: 2,
-          row: 1
-        },
-        {
-          key: 'keyfact3',
-          title:'Keyfact 3',
-          icon:'fa fa-bar-chart',
-          width: 1,
-          height: 1,
-          col: 3,
-          row: 1
-        },
-        {
-          key: 'timeline',
-          title: 'Timeline',
-          icon:'fa fa-line-chart',
-          width: 3,
-          height: 3,
-          chart: 'CandlesVolumes',
-          col: 1,
-          row: 2
-        }]
+  componentDidMount: function() {
+    if(this.props.attributes.chart){
+      console.log('Before init');
+      var mainChart = new MainChart("#" + this.props.attributes.chart);
+      var mainGraphParams = {
+          area: true,
+          candle: false,
+          volume: false,
+          sma: false
       };
-    },
 
-    render: function() {
-      var items = this.state.items.map(function(item) {
-        return (<TestItem attributes={item}>{item.key}</TestItem>);
-      });
-      return (
-        <div className="gridster">
-          <Grid items={items} />
+      console.log('Before draw: ', this.state.maingraphes.candles.length, '  ', this.state.maingraphes.volumes.length);
+      mainChart.draw(this.state.maingraphes, mainGraphParams);
+     }
+  },
+  
+  componentWillUnmount: function() {
+  },
+
+  render: function() {
+    return (
+      <div className="panel panel-default">
+        <div className="panel-heading clearfix">
+          <div className="panel-title  pull-left" onMouseOver="" onMouseOut="">
+            <i className={this.props.attributes.icon}></i>
+            <span className="panel-title-text">{this.props.attributes.title}</span>
+          </div>
+          <div className="panel-title pull-right">
+          <a href="#">
+            <i className="fa fa-minus"></i>
+            </a>
+            <a href="#">
+            <i className="fa fa-plus"></i>
+            </a>
+            <a href="#">
+            <i className="fa fa-times"></i>
+            </a>
+          </div>
         </div>
+        <div className="panel-body">
+        <div id={this.props.attributes.chart ? this.props.attributes.chart: ''}></div>
+        </div>
+      </div>
       );
-    }
-  });
+  }
+});
+
+var Grid = React.createClass({
+
+  render: function() {
+    return (<ul />);
+  },  
+
+  componentDidMount: function() {
+    var gridster = $(this.getDOMNode()).gridster({
+      widget_margins: [10, 10],
+      widget_base_dimensions: [350, 150],
+      resize: {
+          enabled: false
+        },
+      draggable: {
+          handle: '.panel-heading, .panel-handel'
+        }
+    }).data('gridster');
+
+    gridster.disable();
+
+    this.props.items.map(function(item, i) {
+      var attributes = item.props.attributes;
+      var key = "item" + attributes.key;
+      gridster.add_widget(
+        '<li class="item" id={key}></li>'.replace('{key}', key), 
+        attributes.width,
+        attributes.height,
+        attributes.col,
+        attributes.row
+      );
+      React.render(item, document.getElementById(key));
+    });
+    this.setState({gridster: gridster});
+  }
+});
+
+var Dashboard = React.createClass({
+  getInitialState: function() {
+    return {
+      items: [{
+        key: 'keyfact1',
+        title:'Keyfact 1',
+        icon:'fa fa-bar-chart',
+        // chart: 'PieChart',
+        width: 1,
+        height: 1,
+        col: 1,
+        row: 1
+      },
+      {
+        key: 'keyfact2',
+        title:'Keyfact 2',
+        icon:'fa fa-bar-chart',
+        // chart: 'PieChart',
+        width: 1,
+        height: 1,
+        col: 2,
+        row: 1
+      },
+      {
+        key: 'keyfact3',
+        title:'Keyfact 3',
+        icon:'fa fa-bar-chart',
+        width: 1,
+        height: 1,
+        col: 3,
+        row: 1
+      },
+      {
+        key: 'timeline',
+        title: 'Timeline',
+        icon:'fa fa-line-chart',
+        width: 3,
+        height: 3,
+        chart: 'CandlesVolumes',
+        col: 1,
+        row: 2
+      }]
+    };
+  },
+
+  render: function() {
+    var items = this.state.items.map(function(item) {
+      return (<TestItem attributes={item}>{item.key}</TestItem>);
+    });
+    return (
+      <div className="gridster">
+        <Grid items={items} />
+      </div>
+    );
+  }
+});
 
 module.exports = Dashboard;

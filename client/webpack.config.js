@@ -96,6 +96,7 @@ module.exports = {
 			gridsterResponsive: path.join(__dirname, './lib/internal-libs/gridster-responsive/gridster.responsive'),
 			ChartEngine: path.join(__dirname, './lib/internal-libs/chartEngine/ChartEngine'),
 
+			DataSocketManager: path.join(__dirname, './src/managers/SocketManager'),
 			MainChart: path.join(__dirname, './src/components/charts/mainChart/mainChart'),
 
 			// External libs
@@ -110,15 +111,15 @@ module.exports = {
 			numeral: path.join(__dirname, './lib/bower_components/numeral/numeral'),
 			moment: path.join(__dirname, './lib/bower_components/momentjs/moment'),
 			localstorage: path.join(__dirname, './lib/bower_components/store.js/store+json2.min'),
-
+			socketio: path.join(__dirname, './lib/internal-libs/socket.io/socket.io-1.3.5.min.js'),
 			// Home page libs
 			classie: path.join(__dirname, './lib/internal-libs/home/classie'),
 			cbpAnimatedHeader: path.join(__dirname, './lib/internal-libs/home/cbpAnimatedHeader'),
 			jqueryEasing: path.join(__dirname, './lib/internal-libs/home/jquery.easing'),
 
 			// Data
-			fakevolumes:path.join(__dirname, './data/fakevolumes'),
-			fakecandles:path.join(__dirname, './data/fakecandles')
+			fakevolumes: path.join(__dirname, './data/fakevolumes'),
+			fakecandles: path.join(__dirname, './data/fakecandles')
 		}
 	},
 

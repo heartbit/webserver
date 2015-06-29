@@ -99,11 +99,9 @@ App.prototype.initRedisAndCacheManager = function() {
 
 App.prototype.initExpressServer = function() {
     var deferred = Q.defer();
-    var express = require('express');
-    var http = require('http');
 
-    this.app = express();
-    this.server = http.createServer(this.app);
+    this.app = require('express')();
+    this.server = require('http').Server(this.app);
 
     var morgan = require('morgan');
     var bodyParser = require('body-parser');
