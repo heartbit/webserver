@@ -11,6 +11,7 @@ DataSocketManager.on("BITSTAMP:BTC:USD:TRD", function(data){
 });
 
 var TestItem = React.createClass({
+  
   getInitialState: function() {
     return {
       maingraphes:{
@@ -30,7 +31,6 @@ var TestItem = React.createClass({
           volume: false,
           sma: false
       };
-
       console.log('Before draw: ', this.state.maingraphes.candles.length, '  ', this.state.maingraphes.volumes.length);
       mainChart.draw(this.state.maingraphes, mainGraphParams);
      }
@@ -65,6 +65,7 @@ var TestItem = React.createClass({
       </div>
       );
   }
+
 });
 
 var Grid = React.createClass({

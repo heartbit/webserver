@@ -9,12 +9,12 @@ var DataSocketManager = function() {
 
 DataSocketManager.getInstance = function() {
     if (instance === null) {
-        instance = io('/data');
+        instance = io();
 
         instance.on('connect', function() {
             console.log('data socket connected!')
         });
-
+        
         instance.on('disconnect', function() {
             console.log('data socket disconnected!')
         });

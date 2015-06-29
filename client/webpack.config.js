@@ -101,7 +101,7 @@ module.exports = {
 
 			// External libs
 			backbone: path.join(__dirname, './lib/bower_components/backbone/backbone'),
-			d3: path.join(__dirname, './lib/bower_components/d3/d3.min'),
+			d3: path.join(__dirname, './lib/internal-libs/d3/d3.min'),
 			bootstrap: path.join(__dirname, './lib/bower_components/bootstrap/dist/js/bootstrap'),
 			jquery: path.join(__dirname, './lib/bower_components/jquery/dist/jquery'),
 			lodash: path.join(__dirname, './lib/bower_components/lodash/dist/lodash.underscore'),

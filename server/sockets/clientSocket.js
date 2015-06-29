@@ -35,23 +35,22 @@ ClientSocket.prototype.run = function(callback) {
 ClientSocket.prototype.initNewsfeedNamespace = function() {
     var self = this;
 
-    this.io
-        .of("/news")
-        .use(function(socket, next) {
-            if (socket) {
-                console.log('SOCKET NEWS CONNECTION MIDDLEWARE')
-                return next();
-            }
-            next(new Error('Authentication error'));
-        })
-        .on('connection', function(socket) {
-            socket.on('news', function(params) {
-                console.log('ask for news')
-                CacheManager.get('news', function(articles) {
-                    socket.emit('news', articles);
-                });
+    var dataNamespace = this.io.of("/news");
+    // .use(function(socket, next) {
+    //     if (socket) {
+    //         console.log('SOCKET NEWS CONNECTION MIDDLEWARE')
+    //         return next();
+    //     }
+    //     next(new Error('Authentication error'));
+    // })
+    dataNamespace.on('connection', function(socket) {
+        socket.on('news', function(params) {
+            console.log('ask for news')
+            CacheManager.get('news', function(articles) {
+                socket.emit('news', articles);
             });
         });
+    });
 
     EventManager.on('news', function(data) {
         self.io
@@ -103,39 +102,26 @@ ClientSocket.prototype.initDataNamespace = function() {
     var self = this;
 
     var channel = "BITSTAMP:BTC:USD:TRD";
-    
+
     this.io.on('connection', function(socket) {
-        console.log('a user connected');
-    });
-
-    this.io
-        .of("/data")
-        .use(function(socket, next) {
-            if (socket) {
-                console.log('SOCKET DATA CONNECTION MIDDLEWARE')
-                return next();
+        console.log('SOCKET NEW CONNECTION');
+        socket.join("BTC:USD", function(err) {
+            if (err) {
+                var payload = {
+                    error: err
+                };
+                console.log('err dataroom join : ', err);
+                socket.emit('enter-dataroom: BTC:USD; err: ', payload);
+            } else {
+                socket.emit('enter-dataroom: BTC:USD: success!!');
             }
-            next(new Error('Authentication error'));
-        })
-        .on('connection', function(socket) {
-            console.log('SOCKET NEW CONNECTION');
-            socket.join("BTC:USD", function(err) {
-                if (err) {
-                    var payload = {
-                        error: err
-                    };
-                    console.log('err dataroom join : ', err);
-                    socket.emit('enter-dataroom: BTC:USD; err: ', payload);
-                } else {
-                    socket.emit('enter-dataroom: BTC:USD: success!!');
-                }
-            });
-
-            socket.on('disconnect', function() {
-                console.log('socket disconnected');
-            });
-
         });
+
+        socket.on('disconnect', function() {
+            console.log('socket disconnected');
+        });
+
+    });
 
     EventManager.on(channel, function(data) {
         console.log('event kafka on channel, send to room /data BTC:USD');
@@ -144,9 +130,7 @@ ClientSocket.prototype.initDataNamespace = function() {
             data: data,
             dataroom: 'BTC:USD'
         };
-        self.io
-            .of("/data")
-            .to('BTC:USD')
+        self.io.to('BTC:USD')
             // .volatile
             .emit(channel, payload);
     });
