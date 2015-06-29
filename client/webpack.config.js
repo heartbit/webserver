@@ -127,6 +127,8 @@ module.exports = {
 			jQuery: 'jquery',
 			$: 'jquery',
 			_: 'lodash',
+			d3: 'd3'
 		})
+		
 	]
 };
