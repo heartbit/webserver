@@ -3,6 +3,7 @@ var gridster = require('gridster');
 var ChartEngine = require('ChartEngine');
 var MainChart = require('MainChart');
 var DataSocketManager = require('DataSocketManager');
+
 var fakecandles = require('fakecandles');
 var fakevolumes = require('fakevolumes');
 
@@ -23,7 +24,7 @@ var TestItem = React.createClass({
 
   componentDidMount: function() {
     if(this.props.attributes.chart){
-      console.log('Before init');
+      console.log('Before ');
       var mainChart = new MainChart("#" + this.props.attributes.chart);
       var mainGraphParams = {
           area: true,
