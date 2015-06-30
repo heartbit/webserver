@@ -34,7 +34,7 @@ MainChart.prototype.parseMainGraphes = function(maingraphes) {
         return checkValues && checkDates;
     })
 
-    models.candles = _.last(models.candles, 30);
+   // models.candles = _.last(models.candles, 30);
 
     models.volumes = _.filter(maingraphes.volumes, function(volume) {
         var checkValues = volume.amount >= 0;
@@ -47,7 +47,7 @@ MainChart.prototype.parseMainGraphes = function(maingraphes) {
     // models.volumes = _.filter(maingraphes.volumes, function(volume, index) {
     //     return index % 10 == 0;
     // });
-    models.volumes = _.last(models.volumes, 30);
+    //models.volumes = _.last(models.volumes, 30);
     this.models = models;
     console.log("PARSE CANDLES:", models.candles.length);
     console.log("PARSE VOLUMES:", models.volumes.length);

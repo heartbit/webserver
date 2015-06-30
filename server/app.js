@@ -17,9 +17,7 @@ App.prototype.start = function(options) {
         .then(function() {
             self.initProxies();
             self.initSockets();
-            self.initUserAPI();
             self.initClientRoutes();
-            self.initServicesRoutes();
             self.initStaticContentManager();
             self.initFourtyFourPage();
         })
@@ -27,10 +25,6 @@ App.prototype.start = function(options) {
             self.run();
         })
         .done();
-};
-
-App.prototype.initUserAPI = function() {
-    this.app.use('/user', require('./routers/userRouter'));
 };
 
 App.prototype.initManagers = function() {
@@ -238,10 +232,6 @@ App.prototype.initProxies = function() {
     }
 
     this.rippledataapiProxy.init(initRippledataapiProxyCallback);
-};
-
-App.prototype.initServicesRoutes = function() {
-    this.app.use('/services', require('./routers/servicesRouter'));
 };
 
 App.prototype.initClientRoutes = function() {
