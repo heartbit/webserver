@@ -16,6 +16,7 @@
         "proxy"
     ],
     "dependencies": {
+        "async": "*",
         "minimist": "*",
         "body-parser": "*",
         "compression": "*",

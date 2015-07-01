@@ -1,32 +1,35 @@
-var React = require('react');
-var storeMixin = require('storeMixin');
-var RouterStore = require('RouterStore');
+var DashboardActions = require('DashboardActions');
+var React = require("react");
+var App = require('App');
 
-var AppRouter = React.createClass({
-    mixins: [storeMixin(RouterStore)],
+var AppRouter = Backbone.Router.extend({
 
-    getInitialState: function() {
-        return { RouterStore: RouterStore };
+    routes: {
+        "app": "app",
     },
 
-    getComponentClass: function(route) {
-        switch (route) {
-            case 'settings':
-                return require('Settings');
-            case 'dashboard':
-            default:
-                return require('Dashboard');
+    initialize: function(params) {
+        Backbone.history.start({
+            pushState: true
+        });
+        this.datarooms = [];
+    },
+
+    app: function(params) {
+        React.render(<App/>, document.getElementById('app'));
+        if(params) {
+            var params = this.getJsonFromUrl(params);
+            DashboardActions.displayMainGraph(params);
         }
     },
-
-    render: function() {
-        var props = {
-            route: this.state.RouterStore.get('route'),
-            routeParams: this.state.RouterStore.get('params')
-        };
-        var Component = this.getComponentClass(props.route);
-        return <Component {...props} />;
-    }
+    getJsonFromUrl: function () {
+	  var query = location.search.substr(1);
+	  var result = {};
+	  query.split("&").forEach(function(part) {
+	    var item = part.split("=");
+	    result[item[0]] = decodeURIComponent(item[1]);
+	  });
+	  return result;
+	}
 });
-
 module.exports = AppRouter;

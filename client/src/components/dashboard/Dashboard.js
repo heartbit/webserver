@@ -4,36 +4,37 @@ var ChartEngine = require('ChartEngine');
 var MainChart = require('MainChart');
 var DataSocketManager = require('DataSocketManager');
 
-var fakecandles = require('fakecandles');
-var fakevolumes = require('fakevolumes');
-
-DataSocketManager.on("BITSTAMP:BTC:USD:TRD", function(data){
-  console.log("DATA socket: ", data);
-});
+var MaingraphStore = require('MaingraphStore');
+var _mainChart,_mainGraphParams;
 
 var TestItem = React.createClass({
   
   getInitialState: function() {
-    return {
-      maingraphes:{
-        candles: fakecandles,
-        volumes: fakevolumes
-      }
-    }
+    return {};
+  },
+  _onUpdateState: function() {
+	  var all = MaingraphStore.getAll()
+ 	  console.log(all)
+	  this.setState({
+		  maingraphes:{
+	        candles: all.candles,
+	        volumes: all.volumes
+	      }
+	  })
+	  
   },
 
   componentDidMount: function() {
-    if(this.props.attributes.chart){
-      console.log('Before ');
-      var mainChart = new MainChart("#" + this.props.attributes.chart);
-      var mainGraphParams = {
+    MaingraphStore.addChangeListener("change" ,this._onUpdateState);
+	  if(this.props.attributes.chart){
+      console.log('Before init');
+      _mainChart = new MainChart("#" + this.props.attributes.chart);
+      _mainGraphParams = {
           area: true,
           candle: false,
           volume: false,
           sma: false
       };
-      console.log('Before draw: ', this.state.maingraphes.candles.length, '  ', this.state.maingraphes.volumes.length);
-      mainChart.draw(this.state.maingraphes, mainGraphParams);
      }
   },
   
@@ -41,6 +42,10 @@ var TestItem = React.createClass({
   },
 
   render: function() {
+    if(!_.isEmpty(this.state)){
+      console.log('Before draw: ', this.state.maingraphes.candles.length, '  ', this.state.maingraphes.volumes.length);
+      _mainChart.draw(this.state.maingraphes, _mainGraphParams);
+    }
     return (
       <div className="panel panel-default">
         <div className="panel-heading clearfix">
