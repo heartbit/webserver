@@ -37,8 +37,8 @@ App.prototype.initManagers = function() {
 
     return Q.all([
         this.initEventManager(),
-        this.initKafkaManager()
-        // this.initRedisAndCacheManager(),
+        // this.initKafkaManager()
+        this.initRedisAndCacheManager(),
         // this.initMongoManager()
     ]);
 };

@@ -57,7 +57,7 @@ module.exports = {
 	},
 
 	resolve: {
-		modulesDirectories: ['node_modules', 'lib/bower_components','lib/internal-libs'],
+		modulesDirectories: ['node_modules', 'lib/bower_components', 'lib/internal-libs'],
 		alias: {
 
 			// Bundles
@@ -66,7 +66,7 @@ module.exports = {
 			loginBundle: path.join(__dirname, './src/bundle/login'),
 			registerBundle: path.join(__dirname, './src/bundle/register'),
 
-			
+
 			Config: path.join(__dirname, './src/config/Config'),
 
 			// Components
@@ -75,7 +75,11 @@ module.exports = {
 			Footer: path.join(__dirname, './src/components/footer/footer'),
 			SideMenu: path.join(__dirname, './src/components/sidemenu/sidemenu'),
 			// SearchComponent: path.join(__dirname, './src/components/search/searchComponent'),
-			
+
+			// Widgets
+			MainChartWidget: path.join(__dirname, './src/components/widgets/MainChartWidget'),
+			TickerWidget: path.join(__dirname, './src/components/widgets/TickerWidget'),
+			BaseWidget: path.join(__dirname, './src/components/widgets/BaseWidget'),
 			Dashboard: path.join(__dirname, './src/components/dashboard/Dashboard'),
 			AuthComponent: path.join(__dirname, './src/components/auth/authComponent'),
 			RegisterComponent: path.join(__dirname, './src/components/auth/registerComponent'),
@@ -86,6 +90,7 @@ module.exports = {
 			CandleStore: path.join(__dirname, './src/stores/CandleStore'),
 			VolumeStore: path.join(__dirname, './src/stores/VolumeStore'),
 			MaingraphStore: path.join(__dirname, './src/stores/MaingraphStore'),
+			TickerStore: path.join(__dirname, './src/stores/TickerStore'),
 
 			// Mixin
 			StoreMixin: path.join(__dirname, './src/stores/mixin/storeMixin'),
@@ -97,19 +102,19 @@ module.exports = {
 			Dispatcher: path.join(__dirname, './src/dispatcher/dispatcher'),
 
 			FormatUtils: path.join(__dirname, './lib/internal-libs/FormatUtils/FormatUtils'),
-			
+
 			//Models & collections
 			Volume: path.join(__dirname, './src/models/Volume'),
 			Candle: path.join(__dirname, './src/models/Candle'),
-			
+			Ticker: path.join(__dirname, './src/models/Ticker'),
 			Candles: path.join(__dirname, './src/collections/Candles'),
 			Volumes: path.join(__dirname, './src/collections/Volumes'),
 
-			
 			Constants: path.join(__dirname, './src/Constants'),
 
 			//Actions
 			DashboardActions: path.join(__dirname, './src/actions/DashboardActions'),
+			TickerActions: path.join(__dirname, './src/actions/TickerActions'),
 			// Internal libs
 			gridster: path.join(__dirname, './lib/internal-libs/jquery.gridster/gridster'),
 			gridsterResponsive: path.join(__dirname, './lib/internal-libs/gridster-responsive/gridster.responsive'),
@@ -150,6 +155,6 @@ module.exports = {
 			Backbone: 'backbone'
 
 		})
-		
+
 	]
 };

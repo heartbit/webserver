@@ -33,7 +33,8 @@ config.rippledataapiproxy.hostUrl = config.rippledataapiproxy.host;
 
 config.db = {};
 config.db.redis = {};
-config.db.redis.url = "redis://176.31.114.161:6379";
+// config.db.redis.url = "redis://176.31.114.161:6379";
+config.db.redis.url = "redis://192.168.1.49:6379";
 config.db.redis.password = "secret";
 
 config.db.mongo = {};

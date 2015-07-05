@@ -4,7 +4,7 @@ var _ = require('underscore');
 var Q = require('q');
 var fs = require('fs');
 var EventManager = require('./EventManager');
-var apiManager = require('./APIManager');
+// var apiManager = require('./APIManager');
 var CacheManager = require('./CacheManager');
 var config = require('../config/');
 
@@ -26,11 +26,11 @@ RedisManager.prototype.init = function(params) {
         // this.redisClient = redis.createClient();
         var redisCloudUrl = url.parse(params.url);
         this.redisClient = redis.createClient(redisCloudUrl.port, redisCloudUrl.hostname, redisOptions);
-        this.redisClient.auth(params.password);
+        // this.redisClient.auth(params.password);
     } else {
         var redisCloudUrl = url.parse(params.url);
         this.redisClient = redis.createClient(redisCloudUrl.port, redisCloudUrl.hostname, redisOptions);
-        this.redisClient.auth(params.password);
+        // this.redisClient.auth(params.password);
     }
 
     this.redisClient.on("error", function(err) {
@@ -39,6 +39,14 @@ RedisManager.prototype.init = function(params) {
 
     this.redisClient.on("connect", function() {
         console.log('Pub/sub connection...OK');
+        var channel = "BITSTAMP:BTC:USD:TCK";
+        self.redisClient.psubscribe(channel);
+        self.redisClient.on("pmessage", function(pattern, channel, message) {
+            message = self.parseMessage(channel, message);
+            // console.log(message);
+            CacheManager.set(channel, message);
+            EventManager.emit(channel, message);
+        });
         deferred.resolve();
     });
 
