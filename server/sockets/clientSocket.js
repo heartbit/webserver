@@ -32,76 +32,11 @@ ClientSocket.prototype.run = function(callback) {
     }
 };
 
-ClientSocket.prototype.initNewsfeedNamespace = function() {
-    var self = this;
-
-    var dataNamespace = this.io.of("/news");
-    // .use(function(socket, next) {
-    //     if (socket) {
-    //         console.log('SOCKET NEWS CONNECTION MIDDLEWARE')
-    //         return next();
-    //     }
-    //     next(new Error('Authentication error'));
-    // })
-    dataNamespace.on('connection', function(socket) {
-        socket.on('news', function(params) {
-            console.log('ask for news')
-            CacheManager.get('news', function(articles) {
-                socket.emit('news', articles);
-            });
-        });
-    });
-
-    EventManager.on('news', function(data) {
-        self.io
-            .of("/news")
-            .volatile
-            .emit('news', data);
-    });
-};
-
-var generateRoomnames = function(callback) {
-    var self = this;
-    var sep = ":";
-    APIManager.getPlatforms(function(platforms) {
-
-        var rooms = [];
-        self.platforms = platforms;
-        _.each(platforms, function(platform) {
-            _.each(platform.pairs, function(pair) {
-
-                var channels = []
-                _.each(config.measures, function(measure) {
-                    channels.push(platform.name + sep + pair.item + sep + pair.currency + sep + measure.key);
-                });
-
-                var roomid = pair.item + sep + pair.currency;
-                var room = _.find(rooms, function(room) {
-                    return room.id == roomid;
-                });
-
-                // Room already exists
-                if (room) {
-                    room.channels = _.union(room.channels, channels);
-                } else {
-                    rooms.push({
-                        id: roomid,
-                        channels: channels
-                    });
-                }
-
-            });
-        });
-
-        callback(rooms);
-
-    });
-};
 
 ClientSocket.prototype.initDataNamespace = function() {
     var self = this;
 
-    var channel = "BITSTAMP:BTC:USD:TRD";
+    var channel = "BITSTAMP:BTC:USD:TCK";
 
     this.io.on('connection', function(socket) {
         console.log('SOCKET NEW CONNECTION');
@@ -113,18 +48,16 @@ ClientSocket.prototype.initDataNamespace = function() {
                 console.log('err dataroom join : ', err);
                 socket.emit('enter-dataroom: BTC:USD; err: ', payload);
             } else {
-                socket.emit('enter-dataroom: BTC:USD: success!!');
+                socket.emit('enter-dataroom: BTC:USD: success!');
             }
         });
-
         socket.on('disconnect', function() {
             console.log('socket disconnected');
         });
-
     });
 
     EventManager.on(channel, function(data) {
-        console.log('event kafka on channel, send to room /data BTC:USD');
+        //console.log('event redis on channel, send to room /data BTC:USD');
         var payload = {
             key: channel,
             data: data,
@@ -136,6 +69,79 @@ ClientSocket.prototype.initDataNamespace = function() {
     });
 
 };
+
+
+
+
+
+
+
+
+// ClientSocket.prototype.initNewsfeedNamespace = function() {
+//     var self = this;
+
+//     var dataNamespace = this.io.of("/news");
+//     // .use(function(socket, next) {
+//     //     if (socket) {
+//     //         console.log('SOCKET NEWS CONNECTION MIDDLEWARE')
+//     //         return next();
+//     //     }
+//     //     next(new Error('Authentication error'));
+//     // })
+//     dataNamespace.on('connection', function(socket) {
+//         socket.on('news', function(params) {
+//             console.log('ask for news')
+//             CacheManager.get('news', function(articles) {
+//                 socket.emit('news', articles);
+//             });
+//         });
+//     });
+
+//     EventManager.on('news', function(data) {
+//         self.io
+//             .of("/news")
+//             .volatile
+//             .emit('news', data);
+//     });
+// };
+
+// var generateRoomnames = function(callback) {
+//     var self = this;
+//     var sep = ":";
+//     APIManager.getPlatforms(function(platforms) {
+
+//         var rooms = [];
+//         self.platforms = platforms;
+//         _.each(platforms, function(platform) {
+//             _.each(platform.pairs, function(pair) {
+
+//                 var channels = []
+//                 _.each(config.measures, function(measure) {
+//                     channels.push(platform.name + sep + pair.item + sep + pair.currency + sep + measure.key);
+//                 });
+
+//                 var roomid = pair.item + sep + pair.currency;
+//                 var room = _.find(rooms, function(room) {
+//                     return room.id == roomid;
+//                 });
+
+//                 // Room already exists
+//                 if (room) {
+//                     room.channels = _.union(room.channels, channels);
+//                 } else {
+//                     rooms.push({
+//                         id: roomid,
+//                         channels: channels
+//                     });
+//                 }
+
+//             });
+//         });
+
+//         callback(rooms);
+
+//     });
+// };
 
 // ClientSocket.prototype.initChatNamespace = function() {
 // 	this.io

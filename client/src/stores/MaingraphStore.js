@@ -8,9 +8,8 @@ var VolumeStore = require('VolumeStore');
 var CHANGE_EVENT = 'change';
 var _MaingraphStore = {};
 
-
 function registerMainGraph() {
-	console.log("_MaingraphStore",_MaingraphStore);
+	// console.log("_MaingraphStore",_MaingraphStore);
 };
 
 var MaingraphStore = assign({}, EventEmitter.prototype, {
@@ -41,7 +40,6 @@ var MaingraphStore = assign({}, EventEmitter.prototype, {
 
 });
 
-
 MaingraphStore.dispatcherIndex = Dispatcher.register(function(payload) {
 	var action = payload.action;
   	var result;
@@ -67,8 +65,6 @@ MaingraphStore.dispatcherIndex = Dispatcher.register(function(payload) {
 			break;
   	}
   	return true;
-
 });
-
 
 module.exports = MaingraphStore;

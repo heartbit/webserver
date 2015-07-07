@@ -9,8 +9,6 @@ var Constants = require('Constants')
 var Q = require('q')
 
 var DashboardActions = {
-	
-	
 
 	displayMainGraph: function(params) {
 		var promiseCandle = this.populeCandle(params)

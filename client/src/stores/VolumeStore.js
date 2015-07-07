@@ -11,7 +11,7 @@ function registerVolumes(result) {
 	_.each(result.volumes, function(volume) {
 		_VolumeStore[volume.timestamp] = volume;
 	});
-	console.log("_VolumeStore",_VolumeStore);
+	// console.log("_VolumeStore",_VolumeStore);
 };
 
 var VolumeStore = assign({}, EventEmitter.prototype, {

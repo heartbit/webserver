@@ -11,7 +11,7 @@ function registerCandles(result) {
 	_.each(result.candles, function(candle) {
 		_CandleStore[candle.timestamp] = candle;
 	});
-	console.log("CandleStore",_CandleStore);
+	// console.log("CandleStore",_CandleStore);
 };
 
 var CandleStore = assign({}, EventEmitter.prototype, {
