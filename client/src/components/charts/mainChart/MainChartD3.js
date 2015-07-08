@@ -4,7 +4,7 @@ var AreaLayer = require('./areaLayer');
 var VolumeLayer = require('./volumeLayer')
 var moment = require('moment');
 
-function MainChart(el) {
+function MainChartD3(el) {
     this.el = el;
 
     _.bindAll(
@@ -22,38 +22,29 @@ function MainChart(el) {
     };
 };
 
-MainChart.prototype.parseMainGraphes = function(maingraphes) {
+MainChartD3.prototype.parseMainGraphes = function(maingraphes) {
     var models = {};
-
+    // guess interval
     models.candles = _.filter(maingraphes.candles, function(candle) {
         var checkValues = candle.close > 0 && candle.open > 0 && candle.high > 0 && candle.low > 0
         candle.startDate = new Date(+candle.timestamp * 1000);
-        candle.endDate = new Date((+candle.timestamp + 59 * 60) * 1000);
-        candle.middleDate = new Date((+candle.timestamp + 30 * 60) * 1000);
+        candle.endDate = new Date((+candle.timestamp + maingraphes.candles.interval - 1) * 1000);
+        candle.middleDate = new Date((+candle.timestamp + maingraphes.candles.interval/2) * 1000);
         var checkDates = _.isDate(candle.startDate) && _.isDate(candle.startDate) && _.isDate(candle.middleDate);
         return checkValues && checkDates;
     })
 
-   // models.candles = _.last(models.candles, 30);
-
     models.volumes = _.filter(maingraphes.volumes, function(volume) {
         var checkValues = volume.amount >= 0;
         volume.startDate = new Date(volume.timestamp * 1000);
-        volume.endDate = new Date((volume.timestamp + 60 * 60) * 1000);
+        volume.endDate = new Date((volume.timestamp + maingraphes.volumes.interval) * 1000);
         var checkDates = _.isDate(volume.startDate) && _.isDate(volume.endDate);
         return checkValues && checkDates;
     });
-
-    // models.volumes = _.filter(maingraphes.volumes, function(volume, index) {
-    //     return index % 10 == 0;
-    // });
-    //models.volumes = _.last(models.volumes, 30);
     this.models = models;
-    console.log("PARSE CANDLES:", models.candles.length);
-    console.log("PARSE VOLUMES:", models.volumes.length);
 };
 
-MainChart.prototype.initChart = function() {
+MainChartD3.prototype.initChart = function() {
     var self = this;
 
     this.margin = {
@@ -66,6 +57,7 @@ MainChart.prototype.initChart = function() {
     var visWidth = $(this.el).width();
     var visHeigth = $(this.el).height();
 
+    console.log("element Height & width " , $(this.el))
     this.width = visWidth - this.margin.left - this.margin.right;
     this.height = visHeigth - this.margin.top - this.margin.bottom;
 
@@ -83,7 +75,7 @@ MainChart.prototype.initChart = function() {
         .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
 };
 
-MainChart.prototype.initXAxis = function() {
+MainChartD3.prototype.initXAxis = function() {
     var self = this;
     this.timeScale = d3.time.scale()
         .range([0, this.width]);
@@ -102,7 +94,7 @@ MainChart.prototype.initXAxis = function() {
 };
 
 /* Update methods */
-MainChart.prototype.updateXAxis = function() {
+MainChartD3.prototype.updateXAxis = function() {
     var self = this;
     // var last30 = _.last(self.candles, 30);
     var last30 = this.models.candles;
@@ -121,7 +113,7 @@ MainChart.prototype.updateXAxis = function() {
         volume: false
     };
 */
-MainChart.prototype.draw = function(maingraphes, params) {
+MainChartD3.prototype.draw = function(maingraphes, params) {
     this.params = params;
     // this.maingraphes = maingraphes || this.maingraphes;
     this.parseMainGraphes(maingraphes);
@@ -131,13 +123,13 @@ MainChart.prototype.draw = function(maingraphes, params) {
     });
 };
 
-MainChart.prototype.update = function(maingraphes, params) {
+MainChartD3.prototype.update = function(maingraphes, params) {
     //Do something else?
     // this.maingraphes = maingraphes || this.maingraphes;
     this.draw(maingraphes, params);
 };
 
-MainChart.prototype.resize = function() {
+MainChartD3.prototype.resize = function() {
     var self = this;
 
     var visWidth = $(self.el).width();
@@ -163,7 +155,7 @@ MainChart.prototype.resize = function() {
     });
 };
 
-MainChart.prototype.clear = function() {};
+MainChartD3.prototype.clear = function() {};
 
 // MainChart.prototype.doZoom = function(event) {
 //     console.log('do zoom', d3.event);
@@ -186,7 +178,7 @@ MainChart.prototype.clear = function() {};
 //     return false;
 // };
 
-MainChart.prototype.initOnMouseOverEvents = function(element) {
+MainChartD3.prototype.initOnMouseOverEvents = function(element) {
     var self = this;
     element
         .on("mouseover", function() {
@@ -218,7 +210,7 @@ MainChart.prototype.initOnMouseOverEvents = function(element) {
         });
 };
 
-MainChart.prototype.toggleVolumeLayer = function() {
+MainChartD3.prototype.toggleVolumeLayer = function() {
     if (this.layers.volumeLayer.isVisible) {
         // this.layers.areaLayer.updateRange([3 * this.height / 4, 0]);
         this.layers.volumeLayer.hide();
@@ -229,7 +221,7 @@ MainChart.prototype.toggleVolumeLayer = function() {
     return false;
 };
 
-MainChart.prototype.toggleNewsLayer = function() {
+MainChartD3.prototype.toggleNewsLayer = function() {
     if (this.layers.newsLayer.isVisible) {
         this.layers.newsLayer.hide();
     } else {
@@ -238,4 +230,4 @@ MainChart.prototype.toggleNewsLayer = function() {
     return false;
 };
 
-module.exports = MainChart;
+module.exports = MainChartD3;

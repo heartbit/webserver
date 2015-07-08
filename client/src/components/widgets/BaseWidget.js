@@ -25,7 +25,7 @@ var BaseWidget = React.createClass({
 	            </a>
 	          </div>
 	        </div>
-	        <div className="panel-body widget-content">
+	        <div className="panel-body" id={this.props.attributes.chart}>
 		        {this.props.children}
         	</div>
 	      </div>

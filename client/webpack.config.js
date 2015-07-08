@@ -78,6 +78,7 @@ module.exports = {
 
 			// Widgets
 			MainChartWidget: path.join(__dirname, './src/components/widgets/MainChartWidget'),
+			MainChartReact: path.join(__dirname, './src/components/charts/mainChart/MainChartReact'),
 			TickerWidget: path.join(__dirname, './src/components/widgets/TickerWidget'),
 			BaseWidget: path.join(__dirname, './src/components/widgets/BaseWidget'),
 			Dashboard: path.join(__dirname, './src/components/dashboard/Dashboard'),
@@ -121,7 +122,7 @@ module.exports = {
 			ChartEngine: path.join(__dirname, './lib/internal-libs/chartEngine/ChartEngine'),
 
 			DataSocketManager: path.join(__dirname, './src/managers/SocketManager'),
-			MainChart: path.join(__dirname, './src/components/charts/mainChart/mainChart'),
+			MainChartD3: path.join(__dirname, './src/components/charts/mainChart/MainChartD3'),
 
 			// External libs
 			backbone: path.join(__dirname, './lib/bower_components/backbone/backbone'),

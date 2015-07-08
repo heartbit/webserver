@@ -8,10 +8,20 @@ var _VolumeStore = {};
 
 
 function registerVolumes(result) {
+	_VolumeStore.interval = 0;
 	_.each(result.volumes, function(volume) {
 		_VolumeStore[volume.timestamp] = volume;
 	});
-	// console.log("_VolumeStore",_VolumeStore);
+	var i;
+	var count = 0;
+	for (i in _VolumeStore){
+		_VolumeStore.interval = i - _VolumeStore.interval; 
+		count++;
+		if(count == 2){
+			break;
+		}
+	}
+	console.log("_VolumeStore",_VolumeStore.interval);
 };
 
 var VolumeStore = assign({}, EventEmitter.prototype, {
