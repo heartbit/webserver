@@ -10201,6 +10201,31 @@ td.beauty-hover {
   height: 380px;
   width: 920px; }
 
+#MainChartWidget {
+  padding: 15px;
+  height: 100%;
+  overflow-y: hidden; }
+
+#TickerWidget {
+  padding: 3px; }
+
+#TickerWidget ul {
+  list-style-type: none;
+  width: 50%; }
+
+#TickerWidget ul li {
+  list-style-type: none;
+  float: left;
+  width: 100%;
+  display: inline; }
+
+#TickerWidget ul.right li {
+  float: none;
+  display: block; }
+
+#TickerWidget ul.right {
+  float: right; }
+
 li.current a {
   text-decoration: underline;
   text-decoration: overline; }

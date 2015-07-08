@@ -10,27 +10,19 @@ var Dashboard = React.createClass({
     return {
       widgets: [{
         key: 'keyfact1',
-        title:'Keyfact 1',
+        title:'Keyfact',
         icon:'fa fa-bar-chart',
         chart: 'TickerWidget',
-        width: 1,
+        width: 2,
         height: 1,
         col: 1,
         row: 1
       },
       {
-        key: 'keyfact2',
-        title:'Keyfact 2',
-        icon:'fa fa-bar-chart',
-        width: 1,
-        height: 1,
-        col: 2,
-        row: 1
-      },
-      {
         key: 'keyfact3',
-        title:'Keyfact 3',
+        title:'Selector ',
         icon:'fa fa-bar-chart',
+        chart: 'ParameterSelectorWidget',
         width: 1,
         height: 1,
         col: 3,
@@ -62,9 +54,10 @@ var Dashboard = React.createClass({
     	  return (<BaseWidget attributes={result.attributes}></BaseWidget>);
       }
     });
+    console.log(this.props)
     return (
         <div className="gridster">
-         <Grid widgets={widgets}/>
+          <Grid widgets={widgets} params={this.props.params}/>
         </div>
     );
   }

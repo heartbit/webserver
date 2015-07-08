@@ -3616,13 +3616,12 @@
         if (typeof cols === 'undefined') {
             cols = this.get_highest_occupied_cell().col;
         }
-
-        var max_cols = (this.options.autogrow_cols ? this.options.max_cols :
-            this.cols);
+        var max_cols = (this.options.autogrow_cols ? this.options.max_cols : this.cols);
 
         cols = Math.min(max_cols, Math.max(cols, this.options.min_cols));
+
         this.container_width = cols * this.min_widget_width;
-        this.$el.css('width', this.container_width);
+        this.$el.css('width', window.innerWidth*(80/100));// this.container_width);
         return this;
     };
 

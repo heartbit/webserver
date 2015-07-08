@@ -9,8 +9,7 @@ var MainChartWidget = React.createClass({
 	getInitialState: function() {
     	return {}
 	},
-  _onUpdateState: function() {
-	  
+   _onUpdateState: function() {
 	  if(this.props.attributes.chart && !_mainChart){
 	       _mainChart = new MainChart("#" + this.props.attributes.chart);
 	       _mainGraphParams = {
@@ -27,7 +26,6 @@ var MainChartWidget = React.createClass({
 	         volumes: all.volumes
 	       }
 	   });
-	   console.log("update Mainchartwidget")
        _mainChart.draw(this.state.maingraphes,_mainGraphParams);
    },
 

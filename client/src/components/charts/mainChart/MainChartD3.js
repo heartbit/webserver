@@ -57,16 +57,15 @@ MainChartD3.prototype.initChart = function() {
     var visWidth = $(this.el).width();
     var visHeigth = $(this.el).height();
 
-    console.log("element Height & width " , $(this.el))
     this.width = visWidth - this.margin.left - this.margin.right;
     this.height = visHeigth - this.margin.top - this.margin.bottom;
 
     this.chart = d3.select(this.el)
         .append('svg')
         .attr("class", 'playground')
-        .attr("width", visWidth)
-        .attr("height", visHeigth)
-        .attr('viewBox', "0 0 " + visWidth + " " + visHeigth)
+	    .attr("width", visWidth)
+	    .attr("height", visHeigth)
+	    .attr('viewBox', "0 0 " + visWidth + " " + visHeigth)
         .call(this.initOnMouseOverEvents)
 
     this.mainLayer = this.chart
@@ -107,17 +106,20 @@ MainChartD3.prototype.updateXAxis = function() {
     this.timeAxisInstance.call(this.timeAxis);
 };
 
-/**
-    var mainGraphParams = {
-        typePrice: "line",
-        volume: false
-    };
-*/
+
 MainChartD3.prototype.draw = function(maingraphes, params) {
     this.params = params;
     // this.maingraphes = maingraphes || this.maingraphes;
     this.parseMainGraphes(maingraphes);
     this.updateXAxis();
+    var visWidth = params.width || $(this.el).width();
+    var visHeigth = params.height  || $(this.el).height();
+
+    this.width = visWidth - this.margin.left - this.margin.right;
+    this.height = visHeigth - this.margin.top - this.margin.bottom;
+    this.chart.attr("width", visWidth)
+    .attr("height", visHeigth)
+    .attr('viewBox', "0 0 " + visWidth + " " + visHeigth)
     _.each(_.values(this.layers), function(layer) {
         layer.update();
     });
@@ -156,27 +158,6 @@ MainChartD3.prototype.resize = function() {
 };
 
 MainChartD3.prototype.clear = function() {};
-
-// MainChart.prototype.doZoom = function(event) {
-//     console.log('do zoom', d3.event);
-//     var sourceEvent = d3.event.sourceEvent;
-//     switch (sourceEvent.type) {
-//         case "wheel":
-//             // Zoom in -> ask index -1
-//             if (sourceEvent.wheelDelta > 0) {
-//                 this.view.changeTimePeriod(null, -1);
-//             }
-//             // Zoom out -> ask index +1
-//             else {
-//                 this.view.changeTimePeriod(null, 1);
-//             }
-//             break;
-//         case "mousemove":
-//             if (sourceEvent.wheelDelta > 0) {} else {}
-//             break;
-//     }
-//     return false;
-// };
 
 MainChartD3.prototype.initOnMouseOverEvents = function(element) {
     var self = this;

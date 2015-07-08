@@ -19,15 +19,18 @@ var TickerWidget = React.createClass({
 	render: function() {
 		return (
 			<BaseWidget attributes={this.props.attributes}>
+			  <ul className="right">
+			    <li>Open : {this.state.ticker.open} {this.state.ticker.currency}</li>
+			    <li>Last : {this.state.ticker.close} {this.state.ticker.currency}</li>
+			    <li>High : {this.state.ticker.high} {this.state.ticker.currency}</li>
+			    <li>Low : {this.state.ticker.low} {this.state.ticker.currency}</li>
+			  </ul>
 			  <ul>
 			    <li>Variation : {this.state.ticker.variation} % </li>
-			    <li>Volume : {this.state.ticker.volume} BTC</li>
-			    <li>N° : {this.state.ticker.last}</li>
-			    <li>Open : {this.state.ticker.open} $</li>
-			    <li>Close : {this.state.ticker.close} $</li>
-			    <li>High : {this.state.ticker.high} $</li>
-			    <li>Low : {this.state.ticker.low} $</li>
+			    <li>Volume : {this.state.ticker.volume} {this.state.ticker.item}</li>
+			    <li>N° of trades: {this.state.ticker.last} </li>
 			  </ul>
+			
 			
 			</BaseWidget>
 		);

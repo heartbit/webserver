@@ -13,6 +13,9 @@ var TickerActions = {
 				result: ticker.model
 			});
 		})
+	},
+	changeTickerParams:function(params){
+		ticker.changeParams(params);
 	}
 }
 
