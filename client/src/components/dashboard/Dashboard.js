@@ -42,19 +42,19 @@ var Dashboard = React.createClass({
   },
 
   render: function() {
+	var self = this;
     var widgets = this.state.widgets.map(function(widget) {
       var result={};
       result.attributes = widget;
       
       if(widget.chart){
     	  var Widget = require('../widgets/'+widget.chart+'.js');
-    	  return (<Widget attributes={result.attributes}></Widget>);
+    	  return (<Widget attributes={result.attributes} params={self.props.params}></Widget>);
       }
       else{
     	  return (<BaseWidget attributes={result.attributes}></BaseWidget>);
       }
     });
-    console.log(this.props)
     return (
         <div className="gridster">
           <Grid widgets={widgets} params={this.props.params}/>

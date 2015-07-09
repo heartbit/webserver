@@ -35,7 +35,6 @@ var Grid = React.createClass({
  	      var key = "widget" + attributes.key;
     	  //gridster.resize_widget($("#"+key),attributes.width,attributes.height);
 	      React.render(widget, document.getElementById(key));
-    	  console.log('resize' + key);
   	});
   	gridster.options.widget_base_dimensions= [this.props.params.width/4, 150];
   	gridster.generate_grid_and_stylesheet(); 
