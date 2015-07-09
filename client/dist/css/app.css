@@ -10140,6 +10140,80 @@ td.beauty-hover {
 [data-max-sizey="1"][data-max-sizex="1"] .gs-resize-handle {
   display: none !important; }
 
+/*Just add this css for responsive gridster */
+.gridster > * {
+  padding: 0;
+  width: 100% !important; }
+
+.gridster .gs-w {
+  list-style: none; }
+
+.gridster .gs-w[data-sizex="1"] {
+  width: 8.34091%; }
+
+.gridster .gs-w[data-col="1"] {
+  left: 0%; }
+
+.gridster .gs-w[data-sizex="2"] {
+  width: 17.43182%; }
+
+.gridster .gs-w[data-col="2"] {
+  left: 9.09091%; }
+
+.gridster .gs-w[data-sizex="3"] {
+  width: 26.52273%; }
+
+.gridster .gs-w[data-col="3"] {
+  left: 18.18182%; }
+
+.gridster .gs-w[data-sizex="4"] {
+  width: 35.61364%; }
+
+.gridster .gs-w[data-col="4"] {
+  left: 27.27273%; }
+
+.gridster .gs-w[data-sizex="5"] {
+  width: 44.70455%; }
+
+.gridster .gs-w[data-col="5"] {
+  left: 36.36364%; }
+
+.gridster .gs-w[data-sizex="6"] {
+  width: 53.79545%; }
+
+.gridster .gs-w[data-col="6"] {
+  left: 45.45455%; }
+
+.gridster .gs-w[data-sizex="7"] {
+  width: 62.88636%; }
+
+.gridster .gs-w[data-col="7"] {
+  left: 54.54545%; }
+
+.gridster .gs-w[data-sizex="8"] {
+  width: 71.97727%; }
+
+.gridster .gs-w[data-col="8"] {
+  left: 63.63636%; }
+
+.gridster .gs-w[data-sizex="9"] {
+  width: 81.06818%; }
+
+.gridster .gs-w[data-col="9"] {
+  left: 72.72727%; }
+
+.gridster .gs-w[data-sizex="10"] {
+  width: 90.15909%; }
+
+.gridster .gs-w[data-col="10"] {
+  left: 81.81818%; }
+
+.gridster .gs-w[data-sizex="11"] {
+  width: 99.25%; }
+
+.gridster .gs-w[data-col="11"] {
+  left: 90.90909%; }
+
 /* Uncomment this if you set helper : "clone" in draggable options */
 /*.gridster .player {
   opacity:0;

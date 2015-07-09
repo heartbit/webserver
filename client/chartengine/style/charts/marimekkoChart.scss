@@ -1,0 +1,25 @@
+.marimekkoChart .marimekkoLabelLayer .marimekkoRectLabel {
+	fill: $white;
+	font-size: 20px
+}
+
+.marimekkoChart .marimekkoLabelLayer text {
+	pointer-events: none
+}
+
+.marimekkoChart .marimekkoLabelLayer .marimekkoRectTip {
+	fill: $white;
+}
+
+.marimekkoChart .marimekkoLabelLayer .marimekkoColumnLabel {
+	fill: $axis_label_color;
+}
+
+.marimekkoChart .marimekkoRect {
+	stroke: $white;
+	stroke-width: 3px;
+}
+
+.ordinalTotalsChart .ordinalLegendLabel {
+	fill: $axis_label_color;
+}

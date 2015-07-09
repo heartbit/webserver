@@ -1,0 +1,23 @@
+{
+  "name": "chartengine",
+  "version": "0.1.0",
+  "author": "qunb.com",
+  "dependencies": {
+    "jquery": "*",
+    "lodash": "*",
+    "d3": "*",
+    "d3.chart": "*",
+    "d3-tip": "*",
+    "requirejs": "*",
+    "requirejs-text": "*",
+    "momentjs": "*",
+    "modernizr": "*",
+    "js-schema": "*",
+    "faker": "*",
+    "chance": "*",
+    "numeral": "*"
+  },
+  "resolutions": {
+    "d3": "3.4.11"
+  }
+}
