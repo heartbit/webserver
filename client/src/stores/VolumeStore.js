@@ -8,6 +8,8 @@ var _VolumeStore = {};
 
 
 function registerVolumes(result) {
+	_VolumeStore= {};
+
 	_VolumeStore.interval = 0;
 	_.each(result.volumes, function(volume) {
 		_VolumeStore[volume.timestamp] = volume;

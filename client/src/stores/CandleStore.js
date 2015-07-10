@@ -8,6 +8,7 @@ var _CandleStore = {};
 
 
 function registerCandles(result) {
+	_CandleStore= {};
 	_.each(result.candles, function(candle) {
 		_CandleStore[candle.timestamp] = candle;
 	});

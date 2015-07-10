@@ -8,5 +8,6 @@ config.volumes = {};
 config.volumes.url =apiprefix+"volume";
 config.keyfact = {};
 config.keyfact.url = "keyfact";
-
+config.platforms = {};
+config.platforms.url =apiprefix+"platform";
 module.exports = config;

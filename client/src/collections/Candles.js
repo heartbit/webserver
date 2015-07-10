@@ -12,7 +12,7 @@ var candles = Backbone.Collection.extend({
 	 * params: {platform,item,currency,aggregatType,dateStart,dateEnd}
 	 */
 	buildUrl: function(params) {
-		return this.url + "/" + params.platform + "/" + params.item + "/" + params.currency + "/" + params.aggregatType + "/" + params.dateStart + "/" + params.dateEnd
+		return this.url + "/" + params.platform + "/" + params.item + "/" + params.currency + "/" + params.agregat_type + "/" + params.dateStart + "/" + params.dateEnd
 			//BITSTAMP/BTC/USD/1h/1434754800/1435359600
 	},
 

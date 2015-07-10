@@ -41,6 +41,8 @@ RedisManager.prototype.init = function(params) {
         console.log('Pub/sub connection...OK');
         var channel = "BITSTAMP:BTC:USD:TCK";
         self.redisClient.psubscribe(channel);
+        self.redisClient.psubscribe("BITFINEX:BTC:USD:TCK");
+
         self.redisClient.on("pmessage", function(pattern, channel, message) {
             message = self.parseMessage(channel, message);
             // console.log(message);

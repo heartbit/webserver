@@ -92,6 +92,8 @@ module.exports = {
 			VolumeStore: path.join(__dirname, './src/stores/VolumeStore'),
 			MaingraphStore: path.join(__dirname, './src/stores/MaingraphStore'),
 			TickerStore: path.join(__dirname, './src/stores/TickerStore'),
+			SelectorStore: path.join(__dirname, './src/stores/SelectorStore'),
+			PlatformStore: path.join(__dirname, './src/stores/PlatformStore'),
 
 			// Mixin
 			StoreMixin: path.join(__dirname, './src/stores/mixin/storeMixin'),
@@ -108,14 +110,19 @@ module.exports = {
 			Volume: path.join(__dirname, './src/models/Volume'),
 			Candle: path.join(__dirname, './src/models/Candle'),
 			Ticker: path.join(__dirname, './src/models/Ticker'),
+			Platform: path.join(__dirname, './src/models/Platform'),
+
 			Candles: path.join(__dirname, './src/collections/Candles'),
 			Volumes: path.join(__dirname, './src/collections/Volumes'),
+			Platforms: path.join(__dirname, './src/collections/Platforms'),
 
 			Constants: path.join(__dirname, './src/Constants'),
 
 			//Actions
 			DashboardActions: path.join(__dirname, './src/actions/DashboardActions'),
 			TickerActions: path.join(__dirname, './src/actions/TickerActions'),
+			SelectorActions: path.join(__dirname, './src/actions/SelectorActions'),
+
 			// Internal libs
 			gridster: path.join(__dirname, './lib/internal-libs/jquery.gridster/gridster'),
 			gridsterResponsive: path.join(__dirname, './lib/internal-libs/gridster-responsive/gridster.responsive'),

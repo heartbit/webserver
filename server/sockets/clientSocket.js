@@ -37,6 +37,7 @@ ClientSocket.prototype.initDataNamespace = function() {
     var self = this;
 
     var channel = "BITSTAMP:BTC:USD:TCK";
+    var channel2 = "BITFINEX:BTC:USD:TCK";
 
     this.io.on('connection', function(socket) {
         console.log('SOCKET NEW CONNECTION');
@@ -67,6 +68,18 @@ ClientSocket.prototype.initDataNamespace = function() {
             // .volatile
             .emit(channel, payload);
     });
+    EventManager.on(channel2, function(data) {
+        //console.log('event redis on channel, send to room /data BTC:USD');
+        var payload = {
+            key: channel2,
+            data: data,
+            dataroom: 'BTC:USD'
+        };
+        self.io.to('BTC:USD')
+            // .volatile
+            .emit(channel2, payload);
+    });
+
 
 };
 

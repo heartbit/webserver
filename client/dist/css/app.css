@@ -10221,6 +10221,12 @@ td.beauty-hover {
 #TickerWidget ul.right {
   float: right; }
 
+.dateField {
+  float: right; }
+
+.platformSelector {
+  float: left; }
+
 li.current a {
   text-decoration: underline;
   text-decoration: overline; }

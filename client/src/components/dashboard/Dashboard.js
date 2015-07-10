@@ -23,10 +23,10 @@ var Dashboard = React.createClass({
         title:'Selector ',
         icon:'fa fa-bar-chart',
         chart: 'ParameterSelectorWidget',
-        width: 1,
+        width: 2,
         height: 1,
-        col: 3,
-        row: 1
+        col: 1,
+        row: 2
       },
       {
         key: 'timeline',
@@ -36,7 +36,7 @@ var Dashboard = React.createClass({
         height: 3,
         chart: 'MainChartWidget',
         col: 1,
-        row: 2
+        row: 3
       }]
     };
   },
