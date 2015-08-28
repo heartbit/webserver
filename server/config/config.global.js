@@ -2,13 +2,13 @@ var config = {};
 
 config.apiproxy = {};
 // config.apiproxy.host = "http://176.31.126.113";
-//config.apiproxy.host = "http://37.187.112.123";
-//config.apiproxy.port = "9090";
+config.apiproxy.host = "http://37.187.112.123";
+config.apiproxy.port = "9090";
 
-config.apiproxy.host = "http://localhost";
-config.apiproxy.port = "8080";
+// config.apiproxy.host = "http://localhost";
+// config.apiproxy.port = "8080";
 config.apiproxy.hostUrl = config.apiproxy.host + ":" + config.apiproxy.port;
-config.apiproxy.apiUrl = config.apiproxy.hostUrl + 'api/';
+config.apiproxy.apiUrl = config.apiproxy.hostUrl + '/front-api';
 
 config.apiproxy.platforms = config.apiproxy.apiUrl + 'platform';
 config.apiproxy.items = config.apiproxy.apiUrl + 'documentation/item';

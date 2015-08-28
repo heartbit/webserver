@@ -183,6 +183,7 @@ App.prototype.initProxies = function() {
     var ApiProxy = require(proxiesPath + 'apiProxy');
     var apiProxyParams = {
         apiProxyHost: this.config.apiproxy.hostUrl,
+        apiProxyApiUrl: this.config.apiproxy.apiUrl,
         app: this.app
     };
     this.apiproxy = new ApiProxy(apiProxyParams);
