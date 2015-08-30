@@ -10,11 +10,10 @@ var MainChartWidget = React.createClass({
     	return {}
 	},
    _onUpdateState: function() {
-   		console.log("thisiiiii",this,this.context);
 
 	    if(this.props.attributes.chart && !_mainChart){
 	       _mainChart = new MainChart("#" + this.props.attributes.chart);
-	       console.log("SIZE!",this.props.params);
+
 	       _mainGraphParams = {
 	           area: true,
 	           candle: false,
@@ -47,7 +46,6 @@ var MainChartWidget = React.createClass({
            // width: this.props.params.width,
            // height:this.props.params.height
     }
-    console.log("GRAPHPARAMS_RENDER!",_mainGraphParams);
     if(_mainChart)_mainChart.draw(this.state.maingraphes,_mainGraphParams);
  	return (<BaseWidget attributes={this.props.attributes}></BaseWidget>)
   }

@@ -10221,12 +10221,6 @@ td.beauty-hover {
 #TickerWidget ul.right {
   float: right; }
 
-.dateField {
-  float: right; }
-
-.platformSelector {
-  float: left; }
-
 li.current a {
   text-decoration: underline;
   text-decoration: overline; }
@@ -10278,6 +10272,28 @@ li.current a {
   fill-opacity: .1;
   stroke: #fff;
   shape-rendering: crispEdges; }
+
+.simpleSelector {
+  background: #FFFFFF;
+  color: #004756;
+  margin-left: 0.5em; }
+
+.dateInput {
+  height: 1.4em;
+  margin-left: 0.5em;
+  float: right; }
+
+.dateLabel {
+  float: right;
+  width: 17em; }
+
+.dateField {
+  float: left;
+  margin-left: 2.5em; }
+
+.platformSelector {
+  float: left;
+  width: 13em; }
 
 .item {
   display: block;

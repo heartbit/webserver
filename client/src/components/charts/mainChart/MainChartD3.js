@@ -49,9 +49,9 @@ MainChartD3.prototype.initChart = function() {
 
     this.margin = {
         top: 15,
-        right: 30,
+        right: 60,
         bottom: 0,
-        left: 40
+        left: 60
     };
 
     var visWidth = $(this.el).width();
@@ -109,12 +109,11 @@ MainChartD3.prototype.updateXAxis = function() {
 
 MainChartD3.prototype.draw = function(maingraphes, params) {
     this.params = params;
-    console.log("paraaaaaaaaaaaaaaammms",params);
     // this.maingraphes = maingraphes || this.maingraphes;
     this.parseMainGraphes(maingraphes);
     this.updateXAxis();
-    var visWidth = params.width || $(this.el).width();
-    var visHeigth = params.height  || $(this.el).height();
+    var visWidth =  $(this.el).width();
+    var visHeigth = $(this.el).height();
 
     this.width = visWidth - this.margin.left - this.margin.right;
     this.height = visHeigth - this.margin.top - this.margin.bottom;
@@ -140,6 +139,7 @@ MainChartD3.prototype.resize = function() {
 
     self.width = visWidth - self.margin.left - self.margin.right;
     self.height = visHeigth - self.margin.top - self.margin.bottom;
+    console.log("RESIZE", self.width, self.height);
 
     self.chart
         .attr("width", visWidth)
@@ -156,6 +156,8 @@ MainChartD3.prototype.resize = function() {
     _.each(_.values(self.layers), function(layer) {
         layer.resize();
     });
+
+    this.update();
 };
 
 MainChartD3.prototype.clear = function() {};

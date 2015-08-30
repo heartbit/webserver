@@ -14,7 +14,9 @@ var ParameterSelectorWidget = React.createClass({
 		    		item:'BTC',
 		    		agregat_type:'1h',
 		    	}
-	    	}
+	    	},
+	    	platforms: ['BITSTAMP','TOKYOJPY','BITFINEX','RIPPLEFOX'],
+	    	pairs: ['XRP/USD','XRP/BTC','BTC/USD']
 	    }
    },
    _onUpdateState : function(){
@@ -62,21 +64,24 @@ var ParameterSelectorWidget = React.createClass({
    },
    render: function() {
 	   var selector = this.state.selector;
-	   var pairs = _.map(selector.platforms,function(value,key){
+	   var platforms = this.state.platforms;
+
+	   var pairs = _.map(platforms,function(value,key){
 	    	 return _.map(value,function(pair){
 	    		var ic = pair.split("-");
 			    return <option value={pair} name={key} >{pair}</option>
 			 })
 		});
-	    var platforms = _.map(this.state.selector.platforms,function(value,key){
-			return <option value={key}>{key}</option>
+	    var platforms = _.map(platforms,function(value,key){
+	    	console.log("valuuuuue,keyyy",value,key);
+			return <option value={value}>{value}</option>
 		});
 	    
 		if(this.state.selector.params.dateStart){
 			var startDate = moment.unix(this.state.selector.params.dateStart).format('YYYY-MM-DD');
 			var endDate = moment.unix(this.state.selector.params.dateEnd).format('YYYY-MM-DD');
 		}
-		console.log(startDate)
+		// console.log(startDate)
 		var newValue = this.state.selector.params.timeframe;
 		/*
 		 *  <div>
@@ -87,38 +92,37 @@ var ParameterSelectorWidget = React.createClass({
 		 */
 		return (
 			<BaseWidget attributes={this.props.attributes}>
-			  <div className="platformSelector">
-				<label> Platform : 
-					<select id="platforms" value={this.state.selector.params.platform} onChange={this._onPlatformChange}>
-					  {platforms}
-					</select>
-				</label>
-				<div>
-				<label>Agregat Type :
-				  	<select id="aggregatType" value={this.state.selector.params.agregat_type} onChange={this._onAgregatChange}>
-				  		<option value="1m">1m</option>
-				  		<option value="15m">15m</option>
-				  		<option value="1h">1h</option>
-				  		<option value="6h">6h</option>
-				  		<option value="12h">12h</option>
-				  		<option value="24h">24h</option>
-				  	</select>
-			  	</label>
-			  </div>
-			  </div>
-			  <div className="dateField">
-				  <div>
-					  <label>Date Start :
-					    <input type="date" value={startDate} onChange={this._changeDateStart}/>
-					  </label>
-				  </div>
-				  <div>
-					  <label>Date End :
-					    <input type="date" id="dateEnd" onChange={this._changeDateEnd} value={endDate} />
-					  </label>
-				  </div>
-		      </div>
-			  
+				<div className="platformSelector">
+					<label> Platform : 
+						<select id="platforms" className={"simpleSelector"} value={this.state.selector.params.platform} onChange={this._onPlatformChange}>
+						  {platforms}
+						</select>
+					</label>
+			  	</div>
+			  	<div className="dateField">
+					<div>
+						<label className={"dateLabel"} >Date Start :
+							<input type="date" className={"dateInput"} value={startDate} onChange={this._changeDateStart}/>
+						</label>
+					</div>
+					<div>
+						<label className={"dateLabel"} >Date End :
+							<input type="date" className={"dateInput"} id="dateEnd" onChange={this._changeDateEnd} value={endDate} />
+						</label>
+					</div>
+					<div>
+						<label>Agregat Type :
+						  	<select id="aggregatType" className={"simpleSelector"} value={this.state.selector.params.agregat_type} onChange={this._onAgregatChange}>
+						  		<option value="1m">1m</option>
+						  		<option value="15m">15m</option>
+						  		<option value="1h">1h</option>
+						  		<option value="6h">6h</option>
+						  		<option value="12h">12h</option>
+						  		<option value="24h">24h</option>
+						  	</select>
+					  	</label>
+				 	</div>
+		      	</div>			  
 			</BaseWidget>
 		);
 	}
