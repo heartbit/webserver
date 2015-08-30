@@ -58,7 +58,7 @@ ClientSocket.prototype.initDataNamespace = function() {
     });
 
     EventManager.on(channel, function(data) {
-        //console.log('event redis on channel, send to room /data BTC:USD');
+        console.log('event redis on channel, send to room /data BTC:USD');
         var payload = {
             key: channel,
             data: data,
@@ -69,7 +69,7 @@ ClientSocket.prototype.initDataNamespace = function() {
             .emit(channel, payload);
     });
     EventManager.on(channel2, function(data) {
-        //console.log('event redis on channel, send to room /data BTC:USD');
+        console.log('event redis on channel, send to room /data BTC:USD');
         var payload = {
             key: channel2,
             data: data,

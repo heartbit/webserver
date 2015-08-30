@@ -109,6 +109,7 @@ MainChartD3.prototype.updateXAxis = function() {
 
 MainChartD3.prototype.draw = function(maingraphes, params) {
     this.params = params;
+    console.log("paraaaaaaaaaaaaaaammms",params);
     // this.maingraphes = maingraphes || this.maingraphes;
     this.parseMainGraphes(maingraphes);
     this.updateXAxis();

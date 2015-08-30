@@ -45,7 +45,7 @@ RedisManager.prototype.init = function(params) {
 
         self.redisClient.on("pmessage", function(pattern, channel, message) {
             message = self.parseMessage(channel, message);
-            // console.log(message);
+            console.log(message);
             CacheManager.set(channel, message);
             EventManager.emit(channel, message);
         });
@@ -68,7 +68,7 @@ RedisManager.prototype.subscribeToChannels = function(callback) {
                 });
             });
         });
-
+        
         self.redisClient.on("pmessage", function(pattern, channel, message) {
             message = self.parseMessage(channel, message);
             CacheManager.set(channel, message);

@@ -10,15 +10,18 @@ var MainChartWidget = React.createClass({
     	return {}
 	},
    _onUpdateState: function() {
-	  if(this.props.attributes.chart && !_mainChart){
-	       _mainChart = new MainChart("#" + this.props.attributes.chart,);
+   		console.log("thisiiiii",this,this.context);
+
+	    if(this.props.attributes.chart && !_mainChart){
+	       _mainChart = new MainChart("#" + this.props.attributes.chart);
+	       console.log("SIZE!",this.props.params);
 	       _mainGraphParams = {
 	           area: true,
 	           candle: false,
 	           volume: false,
-	           sma: false,
-	           width: this.props.params.width,
-	           height:this.props.params.height
+	           sma: false
+	           // width: this.props.params.width,
+	           // height:this.props.params.height
 	       };
 	   }
 	   var all = MaingraphStore.getAll();
@@ -28,7 +31,6 @@ var MainChartWidget = React.createClass({
 	         volumes: all.volumes
 	       }
 	   });
-       _mainChart.draw(this.state.maingraphes,_mainGraphParams);
    },
 
    componentDidMount: function() {
@@ -41,10 +43,11 @@ var MainChartWidget = React.createClass({
            area: true,
            candle: false,
            volume: false,
-           sma: false,
-           width: this.props.params.width,
-           height:this.props.params.height
+           sma: false
+           // width: this.props.params.width,
+           // height:this.props.params.height
     }
+    console.log("GRAPHPARAMS_RENDER!",_mainGraphParams);
     if(_mainChart)_mainChart.draw(this.state.maingraphes,_mainGraphParams);
  	return (<BaseWidget attributes={this.props.attributes}></BaseWidget>)
   }

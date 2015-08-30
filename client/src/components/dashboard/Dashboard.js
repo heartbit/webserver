@@ -23,7 +23,7 @@ var Dashboard = React.createClass({
         title:'Selector ',
         icon:'fa fa-bar-chart',
         chart: 'ParameterSelectorWidget',
-        width: 2,
+        width: 3,
         height: 1,
         col: 1,
         row: 2
@@ -42,12 +42,13 @@ var Dashboard = React.createClass({
   },
 
   render: function() {
-	var self = this;
+	  var self = this;
     var widgets = this.state.widgets.map(function(widget) {
       var result={};
       result.attributes = widget;
       
       if(widget.chart){
+        console.log("widget params",self.props.params);
     	  var Widget = require('../widgets/'+widget.chart+'.js');
     	  return (<Widget attributes={result.attributes} params={self.props.params}></Widget>);
       }

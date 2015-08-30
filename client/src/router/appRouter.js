@@ -41,7 +41,7 @@ var AppRouter = Backbone.Router.extend({
         	defaultParams = {
         			dateStart: dateStart,
         			dateEnd: dateEnd,
-        			agregat_type: '15m',
+        			agregat_type: '6h',
         			platform:'BITSTAMP',
         			item:'XRP',
         			currency:'USD'
