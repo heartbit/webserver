@@ -105,6 +105,8 @@ module.exports = {
 			Dispatcher: path.join(__dirname, './src/dispatcher/dispatcher'),
 
 			FormatUtils: path.join(__dirname, './lib/internal-libs/FormatUtils/FormatUtils'),
+			RangeTranslate: path.join(__dirname, './src/utils/rangeTranslate'),
+			RangeIntervalMatch: path.join(__dirname, './src/utils/rangeIntervalMatch'),
 
 			//Models & collections
 			Volume: path.join(__dirname, './src/models/Volume'),

@@ -3,6 +3,9 @@ var BaseWidget = require('BaseWidget');
 var SelectorStore = require('SelectorStore');
 var SelectorActions = require('SelectorActions');
 var moment = require('moment')
+var RangeIntervalMatch = require('RangeIntervalMatch');
+
+
 var ParameterSelectorWidget = React.createClass({
 	
    getInitialState: function() {
@@ -12,18 +15,23 @@ var ParameterSelectorWidget = React.createClass({
 		    		platform:'BITSTAMP',
 		    		currency:'USD',
 		    		item:'BTC',
-		    		agregat_type:'1h',
+		    		interval:'15m',
+		    		range:'1d'
 		    	}
 	    	},
 	    	platforms: ['BITSTAMP','TOKYOJPY','BITFINEX','RIPPLEFOX'],
-	    	pairs: ['XRP/USD','XRP/BTC','BTC/USD']
+	    	pairs: ['XRP/USD','XRP/BTC','BTC/USD'],
+	    	range: ['12h','1d','3d','1w','2w','1m','3m','6m','1y','Max', 'Custom'],
+	    	interval: ['1m','15m','1h','6h','12h','24h']
 	    }
    },
    _onUpdateState : function(){
-	   var selector = SelectorStore.getAll();
-	   this.setState({
-		   selector:selector
-	   });
+	    var selector = SelectorStore.getAll();
+	    this.setState({
+			selector: {
+				params:selector
+		    }
+	    });
    },
    componentDidMount: function() {
 	   SelectorStore.addChangeListener("change" ,this._onUpdateState);
@@ -31,51 +39,48 @@ var ParameterSelectorWidget = React.createClass({
     
    componentWillUnmount: function() {
    },
-   _onPlatformChange:function(e){
-	   var selector = this.state.selector; 
-	   selector.params.platform = e.target.value;
-	   SelectorActions.refreshGraphAndKeyfact(selector.params);
-	   this.setState({selector:selector});
-   },
-   _onPairsChange:function(e){
-	   
-   },
-   _onAgregatChange:function(e){
-	   var selector = this.state.selector; 
-	   selector.params.agregat_type = e.target.value;
-	   SelectorActions.refreshGraphAndKeyfact(selector.params);
-	   this.setState({selector:selector});
-   },
-   _formatNewDateAndReturnSelector:function(date,dateType){
-	   var selector = this.state.selector; 
-	   var newDate = moment.utc(date).valueOf()/1000;
-	   selector.params[dateType] = newDate;
-	   return selector
-   },
-   _changeDateEnd:function(e){
-	   var selector =this._formatNewDateAndReturnSelector(e.target.value,'dateEnd');
-	   SelectorActions.refreshGraphAndKeyfact(selector.params);
-	   this.setState({selector:selector});
-   },
-   _changeDateStart:function(e){
-	   var selector = this._formatNewDateAndReturnSelector(e.target.value,'dateStart')
-	   SelectorActions.refreshGraphAndKeyfact(selector.params);
-	   this.setState({selector:selector});
-   },
    render: function() {
-	   var selector = this.state.selector;
-	   var platforms = this.state.platforms;
+	    var selector = this.state.selector;
+	    var platforms = this.state.platforms;
+	    var pairs = this.state.pairs;
+	    var range = this.state.range;
+	    var interval = this.state.interval;
+	    var currentInterval = this.state.selector.params.interval;
+	    var currentRange = this.state.selector.params.range;
+	    if(this.state.selector.params.range == 'Custom') {
+		    var dateStart = <div>
+								<label className={"dateLabel"} >Date Start :
+									<input type="date" className={"dateInput"} value={startDate} onChange={this._changeDateStart}/>
+								</label>
+							</div>;
+	        var dateEnd = 	<div>
+								<label className={"dateLabel"} >Date End :
+									<input type="date" className={"dateInput"} id="dateEnd" onChange={this._changeDateEnd} value={endDate} />
+								</label>
+							</div>;
+		} else {
+			var dateStart = null;
+			var dateEnd = null;
+		}
 
-	   var pairs = _.map(platforms,function(value,key){
-	    	 return _.map(value,function(pair){
-	    		var ic = pair.split("-");
-			    return <option value={pair} name={key} >{pair}</option>
-			 })
-		});
-	    var platforms = _.map(platforms,function(value,key){
-	    	console.log("valuuuuue,keyyy",value,key);
+
+
+	 //   var pairs = _.map(platforms,function(value,key){
+	 //    	 return _.map(value,function(pair){
+	 //    		var ic = pair.split("-");
+		// 	    return <option value={pair} name={key} >{pair}</option>
+		// 	 })
+		// });
+		var pairs = _.map(pairs, function(value, key) {
 			return <option value={value}>{value}</option>
 		});
+	    var platforms = _.map(platforms,function(value,key){
+			return <option value={value}>{value}</option>
+		});
+
+		var range = RangeIntervalMatch.range(range, currentInterval);
+
+		var interval = RangeIntervalMatch.interval(interval, currentRange);
 	    
 		if(this.state.selector.params.dateStart){
 			var startDate = moment.unix(this.state.selector.params.dateStart).format('YYYY-MM-DD');
@@ -92,40 +97,85 @@ var ParameterSelectorWidget = React.createClass({
 		 */
 		return (
 			<BaseWidget attributes={this.props.attributes}>
-				<div className="platformSelector">
-					<label> Platform : 
-						<select id="platforms" className={"simpleSelector"} value={this.state.selector.params.platform} onChange={this._onPlatformChange}>
-						  {platforms}
-						</select>
-					</label>
+				<div className="mainSelector">
+					<div>
+						<label className={"platformLabel"}> Platform : 
+							<select id="platforms" className={"simpleSelector platformSelect"} value={this.state.selector.params.platform} onChange={this._onPlatformChange}>
+							  {platforms}
+							</select>
+						</label>
+					</div>
+					<div>
+						<label className={"platformLabel"}> Pairs : 
+							<select id="pairs" className={"simpleSelector platformSelect"} value={this.state.selector.params.platform} onChange={this._onPlatformChange}>
+							  {pairs}
+							</select>
+						</label>
+					</div>
 			  	</div>
 			  	<div className="dateField">
+			  		<div>
+						<label className={"dateLabel"}  >Range :
+						  	<select id="range" className={"simpleSelector"} value={this.state.selector.params.range} onChange={this._onRangeChange}>
+								{range}
+						  	</select>
+					  	</label>
+				 	</div>
+					{dateStart}
+					{dateEnd}
 					<div>
-						<label className={"dateLabel"} >Date Start :
-							<input type="date" className={"dateInput"} value={startDate} onChange={this._changeDateStart}/>
-						</label>
-					</div>
-					<div>
-						<label className={"dateLabel"} >Date End :
-							<input type="date" className={"dateInput"} id="dateEnd" onChange={this._changeDateEnd} value={endDate} />
-						</label>
-					</div>
-					<div>
-						<label>Agregat Type :
-						  	<select id="aggregatType" className={"simpleSelector"} value={this.state.selector.params.agregat_type} onChange={this._onAgregatChange}>
-						  		<option value="1m">1m</option>
-						  		<option value="15m">15m</option>
-						  		<option value="1h">1h</option>
-						  		<option value="6h">6h</option>
-						  		<option value="12h">12h</option>
-						  		<option value="24h">24h</option>
+						<label className={"dateLabel"}  >Interval :
+						  	<select id="interval" className={"simpleSelector"} value={this.state.selector.params.interval} onChange={this._onIntervalChange}>
+						  		{interval}
 						  	</select>
 					  	</label>
 				 	</div>
 		      	</div>			  
 			</BaseWidget>
 		);
-	}
+	},
+   _onPlatformChange:function(e){
+	   var selector = this.state.selector; 
+	   selector.params.platform = e.target.value;
+	   SelectorActions.refreshGraphAndKeyfact(selector.params);
+	   this.setState({selector:selector});
+   },
+   _onPairsChange:function(e){
+	   
+   },
+
+   _onRangeChange: function(e) {
+   		var newRange = e.target.value;
+   		var defaultInterval = RangeIntervalMatch.defaultInterval(newRange);
+   		var newParams = this.state.selector.params;
+   		newParams.range = newRange;
+   		newParams.interval = defaultInterval;
+   		console.log("newPRAMMM",newParams);
+   		SelectorActions.changeSelector(newParams);
+   },
+
+   _onIntervalChange:function(e){
+	   var newInterval = e.target.value;
+	   var newParams = this.state.selector.params;
+	   newParams.interval = newInterval;
+	   SelectorActions.changeSelector(newParams);
+   },
+   _formatNewDateAndReturnSelector:function(date,dateType){
+	   var selector = this.state.selector; 
+	   var newDate = moment.utc(date).valueOf()/1000;
+	   selector.params[dateType] = newDate;
+	   return selector
+   },
+   _changeDateEnd:function(e){
+	   var selector =this._formatNewDateAndReturnSelector(e.target.value,'dateEnd');
+	   SelectorActions.refreshGraphAndKeyfact(selector.params);
+	   this.setState({selector:selector});
+   },
+   _changeDateStart:function(e){
+	   var selector = this._formatNewDateAndReturnSelector(e.target.value,'dateStart')
+	   SelectorActions.refreshGraphAndKeyfact(selector.params);
+	   this.setState({selector:selector});
+   }
 
 });
 

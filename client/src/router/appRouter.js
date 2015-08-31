@@ -1,6 +1,7 @@
 var DashboardActions = require('DashboardActions');
 var TickerActions = require('TickerActions');
 var SelectorActions = require('SelectorActions');
+var RangeTranslate = require('RangeTranslate');
 
 var React = require("react");
 var App = require('App');
@@ -36,16 +37,15 @@ var AppRouter = Backbone.Router.extend({
              * Item: BTC
              * currency: USD
              */
-        	var dateEnd = Math.floor(new Date().getTime()/1000);
-        	var dateStart = dateEnd - (86400 * 14)
-        	defaultParams = {
-        			dateStart: dateStart,
-        			dateEnd: dateEnd,
-        			agregat_type: '6h',
-        			platform:'BITSTAMP',
-        			item:'XRP',
-        			currency:'USD'
-        	}
+            defaultParams = {
+                    interval: '15m',
+                    platform:'BITSTAMP',
+                    item:'XRP',
+                    currency:'USD'
+            }
+            var range = RangeTranslate('1d');
+            _.extend(defaultParams,range);
+
             SelectorActions.initSelector(defaultParams)
         }
     },

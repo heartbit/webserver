@@ -10273,6 +10273,12 @@ li.current a {
   stroke: #fff;
   shape-rendering: crispEdges; }
 
+#interval {
+  margin-left: 1.6em; }
+
+#range {
+  margin-left: 2.4em; }
+
 .simpleSelector {
   background: #FFFFFF;
   color: #004756;
@@ -10291,8 +10297,16 @@ li.current a {
   float: left;
   margin-left: 2.5em; }
 
-.platformSelector {
+.mainSelector {
   float: left;
+  width: 13em; }
+
+.platformSelect {
+  max-width: 8em;
+  width: 8em;
+  float: right; }
+
+.platformLabel {
   width: 13em; }
 
 .item {

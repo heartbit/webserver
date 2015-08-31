@@ -9,10 +9,7 @@ var _SelectorStore = {
 };
 
 function registerSelector(result){
-	_.each(result.platforms, function(platform) {
-		_SelectorStore.platforms[platform.platformname] = platform.pairs;
-	});
-	_SelectorStore.params=result.params;
+	_SelectorStore=result;
 };
 var SelectorStore = assign({}, EventEmitter.prototype, {
 
@@ -46,7 +43,7 @@ SelectorStore.dispatcherIndex = Dispatcher.register(function(payload) {
 	var action = payload.action;
   	var result;
   	switch(action.actionType) {
-  	     case Constants.ActionTypes.ASK_PLATFORM:	
+  	     case Constants.ActionTypes.REGISTER_SELECTOR:	
   	   	    registerSelector(action.result); 	
 		 	SelectorStore.emitChange();
 		 	break;
