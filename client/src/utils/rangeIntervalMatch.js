@@ -8,21 +8,21 @@ match.customLength = function(params) {
 		case(timeframe<=43200):
 			return '1m';
 			break;
-		case (43200<=timeframe<=86400):
+		case (timeframe<=86400):
 			return '15m';
 			break;
-		case (86400<=timeframe<=259200):
+		case (timeframe<=259200):
 			return '1h';
 			break;
-		case (259200<=timeframe<=604800):
+		case (timeframe<=604800):
 			return '1h';
 			break;
-		case (604800<=timeframe<=1209600):
+		case (timeframe<=1209600):
 			return '6h';
-		case (1209600<=timeframe<=2678400):
+		case (timeframe<=2678400):
 			return '12h';
 			break;
-		case (2678400<=timeframe<=16070400):
+		case (timeframe<=16070400):
 			return '24h';
 			break;
 		default:
@@ -32,27 +32,26 @@ match.customLength = function(params) {
 }
 
 match.customFilterInterval = function(value, currentInterval) {
-	// console.log(value,currentInterval);
-	// switch(currentInterval) { 
-	// 	case '1m':
-	// 		return (value != '24h' && value != '12h' && value != '6h');
-	// 		break;
-	// 	case '15m':
-	// 		return (value != '24h' && value != '12h' && value != '6h');
-	// 		break;
-	// 	case '1h':
-	// 		return  (value !='1m');
-	// 		break;
-	// 	case '6h':
-	// 		return (value !='15m' && value != '1m');
-	// 		break;
-	// 	case '12h':
-	// 		return (value !='1h' && value !='15m' && value!='1m');
-	// 		break;
-	// 	case '24h':
-	// 		return (value!='12h' && value !='6h' && value !='1h' && value !='15m' && value!='1m');
-	// 		break;
-	// }
+	switch(currentInterval) { 
+		case '1m':
+			return (value != '24h' && value != '12h' && value != '6h');
+			break;
+		case '15m':
+			return (value != '24h' && value != '12h' && value != '6h');
+			break;
+		case '1h':
+			return  (value !='1m');
+			break;
+		case '6h':
+			return (value !='15m' && value != '1m');
+			break;
+		case '12h':
+			return (value !='1h' && value !='15m' && value!='1m');
+			break;
+		case '24h':
+			return (value !='1h' && value !='15m' && value!='1m');
+			break;
+	}
 }
 
 match.defaultInterval = function(currentRange,params) {
@@ -113,9 +112,9 @@ match.filterInterval = function(value, currentRange, currentInterval) {
 		case '1y':
 			return (value!='12h' && value !='6h' && value !='1h' && value !='15m' && value!='1m');
 			break;
-		// case 'Custom': 
-		// 	return this.customFilterInterval(value,currentInterval);
-		// 	break;
+		case 'Custom': 
+			return this.customFilterInterval(value,currentInterval);
+			break;
 		default:
 			return (value!='12h' && value !='6h' && value !='1h' && value !='15m' && value!='1m');
 	}

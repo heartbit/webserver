@@ -48,7 +48,6 @@ var Dashboard = React.createClass({
       result.attributes = widget;
       
       if(widget.chart){
-        console.log("widget params",self.props.params);
     	  var Widget = require('../widgets/'+widget.chart+'.js');
     	  return (<Widget attributes={result.attributes} params={self.props.params}></Widget>);
       }

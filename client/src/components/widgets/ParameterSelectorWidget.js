@@ -40,6 +40,7 @@ var ParameterSelectorWidget = React.createClass({
    componentWillUnmount: function() {
    },
    render: function() {
+   		
 	    var selector = this.state.selector;
 	    var platforms = this.state.platforms;
 	    var pairs = this.state.pairs;
@@ -66,24 +67,22 @@ var ParameterSelectorWidget = React.createClass({
 		var range = RangeIntervalMatch.range(range, currentInterval);
 
 		var interval = RangeIntervalMatch.interval(interval, currentRange, currentInterval);
-	    console.log("STAAAAAAAAAAAAAAAAAAAAAAAAATTTEEEEEEEEEEEEEEEEEEE",this.state);
-		if(this.state.selector.params.dateStart){
 
+		if(this.state.selector.params.dateStart){
 			var startDate = moment.unix(this.state.selector.params.dateStart).format('YYYY-MM-DD');
 			var endDate = moment.unix(this.state.selector.params.dateEnd).format('YYYY-MM-DD');
-			console.log("start-end",startDate,endDate);
 		}
 		// var newValue = this.state.selector.params.timeframe;
 
 	    if(this.state.selector.params.range == 'Custom') {
 		    var dateStart = <div>
 								<label className={"dateLabel"} >Date Start :
-									<input type="date" className={"dateInput"} defaultValue={startDate} onChange={this._changeDateStart}/>
+									<input type="date" className={"dateInput"}  onChange={this._changeDateStart} value={startDate} />
 								</label>
 							</div>;
 	        var dateEnd = 	<div>
 								<label className={"dateLabel"} >Date End :
-									<input type="date" className={"dateInput"} id="dateEnd" onChange={this._changeDateEnd} defaultValue={endDate} />
+									<input type="date" className={"dateInput"} id="dateEnd" onChange={this._changeDateEnd} value={endDate} />
 								</label>
 							</div>;
 		} else {
@@ -178,12 +177,22 @@ var ParameterSelectorWidget = React.createClass({
    },
    _changeDateEnd:function(e){
    		var self = this;
-   		var newDateEnd = moment(e.target.value).format('X');
+   		var currentDate = Math.floor(new Date().getTime()/1000);
+   		if(e.target.value == '') {
+   			var newDateEnd = currentDate; 
+   		} else {
+   			newDateEnd = parseInt(moment(e.target.value).format('X'));
+   		}
    		var range = this.state.selector.params.range;
-   		var defaultInterval = RangeIntervalMatch.defaultInterval(range,this.state.selector.params);
    	    var callback = function() {
+   			if(newDateEnd > currentDate) { newDateEnd = currentDate;}
+
             var newParams = self.state.selector.params;
             newParams.dateEnd = newDateEnd;
+            if(newParams.dateEnd <= newParams.dateStart) {
+        		newParams.dateStart = newParams.dateEnd - 86400;
+        	}
+   			var defaultInterval = RangeIntervalMatch.defaultInterval(range,newParams);
             newParams.interval = defaultInterval;
             SelectorActions.changeSelector(newParams);
         };
@@ -191,12 +200,21 @@ var ParameterSelectorWidget = React.createClass({
    },
    _changeDateStart:function(e){
    		var self=this;
-   		var newDateStart = parseInt(moment(e.target.value).format('X'));
+   		var currentDate = Math.floor(new Date().getTime()/1000);
+   		if(e.target.value == '') {
+   			var newDateStart = currentDate - 86400; 
+   		} else {
+   			var newDateStart = parseInt(moment(e.target.value).format('X'));
+   		}
    		var range = this.state.selector.params.range;
-   		var defaultInterval = RangeIntervalMatch.defaultInterval(range,this.state.selector.params);
    	    var callback = function() {
+   	    	if(newDateStart > currentDate) { newDateEnd = currentDate - 86400;}
         	var newParams = self.state.selector.params;
         	newParams.dateStart = newDateStart;
+        	if(newParams.dateStart >= newParams.dateEnd) {
+        		newParams.dateEnd = newParams.dateStart + 86400;
+        	}
+   			var defaultInterval = RangeIntervalMatch.defaultInterval(range,newParams);
         	newParams.interval = defaultInterval;
         	SelectorActions.changeSelector(newParams);
         };
