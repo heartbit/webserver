@@ -20,7 +20,7 @@ var SelectorActions = {
 		this.changeSelector(params);
 	},
 	changeSelector: function(params) {
-		var range = RangeTranslate(params.range);
+		var range = RangeTranslate(params.range, params);
 		var newParams = _.extend(params, range);
 		Dispatcher.handleViewAction({
 			actionType: Constants.ActionTypes.REGISTER_SELECTOR,

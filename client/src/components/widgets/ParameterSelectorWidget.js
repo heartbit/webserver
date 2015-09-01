@@ -47,21 +47,6 @@ var ParameterSelectorWidget = React.createClass({
 	    var interval = this.state.interval;
 	    var currentInterval = this.state.selector.params.interval;
 	    var currentRange = this.state.selector.params.range;
-	    if(this.state.selector.params.range == 'Custom') {
-		    var dateStart = <div>
-								<label className={"dateLabel"} >Date Start :
-									<input type="date" className={"dateInput"} value={startDate} onChange={this._changeDateStart}/>
-								</label>
-							</div>;
-	        var dateEnd = 	<div>
-								<label className={"dateLabel"} >Date End :
-									<input type="date" className={"dateInput"} id="dateEnd" onChange={this._changeDateEnd} value={endDate} />
-								</label>
-							</div>;
-		} else {
-			var dateStart = null;
-			var dateEnd = null;
-		}
 
 
 
@@ -80,14 +65,32 @@ var ParameterSelectorWidget = React.createClass({
 
 		var range = RangeIntervalMatch.range(range, currentInterval);
 
-		var interval = RangeIntervalMatch.interval(interval, currentRange);
-	    
+		var interval = RangeIntervalMatch.interval(interval, currentRange, currentInterval);
+	    console.log("STAAAAAAAAAAAAAAAAAAAAAAAAATTTEEEEEEEEEEEEEEEEEEE",this.state);
 		if(this.state.selector.params.dateStart){
+
 			var startDate = moment.unix(this.state.selector.params.dateStart).format('YYYY-MM-DD');
 			var endDate = moment.unix(this.state.selector.params.dateEnd).format('YYYY-MM-DD');
+			console.log("start-end",startDate,endDate);
+		}
+		// var newValue = this.state.selector.params.timeframe;
+
+	    if(this.state.selector.params.range == 'Custom') {
+		    var dateStart = <div>
+								<label className={"dateLabel"} >Date Start :
+									<input type="date" className={"dateInput"} defaultValue={startDate} onChange={this._changeDateStart}/>
+								</label>
+							</div>;
+	        var dateEnd = 	<div>
+								<label className={"dateLabel"} >Date End :
+									<input type="date" className={"dateInput"} id="dateEnd" onChange={this._changeDateEnd} defaultValue={endDate} />
+								</label>
+							</div>;
+		} else {
+			var dateStart = null;
+			var dateEnd = null;
 		}
 		// console.log(startDate)
-		var newValue = this.state.selector.params.timeframe;
 		/*
 		 *  <div>
 				<select id="pairs" onChange={this._onPairsChange}>
@@ -146,12 +149,19 @@ var ParameterSelectorWidget = React.createClass({
 
    _onRangeChange: function(e) {
    		var newRange = e.target.value;
-   		var defaultInterval = RangeIntervalMatch.defaultInterval(newRange);
-   		var newParams = this.state.selector.params;
-   		newParams.range = newRange;
-   		newParams.interval = defaultInterval;
-   		console.log("newPRAMMM",newParams);
-   		SelectorActions.changeSelector(newParams);
+   		if(newRange != "Custom") {
+	   		var newParams = this.state.selector.params;
+	   		var defaultInterval = RangeIntervalMatch.defaultInterval(newRange,newParams);
+	   		newParams.range = newRange;
+	   		newParams.interval = defaultInterval;
+	   		SelectorActions.changeSelector(newParams);
+	   	} else {
+	   		var selector = this.state.selector;
+	   		selector.params.range = 'Custom';
+	   		this.setState({
+	   			selector: selector
+	   		});
+	   	}
    },
 
    _onIntervalChange:function(e){
@@ -167,15 +177,43 @@ var ParameterSelectorWidget = React.createClass({
 	   return selector
    },
    _changeDateEnd:function(e){
-	   var selector =this._formatNewDateAndReturnSelector(e.target.value,'dateEnd');
-	   SelectorActions.refreshGraphAndKeyfact(selector.params);
-	   this.setState({selector:selector});
+   		var self = this;
+   		var newDateEnd = moment(e.target.value).format('X');
+   		var range = this.state.selector.params.range;
+   		var defaultInterval = RangeIntervalMatch.defaultInterval(range,this.state.selector.params);
+   	    var callback = function() {
+            var newParams = self.state.selector.params;
+            newParams.dateEnd = newDateEnd;
+            newParams.interval = defaultInterval;
+            SelectorActions.changeSelector(newParams);
+        };
+        this.delay()(callback, 500);
    },
    _changeDateStart:function(e){
-	   var selector = this._formatNewDateAndReturnSelector(e.target.value,'dateStart')
-	   SelectorActions.refreshGraphAndKeyfact(selector.params);
-	   this.setState({selector:selector});
-   }
+   		var self=this;
+   		var newDateStart = parseInt(moment(e.target.value).format('X'));
+   		var range = this.state.selector.params.range;
+   		var defaultInterval = RangeIntervalMatch.defaultInterval(range,this.state.selector.params);
+   	    var callback = function() {
+        	var newParams = self.state.selector.params;
+        	newParams.dateStart = newDateStart;
+        	newParams.interval = defaultInterval;
+        	SelectorActions.changeSelector(newParams);
+        };
+        this.delay()(callback, 500);
+   },
+
+    delay: function() {
+    	var self = this;
+        this.timer;
+   		return (function(){
+            return function(callback, ms){
+                clearTimeout(self.timer);
+
+                self.timer = setTimeout(callback, ms);
+            };
+        })();
+    }
 
 });
 
