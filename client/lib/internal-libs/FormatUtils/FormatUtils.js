@@ -80,6 +80,27 @@ FormatUtils.formatPercent = function(value) {
 	return formatted + '%';
 };
 
+FormatUtils.formatPercentV = function(value) {
+	var formatted;
+	// value = roundToN(value, 3);
+	if (value >= 100) {
+		formatted = numeral(value).format("0,0");
+	}
+	if (value < 100 && value >= 10) {
+		formatted = numeral(value).format("0.[0]");
+	}
+	if (value < 10) {
+		formatted = numeral(value).format("0.[00]");
+	}
+	if(formatted >0) {
+		formatted = '+' + formatted;
+	} else {
+		formatted = '-' + formatted;
+	}
+	
+	return formatted + '%';
+};
+
 FormatUtils.formatEvol = function(value) {
 	return value >= 0 ? '+' + this.formatPercent(value) : this.formatPercent(value);
 };

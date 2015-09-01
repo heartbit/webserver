@@ -17,7 +17,6 @@ var Ticker = Backbone.Model.extend({
 		var self = this;
 		console.log('creation ticker');
 		DataSocket.on(this.channel, function(data) {
-			console.log(data);
 			self.model = data.data;
 			self.trigger('change');
 		})
