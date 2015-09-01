@@ -36,7 +36,7 @@ ClientSocket.prototype.run = function(callback) {
 ClientSocket.prototype.initDataNamespace = function() {
     var self = this;
 
-    var channel = "BITSTAMP:BTC:USD:TCK";
+    var channel = "BITSTAMP:XRP:USD:TCK";
     var channel2 = "BITFINEX:BTC:USD:TCK";
 
     this.io.on('connection', function(socket) {
@@ -83,9 +83,43 @@ ClientSocket.prototype.initDataNamespace = function() {
 
 };
 
+var generateRoomnames = function(callback) {
+    var self = this;
+    var sep = ":";
+    APIManager.getPlatforms(function(platforms) {
 
+        var rooms = [];
+        self.platforms = platforms;
+        _.each(platforms, function(platform) {
+            _.each(platform.pairs, function(pair) {
 
+                var channels = []
+                _.each(config.measures, function(measure) {
+                    channels.push(platform.name + sep + pair.item + sep + pair.currency + sep + measure.key);
+                });
 
+                var roomid = pair.item + sep + pair.currency;
+                var room = _.find(rooms, function(room) {
+                    return room.id == roomid;
+                });
+
+                // Room already exists
+                if (room) {
+                    room.channels = _.union(room.channels, channels);
+                } else {
+                    rooms.push({
+                        id: roomid,
+                        channels: channels
+                    });
+                }
+
+            });
+        });
+
+        callback(rooms);
+
+    });
+};
 
 
 
@@ -118,43 +152,6 @@ ClientSocket.prototype.initDataNamespace = function() {
 //     });
 // };
 
-// var generateRoomnames = function(callback) {
-//     var self = this;
-//     var sep = ":";
-//     APIManager.getPlatforms(function(platforms) {
-
-//         var rooms = [];
-//         self.platforms = platforms;
-//         _.each(platforms, function(platform) {
-//             _.each(platform.pairs, function(pair) {
-
-//                 var channels = []
-//                 _.each(config.measures, function(measure) {
-//                     channels.push(platform.name + sep + pair.item + sep + pair.currency + sep + measure.key);
-//                 });
-
-//                 var roomid = pair.item + sep + pair.currency;
-//                 var room = _.find(rooms, function(room) {
-//                     return room.id == roomid;
-//                 });
-
-//                 // Room already exists
-//                 if (room) {
-//                     room.channels = _.union(room.channels, channels);
-//                 } else {
-//                     rooms.push({
-//                         id: roomid,
-//                         channels: channels
-//                     });
-//                 }
-
-//             });
-//         });
-
-//         callback(rooms);
-
-//     });
-// };
 
 // ClientSocket.prototype.initChatNamespace = function() {
 // 	this.io

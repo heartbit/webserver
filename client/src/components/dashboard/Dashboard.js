@@ -13,7 +13,7 @@ var Dashboard = React.createClass({
         title:'Keyfact',
         icon:'fa fa-bar-chart',
         chart: 'TickerWidget',
-        width: 2,
+        width: 3,
         height: 1,
         col: 1,
         row: 1

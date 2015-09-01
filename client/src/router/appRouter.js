@@ -29,14 +29,6 @@ var AppRouter = Backbone.Router.extend({
             SelectorActions.initSelector(params);
         } 
         else {
-        	/**
-             * Base params
-             * Interval : 15min
-             * TimeFrame : 2 Weeks
-             * platform : Bitstamp
-             * Item: BTC
-             * currency: USD
-             */
             defaultParams = {
                     interval: '15m',
                     platform:'BITSTAMP',

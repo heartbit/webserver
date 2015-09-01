@@ -41,3 +41,16 @@ var TickerWidget = React.createClass({
 });
 
 module.exports = TickerWidget;
+
+
+// { lastPrice: 0.007740203574811515,
+//   lastVolume: 1013.996785,
+//   nbTrade: 962,
+//   high: 0.007873160756886877,
+//   low: 0.007517440252194941,
+//   open: 0.007578032996608282,
+//   volume: 8593550.528348,
+//   variation: 2.14000887,
+//   currency: 'USD',
+//   item: 'XRP',
+//   platform: 'BITSTAMP' }
