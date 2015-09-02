@@ -10,4 +10,22 @@ config.keyfact = {};
 config.keyfact.url = "keyfact";
 config.platforms = {};
 config.platforms.url =apiprefix+"platform";
+
+
+config.platforms.defaultplatforms = {
+	'XRP/USD':'BITSTAMP',
+	'XRP/JPY':'TOKYOJPY',
+	'BTC/USD':'BITFINEX',
+	'XRP/CNY':'RIPPLEFOX'
+}
+
+config.platforms.defaultpairs = {
+	'BITSTAMP':'XRP/USD',
+	'TOKYOJPY':'XRP/JPY',
+	'BITFINEX':'BTC/USD',
+	'RIPPLEFOX':'XRP/CNY'
+}
+
+
+
 module.exports = config;

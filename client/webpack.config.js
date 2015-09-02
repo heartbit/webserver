@@ -104,9 +104,11 @@ module.exports = {
 			// Dispatcher
 			Dispatcher: path.join(__dirname, './src/dispatcher/dispatcher'),
 
+			//Helpers & utils
 			FormatUtils: path.join(__dirname, './lib/internal-libs/FormatUtils/FormatUtils'),
-			RangeTranslate: path.join(__dirname, './src/utils/rangeTranslate'),
-			RangeIntervalMatch: path.join(__dirname, './src/utils/rangeIntervalMatch'),
+			RangeTranslate: path.join(__dirname, './src/helpers/selectorWidget/rangeTranslate'),
+			RangeIntervalMatch: path.join(__dirname, './src/helpers/selectorWidget/rangeIntervalMatch'),
+			PairsPlatformsMatch: path.join(__dirname, './src/helpers/selectorWidget/pairsPlatformsMatch'),
 
 			//Models & collections
 			Volume: path.join(__dirname, './src/models/Volume'),

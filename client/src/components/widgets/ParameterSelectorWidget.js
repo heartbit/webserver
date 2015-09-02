@@ -5,6 +5,8 @@ var PlatformStore = require('PlatformStore');
 var SelectorActions = require('SelectorActions');
 var moment = require('moment')
 var RangeIntervalMatch = require('RangeIntervalMatch');
+var PairsPlatformsMatch = require('PairsPlatformsMatch');
+var Config = require('Config');
 
 
 var ParameterSelectorWidget = React.createClass({
@@ -14,20 +16,23 @@ var ParameterSelectorWidget = React.createClass({
 	    	selector:{
 		    	params:{
 		    		platform:'BITSTAMP',
-		    		currency:'USD',
-		    		item:'BTC',
+		    		currency:'XRP',
+		    		item:'USD',
 		    		interval:'15m',
-		    		range:'1d'
+		    		range:'1d',
+		    		pair: 'XRP/USD'
 		    	}
 	    	},
 	    	platforms: [],
 	    	pairs: [],
+	    	allPlatforms: {},
 	    	range: ['12h','1d','3d','1w','2w','1m','3m','6m','1y','Max', 'Custom'],
 	    	interval: ['1m','15m','1h','6h','12h','24h']
 	    }
    },
    _onUpdateState : function(){
 	    var selector = SelectorStore.getAll();
+	    selector.pair = selector.item + '/' + selector.currency;
 	    this.setState({
 			selector: {
 				params:selector
@@ -42,7 +47,7 @@ var ParameterSelectorWidget = React.createClass({
    componentWillUnmount: function() {
    },
    render: function() {
-   		
+   		console.log("STATE",this.state);
 	    var selector = this.state.selector;
 	    var platforms = this.state.platforms;
 	    var pairs = this.state.pairs;
@@ -99,12 +104,13 @@ var ParameterSelectorWidget = React.createClass({
 				</select>
 			  </div>
 		 */
+		 console.log("paiiiiiiiiiiiiiiiiirrr",this.state.selector.params.pair);
 		return (
 			<BaseWidget attributes={this.props.attributes}>
 				<div className="mainSelector">
 					<div>
 						<label className={"platformLabel"}> Pairs : 
-							<select id="pairs" className={"simpleSelector platformSelect"} value={this.state.selector.params.platform} onChange={this._onPlatformChange}>
+							<select id="pairs" className={"simpleSelector platformSelect"} value={this.state.selector.params.pair} onChange={this._onPairChange}>
 							  {pairs}
 							</select>
 						</label>
@@ -153,18 +159,47 @@ var ParameterSelectorWidget = React.createClass({
    		pairs = _.uniq(pairs);
    		this.setState({
    			platforms: platforms,
-   			pairs: pairs
+   			pairs: pairs,
+   			allPlatforms: p
    		});
 	},
 
    _onPlatformChange:function(e){
-	   var selector = this.state.selector; 
-	   selector.params.platform = e.target.value;
-	   SelectorActions.refreshGraphAndKeyfact(selector.params);
-	   this.setState({selector:selector});
+   		var selectedPlatform = e.target.value;
+   		var allPlatforms = this.state.allPlatforms;
+   		var defaultPairs = Config.platforms.defaultpairs;
+	   	var selector = this.state.selector.params; 
+	   	var newPair = PairsPlatformsMatch.getPair(selectedPlatform,selector, allPlatforms, defaultPairs);
+
+	    selector.platform = e.target.value;
+	    selector.item = newPair[0];
+	    selector.currency = newPair[1];
+	    selector.pair = newPair.join('/');
+	   	SelectorActions.changeSelector(selector);
+	   	this.setState({
+	   		selector: {
+	   			params:selector	   			
+	   		}
+	   	});
    },
-   _onPairsChange:function(e){
-	   
+   _onPairChange:function(e){
+   		var selectedPair = e.target.value;
+   		var allPlatforms = this.state.allPlatforms;
+   		var defaultPlatforms = Config.platforms.defaultplatforms;
+	   	var selector = this.state.selector.params; 
+	   	var newPlatform = PairsPlatformsMatch.getPlatform(selectedPair, selector, allPlatforms, defaultPlatforms);   
+
+	   	selector.platform = newPlatform;
+	   	selector.item = selectedPair.split('/')[0];
+	   	selector.currency = selectedPair.split('/')[1];
+	   	selector.pair = selectedPair;
+	   	SelectorActions.changeSelector(selector);
+	   	this.setState({
+	   		selector: {
+	   			params:selector
+	   		}
+	   	});
+	   	console.log("NEW PLATFORM", newPlatform);
    },
 
    _onRangeChange: function(e) {

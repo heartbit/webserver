@@ -24,8 +24,8 @@ APIManager.prototype.getPlatforms = function(callback) {
 	if (!this.platforms) {
 		var platforms = [];
 		request({
-			method: 'POST',
-			uri: this.config.platforms,
+			method: 'GET',
+			url: this.config.platforms,
 		}, function(error, response, body) {
 			if (error) {
 				console.log('ERROR API GET PLATFORMS : ', error);
@@ -33,7 +33,7 @@ APIManager.prototype.getPlatforms = function(callback) {
 			try {
 				self.platforms = JSON.parse(body);
 			} catch (e) {
-				console.log('CANNOT PARSE PARTFORMS JACKSON !!');
+				console.log('CANNOT PARSE PLATFORMS !!');
 			}
 			callback(self.platforms);
 		});

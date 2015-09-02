@@ -14,7 +14,7 @@ var SelectorActions = {
 		platforms.fetchPlatform().then(function(result){
 			Dispatcher.handleViewAction({
 				actionType: Constants.ActionTypes.ASK_PLATFORM,
-				result:{platforms:result,params:params}
+				result:{platforms:result}
 			});
 		});
 		this.changeSelector(params);

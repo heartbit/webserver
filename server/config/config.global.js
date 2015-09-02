@@ -10,7 +10,7 @@ config.apiproxy.port = "9090";
 config.apiproxy.hostUrl = config.apiproxy.host + ":" + config.apiproxy.port;
 config.apiproxy.apiUrl = config.apiproxy.hostUrl + '/front-api';
 
-config.apiproxy.platforms = config.apiproxy.apiUrl + 'platform';
+config.apiproxy.platforms = config.apiproxy.apiUrl + '/api/platform/all';
 config.apiproxy.items = config.apiproxy.apiUrl + 'documentation/item';
 config.apiproxy.criteria = config.apiproxy.apiUrl + 'documentation/criteria';
 config.apiproxy.methods = config.apiproxy.apiUrl + 'documentation/methods';

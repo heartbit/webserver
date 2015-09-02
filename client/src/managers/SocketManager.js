@@ -1,4 +1,4 @@
-var io = require('socketio');
+var io = require('socket.io-client');
 var instance = null;
 
 var DataSocketManager = function() {
@@ -10,6 +10,8 @@ var DataSocketManager = function() {
 DataSocketManager.getInstance = function() {
     if (instance === null) {
         instance = io();
+        console.log(instance);
+        // instance.connect('/data');
 
         instance.on('connect', function() {
             console.log('data socket connected!')

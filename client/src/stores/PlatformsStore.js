@@ -12,7 +12,7 @@ function registerPlatforms(result){
 	_.each(result.platforms, function(platform) {
 		_PlatformsStore.platforms[platform.platformname] = platform.pairs;
 	});
-	_PlatformsStore.params=result.params;
+	// _PlatformsStore.params=result.params;
 	console.log("_PlatformsStore", _PlatformsStore);
 };
 var PlatformsStore = assign({}, EventEmitter.prototype, {
