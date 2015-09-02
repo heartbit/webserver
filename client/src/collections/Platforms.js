@@ -17,11 +17,13 @@ var platforms = Backbone.Collection.extend({
 
 	fetchPlatform: function(params) {
 		this.url = this.buildUrl(params)
+		console.log('url platform!!',this.url);
 		var self = this;
 		this.reset();
 
 		var xhr = this.fetch({
 			success: function(models, response) {
+				console.log('platforms models!',models);
 				self.add(models);
 			},
 			error: function(error) {

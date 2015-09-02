@@ -1,6 +1,7 @@
 var React = require('react/addons');
 var BaseWidget = require('BaseWidget');
 var SelectorStore = require('SelectorStore');
+var PlatformStore = require('PlatformStore');
 var SelectorActions = require('SelectorActions');
 var moment = require('moment')
 var RangeIntervalMatch = require('RangeIntervalMatch');
@@ -19,8 +20,8 @@ var ParameterSelectorWidget = React.createClass({
 		    		range:'1d'
 		    	}
 	    	},
-	    	platforms: ['BITSTAMP','TOKYOJPY','BITFINEX','RIPPLEFOX'],
-	    	pairs: ['XRP/USD','XRP/BTC','BTC/USD'],
+	    	platforms: [],
+	    	pairs: [],
 	    	range: ['12h','1d','3d','1w','2w','1m','3m','6m','1y','Max', 'Custom'],
 	    	interval: ['1m','15m','1h','6h','12h','24h']
 	    }
@@ -35,6 +36,7 @@ var ParameterSelectorWidget = React.createClass({
    },
    componentDidMount: function() {
 	   SelectorStore.addChangeListener("change" ,this._onUpdateState);
+	   PlatformStore.addChangeListener("change", this._onUpdatePlatforms);
    },
     
    componentWillUnmount: function() {
@@ -101,16 +103,16 @@ var ParameterSelectorWidget = React.createClass({
 			<BaseWidget attributes={this.props.attributes}>
 				<div className="mainSelector">
 					<div>
-						<label className={"platformLabel"}> Platform : 
-							<select id="platforms" className={"simpleSelector platformSelect"} value={this.state.selector.params.platform} onChange={this._onPlatformChange}>
-							  {platforms}
+						<label className={"platformLabel"}> Pairs : 
+							<select id="pairs" className={"simpleSelector platformSelect"} value={this.state.selector.params.platform} onChange={this._onPlatformChange}>
+							  {pairs}
 							</select>
 						</label>
 					</div>
 					<div>
-						<label className={"platformLabel"}> Pairs : 
-							<select id="pairs" className={"simpleSelector platformSelect"} value={this.state.selector.params.platform} onChange={this._onPlatformChange}>
-							  {pairs}
+						<label className={"platformLabel"}> Platform : 
+							<select id="platforms" className={"simpleSelector platformSelect"} value={this.state.selector.params.platform} onChange={this._onPlatformChange}>
+							  {platforms}
 							</select>
 						</label>
 					</div>
@@ -136,6 +138,25 @@ var ParameterSelectorWidget = React.createClass({
 			</BaseWidget>
 		);
 	},
+
+	_onUpdatePlatforms: function() {
+		var p = PlatformStore.getAll();
+   		var platforms = [];
+   		var pairs = [];
+   		_.each(p.platforms, function(pair, platform) {
+   			platforms.push(platform);
+   			_.each(pair, function(value, key) {
+   				value = (value.split(';')).join('/');
+   				pairs.push(value);
+   			});
+   		});
+   		pairs = _.uniq(pairs);
+   		this.setState({
+   			platforms: platforms,
+   			pairs: pairs
+   		});
+	},
+
    _onPlatformChange:function(e){
 	   var selector = this.state.selector; 
 	   selector.params.platform = e.target.value;

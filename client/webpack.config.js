@@ -93,7 +93,7 @@ module.exports = {
 			MaingraphStore: path.join(__dirname, './src/stores/MaingraphStore'),
 			TickerStore: path.join(__dirname, './src/stores/TickerStore'),
 			SelectorStore: path.join(__dirname, './src/stores/SelectorStore'),
-			PlatformStore: path.join(__dirname, './src/stores/PlatformStore'),
+			PlatformStore: path.join(__dirname, './src/stores/PlatformsStore'),
 
 			// Mixin
 			StoreMixin: path.join(__dirname, './src/stores/mixin/storeMixin'),

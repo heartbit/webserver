@@ -10348,10 +10348,13 @@ li.current a {
   color: #a00; }
 
 .volumeColor {
-  color: #86b; }
+  color: #0F061D; }
 
 #itemVolume {
   font-size: 0.5em; }
+
+#nbtrade {
+  color: #0F061D; }
 
 .item {
   display: block;

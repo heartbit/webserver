@@ -22,7 +22,7 @@ var TickerWidget = React.createClass({
 		var lastPrice = Math.trunc(ticker.lastPrice*1000000)/1000000;
 		var variation = FormatUtils.formatPercentV(ticker.variation);
 		var VariationColor = this.variationColor(ticker.variation);
-		var volume = Math.trunc(ticker.volume);
+		var volume = FormatUtils.formatValue(ticker.volume);
 		var currency = ticker.currency;
 		var item = ticker.item;
 		var open =  Math.trunc(ticker.open*1000000)/1000000
@@ -58,7 +58,7 @@ var TickerWidget = React.createClass({
 									<span id='itemVolume'> {item} </span>
 								</div>
 								<div>
-									<span id='24hnbtrade'> Trades: {nbTrade} </span>
+									<span id='nbtrade'> Trades: {nbTrade} </span>
 								</div>
 							</div>
 						</div>

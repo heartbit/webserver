@@ -11,7 +11,7 @@ var Ticker = Backbone.Model.extend({
 		close: 0
 	},
 	changeParams: function(params) {
-		console.log(params);
+		// console.log(params);
 		DataSocket.off(this.channel);
 		this.channel = params || "BITFINEX:BTC:USD:TCK";
 		var self = this;

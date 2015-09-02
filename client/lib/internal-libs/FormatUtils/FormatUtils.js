@@ -94,9 +94,10 @@ FormatUtils.formatPercentV = function(value) {
 	}
 	if(formatted >0) {
 		formatted = '+' + formatted;
-	} else {
-		formatted = '-' + formatted;
-	}
+	} 
+	// else {
+	// 	formatted = '-' + formatted;
+	// }
 	
 	return formatted + '%';
 };

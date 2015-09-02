@@ -4,24 +4,25 @@ var Constants = require('Constants');
 var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
-var _SelectorStore = {
+var _PlatformsStore = {
 	platforms:{}
 };
 
-function registerSelector(result){
+function registerPlatforms(result){
 	_.each(result.platforms, function(platform) {
-		_SelectorStore.platforms[platform.platformname] = platform.pairs;
+		_PlatformsStore.platforms[platform.platformname] = platform.pairs;
 	});
-	_SelectorStore.params=result.params;
+	_PlatformsStore.params=result.params;
+	console.log("_PlatformsStore", _PlatformsStore);
 };
-var SelectorStore = assign({}, EventEmitter.prototype, {
+var PlatformsStore = assign({}, EventEmitter.prototype, {
 
 	getAll: function() {
-		return _SelectorStore;
+		return _PlatformsStore;
 	},
 
 	getSpecific:function(key) {
-		return _SelectorStore[key];
+		return _PlatformsStore[key];
 	},
 
 	emitChange: function() {
@@ -42,19 +43,19 @@ var SelectorStore = assign({}, EventEmitter.prototype, {
 
 });
 
-SelectorStore.dispatcherIndex = Dispatcher.register(function(payload) {
+PlatformsStore.dispatcherIndex = Dispatcher.register(function(payload) {
 	var action = payload.action;
   	var result;
   	switch(action.actionType) {
   	     case Constants.ActionTypes.ASK_PLATFORM:	
-  	   	    registerSelector(action.result); 	
-		 	SelectorStore.emitChange();
+  	   	    registerPlatforms(action.result); 	
+		 	PlatformsStore.emitChange();
 		 	break;
   		 case Constants.ActionTypes.ISLOADING:
-  			SelectorStore.emitLoading('isloading');
+  			PlatformsStore.emitLoading('isloading');
 			break;
   	}
   	return true;
 });
 
-module.exports = SelectorStore;
+module.exports = PlatformsStore;
