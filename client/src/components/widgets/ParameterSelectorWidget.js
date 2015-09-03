@@ -47,7 +47,6 @@ var ParameterSelectorWidget = React.createClass({
    componentWillUnmount: function() {
    },
    render: function() {
-   		console.log("STATE",this.state);
 	    var selector = this.state.selector;
 	    var platforms = this.state.platforms;
 	    var pairs = this.state.pairs;
@@ -104,7 +103,6 @@ var ParameterSelectorWidget = React.createClass({
 				</select>
 			  </div>
 		 */
-		 console.log("paiiiiiiiiiiiiiiiiirrr",this.state.selector.params.pair);
 		return (
 			<BaseWidget attributes={this.props.attributes}>
 				<div className="mainSelector">

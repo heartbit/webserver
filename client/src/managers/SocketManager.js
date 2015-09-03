@@ -9,9 +9,9 @@ var DataSocketManager = function() {
 
 DataSocketManager.getInstance = function() {
     if (instance === null) {
-        instance = io();
-        console.log(instance);
-        // instance.connect('/data');
+        var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+  
+        instance = io(full+'/data');
 
         instance.on('connect', function() {
             console.log('data socket connected!')

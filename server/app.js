@@ -83,9 +83,9 @@ App.prototype.initRedisAndCacheManager = function() {
             self.cacheManager.init(redisParams);
         })
         .done(function() {
-            // self.redisManager.subscribeToChannels(function() {
-            deferred.resolve();
-            // });
+            self.redisManager.subscribeToChannels(function() {
+                deferred.resolve();
+            });
         });
 
     return deferred.promise;

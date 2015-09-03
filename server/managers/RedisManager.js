@@ -4,7 +4,7 @@ var _ = require('underscore');
 var Q = require('q');
 var fs = require('fs');
 var EventManager = require('./EventManager');
-// var apiManager = require('./APIManager');
+var apiManager = require('./APIManager');
 var CacheManager = require('./CacheManager');
 var config = require('../config/');
 
@@ -39,16 +39,6 @@ RedisManager.prototype.init = function(params) {
 
     this.redisClient.on("connect", function() {
         console.log('Pub/sub connection...OK');
-        // var channel = "BITSTAMP:BTC:USD:TCK";
-        // self.redisClient.psubscribe(channel);
-        self.redisClient.psubscribe("BITSTAMP:XRP:USD:TCK");
-
-        self.redisClient.on("pmessage", function(pattern, channel, message) {
-            message = self.parseMessage(channel, message);
-            //console.log(message);
-            CacheManager.set(channel, message);
-            EventManager.emit(channel, message);
-        });
         deferred.resolve();
     });
 
@@ -58,12 +48,16 @@ RedisManager.prototype.init = function(params) {
 RedisManager.prototype.subscribeToChannels = function(callback) {
     var self = this;
     var sep = ":";
-
+    // console.log("REDIS subscribeToChannels FUNCTION!");
     apiManager.getPlatforms(function(platforms) {
+        console.log("GET PLATFORMS API AMNAGER REDIS", platforms);
         _.each(platforms, function(platform) {
             _.each(platform.pairs, function(pair) {
                 _.each(config.measures, function(measure) {
-                    var channel = platform.name + sep + pair.item + sep + pair.currency + sep + measure.key;
+                    var item = pair.split(';')[0];
+                    var currency = pair.split(';')[1];
+                    var channel = platform.platformname + sep + item + sep + currency + sep + measure.key;
+                    console.log("PSUBSCRIBE TO THIS SHIT", channel);
                     self.redisClient.psubscribe(channel);
                 });
             });
