@@ -1,6 +1,22 @@
 @import "../external/bootstrap/css/bootstrap";
 @import "../external/font-awesome/css/font-awesome";
 
+.abouth {
+    font-size:1.2em;
+}
+.featuresh {
+    padding-top:3em;
+}
+.featureclick {
+    color:#004756;
+    cursor:pointer;
+}
+
+.featureclick:hover {
+    color:#3E8391;
+    text-decoration:none;
+}
+
 #cta-signup {
     margin-top: 7px;
 }
@@ -84,12 +100,12 @@ hr.star-primary:after {
 header {
     text-align: center;
     color: #fff;
-    background: #004756;
+    background: #1D1B2F;
 }
 
 header .container {
-    padding-top: 100px;
-    padding-bottom: 50px;
+    padding-top: 120px;
+    /*padding-bottom: 50px;*/
 }
 
 header img {
@@ -112,8 +128,8 @@ header .intro-text .skills {
 
 @media(min-width:768px) {
     header .container {
-        padding-top: 200px;
-        padding-bottom: 100px;
+        padding-top: 120px;
+        /*padding-bottom: 100px;*/
     }
 
     header .intro-text .name {
@@ -341,7 +357,7 @@ footer h3 {
 
 footer .footer-above {
     padding-top: 50px;
-    background-color: #004756;
+    background-color: #1D1B2F;
 }
 
 footer .footer-col {

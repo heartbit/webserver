@@ -25,25 +25,26 @@ html(lang="en")
 							a(href="#page-top")
 						li.page-scroll
 							a(href="#feature") Features
-						li.page-scroll
-							a(href="#about") About
+						//li.page-scroll
+						//	a(href="#about") About
 						li.page-scroll
 							a(href="#contact") Contact
-						li
-							a#signin(href="#") Signin
-						li#signup
-							button.btn.btn-default#cta-signup(type="button") Signup
+						//li
+						//	a#signin(href="#") Signin
+						//li#signup
+						//	button.btn.btn-default#cta-signup(type="button") Signup
 
 		header 
 			.container
 				.row
 					.col-lg-12
-						img.img-responsive(src="./img/logo-200.png" alt="logo")
+						//img.img-responsive(src="./img/logo-200.png" alt="logo")
 						.intro-text
 							span.name heartbit
+							p Crypto markets clean dashboards
 							hr.start-light
-							span.skills 
-								a.btn.btn-default(href="./app") Crypto markets clean dashboards
+							//span.skills 
+							//	a.btn.btn-default(href="./app") Crypto markets clean dashboards
 
 
 		section#feature
@@ -52,35 +53,38 @@ html(lang="en")
 					.col-lg-12.text-center
 						h2 Features
 						hr.star-primary
-				.row.text-center
+				.row.text-center.featuresh
 					.col-sm-4.feature-item
 						.caption
-							.caption-content
-								i.fa.fa-bar-chart
-						p Description
+							a.featureclick(href='/app')
+								.caption-content
+									i.fa.fa-line-chart
+									p Real Time
 					.col-sm-4.feature-item
 						.caption
-							.caption-content
-								i.fa.fa-pie-chart
-						p Description
+							a.featureclick(href='http://ledgermonitor.heartbit.io')
+								.caption-content
+									i.fa.fa-bar-chart
+									p LedgerMonitor
 					.col-sm-4.feature-item
 						.caption
-							.caption-content
-								i.fa.fa-area-chart
-						p Description
+							a.featureclick(href='#')
+								.caption-content
+									i.fa.fa-money
+									p Wallet (Coming soon)
 
-		section.success#about
-			.container
-				.row
-					.col-lg-12.text-center
-						h2 About
+		//section.success#about
+		//	.container
+		//		.row
+		//			.col-lg-12.text-center
+		//				h2 About
 
-		section#contact
-			.container
-				.row
-					.col-lg-12.text-center
-						h2 Contact
-						hr.star-primary
+		//section#contact
+		//	.container
+		//		.row
+		//			.col-lg-12.text-center
+		//				h2 Contact
+		//				hr.star-primary
 
 		footer.text-center
 			.footer-above
@@ -93,17 +97,17 @@ html(lang="en")
 							h3 Around the web
 							ul.list-inline
 								li
-									a.btn-social.btn-outline(href="#")
+									a.btn-social.btn-outline(href="https://twitter.com/heartbitoffici1")
 										i.fa.fa-fw.fa-twitter
-								li
-									a.btn-social.btn-outline(href="#")
-										i.fa.fa-fw.fa-linkedin
-								li
-									a.btn-social.btn-outline(href="#")
-										i.fa.fa-fw.fa-dribbble
+								//li
+								//	a.btn-social.btn-outline(href="#")
+								//		i.fa.fa-fw.fa-linkedin
+								//li
+								//	a.btn-social.btn-outline(href="#")
+								//		i.fa.fa-fw.fa-dribbble
 						.footer-col.col-md-4
 							h3 About heartbit
-							p heartbit is a free to use service..
+							p.abouth heartbit gathers price information on bitcoin main exchanges and ripple gateways. It also provide tools to visualize and monitor activity on the ripple ledger.
 
 		.scroll-top.page-scroll.visible-xs.visible-sm
 			a.btn.btn-primary(href="#page-top")
