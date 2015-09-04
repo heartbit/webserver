@@ -146,7 +146,6 @@ VolumeLayer.prototype.hide = function() {
 };
 
 VolumeLayer.prototype.show = function() {
-    var self = this;
     this.isVisible = true;
 
     // this.volumeBarChart

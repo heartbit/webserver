@@ -20,7 +20,7 @@ function MainChartD3(el, params) {
     this.initXAxis();
     this.layers = {
         lineLayer: new LineLayer(this),
-        // areaLayer: new AreaLayer(this),
+        areaLayer: new AreaLayer(this),
         volumeLayer: new VolumeLayer(this)
     };
 };
@@ -224,7 +224,12 @@ MainChartD3.prototype.toggle = (function() {
         return false;
     };
 
-    var areaLayer = function() {
+    var areaLayer = function(param) {
+        if (param == 'hide') {
+            this.layers.areaLayer.hide();
+        } else {
+            this.layers.areaLayer.show();
+        }
         return false;
     }
 

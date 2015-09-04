@@ -60,17 +60,17 @@ function AreaLayer(chart) {
         .attr("class", "y_candle_axis")
         .attr("transform", "translate(" + self.chart.width + ",0)");
 
-    this.candlesArea = d3.svg.area()
-        .x(function(candle) {
-            return self.chart.timeScale(candle.middleDate);
-        })
-        .y0(function(candle) {
-            return self.candleYScale(candle.low);
-        })
-        .y1(function(candle) {
-            return self.candleYScale(candle.high);
-        })
-        .interpolate("monotone");
+    // this.candlesArea = d3.svg.area()
+    //     .x(function(candle) {
+    //         return self.chart.timeScale(candle.middleDate);
+    //     })
+    //     .y0(function(candle) {
+    //         return self.candleYScale(candle.low);
+    //     })
+    //     .y1(function(candle) {
+    //         return self.candleYScale(candle.high);
+    //     })
+    //     .interpolate("monotone");
 
 
 
