@@ -72,10 +72,7 @@ function AreaLayer(chart) {
         })
         .interpolate("monotone");
 
-    this.candleAreaChart = this.candleLayer
-        .append("path")
-        .attr('opacity', 0.4)
-        .attr('class', 'candle_area');
+
 
     this.candlesLine = d3.svg.line()
         .x(function(candle) {
@@ -266,11 +263,6 @@ AreaLayer.prototype.update = function() {
         })
         .attr('r', 0)
         .attr('class', 'circle')
-
-    this.candleAreaChart
-        .transition()
-        .duration(defaultDuration)
-        .attr('d', self.candlesArea(self.candles))
 
     this.candleLineChart
         .transition()

@@ -20,7 +20,7 @@ function MainChartD3(el, params) {
     this.initXAxis();
     this.layers = {
         lineLayer: new LineLayer(this),
-        areaLayer: new AreaLayer(this),
+        // areaLayer: new AreaLayer(this),
         volumeLayer: new VolumeLayer(this)
     };
 };
@@ -238,16 +238,6 @@ MainChartD3.prototype.toggle = (function() {
         lineLayer: lineLayer
     }
 })();
-MainChartD3.prototype.toggleVolumeLayer = function() {
-    if (this.layers.volumeLayer.isVisible) {
-        // this.layers.areaLayer.updateRange([3 * this.height / 4, 0]);
-        this.layers.volumeLayer.hide();
-    } else {
-        // this.layers.areaLayer.updateRange([3 * this.height / 4, 0]);
-        this.layers.volumeLayer.show();
-    }
-    return false;
-};
 
 MainChartD3.prototype.toggleNewsLayer = function() {
     if (this.layers.newsLayer.isVisible) {

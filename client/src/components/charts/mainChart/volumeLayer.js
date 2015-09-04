@@ -12,7 +12,7 @@ function VolumeLayer(chart) {
     this.volumeLayer = this.chart.mainLayer
         .append("g")
         .attr("class", "volumeLayer");
-    this.isVisible = false;
+    this.isVisible = true;
 
     var volumeTickValues = function(d, i, j) {
         return d3.extent(self.volumes.map(function(volume) {
