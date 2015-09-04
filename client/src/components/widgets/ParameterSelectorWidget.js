@@ -2,6 +2,7 @@ var React = require('react/addons');
 var BaseWidget = require('BaseWidget');
 var SelectorStore = require('SelectorStore');
 var PlatformStore = require('PlatformStore');
+var MaingraphStore = require('MaingraphStore');
 var SelectorActions = require('SelectorActions');
 var DashboardActions = require('DashboardActions');
 var moment = require('moment')
@@ -28,7 +29,8 @@ var ParameterSelectorWidget = React.createClass({
 	    	pairs: [],
 	    	allPlatforms: {},
 	    	range: ['12h','1d','3d','1w','2w','1m','3m','6m','1y','Max', 'Custom'],
-	    	interval: ['1m','15m','1h','6h','12h','24h']
+	    	interval: ['1m','15m','1h','6h','12h','24h'],
+	    	mainGraphParams: MaingraphStore.getSpecific('params')
 	    }
    },
    _onUpdateState : function(){
@@ -43,11 +45,13 @@ var ParameterSelectorWidget = React.createClass({
    componentDidMount: function() {
 	   SelectorStore.addChangeListener("change" ,this._onUpdateState);
 	   PlatformStore.addChangeListener("change", this._onUpdatePlatforms);
+	   MaingraphStore.addChangeListener("change", this._onMaingraphNewparams);
    },
     
    componentWillUnmount: function() {
    },
    render: function() {
+   		var self = this;
 	    var selector = this.state.selector;
 	    var platforms = this.state.platforms;
 	    var pairs = this.state.pairs;
@@ -56,14 +60,6 @@ var ParameterSelectorWidget = React.createClass({
 	    var currentInterval = this.state.selector.params.interval;
 	    var currentRange = this.state.selector.params.range;
 
-
-
-	 //   var pairs = _.map(platforms,function(value,key){
-	 //    	 return _.map(value,function(pair){
-	 //    		var ic = pair.split("-");
-		// 	    return <option value={pair} name={key} >{pair}</option>
-		// 	 })
-		// });
 		var pairs = _.map(pairs, function(value, key) {
 			return <option value={value}>{value}</option>
 		});
@@ -79,7 +75,7 @@ var ParameterSelectorWidget = React.createClass({
 			var startDate = moment.unix(this.state.selector.params.dateStart).format('YYYY-MM-DD');
 			var endDate = moment.unix(this.state.selector.params.dateEnd).format('YYYY-MM-DD');
 		}
-		// var newValue = this.state.selector.params.timeframe;
+
 
 	    if(this.state.selector.params.range == 'Custom') {
 		    var dateStart = <div>
@@ -96,14 +92,18 @@ var ParameterSelectorWidget = React.createClass({
 			var dateStart = null;
 			var dateEnd = null;
 		}
-		// console.log(startDate)
-		/*
-		 *  <div>
-				<select id="pairs" onChange={this._onPairsChange}>
-				  {pairs}
-				</select>
-			  </div>
-		 */
+
+		if(this.state.mainGraphParams) {
+			var checkboxes = {};
+			_.each(this.state.mainGraphParams, function(value, param) {
+				if(value) {
+					checkboxes[param] = <input onChange={self._onSelectGraphParams} type="checkbox"  value={param} checked/>;
+				} else {
+					checkboxes[param] = <input onChange={self._onSelectGraphParams} type="checkbox" value={param} />;
+				}
+			});
+		}
+
 		return (
 			<BaseWidget attributes={this.props.attributes}>
 				<div className="mainSelector">
@@ -140,18 +140,20 @@ var ParameterSelectorWidget = React.createClass({
 					  	</label>
 				 	</div>
 		      	</div>
-		      	<div className="secondarySelector">
-		      		<div>
-			      		<label > Area
-			      			<input onChange={this._onSelectArea} type="checkbox"/> 
-			      		</label>
+		      	{ this.state.mainGraphParams ?
+			      	<div className="secondarySelector">
+			      		<div>
+				      		<label > Area
+				      			{checkboxes.areaLayer}
+				      		</label>
+				      	</div>
+				      	<div>
+				      		<label> Volume
+				      			{checkboxes.volumeLayer}
+				      		</label>
+				      	</div>
 			      	</div>
-			      	<div>
-			      		<label> Volume
-			      			<input onChange={this._onSelectVolume} type="checkbox"/>
-			      		</label>
-			      	</div>
-		      	</div>			  
+			    : "" }			  
 			</BaseWidget>
 		);
 	},
@@ -210,7 +212,6 @@ var ParameterSelectorWidget = React.createClass({
 	   			params:selector
 	   		}
 	   	});
-	   	console.log("NEW PLATFORM", newPlatform);
    },
 
    _onRangeChange: function(e) {
@@ -288,15 +289,24 @@ var ParameterSelectorWidget = React.createClass({
         this.delay()(callback, 500);
    },
 
+   _onMaingraphNewparams: function() {
+   		var params = MaingraphStore.getSpecific('params');
+   		this.setState({
+   			mainGraphParams:params
+   		});
+   },
+
    _onSelectArea: function(e) {
    		var selectCandleLayer = d3.select(".candleLayer");
-   		console.log("SELECT CANDLE LAYER", selectCandleLayer);
+   		// console.log("SELECT CANDLE LAYER", selectCandleLayer);
 
    },
 
-   _onSelectVolume: function(e) {
+   _onSelectGraphParams: function(e) {
    		var isChecked = $(e.target)[0].checked;
-   		var params = {'volumeLayer': isChecked};
+   		var value = $(e.target)[0].value;
+   		var params = {};
+   		params[value] = isChecked;
    		DashboardActions.updateMainGraphParams(params)
    },
 

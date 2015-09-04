@@ -20,8 +20,8 @@ function MainChartD3(el, params) {
     this.initXAxis();
     this.layers = {
         lineLayer: new LineLayer(this),
-        // areaLayer: new AreaLayer(this),
-        volumeLayer: new VolumeLayer(this),
+        areaLayer: new AreaLayer(this),
+        volumeLayer: new VolumeLayer(this)
     };
 };
 
@@ -124,12 +124,13 @@ MainChartD3.prototype.draw = function(maingraphes, params) {
     this.chart.attr("width", visWidth)
     .attr("height", visHeigth)
     .attr('viewBox', "0 0 " + visWidth + " " + visHeigth)
+
     _.each(this.layers, function(layer, key) {
         if(self.params[key]) {
             layer.update();
-            // self.layers['volumeLayer'].show();
+            self.toggle[key].call(self,'show');
         } else {
-            // self.layers[key].hide();
+            self.toggle[key].call(self,'hide');
         }
     });
 };
@@ -173,11 +174,10 @@ MainChartD3.prototype.clear = function() {};
 
 MainChartD3.prototype.initOnMouseOverEvents = function(element) {
     var self = this;
-    console.log("outter this",element.this);
     element
         .on("mouseover", function() {
             _.each(self.layers, function(layer, key) {
-                if(self.layers[key]) {
+                if(self.params[key]) {
                     self.layers[key].mouseover();
                 }
             });
@@ -185,7 +185,7 @@ MainChartD3.prototype.initOnMouseOverEvents = function(element) {
         })
         .on("mouseout", function() {
             _.each(self.layers, function(layer, key) {
-                if(self.layers[key]) {
+                if(self.params[key]) {
                     self.layers[key].mouseout();
                 }
             });
@@ -204,7 +204,7 @@ MainChartD3.prototype.initOnMouseOverEvents = function(element) {
             var closestDate = findClosestDate(mousex - self.margin.left);
             if (closestDate) {
                 _.each(self.layers, function(layer, key) {
-                    if(self.layers[key]) {
+                    if(self.params[key]) {
                         self.layers[key].updateTooltip(closestDate);
                     }
                 });
@@ -213,6 +213,31 @@ MainChartD3.prototype.initOnMouseOverEvents = function(element) {
         });
 };
 
+
+MainChartD3.prototype.toggle = (function() {
+    var volumeLayer =  function(param) {
+        if (param == 'hide') {
+            this.layers.volumeLayer.hide();
+        } else {
+            this.layers.volumeLayer.show();
+        }
+        return false;
+    };
+
+    var areaLayer = function() {
+        return false;
+    }
+
+    var lineLayer = function() {
+        return false;
+    }
+
+    return {
+        volumeLayer: volumeLayer,
+        areaLayer: areaLayer,
+        lineLayer: lineLayer
+    }
+})();
 MainChartD3.prototype.toggleVolumeLayer = function() {
     if (this.layers.volumeLayer.isVisible) {
         // this.layers.areaLayer.updateRange([3 * this.height / 4, 0]);

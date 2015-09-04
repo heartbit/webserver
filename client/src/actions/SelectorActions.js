@@ -22,13 +22,13 @@ var SelectorActions = {
 	        this.roomlist = roomlist;
 	    });
 	    DataSocketManager.emit('roomlist');
+	    // init store maingraph params
+	    // DashboardActions.updateMainGraphParams(null);
 		this.changeSelector(params);
 	},
 	changeSelector: function(params) {
 		var range = RangeTranslate(params.range, params);
 		var newParams = _.extend(params, range);
-		console.log("change selctor action NEW APRAMS", newParams);
-
 	    this.joinDataRoom(params);
 		this.refreshGraphAndKeyfact(newParams);
 		Dispatcher.handleViewAction({

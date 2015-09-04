@@ -23,6 +23,7 @@ var MainChartWidget = React.createClass({
 	       },
 	       _mainGraphParams: all.params
 	   });
+	   console.log("mainchartwidgetstate",this.state);
    },
 
    componentDidMount: function() {

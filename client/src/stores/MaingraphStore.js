@@ -19,7 +19,6 @@ function registerMainGraphParams(params) {
 		}
 	} else {
 		_.each(params, function(param, key) {
-			console.log(param,key);
 			_MaingraphStore['params'][key] = param;
 		})
 	}	
@@ -39,7 +38,7 @@ var MaingraphStore = assign({}, EventEmitter.prototype, {
 		this.emit(CHANGE_EVENT)
 	},
 
-	emitLoading: function(event) {
+	emitCustom: function(event) {
 		this.emit(event);
 	},
 
@@ -75,7 +74,7 @@ MaingraphStore.dispatcherIndex = Dispatcher.register(function(payload) {
   		 	MaingraphStore.emitChange();
   		 	break;
   		case Constants.ActionTypes.ISLOADING:
-  			MaingraphStore.emitLoading('isloading');
+  			MaingraphStore.emitCustom('isloading');
 			break;
 		case Constants.ActionTypes.UPDATE_MAINGRAPHPARAMS:
 			registerMainGraphParams(action.result);
