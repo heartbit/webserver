@@ -159,7 +159,8 @@ App.prototype.initStaticContentManager = function() {
         console.log('WEBPACK middlewares');
         var proxy = require('proxy-middleware');
         var url = require('url');
-        this.app.use('/dist', proxy(url.parse('http://localhost:8081/dist')));
+        this.app.use('/js', proxy(url.parse('http://localhost:8081/dist/js/')));
+        this.app.use('/dist', proxy(url.parse('http://localhost:8081/dist/')));
         var webpack = require('webpack');
         var WebpackDevServer = require('webpack-dev-server');
         var config = require('../client/webpack.config');
