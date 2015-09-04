@@ -8,8 +8,21 @@ var VolumeStore = require('VolumeStore');
 var CHANGE_EVENT = 'change';
 var _MaingraphStore = {};
 
-function registerMainGraph() {
-	
+function registerMainGraphParams(params) {
+	if(!_MaingraphStore.params) {
+		_MaingraphStore['params'] = {
+			lineLayer:true,
+			areaLayer: false,
+			candleLayer: false,
+			volumeLayer: true,
+			smaLayer: false
+		}
+	} else {
+		_.each(params, function(param, key) {
+			console.log(param,key);
+			_MaingraphStore['params'][key] = param;
+		})
+	}	
 };
 
 var MaingraphStore = assign({}, EventEmitter.prototype, {
@@ -44,24 +57,29 @@ MaingraphStore.dispatcherIndex = Dispatcher.register(function(payload) {
 	var action = payload.action;
   	var result;
   	switch(action.actionType) {
-  	     case Constants.ActionTypes.ASK_CANDLE:	
+  	    case Constants.ActionTypes.ASK_CANDLE:	
   	    	Dispatcher.waitFor([
               CandleStore.dispatcherIndex
             ]);
   	    	_MaingraphStore.candles = CandleStore.getAll()
 		 	break;
-  	     case Constants.ActionTypes.ASK_VOLUME:	
+  	    case Constants.ActionTypes.ASK_VOLUME:	
  	    	Dispatcher.waitFor([
               VolumeStore.dispatcherIndex
             ]);
  	    	_MaingraphStore.volumes = VolumeStore.getAll()
 		 	break;
-  		 case Constants.ActionTypes.FILL_MAINGRAPH:	
+  		case Constants.ActionTypes.FILL_MAINGRAPH:	
+  		 	registerMainGraphParams();
   			console.log("_MaingraphStore",_MaingraphStore);
   		 	MaingraphStore.emitChange();
   		 	break;
-  		 case Constants.ActionTypes.ISLOADING:
+  		case Constants.ActionTypes.ISLOADING:
   			MaingraphStore.emitLoading('isloading');
+			break;
+		case Constants.ActionTypes.UPDATE_MAINGRAPHPARAMS:
+			registerMainGraphParams(action.result);
+			MaingraphStore.emitChange();
 			break;
   	}
   	return true;

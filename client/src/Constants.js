@@ -8,6 +8,7 @@ module.exports = {
 		ASK_PLATFORM: null,
 		REGISTER_SELECTOR: null,
 		FILL_MAINGRAPH: null,
+		UPDATE_MAINGRAPHPARAMS: null,
 		RECEIVE_TICKER: null
 	}),
 

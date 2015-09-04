@@ -1,11 +1,13 @@
 var d3 = require('d3');
 
-var AreaLayer = require('./areaLayer');
-var VolumeLayer = require('./volumeLayer')
+var AreaLayer = require('AreaLayer');
+var VolumeLayer = require('VolumeLayer');
+var LineLayer = require('LineLayer');
 var moment = require('moment');
 
-function MainChartD3(el) {
+function MainChartD3(el, params) {
     this.el = el;
+    this.params = params;
 
     _.bindAll(
         this,
@@ -17,7 +19,8 @@ function MainChartD3(el) {
     this.initChart();
     this.initXAxis();
     this.layers = {
-        areaLayer: new AreaLayer(this),
+        lineLayer: new LineLayer(this),
+        // areaLayer: new AreaLayer(this),
         volumeLayer: new VolumeLayer(this),
     };
 };
@@ -66,7 +69,7 @@ MainChartD3.prototype.initChart = function() {
 	    .attr("width", visWidth)
 	    .attr("height", visHeigth)
 	    .attr('viewBox', "0 0 " + visWidth + " " + visHeigth)
-        .call(this.initOnMouseOverEvents)
+        .call(this.initOnMouseOverEvents);
 
     this.mainLayer = this.chart
         .append("g")
@@ -108,6 +111,7 @@ MainChartD3.prototype.updateXAxis = function() {
 
 
 MainChartD3.prototype.draw = function(maingraphes, params) {
+    var self= this;
     this.params = params;
     // this.maingraphes = maingraphes || this.maingraphes;
     this.parseMainGraphes(maingraphes);
@@ -120,8 +124,13 @@ MainChartD3.prototype.draw = function(maingraphes, params) {
     this.chart.attr("width", visWidth)
     .attr("height", visHeigth)
     .attr('viewBox', "0 0 " + visWidth + " " + visHeigth)
-    _.each(_.values(this.layers), function(layer) {
-        layer.update();
+    _.each(this.layers, function(layer, key) {
+        if(self.params[key]) {
+            layer.update();
+            // self.layers['volumeLayer'].show();
+        } else {
+            // self.layers[key].hide();
+        }
     });
 };
 
@@ -164,15 +173,22 @@ MainChartD3.prototype.clear = function() {};
 
 MainChartD3.prototype.initOnMouseOverEvents = function(element) {
     var self = this;
+    console.log("outter this",element.this);
     element
         .on("mouseover", function() {
-            self.layers.areaLayer.mouseover();
-            self.layers.volumeLayer.mouseover();
+            _.each(self.layers, function(layer, key) {
+                if(self.layers[key]) {
+                    self.layers[key].mouseover();
+                }
+            });
             return false;
         })
         .on("mouseout", function() {
-            self.layers.areaLayer.mouseout();
-            self.layers.volumeLayer.mouseout();
+            _.each(self.layers, function(layer, key) {
+                if(self.layers[key]) {
+                    self.layers[key].mouseout();
+                }
+            });
             return false;
         })
         .on("mousemove", function() {
@@ -187,8 +203,11 @@ MainChartD3.prototype.initOnMouseOverEvents = function(element) {
             };
             var closestDate = findClosestDate(mousex - self.margin.left);
             if (closestDate) {
-                self.layers.areaLayer.updateTooltip(closestDate);
-                self.layers.volumeLayer.updateTooltip(closestDate);
+                _.each(self.layers, function(layer, key) {
+                    if(self.layers[key]) {
+                        self.layers[key].updateTooltip(closestDate);
+                    }
+                });
             }
             return false;
         });

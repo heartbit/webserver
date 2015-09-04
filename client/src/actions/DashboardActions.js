@@ -45,7 +45,15 @@ var DashboardActions = {
 	        deferred.resolve(result);
 		});
 		return deferred.promise;
-    }
+    },
+
+	updateMainGraphParams: function(params) {
+		Dispatcher.handleViewAction({
+			actionType: Constants.ActionTypes.UPDATE_MAINGRAPHPARAMS,
+			result: params
+		})
+	}
+
 
 }
 

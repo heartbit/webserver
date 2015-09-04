@@ -19,7 +19,6 @@ var SelectorActions = {
 			});
 		});
 		DataSocketManager.once('roomlist', function(roomlist) {
-	        console.log('roomlist', roomlist);
 	        this.roomlist = roomlist;
 	    });
 	    DataSocketManager.emit('roomlist');
@@ -48,7 +47,6 @@ var SelectorActions = {
 		var dataroom = params.item + ':' + params.currency;
 		DataSocketManager.emit('enter-dataroom', dataroom)
 	}
-
 
 	
 }

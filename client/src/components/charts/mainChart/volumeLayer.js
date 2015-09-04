@@ -11,7 +11,7 @@ function VolumeLayer(chart) {
     var height_min = this.chart.height / 4;
     this.volumeLayer = this.chart.mainLayer
         .append("g")
-        .attr("class", "volume_layer");
+        .attr("class", "volumeLayer");
     this.isVisible = true;
 
     var volumeTickValues = function(d, i, j) {

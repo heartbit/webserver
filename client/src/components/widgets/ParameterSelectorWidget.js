@@ -3,6 +3,7 @@ var BaseWidget = require('BaseWidget');
 var SelectorStore = require('SelectorStore');
 var PlatformStore = require('PlatformStore');
 var SelectorActions = require('SelectorActions');
+var DashboardActions = require('DashboardActions');
 var moment = require('moment')
 var RangeIntervalMatch = require('RangeIntervalMatch');
 var PairsPlatformsMatch = require('PairsPlatformsMatch');
@@ -138,6 +139,18 @@ var ParameterSelectorWidget = React.createClass({
 						  	</select>
 					  	</label>
 				 	</div>
+		      	</div>
+		      	<div className="secondarySelector">
+		      		<div>
+			      		<label > Area
+			      			<input onChange={this._onSelectArea} type="checkbox"/> 
+			      		</label>
+			      	</div>
+			      	<div>
+			      		<label> Volume
+			      			<input onChange={this._onSelectVolume} type="checkbox"/>
+			      		</label>
+			      	</div>
 		      	</div>			  
 			</BaseWidget>
 		);
@@ -273,6 +286,18 @@ var ParameterSelectorWidget = React.createClass({
         	SelectorActions.changeSelector(newParams);
         };
         this.delay()(callback, 500);
+   },
+
+   _onSelectArea: function(e) {
+   		var selectCandleLayer = d3.select(".candleLayer");
+   		console.log("SELECT CANDLE LAYER", selectCandleLayer);
+
+   },
+
+   _onSelectVolume: function(e) {
+   		var isChecked = $(e.target)[0].checked;
+   		var params = {'volumeLayer': isChecked};
+   		DashboardActions.updateMainGraphParams(params)
    },
 
     delay: function() {

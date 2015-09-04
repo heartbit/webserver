@@ -54,7 +54,8 @@ li.current a {
     fill:#85bb65;
 }
 .candle_line {
-    stroke: url(#line-gradient);
+    /*stroke: url(#line-gradient);*/
+    stroke:rgb(32, 29, 50);
     stroke-width: 1.5px;
     fill : none;
 }

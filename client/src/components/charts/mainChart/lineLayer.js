@@ -60,22 +60,22 @@ function AreaLayer(chart) {
         .attr("class", "y_candle_axis")
         .attr("transform", "translate(" + self.chart.width + ",0)");
 
-    // this.candlesArea = d3.svg.area()
-    //     .x(function(candle) {
-    //         return self.chart.timeScale(candle.middleDate);
-    //     })
-    //     .y0(function(candle) {
-    //         return self.candleYScale(candle.low);
-    //     })
-    //     .y1(function(candle) {
-    //         return self.candleYScale(candle.high);
-    //     })
-    //     .interpolate("monotone");
+    this.candlesArea = d3.svg.area()
+        .x(function(candle) {
+            return self.chart.timeScale(candle.middleDate);
+        })
+        .y0(function(candle) {
+            return self.candleYScale(candle.low);
+        })
+        .y1(function(candle) {
+            return self.candleYScale(candle.high);
+        })
+        .interpolate("monotone");
 
-    // this.candleAreaChart = this.candleLayer
-    //     .append("path")
-    //     .attr('opacity', 0.4)
-    //     .attr('class', 'candle_area');
+    this.candleAreaChart = this.candleLayer
+        .append("path")
+        .attr('opacity', 0.4)
+        .attr('class', 'candle_area');
 
     this.candlesLine = d3.svg.line()
         .x(function(candle) {
@@ -267,10 +267,10 @@ AreaLayer.prototype.update = function() {
         .attr('r', 0)
         .attr('class', 'circle')
 
-    // this.candleAreaChart
-    //     .transition()
-    //     .duration(defaultDuration)
-    //     .attr('d', self.candlesArea(self.candles))
+    this.candleAreaChart
+        .transition()
+        .duration(defaultDuration)
+        .attr('d', self.candlesArea(self.candles))
 
     this.candleLineChart
         .transition()
