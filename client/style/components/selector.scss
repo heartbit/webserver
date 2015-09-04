@@ -2,19 +2,6 @@
 
 }
 
-#interval {
-	margin-left:1.6em;
-}
-#range {
-	margin-left: 2.4em; 
-}
-
-.simpleSelector {
-	background: #FFFFFF;
-	color: #004756;
-	margin-left: 0.5em;
-}
-
 .dateInput {
 	height: 1.4em;
 	margin-left: 0.5em;
@@ -30,6 +17,11 @@
   float: left;
   margin-left: 2.5em;
 }
+
+#interval {
+	margin-left:1.6em;
+}
+
 .mainSelector {
   float: left;
   width: 13em;
@@ -44,3 +36,26 @@
 .platformLabel {
 	width: 13em;
 }
+
+#range {
+	margin-left: 2.4em; 
+}
+
+.selectorCheckbox {
+	width:5em;
+}
+
+.selectorCheckbox input {
+	float:right;
+}
+
+
+
+.simpleSelector {
+	background: #FFFFFF;
+	color: #004756;
+	margin-left: 0.5em;
+}
+
+
+

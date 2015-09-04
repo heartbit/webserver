@@ -19,9 +19,9 @@ function MainChartD3(el, params) {
     this.initChart();
     this.initXAxis();
     this.layers = {
-        lineLayer: new LineLayer(this),
         areaLayer: new AreaLayer(this),
-        volumeLayer: new VolumeLayer(this)
+        volumeLayer: new VolumeLayer(this),
+        lineLayer: new LineLayer(this)
     };
 };
 

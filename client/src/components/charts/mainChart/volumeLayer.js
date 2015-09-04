@@ -30,13 +30,11 @@ function VolumeLayer(chart) {
 
     this.volumeYAxis = d3.svg.axis()
         .scale(this.volumeYScale)
-        .orient("left")
-        .tickFormat(function(d) {
+        .orient("left");
+    this.volumeYAxis.tickFormat(function(d) {
             return FormatUtils.formatValueShort(d, 3);
         })
-        .ticks(3)
-        // .tickValues(volumeTickValues)
-        .tickSize(-this.chart.width);
+        .ticks(3);
 
     this.volumeYAxisInstance = this.volumeLayer.append("g")
         .attr("class", "y_volume_axis");
@@ -98,16 +96,6 @@ VolumeLayer.prototype.update = function(params) {
         .attr("width", function(d) {
             var width = (self.chart.timeScale(d.endDate) - self.chart.timeScale(d.startDate));
             return width >= 0 ? width : 0;
-        })
-        .attr('fill', function(volume, i) {
-            return "#698791";
-            // if(self.chart.models.candles[i] && self.chart.models.volumes[i]) { 
-            //     if(self.chart.models.candles[i].close > self.chart.models.candles[i].open) {
-            //         return "gold" ;
-            //     }else {
-            //         return "grey";
-            //     }
-            // }
         })
         .attr('opacity', 0.5)
         .attr("height", function(d) {

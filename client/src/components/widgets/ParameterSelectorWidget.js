@@ -99,7 +99,7 @@ var ParameterSelectorWidget = React.createClass({
 				if(value) {
 					checkboxes[param] = <input onChange={self._onSelectGraphParams} type="checkbox"  value={param} checked/>;
 				} else {
-					checkboxes[param] = <input onChange={self._onSelectGraphParams} type="checkbox" value={param} />;
+					checkboxes[param] = <input onChange={self._onSelectGraphParams} type="checkbox" value={param}  />;
 				}
 			});
 		}
@@ -143,12 +143,12 @@ var ParameterSelectorWidget = React.createClass({
 		      	{ this.state.mainGraphParams ?
 			      	<div className="secondarySelector">
 			      		<div>
-				      		<label > Area
+				      		<label className={"selectorCheckbox"} > Area
 				      			{checkboxes.areaLayer}
 				      		</label>
 				      	</div>
 				      	<div>
-				      		<label> Volume
+				      		<label className={"selectorCheckbox"} > Volume
 				      			{checkboxes.volumeLayer}
 				      		</label>
 				      	</div>

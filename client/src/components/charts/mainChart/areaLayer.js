@@ -30,6 +30,10 @@ function AreaLayer(chart) {
         })
         .interpolate("monotone");
 
+    this.candleAreaChart = this.areaLayer
+        .append("path")
+        .attr('opacity', 0.6)
+        .attr('class', 'areaLayer');
 };
 
 AreaLayer.prototype.draw = function() {
@@ -52,10 +56,6 @@ AreaLayer.prototype.update = function() {
         return (candle.high + (candle.high * ratio));
     })) + candleYOffset]);
     
-    this.candleAreaChart = this.areaLayer
-        .append("path")
-        .attr('opacity', 0.4)
-        .attr('class', 'areaLayer');
 
     this.candleAreaChart
         .transition()

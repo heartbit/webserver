@@ -10229,15 +10229,12 @@ li.current a {
   margin-left: 50px; }
 
 .x_time_axis .domain {
-  stroke: #cccccc;
-  stroke-width: 1.5px;
+  stroke: #38493A;
+  stroke-width: 1px;
   fill: none; }
 
 .x_time_axis text {
-  fill: #666666; }
-
-.candle_area {
-  fill: #85bb65; }
+  fill: #3B3752; }
 
 .candle_line {
   /*stroke: url(#line-gradient);*/
@@ -10251,15 +10248,21 @@ li.current a {
   opacity: .5; }
 
 .y_candle_axis .tick text {
-  fill: #666666; }
+  fill: #3B3752; }
 
 .circle {
   stroke-width: 2px;
   stroke: #666666;
   fill: white; }
 
+.areaLayer {
+  fill: #5CC9D7; }
+
+.volume {
+  fill: #53b01e; }
+
 .y_volume_axis .tick text {
-  fill: #666666; }
+  fill: #3B3752; }
 
 .y_volume_axis .tick line {
   stroke: #cccccc;
@@ -10267,23 +10270,15 @@ li.current a {
   opacity: .5; }
 
 .y_volume_axis .domain {
-  opacity: 0; }
+  /*opacity: 0;*/
+  fill: none;
+  stroke: #38493A;
+  stroke-width: 1px; }
 
 .brush .extent {
   fill-opacity: .1;
   stroke: #fff;
   shape-rendering: crispEdges; }
-
-#interval {
-  margin-left: 1.6em; }
-
-#range {
-  margin-left: 2.4em; }
-
-.simpleSelector {
-  background: #FFFFFF;
-  color: #004756;
-  margin-left: 0.5em; }
 
 .dateInput {
   height: 1.4em;
@@ -10298,6 +10293,9 @@ li.current a {
   float: left;
   margin-left: 2.5em; }
 
+#interval {
+  margin-left: 1.6em; }
+
 .mainSelector {
   float: left;
   width: 13em; }
@@ -10309,6 +10307,20 @@ li.current a {
 
 .platformLabel {
   width: 13em; }
+
+#range {
+  margin-left: 2.4em; }
+
+.selectorCheckbox {
+  width: 5em; }
+
+.selectorCheckbox input {
+  float: right; }
+
+.simpleSelector {
+  background: #FFFFFF;
+  color: #004756;
+  margin-left: 0.5em; }
 
 #lastPrice {
   font-size: 2.8em;
