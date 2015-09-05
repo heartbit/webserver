@@ -17,7 +17,7 @@ var candles = Backbone.Collection.extend({
 	},
 
 	fetchCandles: function(params) {
-		this.url = this.buildUrl(params)
+		this.url = this.buildUrl(params);
 		var self = this;
 		this.reset();
 

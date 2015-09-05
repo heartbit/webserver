@@ -52,6 +52,16 @@ var DashboardActions = {
 			actionType: Constants.ActionTypes.UPDATE_MAINGRAPHPARAMS,
 			result: params
 		})
+	},
+
+	updateMovingAverage: function(params) {
+		var candles = new Candles();
+		candles.fetchCandles(params).then(function(result) {	
+			Dispatcher.handleViewAction({
+				actionType: Constants.ActionTypes.ASK_MA,
+				result: {candles:result}
+			});
+		});
 	}
 
 

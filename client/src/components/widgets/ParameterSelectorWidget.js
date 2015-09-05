@@ -3,6 +3,7 @@ var BaseWidget = require('BaseWidget');
 var SelectorStore = require('SelectorStore');
 var PlatformStore = require('PlatformStore');
 var MaingraphStore = require('MaingraphStore');
+var MovingAverageStore = require('MovingAverageStore');
 var SelectorActions = require('SelectorActions');
 var DashboardActions = require('DashboardActions');
 var moment = require('moment')
@@ -150,6 +151,11 @@ var ParameterSelectorWidget = React.createClass({
 				      	<div>
 				      		<label className={"selectorCheckbox"} > Volume
 				      			{checkboxes.volumeLayer}
+				      		</label>
+				      	</div>
+				      	<div>
+				      		<label className={"maInput"}> MA
+				      			<input type="text" onChange={this._onSelectMovinAverage}/> 
 				      		</label>
 				      	</div>
 			      	</div>
@@ -308,6 +314,26 @@ var ParameterSelectorWidget = React.createClass({
    		var params = {};
    		params[value] = isChecked;
    		DashboardActions.updateMainGraphParams(params)
+   },
+
+   _onSelectMovinAverage: function(e) {
+   		var self = this;
+   		var current = this.state.selector.params;
+   		var params = {
+   			ma: e.target.value,
+   			dateStart: current.dateStart,
+   			dateEnd: current.dateEnd,
+   			interval: current.interval,
+   			item: current.item,
+   			currency: current.currency,
+   			platform: current.platform
+   		}
+   		var ma = e.target.value;
+   		var callback = function() {
+   			console.log("moving average params",params);
+   			DashboardActions.updateMovingAverage(params);
+   		}
+   		this.delay()(callback, 500);
    },
 
     delay: function() {
