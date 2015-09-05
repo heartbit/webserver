@@ -222,13 +222,18 @@ AreaLayer.prototype.update = function() {
     this.candles = this.chart.models.candles;
 
     var candleYOffset = 0;
-    var ratio = 0.005;
+    var ratio = 1.02;
 
+    // this.candleYScale.domain([d3.min(self.candles.map(function(candle) {
+    //     return (candle.low - (candle.low * ratio));
+    // })) - candleYOffset, d3.max(this.candles.map(function(candle) {
+    //     return (candle.high + (candle.high * ratio));
+    // })) + candleYOffset]);
     this.candleYScale.domain([d3.min(self.candles.map(function(candle) {
-        return (candle.low - (candle.low * ratio));
-    })) - candleYOffset, d3.max(this.candles.map(function(candle) {
-        return (candle.high + (candle.high * ratio));
-    })) + candleYOffset]);
+        return (candle.close*0.98);
+    })), d3.max(this.candles.map(function(candle) {
+        return (candle.close*1.025);
+    }))]);
 
     this.candleYAxisInstance
         .transition()

@@ -318,22 +318,32 @@ var ParameterSelectorWidget = React.createClass({
 
    _onSelectMovinAverage: function(e) {
    		var self = this;
-   		var current = this.state.selector.params;
-   		var params = {
-   			ma: e.target.value,
-   			dateStart: current.dateStart,
-   			dateEnd: current.dateEnd,
-   			interval: current.interval,
-   			item: current.item,
-   			currency: current.currency,
-   			platform: current.platform
-   		}
-   		var ma = e.target.value;
-   		var callback = function() {
-   			console.log("moving average params",params);
-   			DashboardActions.updateMovingAverage(params);
-   		}
-   		this.delay()(callback, 500);
+		function isInt(n){
+		    return Number(n) === n && n % 1 === 0;
+		}
+   		var ma = parseInt(e.target.value);
+   		console.log(ma, isInt(ma));
+   		if(isInt(ma) && ma<180) {
+	   		var current = this.state.selector.params;
+	   		var dateOriginalStart = current.dateStart;
+	   		var dateStart = current.dateStart - (86400*ma);
+	   		var params = {
+	   			ma: e.target.value,
+	   			dateOriginalStart: dateOriginalStart,
+	   			dateStart: dateStart,
+	   			dateEnd: current.dateEnd,
+	   			interval: current.interval,
+	   			item: current.item,
+	   			currency: current.currency,
+	   			platform: current.platform
+	   		}
+	   		var ma = e.target.value;
+	   		var callback = function() {
+	   			console.log("moving average params",params);
+	   			DashboardActions.updateMovingAverage(params);
+	   		}
+	   		this.delay()(callback, 500);
+	   	}
    },
 
     delay: function() {

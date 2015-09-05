@@ -59,7 +59,7 @@ var DashboardActions = {
 		candles.fetchCandles(params).then(function(result) {	
 			Dispatcher.handleViewAction({
 				actionType: Constants.ActionTypes.ASK_MA,
-				result: {candles:result}
+				result: {candles:result, params: params}
 			});
 		});
 	}
