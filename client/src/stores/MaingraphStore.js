@@ -70,7 +70,6 @@ MaingraphStore.dispatcherIndex = Dispatcher.register(function(payload) {
 		 	break;
   		case Constants.ActionTypes.FILL_MAINGRAPH:	
   		 	registerMainGraphParams();
-  			console.log("_MaingraphStore",_MaingraphStore);
   		 	MaingraphStore.emitChange();
   		 	break;
   		case Constants.ActionTypes.ISLOADING:

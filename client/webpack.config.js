@@ -108,6 +108,7 @@ module.exports = {
 			//Helpers & utils
 			FormatUtils: path.join(__dirname, './lib/internal-libs/FormatUtils/FormatUtils'),
 			RangeTranslate: path.join(__dirname, './src/helpers/selectorWidget/rangeTranslate'),
+			IntervalTranslate: path.join(__dirname, './src/helpers/selectorWidget/intervalTranslate'),
 			RangeIntervalMatch: path.join(__dirname, './src/helpers/selectorWidget/rangeIntervalMatch'),
 			PairsPlatformsMatch: path.join(__dirname, './src/helpers/selectorWidget/pairsPlatformsMatch'),
 
@@ -133,11 +134,16 @@ module.exports = {
 			gridsterResponsive: path.join(__dirname, './lib/internal-libs/gridster-responsive/gridster.responsive'),
 			ChartEngine: path.join(__dirname, './lib/internal-libs/chartEngine/ChartEngine'),
 
+			//charts
 			DataSocketManager: path.join(__dirname, './src/managers/SocketManager'),
 			MainChartD3: path.join(__dirname, './src/components/charts/mainChart/MainChartD3'),
 			AreaLayer: path.join(__dirname, './src/components/charts/mainChart/areaLayer'),
+			SimpleLineLayer: path.join(__dirname, './src/components/charts/mainChart/simplelineLayer'),
 			LineLayer: path.join(__dirname, './src/components/charts/mainChart/lineLayer'),
 			VolumeLayer: path.join(__dirname, './src/components/charts/mainChart/volumeLayer'),
+
+			//charts conf
+			ChartsConf: path.join(__dirname, './src/components/charts/chartConf'),
 
 			// External libs
 			backbone: path.join(__dirname, './lib/bower_components/backbone/backbone'),

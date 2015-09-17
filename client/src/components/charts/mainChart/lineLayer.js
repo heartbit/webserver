@@ -2,6 +2,7 @@ var d3 = require('d3');
 var FormatUtils = require('FormatUtils');
 var moment = require('moment');
 var defaultDuration = 200;
+var conf = require('ChartsConf');
 
 function AreaLayer(chart) {
     var self = this;
@@ -106,7 +107,7 @@ function AreaLayer(chart) {
         .attr('x1', 0)
         .attr('x2', 0)
         .attr('stroke', '#cacaca')
-        .attr('opacity', .5)
+        .attr('opacity', .9)
         .attr('stroke-width', 1);
 
     this.currentPositionLabelTime = this.tooltipLayer
@@ -220,9 +221,8 @@ AreaLayer.prototype.update = function() {
     var self = this;
     this.hideBrush();
     this.candles = this.chart.models.candles;
-
-    var candleYOffset = 0;
-    var ratio = 1.02;
+    var scaleMarginMin = conf.mainchart.scaleMarginMin;
+    var scaleMarginMax = conf.mainchart.scaleMarginMax;
 
     // this.candleYScale.domain([d3.min(self.candles.map(function(candle) {
     //     return (candle.low - (candle.low * ratio));
@@ -230,9 +230,9 @@ AreaLayer.prototype.update = function() {
     //     return (candle.high + (candle.high * ratio));
     // })) + candleYOffset]);
     this.candleYScale.domain([d3.min(self.candles.map(function(candle) {
-        return (candle.close*0.98);
+        return (candle.close*scaleMarginMin);
     })), d3.max(this.candles.map(function(candle) {
-        return (candle.close*1.025);
+        return (candle.close*scaleMarginMax);
     }))]);
 
     this.candleYAxisInstance
@@ -273,6 +273,8 @@ AreaLayer.prototype.update = function() {
         .transition()
         .duration(defaultDuration)
         .attr('d', self.candlesLine(self.candles))
+
+    // console.log("SELF.CANDLES!!!",self.candles);
 };
 
 AreaLayer.prototype.resize = function() {

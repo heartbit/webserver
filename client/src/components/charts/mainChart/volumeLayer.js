@@ -121,12 +121,6 @@ VolumeLayer.prototype.resize = function() {
 VolumeLayer.prototype.hide = function() {
     this.isVisible = false;
 
-    // this.volumeBarChart
-    //     .transition()
-    //     .duration(defaultDuration)
-    //     .attr("height", 0)
-    //     .attr('y', this.chart.height)
-
     this.volumeLayer
         .transition()
         .duration(defaultDuration)
@@ -135,17 +129,6 @@ VolumeLayer.prototype.hide = function() {
 
 VolumeLayer.prototype.show = function() {
     this.isVisible = true;
-
-    // this.volumeBarChart
-    //     .transition()
-    //     .duration(defaultDuration)
-    //     .attr("height", function(d) {
-    //         var height = height_max - self.volumeYScale(d.amount);
-    //         return height >= 0 ? height : 0;
-    //     })
-    //     .attr('y', function(d) {
-    //         return d.amount == 0 ? height_max : self.volumeYScale(d.amount);
-    //     });
 
     this.volumeLayer
         .transition()

@@ -22,7 +22,6 @@ function registerCandles(result) {
 			break;
 		}
 	}
-	console.log("_CandleStore interval",_CandleStore.interval);
 };
 
 var CandleStore = assign({}, EventEmitter.prototype, {

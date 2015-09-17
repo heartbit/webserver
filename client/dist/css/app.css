@@ -10198,7 +10198,8 @@ td.beauty-hover {
 
 #MainChartWidget {
   padding: 15px;
-  height: 100%;
+  height: 120%;
+  margin-top: 30px;
   overflow-y: hidden; }
 
 #TickerWidget {
@@ -10280,6 +10281,11 @@ li.current a {
   stroke: #fff;
   shape-rendering: crispEdges; }
 
+.smaLayer_line {
+  stroke: red;
+  stroke-width: 1px;
+  fill: none; }
+
 .dateInput {
   height: 1.4em;
   margin-left: 0.5em;
@@ -10296,9 +10302,25 @@ li.current a {
 #interval {
   margin-left: 1.6em; }
 
+#maInput {
+  width: 2.3em;
+  margin-left: 0.8em;
+  height: 1.5em; }
+
+.maDrawButton {
+  background: #FFFFFF;
+  color: #004756;
+  margin-left: 0.2em; }
+
+.maLabel {
+  margin-left: 3em; }
+
 .mainSelector {
   float: left;
   width: 13em; }
+
+.secondarySelector {
+  float: left; }
 
 .platformSelect {
   max-width: 8em;

@@ -1,8 +1,9 @@
 var d3 = require('d3');
-
+var VolumeStore = require('VolumeStore');
 var AreaLayer = require('AreaLayer');
 var VolumeLayer = require('VolumeLayer');
 var LineLayer = require('LineLayer');
+var SimpleLineLayer = require('SimpleLineLayer');
 var moment = require('moment');
 
 function MainChartD3(el, params) {
@@ -21,11 +22,12 @@ function MainChartD3(el, params) {
     this.layers = {
         areaLayer: new AreaLayer(this),
         volumeLayer: new VolumeLayer(this),
+        smaLayer: new SimpleLineLayer(this,'smaLayer'),
         lineLayer: new LineLayer(this)
     };
 };
 
-MainChartD3.prototype.parseMainGraphes = function(maingraphes) {
+MainChartD3.prototype.parseMainGraphes = function(maingraphes, indicators) {
     var models = {};
     // guess interval
     models.candles = _.filter(maingraphes.candles, function(candle) {
@@ -44,6 +46,19 @@ MainChartD3.prototype.parseMainGraphes = function(maingraphes) {
         var checkDates = _.isDate(volume.startDate) && _.isDate(volume.endDate);
         return checkValues && checkDates;
     });
+
+    if(indicators) {
+        if(indicators.sma) {
+            models.sma = indicators.sma;
+            models.sma.calculated = _.map(models.sma.calculated,function(d){
+                // d.timestamp = new Date(d.timestamp * 1000);
+                d.startDate = new Date(d.timestamp * 1000);
+                d.endDate = new Date((d.timestamp + models.sma.params.intervalT - 1) * 1000);
+                d.middleDate = new Date((d.timestamp + models.sma.params.intervalT/2) * 1000);
+                return d;
+            });
+        }
+    }
     this.models = models;
 };
 
@@ -110,11 +125,12 @@ MainChartD3.prototype.updateXAxis = function() {
 };
 
 
-MainChartD3.prototype.draw = function(maingraphes, params) {
+MainChartD3.prototype.draw = function(maingraphes, params, indicators) {
     var self= this;
     this.params = params;
+    // this.interval = VolumeStore.getAll().interval;
     // this.maingraphes = maingraphes || this.maingraphes;
-    this.parseMainGraphes(maingraphes);
+    this.parseMainGraphes(maingraphes, indicators);
     this.updateXAxis();
     var visWidth =  $(this.el).width();
     var visHeigth = $(this.el).height();
@@ -149,7 +165,7 @@ MainChartD3.prototype.resize = function() {
 
     self.width = visWidth - self.margin.left - self.margin.right;
     self.height = visHeigth - self.margin.top - self.margin.bottom;
-    console.log("RESIZE", self.width, self.height);
+    // console.log("RESIZE", self.width, self.height);
 
     self.chart
         .attr("width", visWidth)
@@ -237,10 +253,20 @@ MainChartD3.prototype.toggle = (function() {
         return false;
     }
 
+    var smaLayer = function(param) {
+        if (param == 'hide') {
+            this.layers.smaLayer.hide();
+        } else {
+            this.layers.smaLayer.show();
+        }
+        return false;
+    }
+
     return {
         volumeLayer: volumeLayer,
         areaLayer: areaLayer,
-        lineLayer: lineLayer
+        lineLayer: lineLayer,
+        smaLayer: smaLayer
     }
 })();
 

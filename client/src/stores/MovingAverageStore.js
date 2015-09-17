@@ -2,27 +2,63 @@ var Dispatcher = require("Dispatcher");
 var EventEmitter = require('events').EventEmitter;
 var Constants = require('Constants');
 var assign = require('object-assign');
+var MaingraphStore = require('MaingraphStore');
+var IntervalTranslate = require('IntervalTranslate');
 
 var CHANGE_EVENT = 'change';
 var _MaStore = {};
 
 
+function calculMa(result) {
+	var calculatedMa = {};
+	var params = result.params;
+	var originalData = MaingraphStore.getAll().candles;
+	var originalStart = params.dateOriginalStart;
+	var ma = params.ma;
+	var interval = params.interval;
+	var intervalT = params.intervalT;
+
+	calculatedMa =[];
+
+	var totalOriginal = 0;
+	_.each(originalData, function(candle, key) {
+		if(key != 'interval') {
+			var firsttimestamp = candle.timestamp-(intervalT*params.ma);
+			var key = parseInt(key);
+
+			totalOriginal ++;
+			var count = 0;
+			newPoint = {};
+			newPoint['close'] = 0;
+			_.each(result.candles, function(macandle, matimestamp) {
+				if(firsttimestamp<=macandle.timestamp && macandle.timestamp < key) {
+					newPoint['close'] += macandle.close;
+					count++;
+				}
+			});
+
+			newPoint['timestamp'] = key;
+			if(newPoint['close'] == 0) {
+				newPoint['close'] = candle.close;
+			} else {
+				newPoint['close'] = newPoint['close']/count;
+			}
+			calculatedMa.push(newPoint);
+			count = 0;
+		}
+	});
+
+	return calculatedMa;
+}
+
 function registerCandles(result) {
 	_MaStore= {};
+	_MaStore['candles'] = {};
 	_.each(result.candles, function(candle) {
-		_MaStore[candle.timestamp] = candle;
+		_MaStore['candles'][candle.timestamp] = candle;
 	});
-	_MaStore.interval = 0;
-	var i;
-	var count = 0;
-	for (i in _MaStore){
-		_MaStore.interval = i - _MaStore.interval; 
-		count++;
-		if(count == 2){
-			break;
-		}
-	}
-	console.log("_MovingAverageStore",_MaStore,result);
+	_MaStore['params'] = result.params;
+	_MaStore['calculated'] = calculMa(_MaStore);
 };
 
 var MovingAverageStore = assign({}, EventEmitter.prototype, {
@@ -60,6 +96,7 @@ MovingAverageStore.dispatcherIndex = Dispatcher.register(function(payload) {
  
   	switch(action.actionType) {
   		 case Constants.ActionTypes.ASK_MA:	
+  		 	console.log("NEW MA FROM STORE!!");
   		 	registerCandles(action.result); 	
   		 	MovingAverageStore.emitChange();
   		 	break;

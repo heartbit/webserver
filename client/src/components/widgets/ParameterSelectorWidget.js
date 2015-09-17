@@ -9,6 +9,7 @@ var DashboardActions = require('DashboardActions');
 var moment = require('moment')
 var RangeIntervalMatch = require('RangeIntervalMatch');
 var PairsPlatformsMatch = require('PairsPlatformsMatch');
+var IntervalTranslate = require('IntervalTranslate');
 var Config = require('Config');
 
 
@@ -23,7 +24,8 @@ var ParameterSelectorWidget = React.createClass({
 		    		item:'USD',
 		    		interval:'15m',
 		    		range:'1d',
-		    		pair: 'XRP/USD'
+		    		pair: 'XRP/USD',
+		    		ma: null
 		    	}
 	    	},
 	    	platforms: [],
@@ -142,23 +144,28 @@ var ParameterSelectorWidget = React.createClass({
 				 	</div>
 		      	</div>
 		      	{ this.state.mainGraphParams ?
-			      	<div className="secondarySelector">
-			      		<div>
-				      		<label className={"selectorCheckbox"} > Area
-				      			{checkboxes.areaLayer}
+		      		<span>
+				      	<div className="secondarySelector">
+				      		<div>
+					      		<label className={"selectorCheckbox"} > Area
+					      			{checkboxes.areaLayer}
+					      		</label>
+					      	</div>
+					      	<div>
+					      		<label className={"selectorCheckbox"} > Volume
+					      			{checkboxes.volumeLayer}
+					      		</label>
+					      	</div>
+					     
+				      	</div>
+			      	 	<div>
+				      		<label className={"maLabel"}> SMA
+				      			<input id='maInput' type="text"/> 
+				      			<button className={'maDrawButton'} onClick={this._onSelectMovinAverage} value="smaLayer"> Draw </button>
+				      			<button className={'maDrawButton'} onClick={this._onCleanSMA} value="smaLayer"> Clean </button>
 				      		</label>
 				      	</div>
-				      	<div>
-				      		<label className={"selectorCheckbox"} > Volume
-				      			{checkboxes.volumeLayer}
-				      		</label>
-				      	</div>
-				      	<div>
-				      		<label className={"maInput"}> MA
-				      			<input type="text" onChange={this._onSelectMovinAverage}/> 
-				      		</label>
-				      	</div>
-			      	</div>
+				    </span>
 			    : "" }			  
 			</BaseWidget>
 		);
@@ -297,9 +304,13 @@ var ParameterSelectorWidget = React.createClass({
 
    _onMaingraphNewparams: function() {
    		var params = MaingraphStore.getSpecific('params');
+   		if(params.smaLayer) {
+   			this._onSelectMovinAverage(this.state.selector.params.ma);
+   		}
    		this.setState({
    			mainGraphParams:params
    		});
+
    },
 
    _onSelectArea: function(e) {
@@ -309,40 +320,66 @@ var ParameterSelectorWidget = React.createClass({
    },
 
    _onSelectGraphParams: function(e) {
-   		var isChecked = $(e.target)[0].checked;
    		var value = $(e.target)[0].value;
+   		var isChecked = $(e.target)[0].checked || !MaingraphStore.getSpecific('params')[value];
    		var params = {};
    		params[value] = isChecked;
    		DashboardActions.updateMainGraphParams(params)
+   },
+
+   _onCleanSMA: function(e) {
+   		var value = $(e.target)[0].value;
+   		var isChecked = MaingraphStore.getSpecific('params')[value];
+   		if(isChecked) {
+   			isChecked = !isChecked;
+	   		var params = {};
+	   		params[value] = isChecked;
+	   		DashboardActions.updateMainGraphParams(params);
+	   	}
    },
 
    _onSelectMovinAverage: function(e) {
    		var self = this;
 		function isInt(n){
 		    return Number(n) === n && n % 1 === 0;
+		};
+		if($('#maInput').val() != "") {
+   			var ma = parseInt($('#maInput').val());
+		} else {
+			var ma = e;
 		}
-   		var ma = parseInt(e.target.value);
-   		console.log(ma, isInt(ma));
-   		if(isInt(ma) && ma<180) {
+		if(ma > 180) { 
+			ma = 180; 
+			$("#maInput").val(180);
+		};
+   		if(isInt(ma) && ma<=180) {
 	   		var current = this.state.selector.params;
-	   		var dateOriginalStart = current.dateStart;
-	   		var dateStart = current.dateStart - (86400*ma);
+	   		var intervalT = IntervalTranslate(current.interval).interval;
+	   		var dateOriginalStart = MaingraphStore.getAll().candles[Object.keys(MaingraphStore.getAll().candles)[0]].timestamp;
+	   		var dateStart = current.dateStart - (intervalT*ma);
 	   		var params = {
-	   			ma: e.target.value,
+	   			ma: ma,
 	   			dateOriginalStart: dateOriginalStart,
 	   			dateStart: dateStart,
 	   			dateEnd: current.dateEnd,
 	   			interval: current.interval,
+	   			intervalT: intervalT,
 	   			item: current.item,
 	   			currency: current.currency,
 	   			platform: current.platform
 	   		}
-	   		var ma = e.target.value;
 	   		var callback = function() {
-	   			console.log("moving average params",params);
+	   			// console.log("moving average params",params);
 	   			DashboardActions.updateMovingAverage(params);
 	   		}
 	   		this.delay()(callback, 500);
+		   	var newparams = this.state.selector.params;
+		   	newparams.ma = ma;
+		   	this.setState({
+		   		selector: {
+		   			params: newparams
+		   		}
+		   	});
 	   	}
    },
 

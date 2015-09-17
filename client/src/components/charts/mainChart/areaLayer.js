@@ -2,12 +2,12 @@ var d3 = require('d3');
 var FormatUtils = require('FormatUtils');
 var moment = require('moment');
 var defaultDuration = 300;
+var conf = require('ChartsConf');
 
 function AreaLayer(chart) {
     var self = this;
 
     this.chart = chart;
-    console.log("New AreaLayer --> chart context:", this.chart);
     this.areaLayer = this.chart.mainLayer
         .append("g")
         .attr("class","areaLayer");
@@ -44,17 +44,19 @@ AreaLayer.prototype.draw = function() {
 }
 
 AreaLayer.prototype.update = function() {
-    console.log("update AREA CHART!");
     var self = this;
     var candleYOffset = 0;
     var ratio = 0.005;
     this.candles = this.chart.models.candles;
 
+    var scaleMarginMin = conf.mainchart.scaleMarginMin;
+    var scaleMarginMax = conf.mainchart.scaleMarginMax;
+
     this.candleYScale.domain([d3.min(self.candles.map(function(candle) {
-        return (candle.low - (candle.low * ratio));
-    })) - candleYOffset, d3.max(this.candles.map(function(candle) {
-        return (candle.high + (candle.high * ratio));
-    })) + candleYOffset]);
+        return (candle.close*scaleMarginMin);
+    })), d3.max(this.candles.map(function(candle) {
+        return (candle.close*scaleMarginMax);
+    }))]);
     
 
     this.candleAreaChart
