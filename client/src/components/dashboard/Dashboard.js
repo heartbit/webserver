@@ -37,6 +37,16 @@ var Dashboard = React.createClass({
         chart: 'MainChartWidget',
         col: 1,
         row: 3
+      },
+      {
+        key:'orderbook',
+        title:"Orderbook",
+        icon:'fa fa-bar-chart',
+        width: 3,
+        height: 2,
+        chart: 'OrderbookChartWidget',
+        col: 1,
+        row:7
       }]
     };
   },

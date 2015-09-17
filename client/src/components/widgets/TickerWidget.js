@@ -68,15 +68,7 @@ var TickerWidget = React.createClass({
 			</BaseWidget>
 		);
 	},
-				// <ul>
-				// 	<li>Open : {this.state.ticker.open} {this.state.ticker.currency}</li>
-				// 	<li>High : {this.state.ticker.high} {this.state.ticker.currency}</li>
-				// 	<li>Low : {this.state.ticker.low} {this.state.ticker.currency}</li>
-				// </ul>
-				// <ul>
-				// 	<li>Volume : {this.state.ticker.volume} {this.state.ticker.item}</li>
-				// 	<li>N° of trades: {this.state.ticker.last} </li>
-				// </ul>
+	
 	_onTickerReceived: function(){
 		this.setState({ticker:TickerStore.get()});
 	},

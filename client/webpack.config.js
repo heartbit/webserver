@@ -80,6 +80,7 @@ module.exports = {
 			MainChartWidget: path.join(__dirname, './src/components/widgets/MainChartWidget'),
 			MainChartReact: path.join(__dirname, './src/components/charts/mainChart/MainChartReact'),
 			TickerWidget: path.join(__dirname, './src/components/widgets/TickerWidget'),
+			OrderbookChartWidget: path.join(__dirname, './src/components/OrderbookChartWidget'),
 			BaseWidget: path.join(__dirname, './src/components/widgets/BaseWidget'),
 			Dashboard: path.join(__dirname, './src/components/dashboard/Dashboard'),
 			AuthComponent: path.join(__dirname, './src/components/auth/authComponent'),
