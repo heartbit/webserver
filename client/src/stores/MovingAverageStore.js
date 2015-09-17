@@ -96,7 +96,6 @@ MovingAverageStore.dispatcherIndex = Dispatcher.register(function(payload) {
  
   	switch(action.actionType) {
   		 case Constants.ActionTypes.ASK_MA:	
-  		 	console.log("NEW MA FROM STORE!!");
   		 	registerCandles(action.result); 	
   		 	MovingAverageStore.emitChange();
   		 	break;

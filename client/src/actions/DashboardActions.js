@@ -54,7 +54,7 @@ var DashboardActions = {
     },
 
 	updateMainGraphParams: function(params) {
-		console.log("update actions params",params);
+
 		Dispatcher.handleViewAction({
 			actionType: Constants.ActionTypes.UPDATE_MAINGRAPHPARAMS,
 			result: params
