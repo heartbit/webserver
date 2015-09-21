@@ -16,6 +16,7 @@ App.prototype.start = function(options) {
         })
         .then(function() {
             self.initProxies();
+            // self.initWebSockets();
             self.initSockets();
             self.initClientRoutes();
             self.initStaticContentManager();
@@ -141,6 +142,14 @@ App.prototype.initSockets = function() {
     };
 
     this.clientSocket.run(initSocketCallback);
+};
+
+App.prototype.initWebSockets = function() {
+    var self = this;
+    var websocketPath = this.options.serverPath + 'websocket/';
+    var RippleWebSocket = require(websocketPath + 'RippleSocketService');
+    // console.log("WEBSOCKET!",WebSocket);
+    this.rippleWebSocket = new RippleWebSocket();
 };
 
 App.prototype.initStaticContentManager = function() {

@@ -21,7 +21,7 @@ var Dashboard = React.createClass({
       {
         key: 'keyfact3',
         title:'Selector ',
-        icon:'fa fa-bar-chart',
+        icon:'', //fa fa-bar-chart
         chart: 'ParameterSelectorWidget',
         width: 3,
         height: 1,
@@ -47,6 +47,15 @@ var Dashboard = React.createClass({
         chart: 'OrderbookChartWidget',
         col: 1,
         row:7
+      },
+      {
+        key:'bidask',
+        title:'Bids/Asks',
+        icon:'',
+        width:2,
+        height:3,
+        col:1,
+        row:11
       }]
     };
   },

@@ -96,6 +96,7 @@ module.exports = {
 			SelectorStore: path.join(__dirname, './src/stores/SelectorStore'),
 			PlatformStore: path.join(__dirname, './src/stores/PlatformsStore'),
 			MovingAverageStore: path.join(__dirname, './src/stores/MovingAverageStore'),
+			OrderbookStore:  path.join(__dirname, './src/stores/OrderbookStore'),
 
 			// Mixin
 			StoreMixin: path.join(__dirname, './src/stores/mixin/storeMixin'),
@@ -112,12 +113,18 @@ module.exports = {
 			IntervalTranslate: path.join(__dirname, './src/helpers/selectorWidget/intervalTranslate'),
 			RangeIntervalMatch: path.join(__dirname, './src/helpers/selectorWidget/rangeIntervalMatch'),
 			PairsPlatformsMatch: path.join(__dirname, './src/helpers/selectorWidget/pairsPlatformsMatch'),
+			OrderbookParser: path.join(__dirname, './src/helpers/webSocket/orderbookParser'),
+			OrderbookRequest: path.join(__dirname, './src/helpers/webSocket/orderbookRequest'),
+
+			//Websocket
+			OrderbookSocket: path.join(__dirname, './src/websocket/OrderbookSocket'),
 
 			//Models & collections
 			Volume: path.join(__dirname, './src/models/Volume'),
 			Candle: path.join(__dirname, './src/models/Candle'),
 			Ticker: path.join(__dirname, './src/models/Ticker'),
 			Platform: path.join(__dirname, './src/models/Platform'),
+			Orderbook: path.join(__dirname, './src/models/Orderbook'),
 
 			Candles: path.join(__dirname, './src/collections/Candles'),
 			Volumes: path.join(__dirname, './src/collections/Volumes'),
@@ -129,6 +136,7 @@ module.exports = {
 			DashboardActions: path.join(__dirname, './src/actions/DashboardActions'),
 			TickerActions: path.join(__dirname, './src/actions/TickerActions'),
 			SelectorActions: path.join(__dirname, './src/actions/SelectorActions'),
+			WebsocketActions: path.join(__dirname, './src/actions/WebsocketActions'),
 
 			// Internal libs
 			gridster: path.join(__dirname, './lib/internal-libs/jquery.gridster/gridster'),
@@ -137,6 +145,7 @@ module.exports = {
 
 			//charts
 			DataSocketManager: path.join(__dirname, './src/managers/SocketManager'),
+			WebSocketManager: path.join(__dirname, './src/managers/WebSocketManager'),
 			MainChartD3: path.join(__dirname, './src/components/charts/mainChart/MainChartD3'),
 			AreaLayer: path.join(__dirname, './src/components/charts/mainChart/areaLayer'),
 			SimpleLineLayer: path.join(__dirname, './src/components/charts/mainChart/simplelineLayer'),

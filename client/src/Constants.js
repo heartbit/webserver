@@ -6,6 +6,8 @@ module.exports = {
 		ASK_CANDLE: null,
 		ASK_VOLUME: null,
 		ASK_PLATFORM: null,
+		ASK_ORDERBOOK: null,
+		UPDATE_ORDERBOOK: null,
 		ASK_MA: null,
 		REGISTER_SELECTOR: null,
 		FILL_MAINGRAPH: null,
