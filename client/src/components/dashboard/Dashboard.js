@@ -54,7 +54,18 @@ var Dashboard = React.createClass({
         icon:'',
         width:2,
         height:3,
+        chart: 'OrderbookListWidget',
         col:1,
+        row:11
+      },
+      {
+        key:'activeaccounts',
+        title:'Active Accounts',
+        icon:'',
+        width:1,
+        height:3,
+        chart: 'ActiveAccountsWidget',
+        col:3,
         row:11
       }]
     };

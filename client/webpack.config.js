@@ -81,6 +81,8 @@ module.exports = {
 			MainChartReact: path.join(__dirname, './src/components/charts/mainChart/MainChartReact'),
 			TickerWidget: path.join(__dirname, './src/components/widgets/TickerWidget'),
 			OrderbookChartWidget: path.join(__dirname, './src/components/OrderbookChartWidget'),
+			OrderbookListWidget: path.join(__dirname, './src/components/OrderbookListWidget'),
+			ActiveAccountsWidget: path.join(__dirname, './src/components/ActiveAccountsWidget'),
 			BaseWidget: path.join(__dirname, './src/components/widgets/BaseWidget'),
 			Dashboard: path.join(__dirname, './src/components/dashboard/Dashboard'),
 			AuthComponent: path.join(__dirname, './src/components/auth/authComponent'),
@@ -124,7 +126,7 @@ module.exports = {
 			Candle: path.join(__dirname, './src/models/Candle'),
 			Ticker: path.join(__dirname, './src/models/Ticker'),
 			Platform: path.join(__dirname, './src/models/Platform'),
-			Orderbook: path.join(__dirname, './src/models/Orderbook'),
+			// Orderbook: path.join(__dirname, './src/models/Orderbook'),
 
 			Candles: path.join(__dirname, './src/collections/Candles'),
 			Volumes: path.join(__dirname, './src/collections/Volumes'),
@@ -140,6 +142,7 @@ module.exports = {
 
 			// Internal libs
 			gridster: path.join(__dirname, './lib/internal-libs/jquery.gridster/gridster'),
+			gridstack: path.join(__dirname, './lib/internal-libs/jquery.gridstack/gridstack'),
 			gridsterResponsive: path.join(__dirname, './lib/internal-libs/gridster-responsive/gridster.responsive'),
 			ChartEngine: path.join(__dirname, './lib/internal-libs/chartEngine/ChartEngine'),
 
@@ -147,6 +150,7 @@ module.exports = {
 			DataSocketManager: path.join(__dirname, './src/managers/SocketManager'),
 			WebSocketManager: path.join(__dirname, './src/managers/WebSocketManager'),
 			MainChartD3: path.join(__dirname, './src/components/charts/mainChart/MainChartD3'),
+			OrderbookChartD3: path.join(__dirname, './src/components/charts/orderbookChart/OrderbookChartD3'),
 			AreaLayer: path.join(__dirname, './src/components/charts/mainChart/areaLayer'),
 			SimpleLineLayer: path.join(__dirname, './src/components/charts/mainChart/simplelineLayer'),
 			LineLayer: path.join(__dirname, './src/components/charts/mainChart/lineLayer'),

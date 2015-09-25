@@ -20,11 +20,11 @@ orderbookParser.prototype.thinOrder = function(order, type, pair) {
 	var price = getPrice(TakerPaysValue, TakerGetsValue, type);
 	var volume = getVolume(TakerPaysValue, TakerGetsValue, type);
 	var thinOrder = {
-		Account: order.Account,
-		TakerGets: order.TakerGets,
-		TakerPays: order.TakerPays,
-		Price: price,
-		Volume: volume
+		account: order.Account,
+		takerGets: order.TakerGets,
+		takerPays: order.TakerPays,
+		price: price,
+		volume: volume
 	}
 
 	return thinOrder;

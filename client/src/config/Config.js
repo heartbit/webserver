@@ -23,7 +23,8 @@ config.platforms.defaultpairs = {
 	'BITSTAMP':'XRP/USD',
 	'TOKYOJPY':'XRP/JPY',
 	'BITFINEX':'BTC/USD',
-	'RIPPLEFOX':'XRP/CNY'
+	'RIPPLEFOX':'XRP/CNY',
+	'SNAPSWAP':'XRP/USD'
 }
 
 config.platforms.address = {

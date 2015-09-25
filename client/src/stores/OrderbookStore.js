@@ -19,12 +19,23 @@ function update(data) {
 	// register(result);
 }
 
+function sum(data) {
+	data[0]['sum'] = data[0].volume;
+	_.each(data, function(d,i){
+		if(i !=0) {
+			d['sum'] = data[i-1]['sum'] + d.volume;
+		}
+	});
+}
+
 function register(data){
 	var asks = data.result.asks;
 	var bids = data.result.bids;
 	var initialRaw = [asks,bids];
 	var thinAsks = parser.filterInit(asks,'ask');
 	var thinBids = parser.filterInit(bids, 'bid');	
+	sum(thinAsks);
+	sum(thinBids);
 	_OrderbookStore = {
 		ask: thinAsks,
 		bid: thinBids

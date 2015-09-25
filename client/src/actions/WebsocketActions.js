@@ -1,4 +1,3 @@
-var Orderbook = require('Orderbook');
 var OrderbookSocket = require('OrderbookSocket');
 var OrderbookRequest = require('OrderbookRequest');
 var Dispatcher = require('Dispatcher');

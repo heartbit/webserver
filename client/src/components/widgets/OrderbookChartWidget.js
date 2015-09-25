@@ -2,6 +2,8 @@ var React = require('react/addons');
 var BaseWidget = require('BaseWidget');
 var FormatUtils = require('FormatUtils');
 var OrderbookStore = require('OrderbookStore');
+var OrderbookChart = require('OrderbookChartD3');
+var _orderbookChart;
 
 var OrderbookWidget = React.createClass({
 	
@@ -11,22 +13,38 @@ var OrderbookWidget = React.createClass({
 	    }
     },
     componentDidMount: function() {
-   		// console.log(OrderbookSocket);
-   		// OrderbookSocket.create();
+   		OrderbookStore.on('change', this._onUpdateState);
     },
     
     componentWillUnmount: function() {
 
     },
 	render: function() {
+		var data = this.state.orderbook;
+		if(_orderbookChart) _orderbookChart.draw(data);
+
+
 		return (
 			<BaseWidget attributes={this.props.attributes}>
 				<div>
-					Orderbook!
 				</div>
 			</BaseWidget>
 		);
+	},
+	_onUpdateState: function() {
+		if(this.props.attributes.chart && !_orderbookChart){
+	       	_orderbookChart = new OrderbookChart("#" + this.props.attributes.chart);
+	  	}
+
+		var orderbook = OrderbookStore.getAll();
+		this.setState({
+			orderbook: orderbook
+		}, function() {
+			console.log("OrderbookWidgetState", this.state);
+		});
+		console.log("OrderbookWidgetProps",this.props);
 	}
+
 });
 
 module.exports = OrderbookWidget;

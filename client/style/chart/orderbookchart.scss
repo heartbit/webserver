@@ -1,0 +1,27 @@
+.bid_line {
+	stroke: green;
+	stroke-width:1px;
+	fill:none;
+}
+
+.ask_line {
+	stroke: red;
+	stroke-width: 1px;
+	fill:none;
+}
+
+.y_orderbook_axis .tick text {
+    fill: #3B3752;
+}
+.y_orderbook_axis .tick line {
+    stroke: $tick_color;
+    /*stroke-dasharray: 4,4;*/
+    opacity: .5;
+}
+
+.y_orderbook_axis .domain {
+    /*opacity: 0;*/
+    fill:none;
+    stroke:#38493A;
+    stroke-width:1px;
+}
