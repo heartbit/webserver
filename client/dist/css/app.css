@@ -10780,10 +10780,12 @@ li.current a {
   color: #0F061D; }
 
 .orderbookAskList {
-  float: right; }
+  float: right;
+  margin-right: 3em; }
 
 .orderbookBidList {
-  float: left; }
+  float: left;
+  margin-left: 3em; }
 
 .item {
   display: block;

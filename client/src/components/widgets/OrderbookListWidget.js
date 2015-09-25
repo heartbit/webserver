@@ -26,8 +26,8 @@ var OrderbookListWidget = React.createClass({
 			_.each(bid, function(order) {
 				tablebodyBid.push(
 					<tr>
-						<td> {order.sum} </td>
-						<td> {order.volume} </td>
+						<td> {Math.floor(order.sum)} </td>
+						<td> {Math.floor(order.volume)} </td>
 						<td> {order.price} </td>
 					</tr>
 				);
@@ -39,8 +39,8 @@ var OrderbookListWidget = React.createClass({
 				tablebodyAsk.push(
 					<tr>
 						<td> {order.price} </td>
-						<td> {order.volume} </td>
-						<td> {order.sum} </td>
+						<td> {Math.floor(order.volume)} </td>
+						<td> {Math.floor(order.sum)} </td>
 					</tr>
 				);
 			});
