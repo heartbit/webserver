@@ -28,7 +28,10 @@ config.platforms.defaultpairs = {
 }
 
 config.platforms.address = {
-	'BITSTAMP': 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B'
+	'BITSTAMP': 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B',
+	'SNAPSWAP': 'rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q',
+	'RIPPLEFOX': 'rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y',
+	'TOKYOJPY': 'r94s8px6kSw1uZ1MV98dhSRTvc6VMPoPcN'
 }
 
 config.websocketurl = {

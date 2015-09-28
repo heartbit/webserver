@@ -52,8 +52,8 @@ orderbookChartD3.prototype.initXAxis = function() {
 
 	this.xAxis = d3.svg.axis()
 		.scale(this.xScale)
-		.orient('bottom')
-		.ticks(8);
+		.orient('bottom');
+		// .ticks(8);
 
 	this.xAxisInstance = this.mainLayer.append('g')
 		.attr('class', 'x_time_axis')
@@ -80,7 +80,7 @@ orderbookChartD3.prototype.initYAxis = function() {
 	// Right Y axis
 	this.yScaleRight = d3.scale.linear().range([this.height, 0]);
 	this.yAxisRight = d3.svg.axis()
-		.scale(this.yScaleLeft)
+		.scale(this.yScaleRight)
 		.orient('right')
 		.tickFormat(function(d) {
             return FormatUtils.formatValueShort(d, 3);
@@ -107,25 +107,28 @@ orderbookChartD3.prototype.updateYAxis = function(data) {
 	// Left Y Axis
 	this.yScaleLeft.domain([d3.min(data.bid.map(function(order){
 		return order.sum;
-	})), d3.max(data.bid.map(function(order){
-		return order.sum;
-	}))]);
+	})),  d3.max([data.ask[data.ask.length-1].sum, data.bid[data.bid.length-1].sum])]);
+
 	this.yAxisLeftInstance.call(this.yAxisLeft);
 
 	// Right Y Axis
 	this.yScaleRight.domain([d3.min(data.ask.map(function(order){
 		return order.sum;
-	})), d3.max(data.ask.map(function(order){
-		return order.sum;
-	}))]);
+	})), d3.max([data.ask[data.ask.length-1].sum, data.bid[data.bid.length-1].sum])]);
+
 	this.yAxisRightInstance.call(this.yAxisRight);
 
 
 }
 
-orderbookChartD3.prototype.draw = function(data) {
+orderbookChartD3.prototype.draw = function(d) {
 	var self = this;
-	console.log("SHOULD DRAW ORDERBOOK", data);
+	console.log("SHOULD DRAW ORDERBOOK", d);
+	// data.bid = data.bid.slice(0, 20);
+	// data.ask = data.ask.slice(0, 100);
+	var data = {};
+	data.bid = this.zoom(d,'bid', 0.50);
+	data.ask = this.zoom(d, 'ask', 1.50);
 	this.updateXAxis(data);
 	this.updateYAxis(data);
 
@@ -135,7 +138,7 @@ orderbookChartD3.prototype.draw = function(data) {
 			return self.xScale(d.price);
 		})
 		.y(function(d) {
-			return self.yScaleLeft(d.sum);
+			return self.yScaleRight(d.sum);
 		});
 	this.bidLineInstance
 		.attr("d", self.bidLine(data.bid));
@@ -163,6 +166,27 @@ orderbookChartD3.prototype.resize = function() {
 
 orderbookChartD3.prototype.initOnMouseOverEvents =  function() {
 
+}
+
+orderbookChartD3.prototype.zoom = function(data, side, coef) {
+	var s1 = data.bid[0].price;
+	var s2 = data.ask[0].price;
+	var result = [];
+	var spread = [s1, s2];
+
+	_.each(data[side], function(d, i) {
+		if(side == "bid") {
+			if(d.price >= s1*coef) {
+				result.push(d);
+			}
+		} else if(side == "ask") {
+			if(d.price <= s2*coef) {
+				result.push(d);
+			}
+		}
+
+	})
+	return result;
 }
  
 module.exports = orderbookChartD3;

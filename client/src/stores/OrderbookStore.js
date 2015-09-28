@@ -14,21 +14,28 @@ var _OrderbookStore = {
 
 function update(data) {
 	var result = metaparser.parseOrderbookChanges(data.meta);
-	console.log("UPDATE ORDERBOOk!",result);
+	// var result = 
+	// console.log(data.params);
+	parser.parseUpdate(data);
+	// console.log("UPDATE ORDERBOOk!",result);
 	// merge
 	// register(result);
 }
 
 function sum(data) {
-	data[0]['sum'] = data[0].volume;
-	_.each(data, function(d,i){
-		if(i !=0) {
-			d['sum'] = data[i-1]['sum'] + d.volume;
-		}
-	});
+	// console.log("dataaaaaaaaaa",data);
+	if(!_.isEmpty(data)) {
+		data[0]['sum'] = data[0].volume;
+		_.each(data, function(d,i){
+			if(i !=0) {
+				d['sum'] = data[i-1]['sum'] + d.volume;
+			}
+		});
+	}
 }
 
 function register(data){
+	// console.log(data);
 	var asks = data.result.asks;
 	var bids = data.result.bids;
 	var initialRaw = [asks,bids];
@@ -36,10 +43,16 @@ function register(data){
 	var thinBids = parser.filterInit(bids, 'bid');	
 	sum(thinAsks);
 	sum(thinBids);
-	_OrderbookStore = {
-		ask: thinAsks,
-		bid: thinBids
-	};
+	if(!_.isEmpty(thinAsks)) {
+		_OrderbookStore['ask'] = thinAsks;
+	}
+	if(!_.isEmpty(thinBids)) {
+		_OrderbookStore['bid'] = thinBids;
+	}
+	// _OrderbookStore = {
+	// 	ask: thinAsks,
+	// 	bid: thinBids
+	// };
 	console.log("REGISTER STATE ORDERBOOK", _OrderbookStore);
 }
 
@@ -77,7 +90,9 @@ OrderbookStore.dispatcherIndex = Dispatcher.register(function(payload) {
   	switch(action.actionType) {
   	    case Constants.ActionTypes.ASK_ORDERBOOK:	
   	   		register(action.result); 	
-		 	OrderbookStore.emitChange();
+  	   		if(!_.isEmpty(_OrderbookStore.ask) && !_.isEmpty(_OrderbookStore.bid)) {
+		 		OrderbookStore.emitChange();
+		 	}
 		 	break;
 		case Constants.ActionTypes.UPDATE_ORDERBOOK:	
   	   	    update(action.result); 	

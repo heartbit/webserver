@@ -15,8 +15,6 @@ var OrderbookSocket = (function() {
 
 	}
 	
-	
-
 	return {
 		getInstance: function() {
 			if( !instance ) {
