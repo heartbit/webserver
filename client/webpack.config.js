@@ -99,6 +99,7 @@ module.exports = {
 			PlatformStore: path.join(__dirname, './src/stores/PlatformsStore'),
 			MovingAverageStore: path.join(__dirname, './src/stores/MovingAverageStore'),
 			OrderbookStore:  path.join(__dirname, './src/stores/OrderbookStore'),
+			MarketTraderStore: path.join(__dirname, './src/stores/MarketTraderStore'),
 
 			// Mixin
 			StoreMixin: path.join(__dirname, './src/stores/mixin/storeMixin'),
@@ -126,11 +127,13 @@ module.exports = {
 			Candle: path.join(__dirname, './src/models/Candle'),
 			Ticker: path.join(__dirname, './src/models/Ticker'),
 			Platform: path.join(__dirname, './src/models/Platform'),
+			Market_Trader:  path.join(__dirname, './src/models/Market_Trader'),
 			// Orderbook: path.join(__dirname, './src/models/Orderbook'),
 
 			Candles: path.join(__dirname, './src/collections/Candles'),
 			Volumes: path.join(__dirname, './src/collections/Volumes'),
 			Platforms: path.join(__dirname, './src/collections/Platforms'),
+			Market_Traders:  path.join(__dirname, './src/collections/Market_Traders'),
 
 			Constants: path.join(__dirname, './src/Constants'),
 
@@ -139,6 +142,7 @@ module.exports = {
 			TickerActions: path.join(__dirname, './src/actions/TickerActions'),
 			SelectorActions: path.join(__dirname, './src/actions/SelectorActions'),
 			WebsocketActions: path.join(__dirname, './src/actions/WebsocketActions'),
+			DataapiActions: path.join(__dirname, './src/actions/DataapiActions'),
 
 			// Internal libs
 			gridster: path.join(__dirname, './lib/internal-libs/jquery.gridster/gridster'),

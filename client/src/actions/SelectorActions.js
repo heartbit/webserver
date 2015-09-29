@@ -5,6 +5,7 @@ var Q = require('q');
 var DashboardActions = require('DashboardActions');
 var TickerActions = require('TickerActions');
 var WebsocketActions = require('WebsocketActions');
+var DataapiActions = require('DataapiActions');
 var Platforms = require('Platforms');
 var RangeTranslate = require('RangeTranslate');
 var DataSocketManager = require('DataSocketManager');
@@ -33,6 +34,7 @@ var SelectorActions = {
 	    this.joinDataRoom(params);
 		this.refreshGraphAndKeyfact(newParams);
 		this.refreshOrderbook(newParams);
+		this.refreshMarketTraders(newParams);
 		Dispatcher.handleViewAction({
 			actionType: Constants.ActionTypes.REGISTER_SELECTOR,
 			result: newParams
@@ -47,6 +49,10 @@ var SelectorActions = {
 
 	refreshOrderbook: function(params) {
 		WebsocketActions.updateOrderbook(params);
+	},
+
+	refreshMarketTraders: function(params) {
+		DataapiActions.updateMarketTraders(params);
 	},
 
 	joinDataRoom: function(params) {

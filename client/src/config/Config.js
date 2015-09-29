@@ -39,6 +39,10 @@ config.websocketurl = {
 	ripple2: "wss://s1.ripple.com:443"
 }
 
+config.dataapi = {
+	market_traders: "/ripple/dataapi/market_traders/?market="
+}
+
 
 
 module.exports = config;

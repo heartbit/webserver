@@ -15,7 +15,7 @@ RippledataapiProxy.prototype.init = function(callback) {
 		// // console.log(JSON.stringify(parameters));
 		var options = {
 			method: 'POST',
-			url: self.rippledataapiProxyHost,
+			url: self.rippledataapiProxyHost + 'exchange_rates',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -30,11 +30,36 @@ RippledataapiProxy.prototype.init = function(callback) {
 				console.log('error', error);
 				res.send(500, 'something went wrong');
 			} 			
-			console.log("BODDDDYYDDYYDYDYDY",body);
 			res.send(response.statusCode, body);
 		};
 		request(options, callback);
 		// res.send(JSON.stringify(parameters));
+
+	});
+
+	this.app.get('/ripple/dataapi/market_traders/*', function(req, res) {
+		var parameters = req.query.market;
+		console.log("market_traders parameters", parameters);
+		var options = {
+			method: 'POST',
+			url: self.rippledataapiProxyHost + 'market_traders',
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json"
+			},
+			body:parameters
+		};
+
+		var callback = function(error, response, body) {
+			// var body = JSON.parse(body);
+
+			if (error) {
+				console.log('error', error);
+				res.send(500, 'something went wrong');
+			} 			
+			res.send(response.statusCode, body);
+		};
+		request(options, callback);
 
 	});
 

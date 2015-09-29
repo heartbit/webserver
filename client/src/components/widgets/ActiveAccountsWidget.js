@@ -1,7 +1,7 @@
 var React = require('react/addons');
 var BaseWidget = require('BaseWidget');
 var FormatUtils = require('FormatUtils');
-var OrderbookStore = require('OrderbookStore');
+var MarketTraderStore = require('MarketTraderStore');
 
 var ActiveAccountsWidget = React.createClass({
 	
@@ -11,8 +11,7 @@ var ActiveAccountsWidget = React.createClass({
 	    }
     },
     componentDidMount: function() {
-   		// console.log(OrderbookSocket);
-   		// OrderbookSocket.create();
+    	MarketTraderStore.addChangeListener('change',this._update);
     },
     
     componentWillUnmount: function() {
@@ -26,6 +25,11 @@ var ActiveAccountsWidget = React.createClass({
 				</div>
 			</BaseWidget>
 		);
+	},
+
+	_update: function() {
+		var mt = MarketTraderStore.getAll();
+		console.log('mt from view', mt);
 	}
 });
 

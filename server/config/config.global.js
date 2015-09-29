@@ -30,7 +30,7 @@ config.rippleaccountproxy.hostUrl = config.rippleaccountproxy.host;
 config.rippleaccountproxy.remoteserver = "wss://s1.ripple.com:443";
 
 config.rippledataapiproxy = {};
-config.rippledataapiproxy.host = "http://api.ripplecharts.com/api/exchange_rates";
+config.rippledataapiproxy.host = "http://api.ripplecharts.com/api/";
 config.rippledataapiproxy.port = "";
 config.rippledataapiproxy.hostUrl = config.rippledataapiproxy.host;
 
