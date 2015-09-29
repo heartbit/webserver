@@ -3,13 +3,7 @@ var OrderbookRequest = require('OrderbookRequest');
 var Dispatcher = require('Dispatcher');
 var Constants = require('Constants');
 var currentParams;
-var Remote = require('ripple-lib').Remote;
-remote = new Remote({
-			servers: [ "wss://s1.ripple.com:443" ]
-		});
-remote.connect(function() { 
-			console.log("Connected to : " + self.remoteServer);
-		});
+
 
 
 
@@ -57,40 +51,41 @@ var WebsocketActions = {
 			// 	currentParams = _.clone(params);
 			// }
 		// }
-	}
+		var remote = OrderbookSocket.getInstance();
+		var mybook_ask = remote.book('XRP', null, 'USD', 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B');
+		mybook_ask.on("model", handle_asks);
+		function handle_asks(model) {
+			// console.log("ASKS===>",model);
+			var data = {
+				result: {
+					asks:model
+				}
+			}
+			Dispatcher.handleViewAction({
+						actionType: Constants.ActionTypes.ASK_ORDERBOOK,
+						result: data
+			});
+			// console.log(model);
+			// mybook_ask.unsubscribe();
+		}
 
-
-}
-var mybook_ask = remote.book('XRP', null, 'USD', 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B');
-mybook_ask.on("model", handle_asks);
-function handle_asks(model) {
-	console.log("ASKS===>",model);
-	var data = {
-		result: {
-			asks:model
+		var mybook_bid = remote.book('USD','rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B','XRP',null);
+		mybook_bid.on("model", handle_bids);
+		function handle_bids(model) {
+			// console.log("BIDS===>",model);
+			var data = {
+				result: {
+					bids:model
+				}
+			}
+			Dispatcher.handleViewAction({
+							actionType: Constants.ActionTypes.ASK_ORDERBOOK,
+							result: data
+			});
 		}
 	}
-	Dispatcher.handleViewAction({
-				actionType: Constants.ActionTypes.ASK_ORDERBOOK,
-				result: data
-	});
-	// console.log(model);
-	// mybook_ask.unsubscribe();
-}
 
-var mybook_bid = remote.book('USD','rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B','XRP',null);
-mybook_bid.on("model", handle_bids);
-function handle_bids(model) {
-	console.log("BIDS===>",model);
-	var data = {
-		result: {
-			bids:model
-		}
-	}
-	Dispatcher.handleViewAction({
-					actionType: Constants.ActionTypes.ASK_ORDERBOOK,
-					result: data
-	});
+
 }
 
 

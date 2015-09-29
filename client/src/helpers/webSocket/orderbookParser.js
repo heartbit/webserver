@@ -22,23 +22,21 @@ orderbookParser.prototype.thinOrder = function(order, type, pair) {
 	if(order.taker_gets_funded) {
 		var TakerGetsValue = takerValue_funded(order.taker_gets_funded, order.TakerGets);
 	} else {
-		var TakerGetsValue = takerValue(order.TakerGets);
+		var TakerGetsValue = takerValue(order.TakerGets,order.TakerGets);
 	}
-	// if(order.taker_pays_funded) {
-	// 	var TakerPaysValue = takerValue(order.taker_pays_funded, order.TakerPays);
-	// } else {
-		// if(!order.TakerPays || order.TakerPays == 0) {
-		// 	console.log("dpoazkpoadkpoazd", order);
-		// }
+	if(order.taker_pays_funded) {
+		var TakerPaysValue = takerValue_funded(order.taker_pays_funded, order.TakerPays);
+	} else {
 		var TakerPaysValue = takerValue(order.TakerPays, order.TakerPays);
-	// }
+	}
 	// if(order.Account == "rKQ7nB9LkfhtvkvEKQMsxAgf7QgFgXFeBv") {
 	// 	console.log(order,TakerPaysValue,TakerGetsValue, price);
 	// }
 	// 	account: order.Account,
-	var price = getPrice(TakerPaysValue, TakerGetsValue, type);
+	var price = getPrice(takerValue(order.TakerPays, order.TakerPays), takerValue(order.TakerGets,order.TakerGets), type);
 	var volume = getVolume(TakerPaysValue, TakerGetsValue, type);
-	console.log(type,"price",price,"volume",volume,"pays",TakerPaysValue,"gets",TakerGetsValue, order);
+	// var volume = getVolume(TakerGetsValue, price);
+	// console.log(type,"price",price,"volume",volume,"pays",takerValue(order.TakerPays,order.TakerPays),"gets",takerValue(order.TakerGets,order.TakerGets), order);
 
 	var thinOrder = {
 		takerGets: order.TakerGets,
@@ -71,14 +69,14 @@ orderbookParser.prototype.thinOrder = function(order, type, pair) {
 
 function getPrice(TakerPaysValue,TakerGetsValue,type) {
 	if (type == 'ask') {
-		if(TakerGetsValue < 1) {
-			return TakerPaysValue*TakerGetsValue;
-		}
+		// if(TakerGetsValue < 1) {
+		// 	return TakerPaysValue*TakerGetsValue;
+		// }
 		return TakerPaysValue/TakerGetsValue;
 	}
-	if(TakerPaysValue < 1) {
-		return TakerGetsValue*TakerPaysValue;
-	}
+	// if(TakerPaysValue < 1) {
+	// 	return TakerGetsValue*TakerPaysValue;
+	// }
 	return TakerGetsValue/TakerPaysValue;
 }
 
@@ -88,7 +86,9 @@ function getVolume(TakerPaysValue,TakerGetsValue,type) {
 	}
 	return TakerPaysValue;
 }
-
+// function getVolume(TakerGetsFunded, price) {
+// 	return TakerGetsFunded/price;
+// }
 
 function isXRP(taker) {
 	if(!_.isObject(taker)) {

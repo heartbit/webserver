@@ -53,7 +53,7 @@ function register(data){
 	// 	ask: thinAsks,
 	// 	bid: thinBids
 	// };
-	console.log("REGISTER STATE ORDERBOOK", _OrderbookStore);
+	// console.log("REGISTER STATE ORDERBOOK", _OrderbookStore);
 }
 
 var OrderbookStore = assign({}, EventEmitter.prototype, {

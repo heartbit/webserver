@@ -7,3 +7,25 @@
 	float: left;
 	margin-left: 3em;
 }
+
+.orderbookTable_td {
+	padding: 0 1em 0 1em;
+}
+
+.orderbooTable_th {
+	padding: 0 1em 1em 1em;
+}
+
+.loading_orderbookList {
+	width: 85px;
+	height: 85px;
+	top:50%;
+	left:50%;
+	margin: -42.5px 0 0 -42.5px ;
+	position:absolute;
+}
+
+#OrderbookListWidget {
+	background:#061A2D;
+	color: white;
+}

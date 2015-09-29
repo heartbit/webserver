@@ -54,7 +54,7 @@ var Grid = React.createClass({
   	  var ratio = this.props.params.width*0.025;
 	  var w = (this.props.params.width/3-20);
 	  var params= {
-		    widget_margins: [0,5],
+		    widget_margins: [5,5],
 		    widget_base_dimensions: [w, 150],
 		    resize: {
 		          enabled: true

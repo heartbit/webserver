@@ -123,7 +123,6 @@ orderbookChartD3.prototype.updateYAxis = function(data) {
 
 orderbookChartD3.prototype.draw = function(d) {
 	var self = this;
-	console.log("SHOULD DRAW ORDERBOOK", d);
 	// data.bid = data.bid.slice(0, 20);
 	// data.ask = data.ask.slice(0, 100);
 	var data = {};

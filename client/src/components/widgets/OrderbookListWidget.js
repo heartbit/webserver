@@ -26,9 +26,9 @@ var OrderbookListWidget = React.createClass({
 			_.each(bid, function(order) {
 				tablebodyBid.push(
 					<tr>
-						<td> {Math.floor(order.sum)} </td>
-						<td> {Math.floor(order.volume)} </td>
-						<td> {order.price} </td>
+						<td className='orderbookTable_td'> {Math.floor(order.sum)} </td>
+						<td className='orderbookTable_td'> {Math.floor(order.volume)} </td>
+						<td className='orderbookTable_td'> {Math.floor(order.price*Math.pow(10,9))/Math.pow(10,9)} </td>
 					</tr>
 				);
 			})
@@ -38,9 +38,9 @@ var OrderbookListWidget = React.createClass({
 			_.each(ask, function(order) {
 				tablebodyAsk.push(
 					<tr>
-						<td> {order.price} </td>
-						<td> {Math.floor(order.volume)} </td>
-						<td> {Math.floor(order.sum)} </td>
+						<td className='orderbookTable_td'> {Math.floor(order.price*Math.pow(10,9))/Math.pow(10,9)} </td>
+						<td className='orderbookTable_td'> {Math.floor(order.volume)} </td>
+						<td className='orderbookTable_td'> {Math.floor(order.sum)} </td>
 					</tr>
 				);
 			});
@@ -49,30 +49,31 @@ var OrderbookListWidget = React.createClass({
 		return (
 			<BaseWidget attributes={this.props.attributes}>
 				<div>
+				
 					{ this.state.ask.length !=0 ?
 						<table className='orderbookBidList'>
 							<thead>
-								<th> Total </th>
-								<th> Size  </th>
-								<th> Bid Price </th>
+								<th className='orderbooTable_th'> Total </th>
+								<th className='orderbooTable_th'> Size  </th>
+								<th className='orderbooTable_th'> Bid Price </th>
 							</thead>
 							<tbody>
 								{tablebodyBid}
 							</tbody>
 						</table>
-					: 'loading' }
+					: "" }
 					{ this.state.bid.length != 0 ?
 						<table className='orderbookAskList'>
 						 	<thead>
-						 		<th> Ask Price </th>
-						 		<th> Size </th>
-						 		<th> Total </th>
+						 		<th className='orderbooTable_th'> Ask Price </th>
+						 		<th className='orderbooTable_th'> Size </th>
+						 		<th className='orderbooTable_th'> Total </th>
 						 	</thead>
 						 	<tbody>
 						 		{tablebodyAsk}
 						 	</tbody>
 						</table>
-					: 'loading'}
+					: <img className='loading_orderbookList' src='./img/load_medium_blue.GIF' />}
 				</div>
 			</BaseWidget>
 		);
@@ -80,7 +81,6 @@ var OrderbookListWidget = React.createClass({
 
 	_onUpdateBook: function() {
 		var orderbook = OrderbookStore.getAll();
-		console.log("ordebrookList_View", orderbook);
 		this.setState({
 			ask: orderbook.ask,
 			bid: orderbook.bid

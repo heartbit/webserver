@@ -39,10 +39,7 @@ var OrderbookWidget = React.createClass({
 		var orderbook = OrderbookStore.getAll();
 		this.setState({
 			orderbook: orderbook
-		}, function() {
-			console.log("OrderbookWidgetState", this.state);
 		});
-		console.log("OrderbookWidgetProps",this.props);
 	}
 
 });
