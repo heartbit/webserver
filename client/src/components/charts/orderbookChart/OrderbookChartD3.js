@@ -140,6 +140,7 @@ orderbookChartD3.prototype.draw = function(d) {
 			return self.yScaleRight(d.sum);
 		});
 	this.bidLineInstance
+		.transition()
 		.attr("d", self.bidLine(data.bid));
 
 	// Ask
@@ -151,6 +152,7 @@ orderbookChartD3.prototype.draw = function(d) {
 			return self.yScaleRight(d.sum);
 		});
 	this.askLineInstance
+		.transition()
 		.attr("d", self.askLine(data.ask));
  
 }

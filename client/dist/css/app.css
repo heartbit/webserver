@@ -10803,7 +10803,10 @@ li.current a {
 
 #OrderbookListWidget {
   background: #061A2D;
-  color: white; }
+  color: white;
+  width: 98%;
+  margin-left: 0.5em;
+  margin-top: 0.5em; }
 
 .item {
   display: block;

@@ -11,11 +11,16 @@ var OrderbookSocket = (function() {
 		// var webSocket = window.WebSocket || window.MozWebSocket;
 		// var ws = new webSocket(Config.websocketurl.ripple);
 		remote = new Remote({
-			servers: [ "wss://s1.ripple.com:443" ]
+			servers: [ Config.websocketurl.ripple ]
 		});
 		remote.connect(function() { 
-			console.log("Connected to : " + self.remoteServer);
+			console.log("Connected to : " + Config.websocketurl.ripple);
 		});
+
+		remote.on('disconnect' ,function() {
+			console.log('ripple remote WSS has been disconnected');
+		});
+
 
 
 		return  remote;

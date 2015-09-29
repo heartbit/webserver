@@ -2,7 +2,8 @@ var OrderbookSocket = require('OrderbookSocket');
 var OrderbookRequest = require('OrderbookRequest');
 var Dispatcher = require('Dispatcher');
 var Constants = require('Constants');
-var currentParams;
+var config = require('Config');
+var currentBooks = [];
 
 
 
@@ -11,7 +12,61 @@ var currentParams;
 var WebsocketActions = {
 
 	updateOrderbook: function(params) {
-		// var self = this;
+		console.log(currentBooks, currentBooks.length);
+		var self = this;
+		if(currentBooks.length) {
+			console.log("UNSUBSCIBE!", currentBooks);
+			currentBooks[0].unsubscribe();
+			currentBooks[1].unsubscribe();
+			// remote.on('unsubscribe', bookSubscribe);
+			bookSubscribe();
+		} else  {
+			bookSubscribe();
+		}
+
+		function bookSubscribe() {
+			console.log("subscribe!",params);
+			var remote = OrderbookSocket.getInstance();
+			var mybook_ask = remote.book(params.item, null, params.currency, config.platforms.address[params.platform]);
+			mybook_ask.on("model", handle_asks);
+			function handle_asks(model) {
+				// console.log("ASKS===>",model);
+				var data = {
+					result: {
+						asks:model
+					}
+				}
+				Dispatcher.handleViewAction({
+							actionType: Constants.ActionTypes.ASK_ORDERBOOK,
+							result: data
+				});
+				// console.log(model);
+				// mybook_ask.unsubscribe();
+			}
+
+			var mybook_bid = remote.book(params.currency, config.platforms.address[params.platform], params.item ,null);
+			mybook_bid.on("model", handle_bids);
+			function handle_bids(model) {
+				// console.log("BIDS===>",model);
+				var data = {
+					result: {
+						bids:model
+					}
+				}
+				Dispatcher.handleViewAction({
+								actionType: Constants.ActionTypes.ASK_ORDERBOOK,
+								result: data
+				});
+			}
+			currentBooks = [mybook_bid, mybook_ask];
+		}
+	}
+
+
+}
+
+
+module.exports = WebsocketActions;
 		// var ws = OrderbookSocket.getInstance();
 
 		// if(ws.readyState === 1) {
@@ -51,42 +106,3 @@ var WebsocketActions = {
 			// 	currentParams = _.clone(params);
 			// }
 		// }
-		var remote = OrderbookSocket.getInstance();
-		var mybook_ask = remote.book('XRP', null, 'USD', 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B');
-		mybook_ask.on("model", handle_asks);
-		function handle_asks(model) {
-			// console.log("ASKS===>",model);
-			var data = {
-				result: {
-					asks:model
-				}
-			}
-			Dispatcher.handleViewAction({
-						actionType: Constants.ActionTypes.ASK_ORDERBOOK,
-						result: data
-			});
-			// console.log(model);
-			// mybook_ask.unsubscribe();
-		}
-
-		var mybook_bid = remote.book('USD','rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B','XRP',null);
-		mybook_bid.on("model", handle_bids);
-		function handle_bids(model) {
-			// console.log("BIDS===>",model);
-			var data = {
-				result: {
-					bids:model
-				}
-			}
-			Dispatcher.handleViewAction({
-							actionType: Constants.ActionTypes.ASK_ORDERBOOK,
-							result: data
-			});
-		}
-	}
-
-
-}
-
-
-module.exports = WebsocketActions;

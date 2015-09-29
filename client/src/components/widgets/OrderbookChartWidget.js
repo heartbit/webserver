@@ -21,13 +21,16 @@ var OrderbookWidget = React.createClass({
     },
 	render: function() {
 		var data = this.state.orderbook;
-		if(_orderbookChart) _orderbookChart.draw(data);
+		if(_orderbookChart) {
+			_orderbookChart.draw(data);
+		} else {
+			var loading = <img className='loading_orderbookList' src='./img/load_medium.GIF' />
+		}
 
 
 		return (
 			<BaseWidget attributes={this.props.attributes}>
-				<div>
-				</div>
+				{loading}
 			</BaseWidget>
 		);
 	},

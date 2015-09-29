@@ -35,7 +35,8 @@ config.platforms.address = {
 }
 
 config.websocketurl = {
-	ripple:"wss://s-east.ripple.com:443"
+	ripple:"wss://s-east.ripple.com:443",
+	ripple2: "wss://s1.ripple.com:443"
 }
 
 
