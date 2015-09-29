@@ -126,8 +126,8 @@ orderbookChartD3.prototype.draw = function(d) {
 	// data.bid = data.bid.slice(0, 20);
 	// data.ask = data.ask.slice(0, 100);
 	var data = {};
-	data.bid = this.zoom(d,'bid', 0.50);
-	data.ask = this.zoom(d, 'ask', 1.50);
+	data.bid = this.zoom(d,'bid', 0.80);
+	data.ask = this.zoom(d, 'ask', 1.20);
 	this.updateXAxis(data);
 	this.updateYAxis(data);
 

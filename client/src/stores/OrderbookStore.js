@@ -53,6 +53,8 @@ function register(data){
 	// 	ask: thinAsks,
 	// 	bid: thinBids
 	// };
+	
+	_OrderbookStore['params'] = data.result.params;
 	// console.log("REGISTER STATE ORDERBOOK", _OrderbookStore);
 }
 

@@ -1,11 +1,13 @@
 .orderbookAskList {
 	float: right;
-	margin-right: 3em;
+	/*margin-right: 5%;*/
+	margin-top: 2em;
 }
 
 .orderbookBidList {
 	float: left;
-	margin-left: 3em;
+	/*margin-left: 5%;*/
+	margin-top: 2em;
 }
 
 .orderbookTable_td {
@@ -13,7 +15,16 @@
 }
 
 .orderbooTable_th {
-	padding: 0 1em 1em 1em;
+	padding: 0 1em 1em 0.7em;
+	font-size: 1.3em;
+}
+
+.bidTitle {
+	color: green;
+}
+
+.askTitle {
+	color:red;
 }
 
 .loading_orderbookList {

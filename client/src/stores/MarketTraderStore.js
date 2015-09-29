@@ -8,9 +8,9 @@ var _MarketTraderStore = {};
 
 function registerMarketTraders(result){
 	_MarketTraderStore = result.toJSON().results;
-	console.log("_MarketTraderStore",_MarketTraderStore);
 	_MarketTraderStore['total'] = prctVolume(_MarketTraderStore);
 	prctVolumeAccount(_MarketTraderStore);
+	// console.log("_MarketTraderStore",_MarketTraderStore);
 };
 
 function prctVolume(data) {

@@ -16,7 +16,6 @@ match.getPair = function(selectedPlatform, selector, allPlatforms, defaultpairs)
 };
 
 match.getPlatform = function(selectedPair, selector, allPlatforms, defaultplatforms) {
-	console.log("MATCH THIS",selectedPair, selector, allPlatforms, defaultplatforms);
 	var selectedPlatform = selector.platform;
 	_.each(allPlatforms.platforms, function(pairs, platform) {
 		if(platform == selectedPlatform) {

@@ -5,6 +5,7 @@ var React = require('react');
 var Candles = require('Candles');
 var Volumes = require('Volumes');
 var IntervalTranslate = require('IntervalTranslate');
+var RangeTranslate = require('RangeTranslate');
 
 var Constants = require('Constants')
 var Q = require('q')
@@ -12,14 +13,23 @@ var Q = require('q')
 var DashboardActions = {
 
 	displayMainGraph: function(params) {
-		var promiseCandle = this.populeCandle(params);
-		var promiseVolume = this.populeVolume(params);
-		Q.all([promiseCandle,promiseVolume]).then(function(){
-			Dispatcher.handleViewAction({
-				actionType: Constants.ActionTypes.FILL_MAINGRAPH,
-				result: {}
+		var self = this 
+		var updateFrequency = IntervalTranslate(params.interval);
+		display();
+		function display() {
+			var range = RangeTranslate(params.range, params);
+			var newParams = _.extend(params, range);
+			var promiseCandle = self.populeCandle(newParams);
+			var promiseVolume = self.populeVolume(newParams);
+			Q.all([promiseCandle,promiseVolume]).then(function(){
+				Dispatcher.handleViewAction({
+					actionType: Constants.ActionTypes.FILL_MAINGRAPH,
+					result: {}
+				});
 			});
-		})
+		}
+		setInterval(display, updateFrequency.interval*1000);
+		console.log(params, updateFrequency.interval*1000);
 	},
 	
     populeCandle : function(params){

@@ -33,7 +33,8 @@ var WebsocketActions = {
 				// console.log("ASKS===>",model);
 				var data = {
 					result: {
-						asks:model
+						asks:model,
+						params:params
 					}
 				}
 				Dispatcher.handleViewAction({
@@ -50,7 +51,8 @@ var WebsocketActions = {
 				// console.log("BIDS===>",model);
 				var data = {
 					result: {
-						bids:model
+						bids:model,
+						params:params
 					}
 				}
 				Dispatcher.handleViewAction({
