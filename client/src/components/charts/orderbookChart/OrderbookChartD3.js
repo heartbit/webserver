@@ -126,8 +126,8 @@ orderbookChartD3.prototype.draw = function(d) {
 	// data.bid = data.bid.slice(0, 20);
 	// data.ask = data.ask.slice(0, 100);
 	var data = {};
-	data.bid = this.zoom(d,'bid', 0.80);
-	data.ask = this.zoom(d, 'ask', 1.20);
+	data.bid = this.zoom(d,'bid', 0.5);
+	data.ask = this.zoom(d, 'ask', 1.5);
 	this.updateXAxis(data);
 	this.updateYAxis(data);
 
@@ -170,6 +170,8 @@ orderbookChartD3.prototype.initOnMouseOverEvents =  function() {
 }
 
 orderbookChartD3.prototype.zoom = function(data, side, coef) {
+	if (coef == 'all') return data[side];
+
 	var s1 = data.bid[0].price;
 	var s2 = data.ask[0].price;
 	var result = [];

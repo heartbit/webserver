@@ -16,7 +16,8 @@ config.platforms.defaultplatforms = {
 	'XRP/USD':'BITSTAMP',
 	'XRP/JPY':'TOKYOJPY',
 	'BTC/USD':'BITFINEX',
-	'XRP/CNY':'RIPPLEFOX'
+	'XRP/CNY':'RIPPLEFOX',
+	'XRP/BTC':'BITSTAMP'
 }
 
 config.platforms.defaultpairs = {

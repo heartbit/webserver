@@ -18,7 +18,6 @@ var ActiveAccountsWidget = React.createClass({
 
     },
 	render: function() {
-		console.log(this.state);
 		var tableTraders = [];
 		if (!_.isEmpty(this.state.market_traders)) {
 			// market_traders.sort(function(x,y) {

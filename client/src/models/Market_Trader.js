@@ -1,7 +1,7 @@
 var config = require('Config');
 
 
-var Platform = Backbone.Model.extend({
+var MarketTraders = Backbone.Model.extend({
     
 	initialize: function(params) {
 		var query = {
@@ -22,4 +22,4 @@ var Platform = Backbone.Model.extend({
 });
 
 
-module.exports = Platform;
+module.exports = MarketTraders;

@@ -29,6 +29,7 @@ var SelectorActions = {
 		this.changeSelector(params);
 	},
 	changeSelector: function(params) {
+		console.log("SELECTOR params", params);
 		var range = RangeTranslate(params.range, params);
 		var newParams = _.extend(params, range);
 	    this.joinDataRoom(params);

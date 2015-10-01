@@ -1,8 +1,9 @@
 
 var Config = require('Config');
 var parser = require('OrderbookParser');
-var metaparser = require('ripple-lib-transactionparser');
-var Remote = require('ripple-lib').Remote;
+// var metaparser = require('ripple-lib-transactionparser');
+var Remote = require('ripplelib').Remote;
+
 
 var OrderbookSocket = (function() {
 	var instance;
@@ -10,6 +11,7 @@ var OrderbookSocket = (function() {
 		//Private var: ws connection
 		// var webSocket = window.WebSocket || window.MozWebSocket;
 		// var ws = new webSocket(Config.websocketurl.ripple);
+
 		remote = new Remote({
 			servers: [ Config.websocketurl.ripple ]
 		});

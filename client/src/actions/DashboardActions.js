@@ -29,7 +29,6 @@ var DashboardActions = {
 			});
 		}
 		setInterval(display, updateFrequency.interval*1000);
-		console.log(params, updateFrequency.interval*1000);
 	},
 	
     populeCandle : function(params){

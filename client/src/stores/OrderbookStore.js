@@ -13,7 +13,7 @@ var _OrderbookStore = {
 };
 
 function update(data) {
-	var result = metaparser.parseOrderbookChanges(data.meta);
+	// var result = metaparser.parseOrderbookChanges(data.meta);
 	// var result = 
 	// console.log(data.params);
 	parser.parseUpdate(data);
@@ -55,7 +55,7 @@ function register(data){
 	// };
 	
 	_OrderbookStore['params'] = data.result.params;
-	// console.log("REGISTER STATE ORDERBOOK", _OrderbookStore);
+	console.log("REGISTER STATE ORDERBOOK", _OrderbookStore);
 }
 
 var OrderbookStore = assign({}, EventEmitter.prototype, {

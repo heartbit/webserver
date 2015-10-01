@@ -7,27 +7,46 @@ var currentBooks = [];
 
 
 
-
-
 var WebsocketActions = {
 
 	updateOrderbook: function(params) {
-		console.log(currentBooks, currentBooks.length);
+		console.log("updateorderbook",currentBooks);
 		var self = this;
-		if(currentBooks.length) {
-			console.log("UNSUBSCIBE!", currentBooks);
-			currentBooks[0].unsubscribe();
-			currentBooks[1].unsubscribe();
-			// remote.on('unsubscribe', bookSubscribe);
-			bookSubscribe();
-		} else  {
-			bookSubscribe();
-		}
+		bookSubscribe();
 
 		function bookSubscribe() {
+			if(currentBooks.length) {
+				console.log("UNSUBSCIBE!", currentBooks);
+				currentBooks[0].removeListener('model', handle_bids);
+				currentBooks[0].unsubscribe();
+				currentBooks[1].removeListener('model', handle_asks);
+				currentBooks[1].unsubscribe();
+
+			} 
 			console.log("subscribe!",params);
 			var remote = OrderbookSocket.getInstance();
-			var mybook_ask = remote.book(params.item, null, params.currency, config.platforms.address[params.platform]);
+			var options_bid = {
+				currency_pays: params.item,
+				// issuer_pays: null,
+				currency_gets: params.currency,
+				issuer_gets: config.platforms.address[params.platform],
+
+			}
+			var options_ask = {
+				currency_pays: params.currency,
+				issuer_pays: config.platforms.address[params.platform],
+
+				currency_gets: "XRP"
+
+			}
+			remote._books = {};
+    		remote._events.prepare_subscribe = [];
+
+
+			var mybook_ask = remote.book(options_ask);
+			console.log("ASK_BOOK",mybook_ask);
+
+			mybook_ask.offersSync();
 			mybook_ask.on("model", handle_asks);
 			function handle_asks(model) {
 				// console.log("ASKS===>",model);
@@ -41,11 +60,12 @@ var WebsocketActions = {
 							actionType: Constants.ActionTypes.ASK_ORDERBOOK,
 							result: data
 				});
-				// console.log(model);
-				// mybook_ask.unsubscribe();
+
 			}
 
-			var mybook_bid = remote.book(params.currency, config.platforms.address[params.platform], params.item ,null);
+			var mybook_bid = remote.book(options_bid);
+			console.log("BID_book",mybook_bid);
+			mybook_bid.offersSync();
 			mybook_bid.on("model", handle_bids);
 			function handle_bids(model) {
 				// console.log("BIDS===>",model);
