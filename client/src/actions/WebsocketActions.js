@@ -16,14 +16,12 @@ var WebsocketActions = {
 
 		function bookSubscribe() {
 			if(currentBooks.length) {
-				console.log("UNSUBSCIBE!", currentBooks);
 				currentBooks[0].removeListener('model', handle_bids);
 				currentBooks[0].unsubscribe();
 				currentBooks[1].removeListener('model', handle_asks);
 				currentBooks[1].unsubscribe();
-
 			} 
-			console.log("subscribe!",params);
+
 			var remote = OrderbookSocket.getInstance();
 			var options_bid = {
 				currency_pays: params.item,
@@ -44,8 +42,6 @@ var WebsocketActions = {
 
 
 			var mybook_ask = remote.book(options_ask);
-			console.log("ASK_BOOK",mybook_ask);
-
 			mybook_ask.offersSync();
 			mybook_ask.on("model", handle_asks);
 			function handle_asks(model) {
@@ -64,7 +60,6 @@ var WebsocketActions = {
 			}
 
 			var mybook_bid = remote.book(options_bid);
-			console.log("BID_book",mybook_bid);
 			mybook_bid.offersSync();
 			mybook_bid.on("model", handle_bids);
 			function handle_bids(model) {
