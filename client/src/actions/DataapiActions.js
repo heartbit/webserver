@@ -11,6 +11,7 @@ var DataapiActions = {
     	function fetchModel() {
 	    	mt.fetch({
 	    		success: function(model) {
+	    			model['params'] = params;
 	    			Dispatcher.handleViewAction({
 						actionType: Constants.ActionTypes.ASK_MARKETTRADERS,
 						result: model

@@ -43,7 +43,7 @@ var ActiveAccountsWidget = React.createClass({
 						<table >
 							<thead>
 									<th className='orderbooTable_th'> Address </th>
-									<th className='orderbooTable_th'> Volume  </th>
+									<th className='orderbooTable_th'> Volume {this.state.market_traders.params.item }  </th>
 									<th className='orderbooTable_th'> %Total </th>
 								</thead>
 								<tbody>

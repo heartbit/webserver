@@ -7,11 +7,20 @@ var CHANGE_EVENT = 'change';
 var _MarketTraderStore = {};
 
 function registerMarketTraders(result){
+	console.log(result);
 	_MarketTraderStore = result.toJSON().results;
+	_MarketTraderStore['params'] = result.params;
 	_MarketTraderStore['total'] = prctVolume(_MarketTraderStore);
 	prctVolumeAccount(_MarketTraderStore);
-	// console.log("_MarketTraderStore",_MarketTraderStore);
+	sortList(_MarketTraderStore);
+	console.log("_MarketTraderStore",_MarketTraderStore);
 };
+
+function sortList(list) {
+	list.sort(function(a, b) {
+		return b.baseVolume - a.baseVolume;
+	});
+}
 
 function prctVolume(data) {
 	var total = {
