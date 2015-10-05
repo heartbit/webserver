@@ -13,7 +13,7 @@ function registerMarketTraders(result){
 	_MarketTraderStore['total'] = prctVolume(_MarketTraderStore);
 	prctVolumeAccount(_MarketTraderStore);
 	sortList(_MarketTraderStore);
-	console.log("_MarketTraderStore",_MarketTraderStore);
+	// console.log("_MarketTraderStore",_MarketTraderStore);
 };
 
 function sortList(list) {

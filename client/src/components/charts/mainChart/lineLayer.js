@@ -102,12 +102,12 @@ function AreaLayer(chart) {
     this.currentPositionXLine = this.tooltipLayer
         .append("line")
         .attr('class', 'currentPositionXLine')
-        .attr('y1', 10)
-        .attr('y2', this.chart.height)
+        .attr('y1', 0)
+        .attr('y2', this.chart.height-112)
         .attr('x1', 0)
         .attr('x2', 0)
-        .attr('stroke', '#cacaca')
-        .attr('opacity', .9)
+        .attr('stroke', '#12132A')
+        .attr('opacity', .6)
         .attr('stroke-width', 1);
 
     this.currentPositionLabelTime = this.tooltipLayer

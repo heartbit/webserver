@@ -44,6 +44,11 @@ orderbookChartD3.prototype.initChart = function() {
 
 	this.askLineInstance = this.mainLayer.append("path")
 		.attr("class", "ask_line");
+
+	 this.tooltipLayer = this.mainLayer
+        .append("g")
+        .attr("class", "tooltipLayer")
+        .attr('opacity', 0);
 }
 
 orderbookChartD3.prototype.initXAxis = function() {
@@ -190,6 +195,14 @@ orderbookChartD3.prototype.zoom = function(data, side, coef) {
 
 	})
 	return result;
+}
+
+orderbookChartD3.prototype.mouseover = function() {
+
+}
+
+orderbookChartD3.prototype.mouseout = function() {
+	
 }
  
 module.exports = orderbookChartD3;

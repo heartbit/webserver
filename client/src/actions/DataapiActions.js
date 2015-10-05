@@ -2,10 +2,12 @@ var Dispatcher = require('Dispatcher');
 var React = require('react');
 var Constants = require('Constants');
 var Market_Trader = require('Market_Trader');
+var repeat;
 
 var DataapiActions = {
 
 	updateMarketTraders: function(params) {
+	    clearInterval(repeat);
     	var mt = new Market_Trader(params);
     	fetchModel();
     	function fetchModel() {
@@ -19,8 +21,7 @@ var DataapiActions = {
 	    		}
 	    	});
 	    }
-
-	    setInterval(fetchModel, 60000);
+	    repeat = setInterval(fetchModel, 60000);
 	}
 
 
