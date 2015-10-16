@@ -10624,7 +10624,8 @@ li.current a {
   fill: #5CC9D7; }
 
 .volume {
-  fill: #53b01e; }
+  /*fill:rgb(83, 176, 30);*/
+  fill: #14840C; }
 
 .y_volume_axis .tick text {
   fill: #3B3752; }
