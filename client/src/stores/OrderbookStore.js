@@ -4,7 +4,7 @@ var Constants = require('Constants');
 var assign = require('object-assign');
 var parser = require('OrderbookParser');
 parser = new parser();
-var metaparser = require('ripple-lib-transactionparser');
+// var metaparser = require('ripple-lib-transactionparser');
 
 var CHANGE_EVENT = 'change';
 var _OrderbookStore = {
