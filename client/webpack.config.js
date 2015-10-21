@@ -174,7 +174,7 @@ module.exports = {
 			chance: path.join(__dirname, './lib/bower_components/chance/chance'),
 			numeral: path.join(__dirname, './lib/bower_components/numeral/numeral'),
 			moment: path.join(__dirname, './lib/bower_components/momentjs/moment'),
-			ripplelib: path.join(__dirname, './lib/bower_components/ripple/ripple'),
+			ripplelib: path.join(__dirname, './lib/internal-libs/ripple/ripple'),
 			localstorage: path.join(__dirname, './lib/bower_components/store.js/store+json2.min'),
 			socketio: path.join(__dirname, './lib/internal-libs/socket.io/socket.io-1.3.5.min.js'),
 			// Home page libs
