@@ -11,8 +11,7 @@ var DataapiActions = {
 		var isBitcoin = _.find(Config.strictbitcoin, function(platform) {
 			return platform == params.platform;
 		});
-		console.log("PArams && isBitcoin",params, isBitcoin);
-
+		
 		if(isBitcoin) {
 			bitcoinMM();
 		} else {

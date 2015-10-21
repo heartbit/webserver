@@ -97,7 +97,6 @@ var OrderbookListWidget = React.createClass({
 				msg: orderbook.msg
 			});
 		} else {
-			console.log("NEW ORDERBOOK§!!!!",orderbook);
 			this.setState({
 				ask: orderbook.ask,
 				bid: orderbook.bid,

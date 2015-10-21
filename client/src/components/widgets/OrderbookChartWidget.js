@@ -14,7 +14,7 @@ var OrderbookWidget = React.createClass({
     },
     componentDidMount: function() {
    		OrderbookStore.on('change', this._onUpdateState);
-   		 OrderbookStore.addChangeListener('isloading', this._onLoading);
+   		OrderbookStore.addChangeListener('isloading', this._onLoading);
 
     },
     
