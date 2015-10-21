@@ -9,10 +9,28 @@ var currentBooks = [];
 
 var WebsocketActions = {
 
+	unsubscribeOrderbook: function() {
+		currentBooks[0].removeListener('model', currentBooks[2]);
+		currentBooks[0].unsubscribe();
+		currentBooks[1].removeListener('model', currentBooks[3]);
+		currentBooks[1].unsubscribe();
+		Dispatcher.handleViewAction({
+			actionType: Constants.ActionTypes.ASK_ORDERBOOK,
+			result: { msg:"unavailable" }
+		});
+	},
+
 	updateOrderbook: function(params) {
-		console.log("updateorderbook",currentBooks);
 		var self = this;
-		bookSubscribe();
+		var isBitcoin = _.find(config.strictbitcoin, function(platform) {
+			return platform == params.platform;
+		});
+		if(isBitcoin) {
+			this.unsubscribeOrderbook();
+		} else {
+			bookSubscribe();
+		}
+
 
 		function bookSubscribe() {
 			if(currentBooks.length) {
@@ -75,7 +93,7 @@ var WebsocketActions = {
 								result: data
 				});
 			}
-			currentBooks = [mybook_bid, mybook_ask];
+			currentBooks = [mybook_bid, mybook_ask, handle_bids, handle_asks];
 		}
 	}
 

@@ -10782,26 +10782,30 @@ li.current a {
 
 .orderbookAskList {
   float: right;
-  /*margin-right: 5%;*/
-  margin-top: 2em; }
+  margin-right: 1.5em; }
 
 .orderbookBidList {
   float: left;
-  /*margin-left: 5%;*/
-  margin-top: 2em; }
+  margin-left: 1.5em; }
 
 .orderbookTable_td {
-  padding: 0 1em 0 1em; }
+  padding: 0 1em 0 1em;
+  border-top: 1px solid #9ba39c; }
 
 .orderbooTable_th {
   padding: 0 1em 1em 0.7em;
-  font-size: 1.3em; }
+  font-size: 1.1em;
+  color: #061A2D; }
 
 .bidTitle {
-  color: green; }
+  color: #061A2D;
+  margin-top: 3em;
+  margin-bottom: 1.5em; }
 
 .askTitle {
-  color: red; }
+  color: #061A2D;
+  margin-top: 3em;
+  margin-bottom: 1.5em; }
 
 .loading_orderbookList {
   width: 85px;
@@ -10812,8 +10816,8 @@ li.current a {
   position: absolute; }
 
 #OrderbookListWidget {
-  background: #061A2D;
-  color: white;
+  background: white;
+  color: #101010;
   width: 98%;
   margin-left: 0.5em;
   margin-top: 0.5em; }
@@ -10825,8 +10829,8 @@ li.current a {
   display: block; }
 
 #ActiveAccountsWidget {
-  background: #061A2D;
-  color: white;
+  background: white;
+  color: #101010;
   width: 98%;
   margin-left: 0.5em;
   margin-top: 0.5em; }

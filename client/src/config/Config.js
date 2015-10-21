@@ -44,6 +44,8 @@ config.dataapi = {
 	market_traders: "/ripple/dataapi/market_traders/?market="
 }
 
+config.strictbitcoin = ['BITFINEX'];
+
 
 
 module.exports = config;

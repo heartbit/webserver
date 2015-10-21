@@ -7,13 +7,16 @@ var CHANGE_EVENT = 'change';
 var _MarketTraderStore = {};
 
 function registerMarketTraders(result){
-	console.log(result);
-	_MarketTraderStore = result.toJSON().results;
-	_MarketTraderStore['params'] = result.params;
-	_MarketTraderStore['total'] = prctVolume(_MarketTraderStore);
-	prctVolumeAccount(_MarketTraderStore);
-	sortList(_MarketTraderStore);
-	// console.log("_MarketTraderStore",_MarketTraderStore);
+	if(result.msg == "unavailable") {
+		_MarketTraderStore['msg'] = result.msg;
+	} else {
+		_MarketTraderStore = result.toJSON().results;
+		_MarketTraderStore['params'] = result.params;
+		_MarketTraderStore['total'] = prctVolume(_MarketTraderStore);
+		prctVolumeAccount(_MarketTraderStore);
+		sortList(_MarketTraderStore);
+	}
+	// console.log("_MarketTraderStore",_MarketTraderStore, result);
 };
 
 function sortList(list) {

@@ -1,5 +1,6 @@
 var d3 = require('d3');
 var FormatUtils = require('FormatUtils');
+var defaultDuration = 200;
 
 var orderbookChartD3 = function(el, params) {
 	this.el = el;
@@ -45,7 +46,7 @@ orderbookChartD3.prototype.initChart = function() {
 	this.askLineInstance = this.mainLayer.append("path")
 		.attr("class", "ask_line");
 
-	 this.tooltipLayer = this.mainLayer
+	this.tooltipLayer = this.mainLayer
         .append("g")
         .attr("class", "tooltipLayer")
         .attr('opacity', 0);
@@ -204,5 +205,26 @@ orderbookChartD3.prototype.mouseover = function() {
 orderbookChartD3.prototype.mouseout = function() {
 	
 }
+
+
+orderbookChartD3.prototype.hide = function() {
+    this.isVisible = false;
+    this.mainLayer
+        .transition()
+        .duration(defaultDuration)
+        .attr('opacity', 0);
+}
+
+orderbookChartD3.prototype.show = function() {
+    this.isVisible = true;
+    this.mainLayer
+        .transition()
+        .duration(defaultDuration)
+        .attr('opacity', 1);
+}
+
+// orderbookChartD3.prototype.remove = function() {
+// 	d3.select(this.el).remove();
+// }
  
 module.exports = orderbookChartD3;

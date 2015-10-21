@@ -35,27 +35,26 @@ function sum(data) {
 }
 
 function register(data){
-	// console.log(data);
-	var asks = data.result.asks;
-	var bids = data.result.bids;
-	var initialRaw = [asks,bids];
-	var thinAsks = parser.filterInit(asks,'ask');
-	var thinBids = parser.filterInit(bids, 'bid');	
-	sum(thinAsks);
-	sum(thinBids);
-	if(!_.isEmpty(thinAsks)) {
-		_OrderbookStore['ask'] = thinAsks;
-	}
-	if(!_.isEmpty(thinBids)) {
-		_OrderbookStore['bid'] = thinBids;
-	}
-	// _OrderbookStore = {
-	// 	ask: thinAsks,
-	// 	bid: thinBids
-	// };
-	
-	_OrderbookStore['params'] = data.result.params;
-	console.log("REGISTER STATE ORDERBOOK", _OrderbookStore);
+	if(!data.msg) {
+		var asks = data.result.asks;
+		var bids = data.result.bids;
+		var initialRaw = [asks,bids];
+		var thinAsks = parser.filterInit(asks,'ask');
+		var thinBids = parser.filterInit(bids, 'bid');	
+		sum(thinAsks);
+		sum(thinBids);
+		if(!_.isEmpty(thinAsks)) {
+			_OrderbookStore['ask'] = thinAsks;
+		}
+		if(!_.isEmpty(thinBids)) {
+			_OrderbookStore['bid'] = thinBids;
+		}
+		_OrderbookStore['params'] = data.result.params;
+		_OrderbookStore['msg'] = 'available';
+	} else if(data.msg == "unavailable") {
+		_OrderbookStore = {};
+		_OrderbookStore['msg'] = 'unavailable';
+	}	
 }
 
 var OrderbookStore = assign({}, EventEmitter.prototype, {
@@ -92,7 +91,10 @@ OrderbookStore.dispatcherIndex = Dispatcher.register(function(payload) {
   	switch(action.actionType) {
   	    case Constants.ActionTypes.ASK_ORDERBOOK:	
   	   		register(action.result); 	
-  	   		if(!_.isEmpty(_OrderbookStore.ask) && !_.isEmpty(_OrderbookStore.bid)) {
+  	   		if(!_.isEmpty(_OrderbookStore.ask) && !_.isEmpty(_OrderbookStore.bid) && _OrderbookStore.msg == "available") {
+		 		OrderbookStore.emitChange();
+		 	}
+		 	if(_OrderbookStore.msg == "unavailable") {
 		 		OrderbookStore.emitChange();
 		 	}
 		 	break;
@@ -100,7 +102,7 @@ OrderbookStore.dispatcherIndex = Dispatcher.register(function(payload) {
   	   	    update(action.result); 	
 		 	// OrderbookStore.emitChange();
 		 	break;
-  		case Constants.ActionTypes.ISLOADING:
+  		case Constants.ActionTypes.LOADING_ORDERBOOK:
   			OrderbookStore.emitCustom('isloading');
 			break;
   	}

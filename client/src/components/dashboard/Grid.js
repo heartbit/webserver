@@ -50,8 +50,7 @@ var Grid = React.createClass({
   	
   },
   componentDidMount: function() {
-  	console.log("GRIDSTER width", this.props.params.width);
-  	  var ratio = this.props.params.width*0.025;
+  	var ratio = this.props.params.width*0.025;
 	  var w = (this.props.params.width/3-20);
 	  var params= {
 		    widget_margins: [5,5],

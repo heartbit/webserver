@@ -13,6 +13,7 @@ module.exports = {
 		REGISTER_SELECTOR: null,
 		FILL_MAINGRAPH: null,
 		UPDATE_MAINGRAPHPARAMS: null,
+		LOADING_ORDERBOOK: null,
 		RECEIVE_TICKER: null
 	}),
 

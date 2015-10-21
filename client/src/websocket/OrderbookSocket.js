@@ -32,7 +32,6 @@ var OrderbookSocket = (function() {
 	return {
 		getInstance: function() {
 			if( !instance ) {
-				console.log("new instance!");
 				instance = init();
 			}
 			return instance;

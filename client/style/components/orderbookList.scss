@@ -1,30 +1,34 @@
 .orderbookAskList {
 	float: right;
-	/*margin-right: 5%;*/
-	margin-top: 2em;
+	margin-right: 1.5em;
 }
 
 .orderbookBidList {
 	float: left;
-	/*margin-left: 5%;*/
-	margin-top: 2em;
+	margin-left: 1.5em;
 }
 
 .orderbookTable_td {
 	padding: 0 1em 0 1em;
+	border-top: 1px solid rgb(155, 163, 156);
 }
 
 .orderbooTable_th {
 	padding: 0 1em 1em 0.7em;
-	font-size: 1.3em;
+	font-size: 1.1em;
+	color:#061A2D;
 }
 
 .bidTitle {
-	color: green;
+	color: #061A2D;
+	margin-top:3em;
+	margin-bottom:1.5em;
 }
 
 .askTitle {
-	color:red;
+	color:#061A2D;
+	margin-top:3em;
+	margin-bottom:1.5em;
 }
 
 .loading_orderbookList {
@@ -37,8 +41,8 @@
 }
 
 #OrderbookListWidget {
-	background:#061A2D;
-	color: white;
+	background:white;
+	color: #101010;
 	width: 98%;
 	margin-left: 0.5em;
 	margin-top: 0.5em;
