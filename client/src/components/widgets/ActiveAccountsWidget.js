@@ -23,10 +23,10 @@ var ActiveAccountsWidget = React.createClass({
 			if(!this.state.market_traders.msg) {
 			
 				_.each(this.state.market_traders, function(trader) {
-					var address = { address: trader.account};
+					var address = trader.account;
 					tableTraders.push(
 						<tr>
-							<td className='market_traders_address orderbookTable_td'>  <a href={"http://ledgermonitor.heartbit.io/app?"+ JSON.stringify(address)} target="_blank"> { trader.account} </a></td>
+							<td className='market_traders_address orderbookTable_td'>  <a href={"http://ledgermonitor.heartbit.io/app/"+ address} target="_blank"> { trader.account} </a></td>
 							<td className='orderbookTable_td'> { FormatUtils.formatValue(Math.floor(trader.baseVolume))} </td>
 							<td className='orderbookTable_td'> { FormatUtils.formatPercent(trader.total.currencyVolume) }  </td>
 						</tr>
