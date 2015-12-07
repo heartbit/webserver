@@ -29,6 +29,7 @@ var TickerWidget = React.createClass({
 		var high =  Math.trunc(ticker.high*1000000)/1000000
 		var low =  Math.trunc(ticker.low*1000000)/1000000
 		var nbTrade = ticker.nbTrade;
+						// <div id='statstitle'> 24h stats </div>
 		return (
 			<BaseWidget attributes={this.props.attributes}>
 				{ this.state.ticker.lastPrice ?
@@ -42,7 +43,6 @@ var TickerWidget = React.createClass({
 								{variation}
 							</div>
 						</div>
-						<div id='statstitle'> 24h stats </div>
 						<div className={'lastStats'}>
 							<div id='highLow'>
 								<div>

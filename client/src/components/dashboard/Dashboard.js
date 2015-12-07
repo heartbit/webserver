@@ -1,5 +1,6 @@
 var React = require('react/addons');
 var Grid = require('./Grid');
+var DashboardConfig = require('DashboardConfig');
 
 // Widgets
 var BaseWidget = require('BaseWidget');
@@ -7,68 +8,8 @@ var BaseWidget = require('BaseWidget');
 var Dashboard = React.createClass({
 
   getInitialState: function() {
-    return {
-      widgets: [{
-        key: 'keyfact1',
-        title:'Keyfact',
-        icon:'fa fa-bar-chart',
-        chart: 'TickerWidget',
-        width: 3,
-        height: 1,
-        col: 1,
-        row: 1
-      },
-      {
-        key: 'keyfact3',
-        title:'Selector ',
-        icon:'', //fa fa-bar-chart
-        chart: 'ParameterSelectorWidget',
-        width: 3,
-        height: 1,
-        col: 1,
-        row: 2
-      },
-      {
-        key: 'timeline',
-        title: 'Timeline',
-        icon:'fa fa-line-chart',
-        width: 3,
-        height: 3,
-        chart: 'MainChartWidget',
-        col: 1,
-        row: 3
-      },
-      {
-        key:'orderbook',
-        title:"Orderbook",
-        icon:'fa fa-bar-chart',
-        width: 3,
-        height: 2,
-        chart: 'OrderbookChartWidget',
-        col: 1,
-        row:7
-      },
-      {
-        key:'bidask',
-        title:'Bids/Asks',
-        icon:'',
-        width:2,
-        height:3,
-        chart: 'OrderbookListWidget',
-        col:1,
-        row:11
-      },
-      {
-        key:'activeaccounts',
-        title:'Active Accounts',
-        icon:'',
-        width:1,
-        height:3,
-        chart: 'ActiveAccountsWidget',
-        col:3,
-        row:11
-      }]
-    };
+    var conf = DashboardConfig.Conf1;
+    return conf;
   },
 
   render: function() {
@@ -86,7 +27,7 @@ var Dashboard = React.createClass({
       }
     });
     return (
-        <div className="gridster">
+        <div className="grid-stack">
           <Grid widgets={widgets} params={this.props.params}/>
         </div>
     );

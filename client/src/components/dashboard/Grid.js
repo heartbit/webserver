@@ -1,8 +1,8 @@
 var React = require('react/addons');
-var gridster = require('gridster');
+// var gridster = require('gridster');
 var gridstack = require('gridstack');
 var BaseWidget = require('BaseWidget');
-var gridster;
+// var gridster;
 var Grid = React.createClass({
 
   render: function() {
@@ -15,55 +15,84 @@ var Grid = React.createClass({
 	  this.props.widgets.map(function(widget, i) {
 	      var attributes = widget.props.attributes;
 	      var key = "widget" + attributes.key;
-	      gridster.add_widget(
-	        '<li class="widget" id={key}></li>'.replace('{key}', key), 
-	        attributes.width,
-	        attributes.height,
+	      gridstack.add_widget(
+	        '<div class="grid-stack-item widget" id={key}></div>'.replace('{key}', key), 
 	        attributes.col,
-	        attributes.row
+	        attributes.row,
+          attributes.width,
+          attributes.height
 	      );
 	      React.render(widget, document.getElementById(key));
-	    });
+	  });
 
 	},
   componentDidUpdate: function() {
 	//3 columns max per row 
   	//Height never changes
   	// Keyfact = 2, Parameter manager = 1, Timeline=3
-	var self = this;
+	// var self = this;
 
-  	this.props.widgets.map(function(widget, i) {
- 	      var attributes = widget.props.attributes;
- 	      var key = "widget" + attributes.key;
-    	  // gridster.resize_widget($("#"+key),attributes.width,attributes.height);
-	      React.render(widget, document.getElementById(key));
-  	});
-  	var ratio = this.props.params.width*0.025;
-  	// gridster.options.widget_base_dimensions= [this.props.params.width/3, 150];
-  	gridster.resize_widget_dimensions({
-    	widget_base_dimensions: [self.props.params.width/3-20, 150],
-  	});
-  	gridster.generate_grid_and_stylesheet(); 
-  	gridster.get_widgets_from_DOM(); 
-  	gridster.set_dom_grid_height(); 
-  	gridster.set_dom_grid_width();
+ //  	this.props.widgets.map(function(widget, i) {
+ // 	      var attributes = widget.props.attributes;
+ // 	      var key = "widget" + attributes.key;
+ //    	  // gridster.resize_widget($("#"+key),attributes.width,attributes.height);
+	//       React.render(widget, document.getElementById(key));
+ //  	});
+ //  	var ratio = this.props.params.width*0.025;
+ //  	// gridster.options.widget_base_dimensions= [this.props.params.width/3, 150];
+ //  	gridster.resize_widget_dimensions({
+ //    	widget_base_dimensions: [self.props.params.width/3-20, 150],
+ //  	});
+ //  	gridster.generate_grid_and_stylesheet(); 
+ //  	gridster.get_widgets_from_DOM(); 
+ //  	gridster.set_dom_grid_height(); 
+ //  	gridster.set_dom_grid_width();
   	
   },
   componentDidMount: function() {
-  	var ratio = this.props.params.width*0.025;
-	  var w = (this.props.params.width/3-20);
-	  var params= {
-		    widget_margins: [5,5],
-		    widget_base_dimensions: [w, 150],
-		    resize: {
-		          enabled: true
-   	        },
-		    draggable: {
-		          handle: '.panel-heading, .panel-handel'
-		        }
-		    }
-    gridster = this._generateGridster(params);
-    this._renderGrid();
+  	// var ratio = this.props.params.width*0.025;
+	  // var w = (this.props.params.width/3-20);
+	  // var params= {
+		 //    widget_margins: [5,5],
+		 //    widget_base_dimensions: [w, 150],
+		 //    resize: {
+		 //          enabled: true
+   // 	        },
+		 //    draggable: {
+		 //          handle: '.panel-heading, .panel-handel'
+		 //        }
+		 //    }
+   //  gridster = this._generateGridster(params);
+   //  this._renderGrid();
+    var self=this;
+    var options = {
+      width:12,
+      // always_show_resize_handle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+      // resizable: {
+      //     handles: 'e, se, s, sw, w'
+      // },
+      // vertical_margin: 10,
+      cell_height:125,
+      static_grid: true
+    };
+    var gridstack = $('.grid-stack').gridstack(options).data('gridstack');
+    console.log(gridstack);
+    var renderGrid = function() {
+      self.props.widgets.map(function(widget, i) {
+        var attributes = widget.props.attributes;
+        var key = "widget" + attributes.key;
+        gridstack.add_widget(
+            '<div class="grid-stack-item widget" id={key}></div>'.replace('{key}', key), 
+            attributes.col,
+            attributes.row,
+            attributes.width,
+            attributes.height
+        );
+        React.render(widget, document.getElementById(key));
+      });
+    }
+
+    renderGrid();
   }
 });
 

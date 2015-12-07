@@ -21,6 +21,7 @@
     "cron": "*",
     "express": "*",
     "http-auth": "*",
+    "jquery-ui": "^1.10.5",
     "jwt-simple": "*",
     "kafka-node": "*",
     "keymirror": "*",

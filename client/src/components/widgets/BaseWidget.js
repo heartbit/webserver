@@ -9,20 +9,20 @@ var BaseWidget = React.createClass({
     	return {}
 	},
 	render: function() {
+	          // <a href="#">
+	          //   <i className="fa fa-minus"></i>
+	          //   </a>
+	          //   <a href="#">
+	          //   <i className="fa fa-times"></i>
+	          //   </a>
 		return (
-	      <div className="panel panel-default">
+	      <div className="panel panel-default grid-stack-item-content">
 	        <div className="panel-heading clearfix">
 	          <div className="panel-title  pull-left" onMouseOver="" onMouseOut="">
 	            <i className={this.props.attributes.icon}></i>
 	            <span className="panel-title-text">{this.props.attributes.title}</span>
 	          </div>
 	          <div className="panel-title pull-right">
-	          <a href="#">
-	            <i className="fa fa-minus"></i>
-	            </a>
-	            <a href="#">
-	            <i className="fa fa-times"></i>
-	            </a>
 	          </div>
 	        </div>
 	        <div className="panel-body" id={this.props.attributes.chart}>

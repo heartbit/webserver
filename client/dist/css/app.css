@@ -10566,26 +10566,6 @@ td.beauty-hover {
   margin-top: 30px;
   overflow-y: hidden; }
 
-#TickerWidget {
-  padding: 3px; }
-
-#TickerWidget ul {
-  list-style-type: none;
-  width: 50%; }
-
-#TickerWidget ul li {
-  list-style-type: none;
-  float: left;
-  width: 100%;
-  display: inline; }
-
-#TickerWidget ul.right li {
-  float: none;
-  display: block; }
-
-#TickerWidget ul.right {
-  float: right; }
-
 li.current a {
   text-decoration: underline;
   text-decoration: overline; }
@@ -10734,7 +10714,7 @@ li.current a {
   margin-left: 0.5em; }
 
 #lastPrice {
-  font-size: 2.8em;
+  font-size: 2.5em;
   color: #0E143C; }
 
 #pair {
@@ -10751,7 +10731,7 @@ li.current a {
 
 .lastStats {
   margin-left: 23em;
-  padding-top: 0.45em; }
+  padding-top: 1em; }
 
 #volumeNbTrade {
   margin-left: 8em;
@@ -10764,6 +10744,70 @@ li.current a {
 #statstitle {
   margin-left: 23em;
   padding-top: 0.4em; }
+
+#TickerWidget {
+  padding: 3px; }
+
+#TickerWidget ul {
+  list-style-type: none;
+  width: 50%; }
+
+#TickerWidget ul li {
+  list-style-type: none;
+  float: left;
+  width: 100%;
+  display: inline; }
+
+#TickerWidget ul.right li {
+  float: none;
+  display: block; }
+
+#TickerWidget ul.right {
+  float: right; }
+
+@media (max-width: 680px) {
+  #TickerWidget {
+    padding: 3px;
+    font-size: 0.9em; } }
+
+@media (max-width: 609px) {
+  #TickerWidget {
+    padding: 3px;
+    font-size: 0.8em; } }
+
+@media (max-width: 550px) {
+  .lastPriceBlock {
+    margin-left: 1.5em;
+    float: left;
+    padding-top: 0.8em; }
+  #TickerWidget {
+    padding: 3px;
+    font-size: 0.75em; }
+  .lastStats {
+    margin-left: 20em;
+    padding-top: 1em; }
+  #volumeNbTrade {
+    margin-left: 10em;
+    font-size: 1em; } }
+
+@media (max-width: 469px) {
+  .lastPriceBlock {
+    margin-left: 1.5em;
+    float: left;
+    padding-top: 0.8em; }
+  #TickerWidget {
+    padding: 3px;
+    font-size: 0.75em; }
+  .lastStats {
+    margin-left: 20em;
+    padding-top: 1em; }
+  #volumeNbTrade {
+    margin-left: 0em;
+    font-size: 0.8em; }
+  #highLow {
+    float: none;
+    font-size: 1.2em;
+    display: block; } }
 
 .positive {
   color: green; }

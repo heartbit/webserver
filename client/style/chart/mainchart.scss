@@ -8,26 +8,6 @@
     margin-top:30px;
     overflow-y: hidden;
 }
-#TickerWidget{
-  padding:3px;
-}
-#TickerWidget ul {
-  list-style-type:none;
-  width:50%;
-}
-#TickerWidget ul li{
-  list-style-type:none;
-  float:left;
-  width:100%;
-  display:inline;
-}
-#TickerWidget ul.right li{
-  float:none;
-  display:block;
-}
-#TickerWidget ul.right{
-  float:right;
-}
 
 $label_color: #666666;
 $tick_color: #cccccc;

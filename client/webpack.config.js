@@ -66,8 +66,9 @@ module.exports = {
 			loginBundle: path.join(__dirname, './src/bundle/login'),
 			registerBundle: path.join(__dirname, './src/bundle/register'),
 
-
+			//Config
 			Config: path.join(__dirname, './src/config/Config'),
+			DashboardConfig: path.join(__dirname, './src/components/dashboard/dashboardConfig'),
 
 			// Components
 			App: path.join(__dirname, './src/components/app/app'),
