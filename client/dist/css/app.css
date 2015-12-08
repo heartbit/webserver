@@ -10713,6 +10713,40 @@ li.current a {
   color: #004756;
   margin-left: 0.5em; }
 
+@media (max-width: 850px) {
+  #ParameterSelectorWidget {
+    font-size: 0.9em; } }
+
+@media (max-width: 760px) {
+  #ParameterSelectorWidget {
+    font-size: 0.8em; } }
+
+@media (max-width: 690px) {
+  #ParameterSelectorWidget {
+    font-size: 0.7em; } }
+
+@media (max-width: 630px) {
+  #ParameterSelectorWidget {
+    font-size: 0.6em; }
+  #range {
+    margin-left: 1em; }
+  #interval {
+    margin-left: 0.3em; }
+  #ParameterSelectorWidget > .dateField {
+    margin-left: 2em; }
+  #ParameterSelectorWidget .dateLabel {
+    width: 13em; }
+  #ParameterSelectorWidget .selectorCheckbox {
+    width: 5.9em; }
+  #ParameterSelectorWidget input[type="checkbox"] {
+    margin: 0px; } }
+
+@media (max-width: 501px) {
+  #ParameterSelectorWidget .maLabel {
+    margin: 0; }
+  #widgetkeyfact3 > .grid-stack-item-content {
+    overflow: hidden; } }
+
 #lastPrice {
   font-size: 2.5em;
   color: #0E143C; }
@@ -10773,7 +10807,9 @@ li.current a {
 @media (max-width: 609px) {
   #TickerWidget {
     padding: 3px;
-    font-size: 0.8em; } }
+    font-size: 0.8em; }
+  .lastPriceBlock {
+    padding-top: 0.45em; } }
 
 @media (max-width: 550px) {
   .lastPriceBlock {
