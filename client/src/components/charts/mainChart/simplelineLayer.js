@@ -17,7 +17,7 @@ var SimpleLineLayer = function(chart,chartName) {
 
  	this.yScale = d3.scale
     	.linear()
-    	.range([3 * this.chart.height / 4, 0]);
+    	.range([this.chart.height/1.5, 0]);
 
     this.xScale = this.chart.timeScale;
     this.simplelineChart = this.simplelineLayer.append("path")
@@ -52,6 +52,10 @@ SimpleLineLayer.prototype.update = function() {
 	this.simplelineChart
 		.attr("d", self.smaLine(self.chart.models.sma.calculated));
 
+}
+
+SimpleLineLayer.prototype.resize = function() {
+    this.update();
 }
 
 SimpleLineLayer.prototype.mouseover = function() {

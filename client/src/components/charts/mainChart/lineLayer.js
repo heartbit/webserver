@@ -50,7 +50,7 @@ function AreaLayer(chart) {
     this.candleYAxis = d3.svg.axis()
         .scale(this.candleYScale)
         .orient("right")
-        .ticks(6)
+        .ticks(7)
         .tickFormat(function(d) {
             return FormatUtils.formatPrice(d);
         })
@@ -280,7 +280,6 @@ AreaLayer.prototype.update = function() {
 
 AreaLayer.prototype.resize = function(width, height) {
     d3.selectAll('playground y_candle_axis').remove();
-    console.log("HEIGHT",height);
     this.candleYScale.range([height/1.5 , 0]);
    
     this.candleYAxisInstance.attr("transform", "translate(" + width + ",0)");

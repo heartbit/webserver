@@ -22,7 +22,7 @@ function MainChartD3(el, params) {
     this.layers = {
         // areaLayer: new AreaLayer(this),
         volumeLayer: new VolumeLayer(this),
-        // smaLayer: new SimpleLineLayer(this,'smaLayer'),
+        smaLayer: new SimpleLineLayer(this,'smaLayer'),
         lineLayer: new LineLayer(this)
     };
 };
@@ -165,7 +165,6 @@ MainChartD3.prototype.resize = function(data, params, indicators) {
     var visWidth = $(self.el).width();
     // var visHeigth = $(self.el).height();
     var visHeigth = 350;
-    console.log("visHeigth",visHeigth);
     self.width = visWidth - self.margin.left - self.margin.right;
     self.height = visHeigth - self.margin.top - self.margin.bottom;
     // self.height = visHeight;
