@@ -1,6 +1,6 @@
 var React = require('react/addons');
 var BaseWidget = require('./BaseWidget');
-
+var ResizeManager = require('ResizeManager');
 var MaingraphStore = require('MaingraphStore');
 var MovingAverageStore = require('MovingAverageStore');
 var MainChart = require('MainChartD3');
@@ -57,18 +57,18 @@ var MainChartWidget = React.createClass({
 	},
 
 	resizeAll: function() {
-    	var self = this;
-    	var data = this.state.maingraphes;
-		var indicators = this.state.indicators;
-		var params = this.state._mainGraphParams;
-    	var rs = function() { 
-    		_mainChart.resize();  
-    	};
-    	var waitrs;	
-    	window.onresize = function() {
-    		clearTimeout(waitrs);
-    		waitrs = setTimeout(rs, 100);
-    	}
+        var self = this;
+
+        var rs = function() { 
+            _mainChart.resize();  
+        }.bind(this);
+        
+        ResizeManager.push(rs);
+    	// var waitrs;	
+    	// window.onresize = function() {
+    	// 	clearTimeout(waitrs);
+    	// 	waitrs = setTimeout(rs, 100);
+    	// }
 	}
 
 });

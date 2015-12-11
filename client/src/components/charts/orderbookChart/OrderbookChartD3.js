@@ -24,8 +24,8 @@ orderbookChartD3.prototype.initChart = function() {
 
     var visWidth = $(this.el).width();
     // var visHeigth = $(this.el).height();
-    var visHeigth = 350;
-    console.log("visheight-orderbook", visHeigth);
+    var visHeigth = 320;
+
     this.width = visWidth - this.margin.left - this.margin.right;
     this.height = visHeigth - this.margin.top - this.margin.bottom;
 
@@ -102,6 +102,9 @@ orderbookChartD3.prototype.initYAxis = function() {
 
 orderbookChartD3.prototype.updateXAxis = function(data) {
 	var self = this;
+	var visWidth = $(this.el).width();
+    this.width = visWidth - this.margin.left - this.margin.right;
+	this.xScale.range([0, this.width]);
 	this.xScale.domain([d3.min(data.bid.map(function(order){
 		return order.price;
 	})), d3.max(data.ask.map(function(order){
@@ -165,12 +168,28 @@ orderbookChartD3.prototype.draw = function(d) {
  
 }
 
-orderbookChartD3.prototype.update = function() {
-	this.draw();
+orderbookChartD3.prototype.update = function(d) {
+	this.draw(d);
 }
 
-orderbookChartD3.prototype.resize = function() {
+orderbookChartD3.prototype.resize = function(d) {
+	var self = this;
+	var visWidth = $(self.el).width();
+    var visHeigth = 350;
+    self.width = visWidth - self.margin.left - self.margin.right;
+    self.height = visHeigth - self.margin.top - self.margin.bottom;
+	this.yAxisRightInstance.attr("transform", "translate(" + self.width + ",0)");
 
+    self.chart
+        .attr("width", visWidth)
+        .attr("height", visHeigth)
+        .attr('viewBox', "0 0 " + visWidth + " " + visHeigth)
+        .call(self.initOnMouseOverEvents);
+
+    self.mainLayer
+        .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")");
+        
+	this.update(d);
 }
 
 orderbookChartD3.prototype.initOnMouseOverEvents =  function() {

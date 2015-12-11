@@ -3,6 +3,7 @@ var BaseWidget = require('BaseWidget');
 var FormatUtils = require('FormatUtils');
 var OrderbookStore = require('OrderbookStore');
 var OrderbookChart = require('OrderbookChartD3');
+var ResizeManager = require('ResizeManager');
 var _orderbookChart;
 
 var OrderbookWidget = React.createClass({
@@ -15,7 +16,7 @@ var OrderbookWidget = React.createClass({
     componentDidMount: function() {
    		OrderbookStore.on('change', this._onUpdateState);
    		OrderbookStore.addChangeListener('isloading', this._onLoading);
-
+   		this.resizeAll();
     },
     
     componentWillUnmount: function() {
@@ -46,6 +47,7 @@ var OrderbookWidget = React.createClass({
 		if( orderbook.msg == "available") {
 			// console.log("book_chart AVAILABLE !!!");
 			if(this.props.attributes.chart && !_orderbookChart){
+				console.log("#"+this.props.attributes.chart);
 		       	_orderbookChart = new OrderbookChart("#" + this.props.attributes.chart);
 		  	}
 			this.setState({
@@ -63,6 +65,13 @@ var OrderbookWidget = React.createClass({
 		// this.setState({
 		// 	msg: 'loading'
 		// });
+	},
+	resizeAll: function() {
+    	var self = this;
+       	var rs = function() { 
+    		_orderbookChart.resize(self.state.orderbook);  
+    	}.bind(this);
+    	ResizeManager.push(rs);
 	}
 });
 

@@ -279,7 +279,7 @@ LineLayer.prototype.update = function() {
 };
 
 LineLayer.prototype.resize = function(width, height) {
-    d3.selectAll('playground y_candle_axis').remove();
+
     this.candleYScale.range([height/1.5 , 0]);
    
     this.candleYAxisInstance.attr("transform", "translate(" + width + ",0)");

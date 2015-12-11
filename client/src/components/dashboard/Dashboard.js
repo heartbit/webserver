@@ -1,9 +1,10 @@
 var React = require('react/addons');
 var Grid = require('./Grid');
 var DashboardConfig = require('DashboardConfig');
-
+var ResizeManager = require('ResizeManager');
 // Widgets
 var BaseWidget = require('BaseWidget');
+var widgetList = [];
 
 var Dashboard = React.createClass({
 
@@ -20,6 +21,7 @@ var Dashboard = React.createClass({
       
       if(widget.chart){
     	  var Widget = require('../widgets/'+widget.chart+'.js');
+        widgetList.push(Widget);
     	  return (<Widget attributes={result.attributes} params={self.props.params}></Widget>);
       }
       else{
@@ -31,6 +33,18 @@ var Dashboard = React.createClass({
           <Grid widgets={widgets} params={this.props.params}/>
         </div>
     );
+  },
+
+  componentDidMount:  function() {
+    this.resizeAll()
+  },
+
+  resizeAll: function() {
+    window.onresize = function() {
+      _.each(ResizeManager, function(widget_resize) {
+        widget_resize();
+      });
+    }
   }
 
 });

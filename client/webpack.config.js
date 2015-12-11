@@ -119,6 +119,7 @@ module.exports = {
 			PairsPlatformsMatch: path.join(__dirname, './src/helpers/selectorWidget/pairsPlatformsMatch'),
 			OrderbookParser: path.join(__dirname, './src/helpers/webSocket/orderbookParser'),
 			OrderbookRequest: path.join(__dirname, './src/helpers/webSocket/orderbookRequest'),
+			ResizeManager: path.join(__dirname, './src/utils/resizeManager'),
 
 			//Websocket
 			OrderbookSocket: path.join(__dirname, './src/websocket/OrderbookSocket'),
