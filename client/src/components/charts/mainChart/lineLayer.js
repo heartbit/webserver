@@ -45,7 +45,7 @@ function AreaLayer(chart) {
 
     this.candleYScale = d3.scale
         .linear()
-        .range([3 * this.chart.height / 4, 0]);
+        .range([this.chart.height/1.5, 0]);
 
     this.candleYAxis = d3.svg.axis()
         .scale(this.candleYScale)
@@ -224,6 +224,7 @@ AreaLayer.prototype.update = function() {
     var scaleMarginMin = conf.mainchart.scaleMarginMin;
     var scaleMarginMax = conf.mainchart.scaleMarginMax;
 
+
     // this.candleYScale.domain([d3.min(self.candles.map(function(candle) {
     //     return (candle.low - (candle.low * ratio));
     // })) - candleYOffset, d3.max(this.candles.map(function(candle) {
@@ -277,8 +278,13 @@ AreaLayer.prototype.update = function() {
     // console.log("SELF.CANDLES!!!",self.candles);
 };
 
-AreaLayer.prototype.resize = function() {
-    this.candleYScale.range([3 * this.chart.height / 4, 0]);
+AreaLayer.prototype.resize = function(width, height) {
+    d3.selectAll('playground y_candle_axis').remove();
+    console.log("HEIGHT",height);
+    this.candleYScale.range([height/1.5 , 0]);
+   
+    this.candleYAxisInstance.attr("transform", "translate(" + width + ",0)");
+
     this.candleYAxisInstance
         .transition()
         .duration(defaultDuration)

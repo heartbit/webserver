@@ -10556,14 +10556,17 @@ td.beauty-hover {
   .grid-stack {
     height: auto !important; } }
 
+#widgettimeline > .grid-stack-item-content {
+  overflow: hidden; }
+
 #CandlesVolumes {
   height: 380px;
   width: 920px; }
 
 #MainChartWidget {
-  padding: 15px;
-  height: 120%;
-  margin-top: 30px;
+  /*padding:15px;
+    height: 120%;
+    margin-top:30px;*/
   overflow-y: hidden; }
 
 li.current a {
@@ -10746,6 +10749,12 @@ li.current a {
     margin: 0; }
   #widgetkeyfact3 > .grid-stack-item-content {
     overflow: hidden; } }
+
+#widgetselector > .grid-stack-item-content {
+  overflow: hidden; }
+
+#widgetkeyfact1 > .grid-stack-item-content {
+  overflow: hidden; }
 
 #lastPrice {
   font-size: 2.5em;

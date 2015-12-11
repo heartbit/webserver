@@ -50,20 +50,6 @@ var Grid = React.createClass({
   	
   },
   componentDidMount: function() {
-  	// var ratio = this.props.params.width*0.025;
-	  // var w = (this.props.params.width/3-20);
-	  // var params= {
-		 //    widget_margins: [5,5],
-		 //    widget_base_dimensions: [w, 150],
-		 //    resize: {
-		 //          enabled: true
-   // 	        },
-		 //    draggable: {
-		 //          handle: '.panel-heading, .panel-handel'
-		 //        }
-		 //    }
-   //  gridster = this._generateGridster(params);
-   //  this._renderGrid();
     var self=this;
     var options = {
       width:12,

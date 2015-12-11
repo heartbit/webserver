@@ -108,13 +108,15 @@ VolumeLayer.prototype.update = function(params) {
 };
 
 VolumeLayer.prototype.resize = function() {
-    var height_max = 3 * this.chart.height / 4;
-    var height_min = this.chart.height / 4;
-    this.volumeYScale.range([height_max, height_min]);
-    this.volumeYAxisInstance
-        .transition()
-        .duration(defaultDuration)
-        .call(this.volumeYAxis);
+    // var height_max = 3 * this.chart.height / 4;
+    // var height_min = this.chart.height / 4;
+    // var height_max = 350;
+    // var height_min = 0;
+    // this.volumeYScale.range([height_max, height_min]);
+    // this.volumeYAxisInstance
+    //     .transition()
+    //     .duration(defaultDuration)
+    //     .call(this.volumeYAxis);
     this.update();
 };
 

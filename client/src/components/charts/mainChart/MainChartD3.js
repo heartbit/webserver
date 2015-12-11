@@ -20,9 +20,9 @@ function MainChartD3(el, params) {
     this.initChart();
     this.initXAxis();
     this.layers = {
-        areaLayer: new AreaLayer(this),
+        // areaLayer: new AreaLayer(this),
         volumeLayer: new VolumeLayer(this),
-        smaLayer: new SimpleLineLayer(this,'smaLayer'),
+        // smaLayer: new SimpleLineLayer(this,'smaLayer'),
         lineLayer: new LineLayer(this)
     };
 };
@@ -66,14 +66,15 @@ MainChartD3.prototype.initChart = function() {
     var self = this;
 
     this.margin = {
-        top: 15,
+        top: 50,
         right: 60,
         bottom: 0,
         left: 60
     };
 
     var visWidth = $(this.el).width();
-    var visHeigth = $(this.el).height();
+    // var visHeigth = $(this.el).height();
+    var visHeigth = 350;
 
     this.width = visWidth - this.margin.left - this.margin.right;
     this.height = visHeigth - this.margin.top - this.margin.bottom;
@@ -133,7 +134,8 @@ MainChartD3.prototype.draw = function(maingraphes, params, indicators) {
     this.parseMainGraphes(maingraphes, indicators);
     this.updateXAxis();
     var visWidth =  $(this.el).width();
-    var visHeigth = $(this.el).height();
+    // var visHeigth = $(this.el).height();
+    var visHeigth = 350;
 
     this.width = visWidth - this.margin.left - this.margin.right;
     this.height = visHeigth - this.margin.top - this.margin.bottom;
@@ -151,20 +153,22 @@ MainChartD3.prototype.draw = function(maingraphes, params, indicators) {
     });
 };
 
-MainChartD3.prototype.update = function(maingraphes, params) {
+MainChartD3.prototype.update = function(maingraphes, params, indicators) {
     //Do something else?
     // this.maingraphes = maingraphes || this.maingraphes;
-    this.draw(maingraphes, params);
+    this.draw(maingraphes, params, indicators);
 };
 
-MainChartD3.prototype.resize = function() {
+MainChartD3.prototype.resize = function(data, params, indicators) {
     var self = this;
 
     var visWidth = $(self.el).width();
-    var visHeigth = $(self.el).height();
-
+    // var visHeigth = $(self.el).height();
+    var visHeigth = 350;
+    console.log("visHeigth",visHeigth);
     self.width = visWidth - self.margin.left - self.margin.right;
     self.height = visHeigth - self.margin.top - self.margin.bottom;
+    // self.height = visHeight;
     // console.log("RESIZE", self.width, self.height);
 
     self.chart
@@ -180,10 +184,10 @@ MainChartD3.prototype.resize = function() {
     // self.zoom.x(self.timeScale);
     self.timeAxisInstance.call(self.timeAxis);
     _.each(_.values(self.layers), function(layer) {
-        layer.resize();
+        layer.resize(self.width, self.height);
     });
 
-    this.update();
+    // this.update(data, params, indicators);
 };
 
 MainChartD3.prototype.clear = function() {};

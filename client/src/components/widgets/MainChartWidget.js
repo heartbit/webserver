@@ -40,8 +40,10 @@ var MainChartWidget = React.createClass({
     },
 
     componentDidMount: function() {
-      MaingraphStore.addChangeListener("change" ,this._onUpdateState);
-      MovingAverageStore.addChangeListener("change", this._onMaUpdate);
+    	var self = this;
+      	MaingraphStore.addChangeListener("change" ,this._onUpdateState);
+      	MovingAverageStore.addChangeListener("change", this._onMaUpdate);
+      	this.resizeAll();
     },
     componentWillUnmount: function() {},
 
@@ -52,6 +54,21 @@ var MainChartWidget = React.createClass({
 
 		if(_mainChart) _mainChart.draw(data ,params, indicators);
 		return (<BaseWidget attributes={this.props.attributes}></BaseWidget>)
+	},
+
+	resizeAll: function() {
+    	var self = this;
+    	var data = this.state.maingraphes;
+		var indicators = this.state.indicators;
+		var params = this.state._mainGraphParams;
+    	var rs = function() { 
+    		_mainChart.resize();  
+    	};
+    	var waitrs;	
+    	window.onresize = function() {
+    		clearTimeout(waitrs);
+    		waitrs = setTimeout(rs, 100);
+    	}
 	}
 
 });
