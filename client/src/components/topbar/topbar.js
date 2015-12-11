@@ -4,18 +4,10 @@ var React = require('react');
 var Topbar = React.createClass({
   render: function(){
     return (
-      <div className="container-fluid expanded-panel">
+      <div className="container-fluid expanded-panel topbar">
         <div className="row">
           <div id="logo" className="col-xs-12 col-sm-2">
-            <a href="/">heartbit</a>
-          </div>
-          <div id="top-panel" className="col-xs-12 col-sm-10">
-            <div className="row">
-              <div className="col-xs-8 col-sm-4">
-              </div>
-              <div className="col-xs-4 col-sm-8 top-panel-right">
-              </div>
-            </div>
+            <a href="/">Real Time</a>
           </div>
         </div>
       </div>
@@ -23,6 +15,14 @@ var Topbar = React.createClass({
   }
 });
 module.exports = Topbar;
+          // <div id="top-panel" className="col-xs-12 col-sm-10">
+          //   <div className="row">
+          //     <div className="col-xs-8 col-sm-4">
+          //     </div>
+          //     <div className="col-xs-4 col-sm-8 top-panel-right">
+          //     </div>
+          //   </div>
+          // </div>
                 // <a href="#" className="show-sidebar">
                 //   <i className="fa fa-bars"></i>
                 // </a>

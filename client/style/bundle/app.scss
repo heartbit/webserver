@@ -14,6 +14,8 @@
 
 body {
 	font-family: "lato", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+	margin-bottom: 2em;
+	background-color: #004655;
 }
 
 .footer {
@@ -21,4 +23,8 @@ body {
 	bottom: 0;
 	width: 100%;
 	height: 60px;
+}
+
+.panel-title-text {
+	margin-left: 1em;
 }
