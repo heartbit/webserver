@@ -21,9 +21,9 @@ function MainChartD3(el, params) {
     this.initXAxis();
     this.layers = {
         // areaLayer: new AreaLayer(this),
-        volumeLayer: new VolumeLayer(this),
+        volumeLayer: new VolumeLayer(this, 'volumeLayer'),
         smaLayer: new SimpleLineLayer(this,'smaLayer'),
-        lineLayer: new LineLayer(this)
+        lineLayer: new LineLayer(this, 'lineLayer')
     };
 };
 
@@ -183,7 +183,9 @@ MainChartD3.prototype.resize = function(data, params, indicators) {
     // self.zoom.x(self.timeScale);
     self.timeAxisInstance.call(self.timeAxis);
     _.each(_.values(self.layers), function(layer) {
-        layer.resize(self.width, self.height);
+        if(self.params[layer.chartName]) {
+            layer.resize(self.width, self.height);
+        }
     });
 
     // this.update(data, params, indicators);

@@ -4,8 +4,9 @@ var moment = require('moment');
 
 var defaultDuration = 300;
 
-function VolumeLayer(chart) {
+function VolumeLayer(chart, chartName) {
     var self = this;
+    this.chartName = chartName;
     this.chart = chart;
     var height_max = 3 * this.chart.height / 4;
     var height_min = this.chart.height / 4;

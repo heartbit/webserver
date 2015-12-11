@@ -4,9 +4,9 @@ var moment = require('moment');
 var defaultDuration = 200;
 var conf = require('ChartsConf');
 
-function AreaLayer(chart) {
+function LineLayer(chart, chartName) {
     var self = this;
-
+    this.chartName = chartName;
     _.bindAll(this, 'brushed');
     this.chart = chart;
 
@@ -211,13 +211,13 @@ function AreaLayer(chart) {
         .attr('class', 'highCandleBrashLabel');
 };
 
-AreaLayer.prototype.draw = function(params) {
+LineLayer.prototype.draw = function(params) {
     var self = this;
     this.params = params;
     this.update();
 };
 
-AreaLayer.prototype.update = function() {
+LineLayer.prototype.update = function() {
     var self = this;
     this.hideBrush();
     this.candles = this.chart.models.candles;
@@ -278,7 +278,7 @@ AreaLayer.prototype.update = function() {
     // console.log("SELF.CANDLES!!!",self.candles);
 };
 
-AreaLayer.prototype.resize = function(width, height) {
+LineLayer.prototype.resize = function(width, height) {
     d3.selectAll('playground y_candle_axis').remove();
     this.candleYScale.range([height/1.5 , 0]);
    
@@ -291,9 +291,9 @@ AreaLayer.prototype.resize = function(width, height) {
     this.update();
 };
 
-AreaLayer.prototype.hide = function() {};
+LineLayer.prototype.hide = function() {};
 
-AreaLayer.prototype.finclosestCandle = function(date) {
+LineLayer.prototype.finclosestCandle = function(date) {
     var pointIndex = (this.closestPoint && this.closestPoint.index) || 0;
     var closestPoint = this.candleCircles[pointIndex];
     var circlesCount = this.candleCircles.size()
@@ -317,7 +317,7 @@ AreaLayer.prototype.finclosestCandle = function(date) {
     };
 };
 
-AreaLayer.prototype.updateTooltip = function(date) {
+LineLayer.prototype.updateTooltip = function(date) {
     var self = this;
 
     this.closestPoint = this.finclosestCandle(date);
@@ -361,7 +361,7 @@ AreaLayer.prototype.updateTooltip = function(date) {
     }
 };
 
-AreaLayer.prototype.mouseout = function() {
+LineLayer.prototype.mouseout = function() {
     var self = this;
 
     this.candleCircles
@@ -377,19 +377,19 @@ AreaLayer.prototype.mouseout = function() {
         .attr('opacity', 0);
 };
 
-AreaLayer.prototype.mouseover = function() {
+LineLayer.prototype.mouseover = function() {
     this.tooltipLayer
         .transition()
         .duration(100)
         .attr('opacity', 1);
 };
 
-AreaLayer.prototype.updateRange = function(range) {
+LineLayer.prototype.updateRange = function(range) {
     this.candleYScale.range(range);
     this.update();
 };
 
-AreaLayer.prototype.brushed = function() {
+LineLayer.prototype.brushed = function() {
     var extent = this.brush.extent();
 
     var startDateBrush = extent[0];
@@ -530,7 +530,7 @@ AreaLayer.prototype.brushed = function() {
 
 };
 
-AreaLayer.prototype.hideBrush = function() {
+LineLayer.prototype.hideBrush = function() {
 
     this.gBrushLabel
     // .transition()
@@ -584,4 +584,4 @@ AreaLayer.prototype.hideBrush = function() {
 };
 
 
-module.exports = AreaLayer;
+module.exports = LineLayer;

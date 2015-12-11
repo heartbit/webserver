@@ -23,7 +23,9 @@ orderbookChartD3.prototype.initChart = function() {
     };
 
     var visWidth = $(this.el).width();
-    var visHeigth = $(this.el).height();
+    // var visHeigth = $(this.el).height();
+    var visHeigth = 350;
+    console.log("visheight-orderbook", visHeigth);
     this.width = visWidth - this.margin.left - this.margin.right;
     this.height = visHeigth - this.margin.top - this.margin.bottom;
 
