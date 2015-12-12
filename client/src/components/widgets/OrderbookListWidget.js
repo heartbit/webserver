@@ -24,29 +24,52 @@ var OrderbookListWidget = React.createClass({
 		var ask = this.state.ask;
 		var bid = this.state.bid;
 		if (this.state.msg == "available") {
+			var size = {
+			  width: window.innerWidth || document.body.clientWidth,
+			  height: window.innerHeight || document.body.clientHeight
+			}
+			console.log('SIZE!', size);
+			if(size.width <= 600) {
+				var limit = 8;
+			} else {
+				var limit = 23;
+			}
+
 			if(bid.length != 0) {
 				var tablebodyBid = [];
-				_.each(bid, function(order) {
+				for(i = 0; i <= limit; i++) {
+					var order = bid[i];
 					tablebodyBid.push(
 						<tr>
 							<td className='orderbookTable_td'> { FormatUtils.formatValue(Math.floor(order.sum,0))} </td>
 							<td className='orderbookTable_td'> { FormatUtils.formatValue(Math.floor(order.volume))} </td>
 							<td className='orderbookTable_td'> {Math.floor(order.price*Math.pow(10,9))/Math.pow(10,9)} </td>
 						</tr>
-					);
-				})
+					);	
+				}
 			}
 			if(ask.length != 0) {
 				var tablebodyAsk = [];
-				_.each(ask, function(order) {
-					tablebodyAsk.push(
-						<tr>
-							<td className='orderbookTable_td'> {Math.floor(order.price*Math.pow(10,9))/Math.pow(10,9)} </td>
-							<td className='orderbookTable_td'> {FormatUtils.formatValue(Math.floor(order.volume))} </td>
-							<td className='orderbookTable_td'> {FormatUtils.formatValue(Math.floor(order.sum))} </td>
-						</tr>
-					);
-				});
+				for(i = 0; i <= limit; i++) {
+					var order = bid[i];
+					if(size.width <= 500) {
+						tablebodyAsk.push(
+							<tr>
+								<td className='orderbookTable_td'> {Math.floor(order.price*Math.pow(10,9))/Math.pow(10,9)} </td>
+								<td className='orderbookTable_td'> { FormatUtils.formatValue(Math.floor(order.volume))} </td>
+								<td className='orderbookTable_td'> { FormatUtils.formatValue(Math.floor(order.sum,0))} </td>
+							</tr>
+						);
+					} else {
+						tablebodyAsk.push(
+							<tr>
+								<td className='orderbookTable_td'> {Math.floor(order.price*Math.pow(10,9))/Math.pow(10,9)} </td>
+								<td className='orderbookTable_td'> {FormatUtils.formatValue(Math.floor(order.volume))} </td>
+								<td className='orderbookTable_td'> {FormatUtils.formatValue(Math.floor(order.sum))} </td>
+							</tr>
+						);
+					}
+				}
 			} 
 		} else if(this.state.msg == "unavailable") {
 			var loadblock = <div> "Data unavailable yet" </div>;
@@ -76,7 +99,7 @@ var OrderbookListWidget = React.createClass({
 							<table className='orderbookAskList'>
 							 	<thead>
 							 		<th className='orderbooTable_th askTitle'> Ask Price {this.state.params.currency} </th>
-							 		<th className='orderbooTable_th'> Size {this.state.params.item}  </th>
+							 		<th className='orderbooTable_th'> Order Size {this.state.params.item}  </th>
 							 		<th className='orderbooTable_th'> Total {this.state.params.item} </th>
 							 	</thead>
 							 	<tbody>

@@ -67,9 +67,9 @@ MainChartD3.prototype.initChart = function() {
 
     this.margin = {
         top: 50,
-        right: 60,
+        right: 50,
         bottom: 0,
-        left: 60
+        left: 35
     };
 
     var visWidth = $(this.el).width();

@@ -1,12 +1,108 @@
+#widgetbidask .grid-stack-item-content {
+	overflow: hidden;
+}
+
 .orderbookAskList {
 	float: right;
-	margin-right: 1.5em;
+	margin-right: 1%;
+	width: 47%;
+	font-size: 1.3em;
 }
 
 .orderbookBidList {
 	float: left;
-	margin-left: 1.5em;
+	margin-left: 1%;
+	width: 47%;
+	font-size: 1.3em;
 }
+
+@media (max-width:1780px) {
+	.orderbookAskList {
+		font-size: 1.1em;
+	}
+	.orderbookBidList {
+		font-size: 1.1em;
+	}
+}
+
+@media (max-width: 1510px) {
+	.orderbookAskList {
+		font-size: 1em;
+	}
+	.orderbookBidList {
+		font-size: 1em;
+	}
+}
+
+@media (max-width: 1400px) {
+	.orderbookAskList {
+		font-size: 0.9em;
+	}
+	.orderbookBidList {
+		font-size: 0.9em;
+	}
+}
+
+@media (max-width: 1280px) {
+	.orderbookAskList {
+		font-size: 0.9em;
+	}
+	.orderbookBidList {
+		font-size: 0.9em;
+	}
+}
+
+@media (max-width: 1150px) {
+	.orderbookAskList {
+		font-size: 0.9em;
+	}
+	.orderbookBidList {
+		font-size: 0.9em;
+	}
+}
+
+@media (max-width: 720px) {
+	.orderbookAskList {
+		font-size: 0.8em;
+	}
+	.orderbookBidList {
+		font-size: 0.8em;
+	}
+}
+
+@media (max-width: 600px) {
+	.orderbookAskList {
+		font-size: 0.85em;
+		float: none;
+		width: 90%;
+		margin-left: 5%;
+		margin-top: 3em;
+	}
+	.orderbookBidList {
+		font-size: 0.85em;
+		float: none;
+		width: 90%;
+		margin-left: 5%;
+	}
+}
+
+@media (max-width: 500px) {
+	.orderbookAskList {
+		font-size: 0.85em;
+		float: none;
+		width: 90%;
+		margin-left: 5%;
+		margin-top: 3em;
+	}
+	.orderbookBidList {
+		font-size: 0.85em;
+		float: none;
+		width: 90%;
+		margin-left: 5%;
+	}
+}
+
+
 
 .orderbookTable_td {
 	padding: 0 1em 0 1em;

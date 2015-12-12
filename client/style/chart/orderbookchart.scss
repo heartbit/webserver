@@ -2,6 +2,10 @@
     overflow: hidden;
 }
 
+#widgetorderbook .panel-body {
+    padding: none;
+}
+
 .bid_line {
 	stroke: green;
 	stroke-width:1px;

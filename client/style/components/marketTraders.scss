@@ -12,3 +12,45 @@
 	margin-left: 0.5em;
 	margin-top: 0.5em;
 }
+
+@media (max-width: 434px) {
+	
+}
+
+@media (max-width:1100px) {
+	.market_traders_address {
+		width: 100%;
+		overflow: none;
+		text-overflow: none;
+		display:block;
+	}
+}
+
+@media (max-width: 589px) {
+	.market_traders_address {
+		width:10em;
+		overflow:hidden;
+		text-overflow: ellipsis;
+		display:block;
+	}
+}
+
+@media (max-width: 434px) {
+	.market_traders_address {
+		width:10em;
+		overflow:hidden;
+		text-overflow: ellipsis;
+		display:block;
+		font-size: 0.8em;
+	}
+}
+
+@media (max-width: 330px) {
+	.market_traders_address {
+		width:10em;
+		overflow:hidden;
+		text-overflow: ellipsis;
+		display:block;
+		font-size: 0.7em;
+	}
+}

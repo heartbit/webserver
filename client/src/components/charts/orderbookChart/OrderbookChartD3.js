@@ -17,9 +17,9 @@ orderbookChartD3.prototype.initChart = function() {
 
     this.margin = {
         top: 30,
-        right: 60,
+        right: 35,
         bottom: 20,
-        left: 60
+        left: 35
     };
 
     var visWidth = $(this.el).width();
