@@ -28,7 +28,7 @@ var OrderbookListWidget = React.createClass({
 			  width: window.innerWidth || document.body.clientWidth,
 			  height: window.innerHeight || document.body.clientHeight
 			}
-			console.log('SIZE!', size);
+
 			if(size.width <= 600) {
 				var limit = 8;
 			} else {
@@ -39,13 +39,34 @@ var OrderbookListWidget = React.createClass({
 				var tablebodyBid = [];
 				for(i = 0; i <= limit; i++) {
 					var order = bid[i];
-					tablebodyBid.push(
-						<tr>
-							<td className='orderbookTable_td'> { FormatUtils.formatValue(Math.floor(order.sum,0))} </td>
-							<td className='orderbookTable_td'> { FormatUtils.formatValue(Math.floor(order.volume))} </td>
-							<td className='orderbookTable_td'> {Math.floor(order.price*Math.pow(10,9))/Math.pow(10,9)} </td>
-						</tr>
-					);	
+					if(size.width <= 500) {
+						tablebodyBid.push(
+							<tr>
+								<td className='orderbookTable_td'> {Math.floor(order.price*Math.pow(10,9))/Math.pow(10,9)} </td>
+								<td className='orderbookTable_td'> { FormatUtils.formatValue(Math.floor(order.volume))} </td>
+								<td className='orderbookTable_td'> { FormatUtils.formatValue(Math.floor(order.sum,0))} </td>
+							</tr>
+						);
+
+						var theadBid = <thead>
+									<th className='orderbooTable_th bidTitle'> Bid Price {this.state.params.currency} </th>
+									<th className='orderbooTable_th'> Order Size {this.state.params.item} </th>
+									<th className='orderbooTable_th'> Total {this.state.params.item} </th>
+								</thead>;	
+					} else {
+						tablebodyBid.push(
+							<tr>
+								<td className='orderbookTable_td'> { FormatUtils.formatValue(Math.floor(order.sum,0))} </td>
+								<td className='orderbookTable_td'> { FormatUtils.formatValue(Math.floor(order.volume))} </td>
+								<td className='orderbookTable_td'> {Math.floor(order.price*Math.pow(10,9))/Math.pow(10,9)} </td>
+							</tr>
+						);
+						var theadBid = <thead>
+									<th className='orderbooTable_th'> Total {this.state.params.item} </th>
+									<th className='orderbooTable_th'> Order Size {this.state.params.item} </th>
+									<th className='orderbooTable_th bidTitle'> Bid Price {this.state.params.currency} </th>
+								</thead>;
+					}
 				}
 			}
 			if(ask.length != 0) {
@@ -83,11 +104,7 @@ var OrderbookListWidget = React.createClass({
 					{ this.state.msg == "available" ?
 						this.state.ask.length !=0 ?
 							<table className='orderbookBidList'>
-								<thead>
-									<th className='orderbooTable_th'> Total {this.state.params.item} </th>
-									<th className='orderbooTable_th'> Order Size {this.state.params.item} </th>
-									<th className='orderbooTable_th bidTitle'> Bid Price {this.state.params.currency} </th>
-								</thead>
+								{theadBid}
 								<tbody>
 									{tablebodyBid}
 								</tbody>

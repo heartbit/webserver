@@ -120,6 +120,7 @@ module.exports = {
 			OrderbookParser: path.join(__dirname, './src/helpers/webSocket/orderbookParser'),
 			OrderbookRequest: path.join(__dirname, './src/helpers/webSocket/orderbookRequest'),
 			ResizeManager: path.join(__dirname, './src/utils/resizeManager'),
+			SizeManager: path.join(__dirname, './src/utils/sizeManager'),
 
 			//Websocket
 			OrderbookSocket: path.join(__dirname, './src/websocket/OrderbookSocket'),

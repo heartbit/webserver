@@ -10577,12 +10577,18 @@ li.current a {
   margin-left: 50px; }
 
 .x_time_axis .domain {
-  stroke: #38493A;
+  stroke: #3B3752;
   stroke-width: 1px;
   fill: none; }
 
 .x_time_axis text {
-  fill: #3B3752; }
+  fill: #3B3752;
+  stroke-width: 0.4px; }
+
+.x_time_axis {
+  fill: none;
+  stroke: #38493A;
+  shape-rendering: crispEdges; }
 
 .candle_line {
   /*stroke: url(#line-gradient);*/

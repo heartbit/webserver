@@ -4,6 +4,7 @@ var Topbar = require('Topbar');
 var SideMenu = require('SideMenu');
 var Footer = require('Footer');
 var Dashboard = require('Dashboard');
+var SizeManager = require('SizeManager');
 
 var App = React.createClass({
 	getInitialState: function(){
@@ -15,6 +16,7 @@ var App = React.createClass({
 	},
 	componentDidMount: function() {
 		var self = this;
+        SizeManager.execute();
         // var delay = (function(){
         //     var timer;
         //     return function(callback, ms){

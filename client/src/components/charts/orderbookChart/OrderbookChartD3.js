@@ -1,6 +1,8 @@
 var d3 = require('d3');
 var FormatUtils = require('FormatUtils');
 var defaultDuration = 200;
+var ResizeManager = require('ResizeManager');
+var SizeManager = require('SizeManager');
 
 var orderbookChartD3 = function(el, params) {
 	this.el = el;
@@ -9,16 +11,15 @@ var orderbookChartD3 = function(el, params) {
 	this.initChart();
 	this.initXAxis();
 	this.initYAxis();
-
 }
 
 orderbookChartD3.prototype.initChart = function() {
  	var self = this;
-
+ 	this.addResizeFunction();
     this.margin = {
-        top: 30,
-        right: 35,
-        bottom: 20,
+        top: 10,
+        right: 38,
+        bottom: 50,
         left: 35
     };
 
@@ -52,6 +53,28 @@ orderbookChartD3.prototype.initChart = function() {
         .append("g")
         .attr("class", "tooltipLayer")
         .attr('opacity', 0);
+}
+
+orderbookChartD3.prototype.addResizeFunction = function()  {
+	// rotate xaxis label 
+	var self = this;
+	var rotateAxis = function() {
+		this.rsAxis.selectAll('text')
+			.style("text-anchor", "end")
+			.attr("dx", "-1em")
+			.attr('dy', ".15em")
+			.attr("transform", "rotate(-65)");
+	}.bind(this);
+	var rotateAxisBack = function() {
+		console.log("ROTATE BACK");
+		this.rsAxis.selectAll('text')
+			.style("text-anchor", "middle")
+			.attr("dx", "0")
+			.attr('dy', "0.71em")
+			.attr("transform", "rotate(0)");
+	}.bind(this);
+	SizeManager.add(rotateAxis, 700, false, rotateAxisBack);
+
 }
 
 orderbookChartD3.prototype.initXAxis = function() {
@@ -110,7 +133,9 @@ orderbookChartD3.prototype.updateXAxis = function(data) {
 	})), d3.max(data.ask.map(function(order){
 		return order.price;
 	}))]);
-	this.xAxisInstance.call(this.xAxis);
+
+	this.rsAxis = this.xAxisInstance.call(this.xAxis);
+	SizeManager.execute();
 }
 
 orderbookChartD3.prototype.updateYAxis = function(data) {
