@@ -17,9 +17,9 @@ orderbookChartD3.prototype.initChart = function() {
  	var self = this;
  	this.addResizeFunction();
     this.margin = {
-        top: 10,
+        top: 40,
         right: 38,
-        bottom: 50,
+        bottom: 30,
         left: 35
     };
 

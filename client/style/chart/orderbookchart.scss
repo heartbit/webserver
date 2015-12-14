@@ -33,3 +33,9 @@
     stroke:#38493A;
     stroke-width:1px;
 }
+
+@media (max-width:500px) {
+    .y_orderbook_axis {
+        font-size: 0.8em;
+    }
+}

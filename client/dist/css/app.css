@@ -10590,6 +10590,10 @@ li.current a {
   stroke: #38493A;
   shape-rendering: crispEdges; }
 
+@media (max-width: 500px) {
+  .x_time_axis {
+    font-size: 0.7em; } }
+
 .candle_line {
   /*stroke: url(#line-gradient);*/
   stroke: #201d32;
@@ -10603,6 +10607,10 @@ li.current a {
 
 .y_candle_axis .tick text {
   fill: #3B3752; }
+
+@media (max-width: 500px) {
+  .y_candle_axis {
+    font-size: 0.8em; } }
 
 .circle {
   stroke-width: 2px;
@@ -10649,6 +10657,10 @@ li.current a {
   stroke: #38493A;
   stroke-width: 1px; }
 
+@media (max-width: 500px) {
+  .y_volume_axis {
+    font-size: 0.8em; } }
+
 .brush .extent {
   fill-opacity: .1;
   stroke: #fff;
@@ -10688,6 +10700,10 @@ li.current a {
   fill: none;
   stroke: #38493A;
   stroke-width: 1px; }
+
+@media (max-width: 500px) {
+  .y_orderbook_axis {
+    font-size: 0.8em; } }
 
 .dateInput {
   height: 1.4em;
