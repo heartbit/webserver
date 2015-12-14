@@ -73,7 +73,7 @@ orderbookChartD3.prototype.addResizeFunction = function()  {
 			.attr('dy', "0.71em")
 			.attr("transform", "rotate(0)");
 	}.bind(this);
-	SizeManager.add(rotateAxis, 700, false, rotateAxisBack);
+	SizeManager.add(rotateAxis, 700, false, rotateAxisBack,"rotateOrderBookxAxis");
 
 }
 
@@ -135,7 +135,7 @@ orderbookChartD3.prototype.updateXAxis = function(data) {
 	}))]);
 
 	this.rsAxis = this.xAxisInstance.call(this.xAxis);
-	SizeManager.execute();
+	SizeManager.execute("rotateOrderBookxAxis");
 }
 
 orderbookChartD3.prototype.updateYAxis = function(data) {

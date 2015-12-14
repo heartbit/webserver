@@ -5,6 +5,7 @@ var VolumeLayer = require('VolumeLayer');
 var LineLayer = require('LineLayer');
 var SimpleLineLayer = require('SimpleLineLayer');
 var moment = require('moment');
+// var sizeManager
 
 function MainChartD3(el, params) {
     this.el = el;
@@ -92,6 +93,14 @@ MainChartD3.prototype.initChart = function() {
         .attr("class", 'mainLayer')
         .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
 };
+
+MainChartD3.prototype.addResizeFunction = function() {
+    var self = this;
+    
+
+
+    
+}
 
 MainChartD3.prototype.initXAxis = function() {
     var self = this;
