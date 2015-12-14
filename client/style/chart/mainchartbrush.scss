@@ -1,0 +1,21 @@
+.endBrushLabelTime {
+	fill: rgb(131, 79, 11);
+}
+
+.startBrushLabelTime {
+	fill: rgb(131, 79, 11);
+}
+
+.evolRate {
+	font-size: 3em;
+}
+
+
+@media (max-width:500px) {
+	.endBrushLabelTime {
+		font-size: 0.7em;
+	}
+	.startBrushLabelTime {
+		font-size: 0.7em;
+	}	
+}
