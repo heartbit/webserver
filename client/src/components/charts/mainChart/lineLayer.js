@@ -169,7 +169,7 @@ function LineLayer(chart, chartName) {
         .append("text")
         .attr('y', 3 * this.chart.height / 4 - 30)
         .attr('opacity', 0)
-        .style('font-size', '40px')
+        // .style('font-size', '40px')
         .style("text-anchor", "middle")
         .style("fill", '#808080')
         .style("stroke", "none")
@@ -185,14 +185,14 @@ function LineLayer(chart, chartName) {
     this.startBrushLabelTime = this.gBrush
         .append('text')
         .attr("y", 0)
-        .style("fill", '#666')
+        // .style("fill", '#666')
         .style("stroke", "none")
         .attr('class', 'startBrushLabelTime');
 
     this.endBrushLabelTime = this.gBrush
         .append('text')
         .attr("y", 0)
-        .style("fill", '#666')
+        // .style("fill", '#666')
         .style("stroke", "none")
         .attr('class', 'endBrushLabelTime');
 
@@ -440,7 +440,7 @@ LineLayer.prototype.brushed = function() {
             .duration(50)
             .attr('x', newx)
             .attr('opacity', 1)
-            .attr('font-size', '50px')
+            .attr('class', 'evolRate')
             .text(FormatUtils.formatEvol(evol))
             .style("fill", evolColor);
 
@@ -452,7 +452,7 @@ LineLayer.prototype.brushed = function() {
             .attr('opacity', 1)
             .attr('font-size', '16px')
             .attr('text-anchor', function() {
-                return nbCandles < 10 ? 'end' : 'middle';
+                return nbCandles < 30 ? 'end' : 'middle';
             })
             .text(FormatUtils.formatDate(startDateBrush, 'lll'));
 
@@ -463,7 +463,7 @@ LineLayer.prototype.brushed = function() {
             .attr('x', this.chart.timeScale(endDateBrush))
             .attr('opacity', 1)
             .attr('text-anchor', function() {
-                return nbCandles < 10 ? 'start' : 'middle';
+                return nbCandles < 30 ? 'start' : 'middle';
             })
             .attr('font-size', '16px')
             .text(FormatUtils.formatDate(endDateBrush, 'lll'));

@@ -80,15 +80,18 @@ li.current a {
 }
 
 .tooltipPrice {
-  font-size: 1em;  
+  fill: #001523;
+  font-weight: 600; 
 }
 
 .tooltipDate {
-    
+    fill: rgb(131, 79, 11);
+    font-weight: 600;
 }
 
 .tooltipVolume {
-    
+    fill: #3F6F3B;
+    font-weight: 600;
 }
 
 

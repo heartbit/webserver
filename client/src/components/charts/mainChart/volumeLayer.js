@@ -196,9 +196,14 @@ VolumeLayer.prototype.updateTooltip = function(date) {
         d3.select('.tooltipVolume')
             .text('Volume: ' + FormatUtils.formatValue(this.closestPoint.candle.amount, 0))
             .attr('x', function() {
+                var defaultx = 200;
                 var pricewidth = d3.select('.tooltipPrice').node().getBBox().width;
                 var pricex = d3.select('.tooltipPrice').node().getBBox().x;
-                return pricewidth + pricex + pricewidth*0.2;
+                if (pricewidth == 0 || null) {
+                    return defaultx;
+                } else {
+                    return pricewidth + pricex + pricewidth*0.2;
+                }
             });
 ;
     }

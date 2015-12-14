@@ -10618,7 +10618,16 @@ li.current a {
   fill: white; }
 
 .tooltipPrice {
-  font-size: 1em; }
+  fill: #001523;
+  font-weight: 600; }
+
+.tooltipDate {
+  fill: #834f0b;
+  font-weight: 600; }
+
+.tooltipVolume {
+  fill: #3F6F3B;
+  font-weight: 600; }
 
 @media (max-width: 450px) {
   .tooltipPrice {
@@ -10704,6 +10713,21 @@ li.current a {
 @media (max-width: 500px) {
   .y_orderbook_axis {
     font-size: 0.8em; } }
+
+.endBrushLabelTime {
+  fill: #834f0b; }
+
+.startBrushLabelTime {
+  fill: #834f0b; }
+
+.evolRate {
+  font-size: 3em; }
+
+@media (max-width: 500px) {
+  .endBrushLabelTime {
+    font-size: 0.7em; }
+  .startBrushLabelTime {
+    font-size: 0.7em; } }
 
 .dateInput {
   height: 1.4em;
