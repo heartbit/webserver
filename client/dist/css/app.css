@@ -10609,6 +10609,25 @@ li.current a {
   stroke: #666666;
   fill: white; }
 
+.tooltipPrice {
+  font-size: 1em; }
+
+@media (max-width: 450px) {
+  .tooltipPrice {
+    font-size: 0.7em; }
+  .tooltipDate {
+    font-size: 0.7em; }
+  .tooltipVolume {
+    font-size: 0.7em; } }
+
+@media (max-width: 400px) {
+  .tooltipPrice {
+    font-size: 0.65em; }
+  .tooltipDate {
+    font-size: 0.65em; }
+  .tooltipVolume {
+    font-size: 0.65em; } }
+
 .areaLayer {
   fill: #5CC9D7; }
 

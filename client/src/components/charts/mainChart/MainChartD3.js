@@ -68,10 +68,10 @@ MainChartD3.prototype.initChart = function() {
     this.addResizeFunction();
 
     this.margin = {
-        top: 50,
+        top: 30,
         right: 50,
         bottom: 0,
-        left: 35
+        left: 40
     };
 
     var visWidth = $(this.el).width();
@@ -80,6 +80,29 @@ MainChartD3.prototype.initChart = function() {
 
     this.width = visWidth - this.margin.left - this.margin.right;
     this.height = visHeigth - this.margin.top - this.margin.bottom;
+
+    this.tooltipData = d3.select(this.el)
+        .append('svg')
+        .attr('width', '30em')
+        .attr('height', '1em')
+        .append('g');
+
+    this.tooltipData.append('text')
+        .attr('y', 10)
+        .attr('x', 10)
+        .attr('class', 'tooltipDate');
+
+    this.tooltipData.append('text')
+        .attr('y',10)
+        .attr('x', 165)
+        .attr('class', 'tooltipPrice');
+
+    this.tooltipData.append('text')
+        .attr('y', function() {
+            return 10;
+        })
+        .attr('x', 268)
+        .attr('class', 'tooltipVolume');
 
     this.chart = d3.select(this.el)
         .append('svg')

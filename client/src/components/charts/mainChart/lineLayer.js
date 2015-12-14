@@ -343,21 +343,33 @@ LineLayer.prototype.updateTooltip = function(date) {
             .attr('x1', currentX)
             .attr('x2', currentX);
 
-        this.currentPositionLabelTime
-            .style("text-anchor", function() {
-                return currentX > self.chart.width / 2 ? "end" : "start";
-            })
-            .attr("x", currentX)
-            .text(' ' + FormatUtils.formatDate(this.closestPoint.candle.startDate, 'lll'));
+        // this.currentPositionLabelTime
+        //     .style("text-anchor", function() {
+        //         return currentX > self.chart.width / 2 ? "end" : "start";
+        //     })
+        //     .attr("x", currentX)
+        //     .text(' ' + FormatUtils.formatDate(this.closestPoint.candle.startDate, 'lll'));
 
-        this.currentPositionLabelPrice
-            .style("text-anchor", function() {
-                return currentX > self.chart.width / 2 ? "end" : "start";
-            })
-            .attr("x", function() {
-                return currentX;
-            })
-            .text(' Price: ' + FormatUtils.formatPrice(this.closestPoint.candle.close));
+        // this.currentPositionLabelPrice
+        //     .style("text-anchor", function() {
+        //         return currentX > self.chart.width / 2 ? "end" : "start";
+        //     })
+        //     .attr("x", function() {
+        //         return currentX;
+        //     })
+        //     .text(' Price: ' + FormatUtils.formatPrice(this.closestPoint.candle.close));
+        d3.select('.tooltipDate')
+            .text(FormatUtils.formatDate(this.closestPoint.candle.startDate, 'lll'));
+
+        d3.select('.tooltipPrice')
+            .text('Price: ' + FormatUtils.formatPrice(this.closestPoint.candle.close))   
+            .attr('x', function() {
+                var datewidth = d3.select('.tooltipDate').node().getBBox().width;
+                var datex = d3.select('.tooltipDate').node().getBBox().x;
+                return datewidth + datex + datewidth*0.15;
+            });
+
+
     }
 };
 

@@ -184,14 +184,23 @@ VolumeLayer.prototype.updateTooltip = function(date) {
                 }
             });
 
-        this.volumeLabel
-            .attr('opacity', 1)
-            .attr('x', +left + 5)
-            .attr('y', 60)
-            .style("text-anchor", function() {
-                return left > self.chart.width / 2 ? "end" : "start";
-            })
-            .text(' Volume: ' + FormatUtils.formatValue(this.closestPoint.candle.amount, 0));
+        // this.volumeLabel
+        //     .attr('opacity', 1)
+        //     .attr('x', +left + 5)
+        //     .attr('y', 60)
+        //     .style("text-anchor", function() {
+        //         return left > self.chart.width / 2 ? "end" : "start";
+        //     })
+        //     .text(' Volume: ' + FormatUtils.formatValue(this.closestPoint.candle.amount, 0));
+
+        d3.select('.tooltipVolume')
+            .text('Volume: ' + FormatUtils.formatValue(this.closestPoint.candle.amount, 0))
+            .attr('x', function() {
+                var pricewidth = d3.select('.tooltipPrice').node().getBBox().width;
+                var pricex = d3.select('.tooltipPrice').node().getBBox().x;
+                return pricewidth + pricex + pricewidth*0.2;
+            });
+;
     }
 };
 
