@@ -72,7 +72,7 @@ var OrderbookListWidget = React.createClass({
 			if(ask.length != 0) {
 				var tablebodyAsk = [];
 				for(i = 0; i <= limit; i++) {
-					var order = bid[i];
+					var order = ask[i];
 					if(size.width <= 500) {
 						tablebodyAsk.push(
 							<tr>
