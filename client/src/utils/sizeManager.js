@@ -31,7 +31,7 @@ SizeManager.prototype.add = function(fct, width, height, backfct, id) {
 			height: height,
 			id: id
 		};
-		this.listback.push(newFct);
+	this.listback.push(newFct);
 	}
 }
 

@@ -62,7 +62,6 @@ var Grid = React.createClass({
       static_grid: true
     };
     var gridstack = $('.grid-stack').gridstack(options).data('gridstack');
-    console.log(gridstack);
     var renderGrid = function() {
       self.props.widgets.map(function(widget, i) {
         var attributes = widget.props.attributes;
