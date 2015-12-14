@@ -8,7 +8,7 @@
     padding-top:3em;
 }
 .featureclick {
-    color:#004756;
+    color: #00010f;
     cursor:pointer;
 }
 
@@ -100,7 +100,12 @@ hr.star-primary:after {
 header {
     text-align: center;
     color: #fff;
-    background: #1D1B2F;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#00010f+0,004756+100 */
+    background: #00010f; /* Old browsers */
+    background: -moz-linear-gradient(top,  #00010f 0%, #004756 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #00010f 0%,#004756 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #00010f 0%,#004756 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00010f', endColorstr='#004756',GradientType=0 ); /* IE6-9 */;
 }
 
 header .container {
@@ -356,8 +361,8 @@ footer h3 {
 }
 
 footer .footer-above {
-    padding-top: 50px;
-    background-color: #1D1B2F;
+    padding-top: 50px; 
+    background-color: #004655;
 }
 
 footer .footer-col {

@@ -17,24 +17,6 @@ var App = React.createClass({
 	componentDidMount: function() {
 		var self = this;
         SizeManager.execute();
-        // var delay = (function(){
-        //     var timer;
-        //     return function(callback, ms){
-        //         clearTimeout(timer);
-        //         timer = setTimeout(callback, ms);
-        //     };
-        // })();
-        // $( window ).resize(function() {
-        //     var callback = function() {
-        //         console.log("resize with delay hack!",window.innerWidth);
-        //         var w = window.innerWidth;
-        //         params = {
-        //             width : w
-        //         }
-        //         self.setState({params:params})
-        //     };
-        //     delay(callback, 1000);
-        // });
     },
     render: function() {
         return (
