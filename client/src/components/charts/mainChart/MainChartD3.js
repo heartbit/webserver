@@ -5,7 +5,7 @@ var VolumeLayer = require('VolumeLayer');
 var LineLayer = require('LineLayer');
 var SimpleLineLayer = require('SimpleLineLayer');
 var moment = require('moment');
-// var sizeManager
+var SizeManager = require('SizeManager');
 
 function MainChartD3(el, params) {
     this.el = el;
@@ -65,6 +65,7 @@ MainChartD3.prototype.parseMainGraphes = function(maingraphes, indicators) {
 
 MainChartD3.prototype.initChart = function() {
     var self = this;
+    this.addResizeFunction();
 
     this.margin = {
         top: 50,
@@ -96,10 +97,22 @@ MainChartD3.prototype.initChart = function() {
 
 MainChartD3.prototype.addResizeFunction = function() {
     var self = this;
-    
+    var rotateAxis = function() {
+        this.rsAxis.selectAll('text')
+            .style("text-anchor", "end")
+            .attr("dx", "-1em")
+            .attr('dy', ".15em")
+            .attr("transform", "rotate(-65)");
+    }.bind(this);
+    var rotateAxisBack = function() {
+        this.rsAxis.selectAll('text')
+            .style("text-anchor", "middle")
+            .attr("dx", "0")
+            .attr('dy', "0.71em")
+            .attr("transform", "rotate(0)");
+    }.bind(this);
+    SizeManager.add(rotateAxis, 700, false, rotateAxisBack,"rotateMainChartxAxis");
 
-
-    
 }
 
 MainChartD3.prototype.initXAxis = function() {
@@ -131,7 +144,8 @@ MainChartD3.prototype.updateXAxis = function() {
         return candle.endDate;
     }))]);
     // this.zoom.x(this.timeScale);
-    this.timeAxisInstance.call(this.timeAxis);
+    this.rsAxis = this.timeAxisInstance.call(this.timeAxis);
+    SizeManager.execute("rotateMainChartxAxis");
 };
 
 
@@ -190,7 +204,8 @@ MainChartD3.prototype.resize = function(data, params, indicators) {
 
     self.timeScale.range([0, self.width]);
     // self.zoom.x(self.timeScale);
-    self.timeAxisInstance.call(self.timeAxis);
+    // self.timeAxisInstance.call(self.timeAxis);
+    this.updateXAxis();
     _.each(_.values(self.layers), function(layer) {
         if(self.params[layer.chartName]) {
             layer.resize(self.width, self.height);

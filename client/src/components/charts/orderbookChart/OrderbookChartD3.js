@@ -66,7 +66,6 @@ orderbookChartD3.prototype.addResizeFunction = function()  {
 			.attr("transform", "rotate(-65)");
 	}.bind(this);
 	var rotateAxisBack = function() {
-		console.log("ROTATE BACK");
 		this.rsAxis.selectAll('text')
 			.style("text-anchor", "middle")
 			.attr("dx", "0")
