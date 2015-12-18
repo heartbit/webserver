@@ -7697,6 +7697,9 @@ button.close {
 .fa-meanpath:before {
   content: "\f20c"; }
 
+.coming-soon {
+  font-size: 0.3em; }
+
 .abouth {
   font-size: 1.2em; }
 
