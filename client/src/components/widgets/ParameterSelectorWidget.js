@@ -22,8 +22,8 @@ var ParameterSelectorWidget = React.createClass({
 		    		platform:'BITSTAMP',
 		    		currency:'XRP',
 		    		item:'USD',
-		    		interval:'1h',
-		    		range:'1w',
+		    		interval:'12h',
+		    		range:'1m',
 		    		pair: 'XRP/USD',
 		    		ma: null
 		    	}

@@ -10608,6 +10608,9 @@ li.current a {
 .y_candle_axis .tick text {
   fill: #3B3752; }
 
+.y_candle_axis {
+  font-size: 0.8em; }
+
 @media (max-width: 500px) {
   .y_candle_axis {
     font-size: 0.8em; } }
@@ -10665,6 +10668,9 @@ li.current a {
   fill: none;
   stroke: #38493A;
   stroke-width: 1px; }
+
+.y_volume_axis {
+  font-size: 0.8em; }
 
 @media (max-width: 500px) {
   .y_volume_axis {
