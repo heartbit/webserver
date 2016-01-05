@@ -16,7 +16,6 @@ App.prototype.start = function(options) {
         })
         .then(function() {
             self.initProxies();
-            // self.initWebSockets();
             self.initSockets();
             self.initClientRoutes();
             self.initStaticContentManager();
@@ -33,14 +32,9 @@ App.prototype.initManagers = function() {
     this.apiManager = require(this.options.serverPath + 'managers/APIManager');
     this.apiManager.init(this.config.apiproxy);
 
-    // this.cronJobManager = require(this.options.serverPath + 'managers/CronJobsManager');
-    // this.cronJobManager.start();
-
     return Q.all([
         this.initEventManager(),
-        // this.initKafkaManager()
         this.initRedisAndCacheManager(),
-        // this.initMongoManager()
     ]);
 };
 

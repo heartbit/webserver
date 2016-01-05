@@ -21,9 +21,7 @@ var AppRouter = Backbone.Router.extend({
 
     app: function(params) {
         React.render(<App/>, document.getElementById('app'));
-        
-      
-        
+             
         if(params) {
         	params = getJsonFromUrl(params);
             SelectorActions.initSelector(params);

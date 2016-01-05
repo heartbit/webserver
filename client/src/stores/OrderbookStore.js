@@ -13,17 +13,10 @@ var _OrderbookStore = {
 };
 
 function update(data) {
-	// var result = metaparser.parseOrderbookChanges(data.meta);
-	// var result = 
-	// console.log(data.params);
 	parser.parseUpdate(data);
-	// console.log("UPDATE ORDERBOOk!",result);
-	// merge
-	// register(result);
 }
 
 function sum(data) {
-	// console.log("dataaaaaaaaaa",data);
 	if(!_.isEmpty(data)) {
 		data[0]['sum'] = data[0].volume;
 		_.each(data, function(d,i){
@@ -100,7 +93,6 @@ OrderbookStore.dispatcherIndex = Dispatcher.register(function(payload) {
 		 	break;
 		case Constants.ActionTypes.UPDATE_ORDERBOOK:	
   	   	    update(action.result); 	
-		 	// OrderbookStore.emitChange();
 		 	break;
   		case Constants.ActionTypes.LOADING_ORDERBOOK:
   			OrderbookStore.emitCustom('isloading');
