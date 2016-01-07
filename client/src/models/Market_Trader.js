@@ -16,7 +16,7 @@ var MarketTraders = Backbone.Model.extend({
 		    "format": "json"
 		}
 
-		this.url =config.dataapi.market_traders+JSON.stringify(query);
+		this.url = config.dataapi.market_traders+JSON.stringify(query);
 	}
 
 });

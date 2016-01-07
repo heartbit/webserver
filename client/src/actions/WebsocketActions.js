@@ -63,7 +63,6 @@ var WebsocketActions = {
 			mybook_ask.offersSync();
 			mybook_ask.on("model", handle_asks);
 			function handle_asks(model) {
-				// console.log("ASKS===>",model);
 				var data = {
 					result: {
 						asks:model,
@@ -81,7 +80,6 @@ var WebsocketActions = {
 			mybook_bid.offersSync();
 			mybook_bid.on("model", handle_bids);
 			function handle_bids(model) {
-				// console.log("BIDS===>",model);
 				var data = {
 					result: {
 						bids:model,

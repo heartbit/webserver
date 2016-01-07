@@ -7,16 +7,18 @@ var CHANGE_EVENT = 'change';
 var _MarketTraderStore = {};
 
 function registerMarketTraders(result){
+	var params = result.params
+	var id = result.app ? 'app' : params.platform + params.item + params.currency;
 	if(result.msg == "unavailable") {
 		_MarketTraderStore['msg'] = result.msg;
 	} else {
-		_MarketTraderStore = result.toJSON().results;
-		_MarketTraderStore['params'] = result.params;
-		_MarketTraderStore['total'] = prctVolume(_MarketTraderStore);
-		prctVolumeAccount(_MarketTraderStore);
-		sortList(_MarketTraderStore);
+		_MarketTraderStore[id] = result.toJSON().results;
+		_MarketTraderStore[id]['params'] = result.params;
+		_MarketTraderStore[id]['total'] = prctVolume(_MarketTraderStore[id]);
+		prctVolumeAccount(_MarketTraderStore[id]);
+		sortList(_MarketTraderStore[id]);
 	}
-	// console.log("_MarketTraderStore",_MarketTraderStore, result);
+	console.log("_MarketTraderStore",_MarketTraderStore, result);
 };
 
 function sortList(list) {
@@ -64,8 +66,8 @@ var MarketTraderStore = assign({}, EventEmitter.prototype, {
 		return _MarketTraderStore[key];
 	},
 
-	emitChange: function() {
-		this.emit(CHANGE_EVENT)
+	emitChange: function(event) {
+		this.emit(event)
 	},
 
 	emitLoading: function(event) {
@@ -88,7 +90,11 @@ MarketTraderStore.dispatcherIndex = Dispatcher.register(function(payload) {
   	switch(action.actionType) {
   	     case Constants.ActionTypes.ASK_MARKETTRADERS:	
   	   	    registerMarketTraders(action.result); 	
-		 	MarketTraderStore.emitChange();
+  	   	    if(action.result.app) {
+		 		MarketTraderStore.emitChange('app');
+		 	} else {
+		 		MarketTraderStore.emitChange(action.result.params.platform + action.result.params.item + action.result.params.currency);
+		 	}
 		 	break;
   		 case Constants.ActionTypes.ISLOADING:
   			MarketTraderStore.emitLoading('isloading');

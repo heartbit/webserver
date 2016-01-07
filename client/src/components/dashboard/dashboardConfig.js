@@ -1,5 +1,5 @@
 Config = {
-	Conf1 : {
+	app : {
 		widgets: [{
 	   		key: 'keyfact1',
 	        title:'Price & Volume',
@@ -54,6 +54,7 @@ Config = {
 	    {
 	        key:'activeaccounts',
 	        title:'Active Accounts',
+	        id:'app',
 	        icon:'',
 	        width:4,
 	        height:4,
@@ -62,6 +63,75 @@ Config = {
 	        row:10
 	    }
 	    ]
+	},
+	marketMakers: {
+		widgets: [{
+	        key:'activeaccounts',
+	        title:'BITSTAMP XRP/USD',
+	        id: 'BITSTAMPXRPUSD',
+	        icon:'',
+	        width:4,
+	        height:2,
+	        chart: 'ActiveAccountsWidget',
+	        col:0,
+	        row:0
+	    },
+	    {
+	        key:'activeaccounts2',
+	        title:'TOKYOJPY XRP/JPY',
+	        id: 'TOKYOJPYXRPJPY',
+	        icon:'',
+	        width:4,
+	        height:2,
+	        chart: 'ActiveAccountsWidget',
+	        col:4,
+	        row:0
+	    },
+	    {
+	        key:'activeaccounts3',
+	        title:'RIPPLEFOX XRP/CNY',
+	        id: 'RIPPLEFOXXRPCNY',
+	        icon:'',
+	        width:4,
+	        height:2,
+	        chart: 'ActiveAccountsWidget',
+	        col:9,
+	        row:0
+	    },
+	    {
+	        key:'activeaccounts4',
+	        title:'SNAPSWAP XRP/USD',
+	        id: 'SNAPSWAPXRPUSD',
+	        icon:'',
+	        width:4,
+	        height:2,
+	        chart: 'ActiveAccountsWidget',
+	        col:9,
+	        row:2
+	    },
+	    {
+	        key:'activeaccounts5',
+	        title:'BITSTAMP XRP/BTC',
+	        id: 'BITSTAMPXRPBTC',
+	        icon:'',
+	        width:4,
+	        height:2,
+	        chart: 'ActiveAccountsWidget',
+	        col:0,
+	        row:2
+	    },
+	    {
+	        key:'activeaccounts6',
+	        title:'GATEHUB XRP/USD',
+	        id: 'GATEHUBXRPUSD',
+	        icon:'',
+	        width:4,
+	        height:2,
+	        chart: 'ActiveAccountsWidget',
+	        col:4,
+	        row:2
+	    }
+		]
 	}
 };
 

@@ -1,5 +1,4 @@
 var React = require('react');
-
 var Topbar = require('Topbar');
 var SideMenu = require('SideMenu');
 var Footer = require('Footer');
@@ -10,7 +9,8 @@ var App = React.createClass({
 	getInitialState: function(){
 		return  {
 			params : {
-	    	  width : window.innerWidth
+	    	  width : window.innerWidth,
+	    	  conf: this.props.conf
 	    	}  
 		}
 	},

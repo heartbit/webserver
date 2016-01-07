@@ -7,7 +7,7 @@ var Config = require('Config');
 
 var DataapiActions = {
 
-	updateMarketTraders: function(params) {
+	updateMarketTraders: function(params,app) {
 		var isBitcoin = _.find(Config.strictbitcoin, function(platform) {
 			return platform == params.platform;
 		});
@@ -26,6 +26,9 @@ var DataapiActions = {
 		    	mt.fetch({
 		    		success: function(model) {
 		    			model['params'] = params;
+		    			if(app) {
+		    				model['app'] = true;
+		    			}
 		    			Dispatcher.handleViewAction({
 							actionType: Constants.ActionTypes.ASK_MARKETTRADERS,
 							result: model

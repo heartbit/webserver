@@ -8,10 +8,6 @@ var Remote = require('ripplelib').Remote;
 var OrderbookSocket = (function() {
 	var instance;
 	function init() {
-		//Private var: ws connection
-		// var webSocket = window.WebSocket || window.MozWebSocket;
-		// var ws = new webSocket(Config.websocketurl.ripple);
-
 		remote = new Remote({
 			servers: [ Config.websocketurl.ripple ]
 		});

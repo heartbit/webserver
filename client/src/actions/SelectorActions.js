@@ -52,7 +52,7 @@ var SelectorActions = {
 	},
 
 	refreshMarketTraders: function(params) {
-		DataapiActions.updateMarketTraders(params);
+		DataapiActions.updateMarketTraders(params,true);
 	},
 
 	joinDataRoom: function(params) {

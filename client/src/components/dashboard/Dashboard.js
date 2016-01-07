@@ -9,7 +9,7 @@ var widgetList = [];
 var Dashboard = React.createClass({
 
   getInitialState: function() {
-    var conf = DashboardConfig.Conf1;
+    var conf = DashboardConfig[this.props.params.conf];
     return conf;
   },
 

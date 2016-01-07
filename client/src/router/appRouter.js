@@ -1,7 +1,7 @@
-var DashboardActions = require('DashboardActions');
-var TickerActions = require('TickerActions');
 var SelectorActions = require('SelectorActions');
 var RangeTranslate = require('RangeTranslate');
+var DataapiActions = require('DataapiActions');
+var Config =require('Config');
 
 var React = require("react");
 var App = require('App');
@@ -10,6 +10,7 @@ var AppRouter = Backbone.Router.extend({
 
     routes: {
         "app": "app",
+        "marketmakers": "marketMakers"
     },
 
     initialize: function(params) {
@@ -20,7 +21,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     app: function(params) {
-        React.render(<App/>, document.getElementById('app'));
+        React.render(<App conf='app'/>, document.getElementById('app'));
              
         if(params) {
         	params = getJsonFromUrl(params);
@@ -38,6 +39,14 @@ var AppRouter = Backbone.Router.extend({
 
             SelectorActions.initSelector(defaultParams)
         }
+    },
+
+    marketMakers: function() {
+        React.render(<App conf='marketMakers'/>, document.getElementById('app'));
+        var params = []
+        _.each(Config.platformsParams, function(param)  {
+            DataapiActions.updateMarketTraders(param);
+        })
     },
     
     getJsonFromUrl: function () {

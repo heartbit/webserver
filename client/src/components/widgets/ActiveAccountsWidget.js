@@ -11,7 +11,11 @@ var ActiveAccountsWidget = React.createClass({
 	    }
     },
     componentDidMount: function() {
-    	MarketTraderStore.addChangeListener('change',this._update);
+    	if(this.props.attributes.id == 'app') {
+    		MarketTraderStore.addChangeListener('app',this._update);
+    	} else {
+    		MarketTraderStore.addChangeListener(this.props.attributes.id, this._update);
+    	}
     },
     
     componentWillUnmount: function() {
@@ -58,7 +62,8 @@ var ActiveAccountsWidget = React.createClass({
 	},
 
 	_update: function() {
-		var mt = MarketTraderStore.getAll();
+		console.log("getspecific!",MarketTraderStore.getSpecific(this.props.attributes.id), this.props.attributes.id);
+		var mt = MarketTraderStore.getSpecific(this.props.attributes.id);
 		// console.log('mt from view', mt);
 		this.setState({
 			market_traders: mt
