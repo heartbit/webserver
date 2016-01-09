@@ -27,12 +27,18 @@ var ActiveAccountsWidget = React.createClass({
 			if(!this.state.market_traders.msg) {
 			
 				_.each(this.state.market_traders, function(trader) {
+					if(trader.buysellratio*100>=50) {
+						var color = "positive";
+					} else {
+						var color = "negative";
+					}
 					var address = trader.account;
 					tableTraders.push(
 						<tr>
 							<td className='market_traders_address orderbookTable_td'>  <a href={"http://ledgermonitor.heartbit.io/app/"+ address} target="_blank"> { trader.account} </a></td>
 							<td className='orderbookTable_td'> { FormatUtils.formatValue(Math.floor(trader.baseVolume))} </td>
 							<td className='orderbookTable_td'> { FormatUtils.formatPercent(trader.total.currencyVolume) }  </td>
+							<td className={'orderbookTable_td ' + color}> { FormatUtils.formatPercent(trader.buysellratio*100) }  </td>
 						</tr>
 					);
 				});
@@ -47,10 +53,11 @@ var ActiveAccountsWidget = React.createClass({
 						<div className="unavailableData"> Data not available yet </div>
 						:<table >
 							<thead>
-									<th className='orderbooTable_th'> Address </th>
-									<th className='orderbooTable_th'> Volume {this.state.market_traders.params.item }  </th>
-									<th className='orderbooTable_th'> %Total </th>
-								</thead>
+								<th className='orderbooTable_th'> Address </th>
+								<th className='orderbooTable_th'> Volume {this.state.market_traders.params.item }  </th>
+								<th className='orderbooTable_th'> %Total </th>
+								<th className='orderbooTable_th'> %Buy </th>	
+							</thead>
 								<tbody>
 									{tableTraders}
 								</tbody>

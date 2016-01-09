@@ -15,6 +15,7 @@ function registerMarketTraders(result){
 		_MarketTraderStore[id] = result.toJSON().results;
 		_MarketTraderStore[id]['params'] = result.params;
 		_MarketTraderStore[id]['total'] = prctVolume(_MarketTraderStore[id]);
+		_MarketTraderStore[id]['buysellratio'] = buysellratio(_MarketTraderStore[id]);
 		prctVolumeAccount(_MarketTraderStore[id]);
 		sortList(_MarketTraderStore[id]);
 	}
@@ -54,6 +55,13 @@ function prctVolumeAccount(data) {
 		account.total['itemVolume'] = (account.baseVolume/data.total.itemVolume)*100;
 		account.total['trades'] = (account.count/data.total.trades)*100;
 	});
+}
+
+function buysellratio(data) {
+	_.each(data, function(account) {
+		var total = account.buy.baseVolume + account.sell.baseVolume;
+		account['buysellratio'] = account.buy.baseVolume/(total);
+	})
 }
 
 var MarketTraderStore = assign({}, EventEmitter.prototype, {

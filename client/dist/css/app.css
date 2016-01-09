@@ -11058,7 +11058,7 @@ li.current a {
   margin-top: 0.5em; }
 
 .market_traders_address {
-  width: 10em;
+  width: 7em;
   overflow: hidden;
   text-overflow: ellipsis;
   display: block; }
@@ -11079,14 +11079,14 @@ li.current a {
 
 @media (max-width: 589px) {
   .market_traders_address {
-    width: 10em;
+    width: 7em;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block; } }
 
 @media (max-width: 434px) {
   .market_traders_address {
-    width: 10em;
+    width: 7em;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
@@ -11094,7 +11094,7 @@ li.current a {
 
 @media (max-width: 330px) {
   .market_traders_address {
-    width: 10em;
+    width: 7em;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
@@ -11122,4 +11122,4 @@ body {
   margin-left: 1em; }
 
 .grid-stack {
-  margin-top: 4em; }
+  margin-top: 5em; }
