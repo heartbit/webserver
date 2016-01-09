@@ -11101,32 +11101,7 @@ li.current a {
     font-size: 0.7em; } }
 
 .topbar {
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#00010f+0,004756+100 */
-  background: #00010f;
-  /* Old browsers */
-  background: -moz-linear-gradient(top, #00010f 0%, #004756 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #00010f 0%, #004756 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #00010f 0%, #004756 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00010f', endColorstr='#004756',GradientType=0 );
-  /* IE6-9 */ }
-
-#bar_brand {
-  color: white; }
-
-#realtime {
-  color: white; }
-
-#ledgermonitor {
-  color: white; }
-
-#ledgermonitor[aria-expanded="true"] {
-  color: #333; }
-
-#marketmakers {
-  color: white; }
+  font-size: 16px; }
 
 .item {
   display: block;

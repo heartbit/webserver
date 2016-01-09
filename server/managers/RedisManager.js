@@ -57,7 +57,7 @@ RedisManager.prototype.subscribeToChannels = function(callback) {
                     var item = pair.split(';')[0];
                     var currency = pair.split(';')[1];
                     var channel = platform.platformname + sep + item + sep + currency + sep + measure.key;
-                    console.log("PSUBSCRIBE TO THIS SHIT", channel);
+                    console.log("Subscribe to :", channel);
                     self.redisClient.psubscribe(channel);
                 });
             });
