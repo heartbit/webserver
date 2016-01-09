@@ -5,4 +5,24 @@
   background: -webkit-linear-gradient(top,  #00010f 0%,#004756 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom,  #00010f 0%,#004756 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00010f', endColorstr='#004756',GradientType=0 ); /* IE6-9 */
+
+}
+
+#bar_brand {
+	color: white;
+}
+#realtime {
+	color: white;
+}
+
+#ledgermonitor {
+	color:white;
+}
+#ledgermonitor[aria-expanded="true"]{
+	color: #333;
+}
+
+
+#marketmakers {
+	color:white;
 }

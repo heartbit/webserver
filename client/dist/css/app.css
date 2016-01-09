@@ -11113,6 +11113,21 @@ li.current a {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00010f', endColorstr='#004756',GradientType=0 );
   /* IE6-9 */ }
 
+#bar_brand {
+  color: white; }
+
+#realtime {
+  color: white; }
+
+#ledgermonitor {
+  color: white; }
+
+#ledgermonitor[aria-expanded="true"] {
+  color: #333; }
+
+#marketmakers {
+  color: white; }
+
 .item {
   display: block;
   position: absolute; }
@@ -11130,3 +11145,6 @@ body {
 
 .panel-title-text {
   margin-left: 1em; }
+
+.grid-stack {
+  margin-top: 4em; }
