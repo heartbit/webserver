@@ -47,7 +47,7 @@ var DataapiActions = {
 			clearInterval(repeat);
 			Dispatcher.handleViewAction({
 				actionType: Constants.ActionTypes.ASK_MARKETTRADERS,
-				result: { msg: "unavailable"}
+				result: { params: params, msg: "unavailable"}
 			})
 		}
 

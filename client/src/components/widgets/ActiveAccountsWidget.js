@@ -69,9 +69,7 @@ var ActiveAccountsWidget = React.createClass({
 	},
 
 	_update: function() {
-		console.log("getspecific!",MarketTraderStore.getSpecific(this.props.attributes.id), this.props.attributes.id);
 		var mt = MarketTraderStore.getSpecific(this.props.attributes.id);
-		// console.log('mt from view', mt);
 		this.setState({
 			market_traders: mt
 		});

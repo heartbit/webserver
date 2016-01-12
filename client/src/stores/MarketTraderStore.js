@@ -8,10 +8,10 @@ var _MarketTraderStore = {};
 
 function registerMarketTraders(result){
 	var params = result.params
-	var id = result.app ? 'app' : params.platform + params.item + params.currency;
 	if(result.msg == "unavailable") {
 		_MarketTraderStore['msg'] = result.msg;
 	} else {
+		var id = result.app ? 'app' : params.platform + params.item + params.currency;
 		_MarketTraderStore[id] = result.toJSON().results;
 		_MarketTraderStore[id]['params'] = result.params;
 		_MarketTraderStore[id]['total'] = prctVolume(_MarketTraderStore[id]);
@@ -19,7 +19,7 @@ function registerMarketTraders(result){
 		prctVolumeAccount(_MarketTraderStore[id]);
 		sortList(_MarketTraderStore[id]);
 	}
-	console.log("_MarketTraderStore",_MarketTraderStore, result);
+	// console.log("_MarketTraderStore",_MarketTraderStore, result);
 };
 
 function sortList(list) {

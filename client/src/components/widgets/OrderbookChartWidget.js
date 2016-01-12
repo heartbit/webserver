@@ -47,7 +47,6 @@ var OrderbookWidget = React.createClass({
 		if( orderbook.msg == "available") {
 			// console.log("book_chart AVAILABLE !!!");
 			if(this.props.attributes.chart && !_orderbookChart){
-				console.log("#"+this.props.attributes.chart);
 		       	_orderbookChart = new OrderbookChart("#" + this.props.attributes.chart);
 		  	}
 			this.setState({
